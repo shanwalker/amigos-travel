@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Calendar, Users } from 'lucide-react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import heroVideo from '@/assets/hero-video.mp4';
 import tripThailand from '@/assets/trip-thailand.jpg';
 import tripVietnam from '@/assets/trip-vietnam.jpg';
@@ -130,16 +130,18 @@ export const HeroSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
+  const autoScrollRef = useRef<NodeJS.Timeout | null>(null);
 
-  const checkScrollButtons = () => {
+  const checkScrollButtons = useCallback(() => {
     if (scrollRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
       setCanScrollLeft(scrollLeft > 0);
       setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
     }
-  };
+  }, []);
 
-  const scroll = (direction: 'left' | 'right') => {
+  const scroll = useCallback((direction: 'left' | 'right') => {
     if (scrollRef.current) {
       const scrollAmount = 300;
       scrollRef.current.scrollBy({
@@ -148,6 +150,48 @@ export const HeroSection = () => {
       });
       setTimeout(checkScrollButtons, 300);
     }
+  }, [checkScrollButtons]);
+
+  // Auto-scroll logic
+  const autoScroll = useCallback(() => {
+    if (scrollRef.current && !isPaused) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      
+      // If at the end, scroll back to start
+      if (scrollLeft >= scrollWidth - clientWidth - 10) {
+        scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        scrollRef.current.scrollBy({ left: 1, behavior: 'auto' });
+      }
+      checkScrollButtons();
+    }
+  }, [isPaused, checkScrollButtons]);
+
+  // Start/stop auto-scroll based on pause state
+  useEffect(() => {
+    if (!isPaused) {
+      autoScrollRef.current = setInterval(autoScroll, 30);
+    } else {
+      if (autoScrollRef.current) {
+        clearInterval(autoScrollRef.current);
+        autoScrollRef.current = null;
+      }
+    }
+
+    return () => {
+      if (autoScrollRef.current) {
+        clearInterval(autoScrollRef.current);
+      }
+    };
+  }, [isPaused, autoScroll]);
+
+  // Pause handlers
+  const handleMouseEnter = () => setIsPaused(true);
+  const handleMouseLeave = () => setIsPaused(false);
+  const handleTouchStart = () => setIsPaused(true);
+  const handleTouchEnd = () => {
+    // Resume after a short delay to allow for touch scrolling
+    setTimeout(() => setIsPaused(false), 3000);
   };
 
   return (
@@ -279,6 +323,10 @@ export const HeroSection = () => {
             <div
               ref={scrollRef}
               onScroll={checkScrollButtons}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
               className="flex gap-5 overflow-x-auto scrollbar-hide pb-4 pr-6"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
