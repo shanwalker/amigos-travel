@@ -49,6 +49,8 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
               <img 
                 src={logo} 
                 alt="Travel Amigo" 
+                loading="eager"
+                fetchPriority="high"
                 className="relative h-10 md:h-12 w-auto brightness-125 contrast-110 drop-shadow-[0_2px_8px_rgba(255,180,0,0.3)]"
               />
             </>
@@ -63,6 +65,8 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
               <img 
                 src={logo} 
                 alt="Travel Amigo" 
+                loading="eager"
+                fetchPriority="high"
                 className="relative h-10 md:h-12 w-auto"
               />
             </>

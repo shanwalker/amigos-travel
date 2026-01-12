@@ -154,7 +154,9 @@ export const HeroSection = () => {
           muted
           loop
           playsInline
+          preload="auto"
           className="w-full h-full object-cover"
+          poster=""
         >
           <source src={heroVideo} type="video/mp4" />
         </video>
