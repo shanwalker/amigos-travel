@@ -1,23 +1,44 @@
 import { motion } from 'framer-motion';
 import { MapPin, Calendar, Users } from 'lucide-react';
+import { useRef, useEffect } from 'react';
 import heroVideo from '@/assets/hero-video.mp4';
 import { MagneticButton, TypingText } from './ui/animations';
 
 export const HeroSectionV2 = () => {
   const destinations = ['Vietnam', 'Thailand', 'Bali', 'Japan', 'Greece'];
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Force video play on mount (handles browser autoplay restrictions)
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.play().catch(() => {
+        // Autoplay was prevented, add click handler to start video
+        const startVideo = () => {
+          video.play();
+          document.removeEventListener('click', startVideo);
+          document.removeEventListener('touchstart', startVideo);
+        };
+        document.addEventListener('click', startVideo);
+        document.addEventListener('touchstart', startVideo);
+      });
+    }
+  }, []);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden film-grain vignette">
       {/* Background Video */}
       <div className="absolute inset-0">
         <video
+          ref={videoRef}
           autoPlay
           muted
           loop
           playsInline
           preload="auto"
           className="w-full h-full object-cover"
-          poster=""
+          // @ts-ignore - webkit-playsinline for iOS Safari
+          webkit-playsinline="true"
         >
           <source src={heroVideo} type="video/mp4" />
         </video>
