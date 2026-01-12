@@ -15,7 +15,9 @@ export const HeroSectionV2 = () => {
           muted
           loop
           playsInline
+          preload="auto"
           className="w-full h-full object-cover"
+          poster=""
         >
           <source src={heroVideo} type="video/mp4" />
         </video>
