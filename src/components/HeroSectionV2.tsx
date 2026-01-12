@@ -42,9 +42,9 @@ export const HeroSectionV2 = () => {
             ✈️ Premium Group Travel Experiences
           </motion.span>
           
-          <h1 className="font-serif text-5xl md:text-7xl font-bold text-foreground leading-[1.1] mb-6">
+          <h1 className="font-luxury text-5xl md:text-7xl font-bold text-foreground leading-[1.05] mb-6 tracking-tight">
             Travel with
-            <span className="text-gradient"> Friends</span>
+            <span className="text-gradient italic"> Friends</span>
             <br />
             You Haven't Met
             <span className="text-primary">.</span>
@@ -102,7 +102,7 @@ export const HeroSectionV2 = () => {
               </p>
             </div>
 
-            <h3 className="text-xl font-serif font-bold text-foreground mb-6">
+            <h3 className="text-xl font-luxury font-bold text-foreground mb-6">
               Find Your Next Adventure
             </h3>
 
