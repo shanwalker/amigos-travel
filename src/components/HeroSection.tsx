@@ -74,10 +74,15 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
       transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
       className="relative flex-shrink-0 w-[280px] h-[380px] rounded-2xl overflow-hidden group cursor-pointer"
     >
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-        style={{ backgroundImage: `url(${trip.image})` }}
+      {/* Background Image - with explicit dimensions for CLS */}
+      <img 
+        src={trip.image}
+        alt={trip.destination}
+        loading="lazy"
+        decoding="async"
+        width={280}
+        height={380}
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
       />
       
       {/* Gradient Overlay */}

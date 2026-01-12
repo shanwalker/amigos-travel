@@ -32,6 +32,10 @@ export const MemoryReelSection = () => {
       <img 
         src={image.src} 
         alt={image.location}
+        loading="lazy"
+        decoding="async"
+        width={192}
+        height={300}
         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
       />
       
