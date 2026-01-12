@@ -77,7 +77,7 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
       {/* Spots Badge */}
       <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-primary/90 backdrop-blur-sm">
         <span className="text-xs font-sans font-semibold text-primary-foreground">
-          {trip.spots} spots left
+          <span className="font-display">{trip.spots}</span> spots left
         </span>
       </div>
       
@@ -86,7 +86,9 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
         {/* Duration */}
         <div className="flex items-center gap-2 mb-2">
           <Calendar className="w-4 h-4 text-primary" />
-          <span className="text-sm font-sans text-foreground/80">{trip.duration}</span>
+          <span className="text-sm font-sans text-foreground/80">
+            <span className="font-display">{trip.duration.split(' ')[0]}</span> {trip.duration.split(' ')[1]}
+          </span>
         </div>
         
         {/* Destination */}
@@ -103,7 +105,7 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
         {/* Price Button */}
         <div className="glass-card px-4 py-2.5 inline-flex items-center gap-2 group-hover:bg-primary/20 transition-colors">
           <span className="text-xs font-sans text-muted-foreground">from</span>
-          <span className="text-lg font-serif font-bold text-primary">{trip.price}</span>
+          <span className="text-lg font-display font-bold text-primary tracking-tight">{trip.price}</span>
         </div>
       </div>
     </motion.div>

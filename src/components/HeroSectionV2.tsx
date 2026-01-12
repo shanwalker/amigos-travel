@@ -147,7 +147,7 @@ export const HeroSectionV2 = () => {
 
             {/* Trust Badge */}
             <p className="text-center text-xs text-muted-foreground mt-4 font-sans">
-              ⭐ Rated 4.9/5 by 10,000+ travelers
+              ⭐ Rated <span className="font-display font-semibold">4.9/5</span> by <span className="font-display font-semibold">10,000+</span> travelers
             </p>
           </div>
         </motion.div>
