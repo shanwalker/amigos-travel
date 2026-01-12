@@ -38,12 +38,15 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
-        {/* Logo */}
-        <a href="#" className="flex items-center">
+        {/* Logo with glow effect for better visibility */}
+        <a href="#" className="flex items-center relative group">
+          {/* Subtle ambient glow behind logo */}
+          <div className="absolute -inset-2 bg-white/10 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-white/15 to-primary/20 rounded-lg blur-md opacity-60" />
           <img 
             src={logo} 
             alt="Travel Amigo" 
-            className="h-10 md:h-12 w-auto"
+            className="relative h-10 md:h-12 w-auto drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] brightness-110"
           />
         </a>
 
