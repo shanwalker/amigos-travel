@@ -41,6 +41,10 @@ export const Footer = () => {
             <img 
               src={logo} 
               alt="Travel Amigo" 
+              loading="lazy"
+              decoding="async"
+              width={122}
+              height={48}
               className="h-12 w-auto mb-6"
             />
             <p className="text-muted-foreground font-inter mb-6 max-w-sm">
