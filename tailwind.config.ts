@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
-        inter: ['Inter', 'sans-serif'],
+        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        sans: ['"Outfit"', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
