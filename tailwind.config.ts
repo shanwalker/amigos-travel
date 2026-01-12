@@ -17,6 +17,7 @@ export default {
         serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
         sans: ['"Outfit"', 'system-ui', 'sans-serif'],
         display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+        luxury: ['"Playfair Display"', 'Georgia', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",
