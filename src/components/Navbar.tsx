@@ -38,15 +38,16 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
-        {/* Logo with glow effect for better visibility */}
+        {/* Logo with premium glass background */}
         <a href="#" className="flex items-center relative group">
-          {/* Subtle ambient glow behind logo */}
-          <div className="absolute -inset-2 bg-white/10 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-white/15 to-primary/20 rounded-lg blur-md opacity-60" />
+          {/* Glass background pill for logo visibility */}
+          <div className="absolute -inset-x-3 -inset-y-2 bg-white/10 backdrop-blur-sm rounded-xl border border-white/10" />
+          {/* Hover glow effect */}
+          <div className="absolute -inset-3 bg-primary/20 rounded-xl blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500" />
           <img 
             src={logo} 
             alt="Travel Amigo" 
-            className="relative h-10 md:h-12 w-auto drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] brightness-110"
+            className="relative h-10 md:h-12 w-auto brightness-125 contrast-110 drop-shadow-[0_2px_8px_rgba(255,180,0,0.3)]"
           />
         </a>
 
