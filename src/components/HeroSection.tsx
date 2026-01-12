@@ -1,10 +1,138 @@
 import { motion } from 'framer-motion';
-import { MapPin, Calendar, Users } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, Users } from 'lucide-react';
+import { useState, useRef } from 'react';
 import heroVideo from '@/assets/hero-video.mp4';
-import { MagneticButton, TypingText } from './ui/animations';
+import tripThailand from '@/assets/trip-thailand.jpg';
+import tripVietnam from '@/assets/trip-vietnam.jpg';
+import tripBali from '@/assets/trip-bali.jpg';
+import tripJapan from '@/assets/trip-japan.jpg';
+import { MagneticButton } from './ui/animations';
+
+interface Trip {
+  id: number;
+  destination: string;
+  duration: string;
+  price: string;
+  image: string;
+  departures: string;
+  spots: number;
+}
+
+const upcomingTrips: Trip[] = [
+  {
+    id: 1,
+    destination: 'Thailand Island Hopping',
+    duration: '15 days',
+    price: '₹89,999',
+    image: tripThailand,
+    departures: 'Jan 25, Feb 10',
+    spots: 6,
+  },
+  {
+    id: 2,
+    destination: 'Vietnam Discovery',
+    duration: '12 days',
+    price: '₹74,999',
+    image: tripVietnam,
+    departures: 'Feb 5, Mar 1',
+    spots: 4,
+  },
+  {
+    id: 3,
+    destination: 'Bali & Beyond',
+    duration: '10 days',
+    price: '₹69,999',
+    image: tripBali,
+    departures: 'Jan 28, Feb 15',
+    spots: 8,
+  },
+  {
+    id: 4,
+    destination: 'Japan Spring',
+    duration: '14 days',
+    price: '₹1,29,999',
+    image: tripJapan,
+    departures: 'Mar 20, Apr 5',
+    spots: 3,
+  },
+];
+
+const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
+      className="relative flex-shrink-0 w-[280px] h-[380px] rounded-2xl overflow-hidden group cursor-pointer"
+    >
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+        style={{ backgroundImage: `url(${trip.image})` }}
+      />
+      
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/40 to-transparent" />
+      
+      {/* Spots Badge */}
+      <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-primary/90 backdrop-blur-sm">
+        <span className="text-xs font-sans font-semibold text-primary-foreground">
+          {trip.spots} spots left
+        </span>
+      </div>
+      
+      {/* Content */}
+      <div className="absolute bottom-0 left-0 right-0 p-5">
+        {/* Duration */}
+        <div className="flex items-center gap-2 mb-2">
+          <Calendar className="w-4 h-4 text-primary" />
+          <span className="text-sm font-sans text-foreground/80">{trip.duration}</span>
+        </div>
+        
+        {/* Destination */}
+        <h3 className="font-serif text-2xl font-bold text-foreground mb-3 leading-tight">
+          {trip.destination}
+        </h3>
+        
+        {/* Departures */}
+        <div className="flex items-center gap-2 mb-4">
+          <Users className="w-4 h-4 text-muted-foreground" />
+          <span className="text-xs font-sans text-muted-foreground">{trip.departures}</span>
+        </div>
+        
+        {/* Price Button */}
+        <div className="glass-card px-4 py-2.5 inline-flex items-center gap-2 group-hover:bg-primary/20 transition-colors">
+          <span className="text-xs font-sans text-muted-foreground">from</span>
+          <span className="text-lg font-serif font-bold text-primary">{trip.price}</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 export const HeroSection = () => {
-  const destinations = ['Vietnam', 'Thailand', 'Bali', 'Japan', 'Greece'];
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScrollButtons = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const scrollAmount = 300;
+      scrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth',
+      });
+      setTimeout(checkScrollButtons, 300);
+    }
+  };
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden film-grain vignette">
@@ -22,135 +150,124 @@ export const HeroSection = () => {
       </div>
       
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/90 via-navy-deep/70 to-navy-deep/50" />
+      <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/95 via-navy-deep/80 to-navy-deep/60" />
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 py-32 flex flex-col lg:flex-row items-center justify-between gap-12">
-        {/* Left Content */}
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex-1 max-w-2xl"
-        >
-          <motion.span 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="inline-block px-4 py-2 rounded-full glass-card text-sm font-inter font-medium text-primary mb-6"
+      <div className="relative z-10 container mx-auto px-6 py-32">
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-12">
+          {/* Left Content - Headline */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex-shrink-0 lg:max-w-lg"
           >
-            ✈️ Premium Group Travel Experiences
-          </motion.span>
-          
-          <h1 className="font-jakarta text-5xl md:text-7xl font-extrabold text-foreground leading-[1.1] mb-6">
-            Travel with
-            <span className="text-gradient"> Friends</span>
-            <br />
-            You Haven't Met
-            <span className="text-primary">.</span>
-          </h1>
-          
-          <p className="text-lg md:text-xl text-muted-foreground font-inter max-w-xl mb-8">
-            Join curated group adventures with like-minded travelers. Fixed departures, 
-            flexible plans, and lifetime memories—all with your new global family.
-          </p>
-
-          <div className="flex flex-wrap gap-4">
-            <MagneticButton className="animate-glow-pulse">
-              Explore Trips
-            </MagneticButton>
-            <button className="px-8 py-4 rounded-xl border border-foreground/20 text-foreground font-jakarta font-semibold hover:bg-foreground/5 transition-colors">
-              Watch Story
-            </button>
-          </div>
-
-          {/* Stats */}
-          <div className="flex gap-8 mt-12">
-            {[
-              { value: '10K+', label: 'Amigos' },
-              { value: '50+', label: 'Countries' },
-              { value: '4.9', label: 'Rating' },
-            ].map((stat, i) => (
-              <motion.div 
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 + i * 0.1 }}
-                className="text-center"
-              >
-                <div className="text-3xl font-jakarta font-extrabold text-foreground">{stat.value}</div>
-                <div className="text-sm text-muted-foreground font-inter">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Right - Glassmorphism Card */}
-        <motion.div
-          initial={{ opacity: 0, x: 50, rotateY: -10 }}
-          animate={{ opacity: 1, x: 0, rotateY: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-          className="w-full max-w-md animate-float"
-        >
-          <div className="glass-card p-6 md:p-8">
-            {/* Live Ticker */}
-            <div className="flex items-center gap-2 mb-6 pb-4 border-b border-foreground/10">
-              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <p className="text-sm text-muted-foreground font-inter">
-                Joining <span className="text-primary font-semibold">14 Amigos</span> in{' '}
-                <TypingText texts={destinations} className="text-primary font-semibold" />
-              </p>
-            </div>
-
-            <h3 className="text-xl font-jakarta font-bold text-foreground mb-6">
-              Find Your Next Adventure
-            </h3>
-
-            {/* Form Fields */}
-            <div className="space-y-4">
-              <div className="relative">
-                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                <select className="w-full bg-navy-medium/50 border border-foreground/10 rounded-xl py-4 pl-12 pr-4 text-foreground font-inter appearance-none focus:outline-none focus:border-primary transition-colors">
-                  <option>Where do you want to go?</option>
-                  <option>Vietnam</option>
-                  <option>Thailand</option>
-                  <option>Bali</option>
-                  <option>Japan</option>
-                  <option>Greece</option>
-                </select>
-              </div>
-
-              <div className="relative">
-                <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                <input 
-                  type="text"
-                  placeholder="When?"
-                  className="w-full bg-navy-medium/50 border border-foreground/10 rounded-xl py-4 pl-12 pr-4 text-foreground font-inter placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
-                />
-              </div>
-
-              <div className="relative">
-                <Users className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                <select className="w-full bg-navy-medium/50 border border-foreground/10 rounded-xl py-4 pl-12 pr-4 text-foreground font-inter appearance-none focus:outline-none focus:border-primary transition-colors">
-                  <option>Trip Type</option>
-                  <option>Fixed Group</option>
-                  <option>Flexible / Vote</option>
-                  <option>Family / Open Tribe</option>
-                </select>
-              </div>
-            </div>
-
-            {/* CTA */}
-            <MagneticButton className="w-full mt-6 justify-center">
-              Explore Trips
-            </MagneticButton>
-
-            {/* Trust Badge */}
-            <p className="text-center text-xs text-muted-foreground mt-4 font-inter">
-              ⭐ Rated 4.9/5 by 10,000+ travelers
+            <motion.span 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="inline-block px-4 py-2 rounded-full glass-card text-sm font-sans font-medium text-primary mb-6"
+            >
+              ✈️ Premium Group Travel
+            </motion.span>
+            
+            <h1 className="font-serif text-5xl md:text-6xl xl:text-7xl font-bold text-foreground leading-[1.1] mb-6">
+              Travel with
+              <span className="text-gradient"> Friends</span>
+              <br />
+              You Haven't Met
+              <span className="text-primary">.</span>
+            </h1>
+            
+            <p className="text-lg text-muted-foreground font-sans max-w-md mb-8">
+              Join curated group adventures with like-minded travelers. Fixed departures, 
+              flexible plans, and lifetime memories.
             </p>
-          </div>
-        </motion.div>
+
+            <div className="flex flex-wrap gap-4 mb-8">
+              <MagneticButton className="animate-glow-pulse">
+                View All Trips
+              </MagneticButton>
+              <button className="px-6 py-4 rounded-xl border border-foreground/20 text-foreground font-sans font-semibold hover:bg-foreground/5 transition-colors">
+                Watch Story
+              </button>
+            </div>
+
+            {/* Stats */}
+            <div className="flex gap-8">
+              {[
+                { value: '10K+', label: 'Amigos' },
+                { value: '50+', label: 'Countries' },
+                { value: '4.9', label: 'Rating' },
+              ].map((stat, i) => (
+                <motion.div 
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.6 + i * 0.1 }}
+                  className="text-center"
+                >
+                  <div className="text-2xl font-serif font-bold text-foreground">{stat.value}</div>
+                  <div className="text-xs text-muted-foreground font-sans">{stat.label}</div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right - Upcoming Trips Slider */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="flex-1 w-full lg:w-auto"
+          >
+            {/* Section Header */}
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h2 className="font-serif text-2xl font-bold text-foreground">Upcoming Trips</h2>
+                <p className="text-sm text-muted-foreground font-sans">Curated departures filling fast</p>
+              </div>
+              
+              {/* Navigation Arrows */}
+              <div className="flex gap-2">
+                <button
+                  onClick={() => scroll('left')}
+                  disabled={!canScrollLeft}
+                  className={`w-10 h-10 rounded-full glass-card flex items-center justify-center transition-all ${
+                    canScrollLeft 
+                      ? 'hover:bg-primary/20 text-foreground cursor-pointer' 
+                      : 'opacity-40 cursor-not-allowed text-muted-foreground'
+                  }`}
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={() => scroll('right')}
+                  disabled={!canScrollRight}
+                  className={`w-10 h-10 rounded-full glass-card flex items-center justify-center transition-all ${
+                    canScrollRight 
+                      ? 'hover:bg-primary/20 text-foreground cursor-pointer' 
+                      : 'opacity-40 cursor-not-allowed text-muted-foreground'
+                  }`}
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Trip Cards Slider */}
+            <div
+              ref={scrollRef}
+              onScroll={checkScrollButtons}
+              className="flex gap-5 overflow-x-auto scrollbar-hide pb-4 -mr-6 pr-6"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {upcomingTrips.map((trip, index) => (
+                <TripCard key={trip.id} trip={trip} index={index} />
+              ))}
+            </div>
+          </motion.div>
+        </div>
       </div>
 
       {/* Scroll Indicator */}
@@ -160,7 +277,7 @@ export const HeroSection = () => {
         transition={{ delay: 1.5 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="text-xs text-muted-foreground font-inter">Scroll to explore</span>
+        <span className="text-xs text-muted-foreground font-sans">Scroll to explore</span>
         <motion.div 
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
