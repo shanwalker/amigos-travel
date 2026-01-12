@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/HeroSection';
 import { HeroSectionV2 } from '@/components/HeroSectionV2';
+import { TripSearchBar } from '@/components/TripSearchBar';
 import { AmigoWaySection } from '@/components/AmigoWaySection';
 import { MemoryReelSection } from '@/components/MemoryReelSection';
 import { TestimonialsSection } from '@/components/TestimonialsSection';
@@ -17,7 +18,14 @@ const Index = () => {
         currentVersion={currentVersion} 
         onVersionChange={setCurrentVersion} 
       />
-      {currentVersion === 'v1' ? <HeroSection /> : <HeroSectionV2 />}
+      {currentVersion === 'v1' ? (
+        <>
+          <HeroSection />
+          <TripSearchBar />
+        </>
+      ) : (
+        <HeroSectionV2 />
+      )}
       <AmigoWaySection />
       <MemoryReelSection />
       <TestimonialsSection />
