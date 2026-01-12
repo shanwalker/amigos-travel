@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { MapPin, Calendar, Users } from 'lucide-react';
-import heroBg from '@/assets/hero-bg.jpg';
+import heroVideo from '@/assets/hero-video.mp4';
 import { MagneticButton, TypingText } from './ui/animations';
 
 export const HeroSection = () => {
@@ -8,11 +8,18 @@ export const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden film-grain vignette">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroBg})` }}
-      />
+      {/* Background Video */}
+      <div className="absolute inset-0">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="w-full h-full object-cover"
+        >
+          <source src={heroVideo} type="video/mp4" />
+        </video>
+      </div>
       
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/90 via-navy-deep/70 to-navy-deep/50" />
@@ -20,7 +27,7 @@ export const HeroSection = () => {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 py-32 flex flex-col lg:flex-row items-center justify-between gap-12">
         {/* Left Content */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
