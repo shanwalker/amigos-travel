@@ -237,24 +237,25 @@ export const HeroSection = () => {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex-1 w-full lg:w-auto"
+            className="flex-1 w-full lg:w-auto lg:max-w-[55%] overflow-hidden"
           >
-            {/* Section Header */}
-            <div className="flex items-center justify-between mb-6">
-              <div>
+            {/* Section Header with Navigation */}
+            <div className="flex items-start justify-between mb-6 gap-4 pr-6">
+              <div className="flex-1 min-w-0">
                 <h2 className="font-serif text-2xl font-bold text-foreground">Upcoming Trips</h2>
                 <p className="text-sm text-muted-foreground font-sans">Curated departures filling fast</p>
               </div>
               
               {/* Navigation Arrows */}
-              <div className="flex gap-2">
+              <div className="flex gap-3 flex-shrink-0">
                 <button
                   onClick={() => scroll('left')}
                   disabled={!canScrollLeft}
-                  className={`w-10 h-10 rounded-full glass-card flex items-center justify-center transition-all ${
+                  aria-label="Previous trips"
+                  className={`w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
                     canScrollLeft 
-                      ? 'hover:bg-primary/20 text-foreground cursor-pointer' 
-                      : 'opacity-40 cursor-not-allowed text-muted-foreground'
+                      ? 'border-primary bg-primary/20 hover:bg-primary/40 text-primary cursor-pointer hover:scale-105' 
+                      : 'border-foreground/30 bg-foreground/5 opacity-50 cursor-not-allowed text-muted-foreground'
                   }`}
                 >
                   <ChevronLeft className="w-5 h-5" />
@@ -262,10 +263,11 @@ export const HeroSection = () => {
                 <button
                   onClick={() => scroll('right')}
                   disabled={!canScrollRight}
-                  className={`w-10 h-10 rounded-full glass-card flex items-center justify-center transition-all ${
+                  aria-label="Next trips"
+                  className={`w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
                     canScrollRight 
-                      ? 'hover:bg-primary/20 text-foreground cursor-pointer' 
-                      : 'opacity-40 cursor-not-allowed text-muted-foreground'
+                      ? 'border-primary bg-primary/20 hover:bg-primary/40 text-primary cursor-pointer hover:scale-105' 
+                      : 'border-foreground/30 bg-foreground/5 opacity-50 cursor-not-allowed text-muted-foreground'
                   }`}
                 >
                   <ChevronRight className="w-5 h-5" />
@@ -277,7 +279,7 @@ export const HeroSection = () => {
             <div
               ref={scrollRef}
               onScroll={checkScrollButtons}
-              className="flex gap-5 overflow-x-auto scrollbar-hide pb-4 -mr-6 pr-6"
+              className="flex gap-5 overflow-x-auto scrollbar-hide pb-4 pr-6"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               {upcomingTrips.map((trip, index) => (
