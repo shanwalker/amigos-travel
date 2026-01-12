@@ -55,6 +55,15 @@ const upcomingTrips: Trip[] = [
     departures: 'Mar 20, Apr 5',
     spots: 3,
   },
+  {
+    id: 5,
+    destination: 'Sri Lanka Explorer',
+    duration: '11 days',
+    price: '₹64,999',
+    image: tripThailand,
+    departures: 'Feb 12, Mar 8',
+    spots: 5,
+  },
 ];
 
 const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {

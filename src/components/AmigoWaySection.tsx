@@ -85,7 +85,7 @@ export const AmigoWaySection = () => {
             ))}
           </div>
           <p className="text-sm text-muted-foreground font-inter mt-3">
-            The <span className="text-primary font-semibold">Reddy Family</span> is hosting in Vietnam
+            <span className="text-primary font-semibold">Travel Amigo</span> is hosting in Vietnam
           </p>
         </div>
       ),
