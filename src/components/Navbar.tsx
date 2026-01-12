@@ -4,7 +4,12 @@ import { Menu, X } from 'lucide-react';
 import logo from '@/assets/logo.png';
 import { MagneticButton } from './ui/animations';
 
-export const Navbar = () => {
+interface NavbarProps {
+  currentVersion: 'v1' | 'v2';
+  onVersionChange: (version: 'v1' | 'v2') => void;
+}
+
+export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -42,13 +47,37 @@ export const Navbar = () => {
           />
         </a>
 
+        {/* Version Switcher - Simple Buttons */}
+        <div className="hidden md:flex items-center gap-1 bg-navy-medium/50 rounded-lg p-1">
+          <button
+            onClick={() => onVersionChange('v1')}
+            className={`px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${
+              currentVersion === 'v1'
+                ? 'bg-primary text-primary-foreground'
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            V1
+          </button>
+          <button
+            onClick={() => onVersionChange('v2')}
+            className={`px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${
+              currentVersion === 'v2'
+                ? 'bg-primary text-primary-foreground'
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            V2
+          </button>
+        </div>
+
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="text-foreground/80 hover:text-foreground font-inter text-sm font-medium transition-colors relative group"
+              className="text-foreground/80 hover:text-foreground font-sans text-sm font-medium transition-colors relative group"
             >
               {link.label}
               <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
@@ -81,11 +110,36 @@ export const Navbar = () => {
           className="md:hidden glass-card mt-2 mx-4 p-6 rounded-2xl"
         >
           <div className="flex flex-col gap-4">
+            {/* Mobile Version Switcher */}
+            <div className="flex items-center gap-2 pb-4 border-b border-foreground/10">
+              <span className="text-sm text-muted-foreground font-sans">Version:</span>
+              <button
+                onClick={() => onVersionChange('v1')}
+                className={`px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${
+                  currentVersion === 'v1'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:text-foreground bg-navy-medium/50'
+                }`}
+              >
+                V1
+              </button>
+              <button
+                onClick={() => onVersionChange('v2')}
+                className={`px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${
+                  currentVersion === 'v2'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'text-muted-foreground hover:text-foreground bg-navy-medium/50'
+                }`}
+              >
+                V2
+              </button>
+            </div>
+            
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="text-foreground font-inter text-lg font-medium py-2"
+                className="text-foreground font-sans text-lg font-medium py-2"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.label}

@@ -7,15 +7,13 @@ import { MemoryReelSection } from '@/components/MemoryReelSection';
 import { TestimonialsSection } from '@/components/TestimonialsSection';
 import { Footer } from '@/components/Footer';
 import { ChatFab } from '@/components/ChatFab';
-import { VersionSwitcher } from '@/components/VersionSwitcher';
 
 const Index = () => {
   const [currentVersion, setCurrentVersion] = useState<'v1' | 'v2'>('v1');
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
-      <VersionSwitcher 
+      <Navbar 
         currentVersion={currentVersion} 
         onVersionChange={setCurrentVersion} 
       />
