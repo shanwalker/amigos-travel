@@ -65,7 +65,7 @@ export const HeroSectionV2 = () => {
           </div>
 
           {/* Stats */}
-          <div className="flex gap-8 mt-12">
+          <div className="flex gap-10 mt-12">
             {[
               { value: '10K+', label: 'Amigos' },
               { value: '50+', label: 'Countries' },
@@ -78,8 +78,8 @@ export const HeroSectionV2 = () => {
                 transition={{ duration: 0.6, delay: 0.6 + i * 0.1 }}
                 className="text-center"
               >
-                <div className="text-3xl font-serif font-bold text-foreground">{stat.value}</div>
-                <div className="text-sm text-muted-foreground font-sans">{stat.label}</div>
+                <div className="text-3xl md:text-4xl font-display font-bold text-foreground tracking-tight">{stat.value}</div>
+                <div className="text-xs text-muted-foreground font-sans uppercase tracking-wider mt-1">{stat.label}</div>
               </motion.div>
             ))}
           </div>
