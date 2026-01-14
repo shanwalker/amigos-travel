@@ -3,9 +3,15 @@ import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/HeroSection';
 import { HeroSectionV2 } from '@/components/HeroSectionV2';
 import { TripSearchBar } from '@/components/TripSearchBar';
+import { MeetYourTribeSection } from '@/components/MeetYourTribeSection';
 import { AmigoWaySection } from '@/components/AmigoWaySection';
+import { ItineraryPreviewSection } from '@/components/ItineraryPreviewSection';
 import { MemoryReelSection } from '@/components/MemoryReelSection';
+import { TrustShieldSection } from '@/components/TrustShieldSection';
 import { TestimonialsSection } from '@/components/TestimonialsSection';
+import { CountdownBannerSection } from '@/components/CountdownBannerSection';
+import { TravelQuizSection } from '@/components/TravelQuizSection';
+import { TravelStoriesSection } from '@/components/TravelStoriesSection';
 import { Footer } from '@/components/Footer';
 import { ChatFab } from '@/components/ChatFab';
 
@@ -22,13 +28,19 @@ const Index = () => {
         <>
           <HeroSection />
           <TripSearchBar />
+          <MeetYourTribeSection />
+          <AmigoWaySection />
+          <ItineraryPreviewSection />
+          <MemoryReelSection />
+          <TrustShieldSection />
+          <TestimonialsSection />
+          <CountdownBannerSection />
+          <TravelQuizSection />
+          <TravelStoriesSection />
         </>
       ) : (
         <HeroSectionV2 />
       )}
-      <AmigoWaySection />
-      <MemoryReelSection />
-      <TestimonialsSection />
       <Footer />
       <ChatFab />
     </div>
