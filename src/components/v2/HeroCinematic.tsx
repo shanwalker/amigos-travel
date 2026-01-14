@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { MapPin, Calendar, Users, Sparkles } from 'lucide-react';
 import { MagneticButton, TypingText } from '../ui/animations';
+import { TextReveal } from './TextReveal';
 import heroVideo from '@/assets/hero-video.mp4';
 import heroBg from '@/assets/hero-bg.jpg';
 import logo from '@/assets/logo.png';
@@ -11,6 +12,27 @@ export const HeroCinematic = () => {
   const [amigoCount, setAmigoCount] = useState(14);
   const destinations = ['Thailand', 'Bali', 'Vietnam', 'Japan', 'Greece'];
   const [currentDestination, setCurrentDestination] = useState(0);
+
+  // Mouse tracking for parallax orbs
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  
+  const springConfig = { damping: 50, stiffness: 100 };
+  const orbX1 = useSpring(useTransform(mouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [40, -40]), springConfig);
+  const orbY1 = useSpring(useTransform(mouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [40, -40]), springConfig);
+  const orbX2 = useSpring(useTransform(mouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [-30, 30]), springConfig);
+  const orbY2 = useSpring(useTransform(mouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [-30, 30]), springConfig);
+  const orbX3 = useSpring(useTransform(mouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [20, -20]), springConfig);
+  const orbY3 = useSpring(useTransform(mouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [20, -20]), springConfig);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [mouseX, mouseY]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -22,6 +44,41 @@ export const HeroCinematic = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden v2-hero-gradient film-grain vignette">
+      {/* Parallax Gradient Orbs */}
+      <motion.div 
+        className="absolute w-[600px] h-[600px] rounded-full pointer-events-none z-[1]"
+        style={{ 
+          x: orbX1, 
+          y: orbY1,
+          top: '10%',
+          left: '10%',
+          background: 'radial-gradient(circle, hsl(var(--primary) / 0.25) 0%, transparent 70%)',
+          filter: 'blur(80px)',
+        }}
+      />
+      <motion.div 
+        className="absolute w-[500px] h-[500px] rounded-full pointer-events-none z-[1]"
+        style={{ 
+          x: orbX2, 
+          y: orbY2,
+          bottom: '20%',
+          right: '5%',
+          background: 'radial-gradient(circle, hsl(270 70% 50% / 0.2) 0%, transparent 70%)',
+          filter: 'blur(60px)',
+        }}
+      />
+      <motion.div 
+        className="absolute w-[400px] h-[400px] rounded-full pointer-events-none z-[1]"
+        style={{ 
+          x: orbX3, 
+          y: orbY3,
+          top: '50%',
+          left: '50%',
+          background: 'radial-gradient(circle, hsl(200 70% 50% / 0.15) 0%, transparent 70%)',
+          filter: 'blur(50px)',
+        }}
+      />
+
       {/* Background Video with placeholder */}
       <div className="absolute inset-0 z-0">
         <img 
@@ -91,10 +148,9 @@ export const HeroCinematic = () => {
             </motion.div>
 
             <h1 className="font-jakarta text-5xl md:text-6xl lg:text-7xl font-extrabold text-foreground leading-[1.1] mb-6">
-              Travel with{' '}
-              <span className="text-gradient">Friends</span>
+              <TextReveal delay={0.3}>Travel with Friends</TextReveal>
               <br />
-              You Haven't Met
+              <TextReveal delay={0.5}>You Haven't Met</TextReveal>
               <span className="text-primary">.</span>
             </h1>
 

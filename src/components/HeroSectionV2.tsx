@@ -4,3 +4,5 @@ export { AppSyncSection } from './v2/AppSyncSection';
 export { FlashPackBentoGrid } from './v2/FlashPackBentoGrid';
 export { InfiniteMemoryReel } from './v2/InfiniteMemoryReel';
 export { MarkerPenTestimonials } from './v2/MarkerPenTestimonials';
+export { CursorSpotlight } from './v2/CursorSpotlight';
+export { TextReveal, CharacterReveal } from './v2/TextReveal';
