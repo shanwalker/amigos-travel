@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/HeroSection';
-import { HeroSectionV2 } from '@/components/HeroSectionV2';
+import { HeroSectionV2, AppSyncSection, FlashPackBentoGrid, InfiniteMemoryReel, MarkerPenTestimonials } from '@/components/HeroSectionV2';
 import { TripSearchBar } from '@/components/TripSearchBar';
 import { MeetYourTribeSection } from '@/components/MeetYourTribeSection';
 import { AmigoWaySection } from '@/components/AmigoWaySection';
@@ -39,7 +39,13 @@ const Index = () => {
           <TravelStoriesSection />
         </>
       ) : (
-        <HeroSectionV2 />
+        <>
+          <HeroSectionV2 />
+          <AppSyncSection />
+          <FlashPackBentoGrid />
+          <InfiniteMemoryReel />
+          <MarkerPenTestimonials />
+        </>
       )}
       <Footer />
       <ChatFab />
