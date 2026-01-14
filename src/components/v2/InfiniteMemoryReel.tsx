@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { MapPin, Play } from 'lucide-react';
+import { TextReveal } from './TextReveal';
 import reel1 from '@/assets/reel-1.jpg';
 import reel2 from '@/assets/reel-2.jpg';
 import reel3 from '@/assets/reel-3.jpg';
@@ -112,7 +113,7 @@ export const InfiniteMemoryReel = () => {
             Captured Moments
           </span>
           <h2 className="font-jakarta text-4xl md:text-5xl font-bold text-foreground mt-3 mb-4">
-            Memories in Motion
+            <TextReveal>Memories in Motion</TextReveal>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Real stories from real Amigos. Every frame is a lifetime memory waiting to happen.
