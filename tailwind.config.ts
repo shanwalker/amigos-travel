@@ -62,6 +62,9 @@ export default {
           orange: "hsl(var(--amigo-orange))",
           glow: "hsl(var(--amigo-orange-glow))",
         },
+        superlist: {
+          dark: "hsl(var(--superlist-dark))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
