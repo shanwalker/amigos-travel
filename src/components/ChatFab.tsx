@@ -1,11 +1,46 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send } from 'lucide-react';
+import { z } from 'zod';
+
+const MAX_MESSAGE_LENGTH = 500;
+
+const messageSchema = z.string().trim().min(1, "Message cannot be empty").max(MAX_MESSAGE_LENGTH, `Message must be less than ${MAX_MESSAGE_LENGTH} characters`);
 
 export const ChatFab = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
+  const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Enforce max length at input level
+    if (value.length <= MAX_MESSAGE_LENGTH) {
+      setMessage(value);
+      setError(null);
+    }
+  };
+
+  const handleSubmit = () => {
+    try {
+      const validatedMessage = messageSchema.parse(message);
+      // Process validated message (for future backend integration)
+      console.log('Valid message:', validatedMessage);
+      setMessage('');
+      setError(null);
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        setError(err.errors[0]?.message || 'Invalid message');
+      }
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit();
+    }
+  };
   return (
     <>
       {/* FAB Button */}
@@ -93,21 +128,33 @@ export const ChatFab = () => {
 
             {/* Input */}
             <div className="p-4 border-t border-foreground/10">
-              <div className="flex items-center gap-3">
-                <input
-                  type="text"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Ask anything..."
-                  className="flex-1 bg-navy-medium/50 border border-foreground/10 rounded-xl py-3 px-4 text-foreground font-inter placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
-                />
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-12 h-12 rounded-xl bg-primary text-primary-foreground flex items-center justify-center"
-                >
-                  <Send className="w-5 h-5" />
-                </motion.button>
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-3">
+                  <input
+                    type="text"
+                    value={message}
+                    onChange={handleMessageChange}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Ask anything..."
+                    maxLength={MAX_MESSAGE_LENGTH}
+                    className="flex-1 bg-navy-medium/50 border border-foreground/10 rounded-xl py-3 px-4 text-foreground font-inter placeholder:text-muted-foreground focus:outline-none focus:border-primary transition-colors"
+                  />
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={handleSubmit}
+                    disabled={!message.trim()}
+                    className="w-12 h-12 rounded-xl bg-primary text-primary-foreground flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Send className="w-5 h-5" />
+                  </motion.button>
+                </div>
+                {error && (
+                  <p className="text-xs text-red-400 font-inter">{error}</p>
+                )}
+                <p className="text-xs text-muted-foreground font-inter text-right">
+                  {message.length}/{MAX_MESSAGE_LENGTH}
+                </p>
               </div>
             </div>
           </motion.div>
