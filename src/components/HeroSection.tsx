@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, Calendar, Users } from 'lucide-react';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import heroVideo from '@/assets/hero-video.mp4';
 import tripThailand from '@/assets/trip-thailand.jpg';
+import heroBg from '@/assets/hero-bg.jpg';
 import tripVietnam from '@/assets/trip-vietnam.jpg';
 import tripBali from '@/assets/trip-bali.jpg';
 import tripJapan from '@/assets/trip-japan.jpg';
@@ -132,6 +133,7 @@ export const HeroSection = () => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   const autoScrollRef = useRef<NodeJS.Timeout | null>(null);
 
   const checkScrollButtons = useCallback(() => {
@@ -214,8 +216,18 @@ export const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden film-grain vignette">
-      {/* Background Video */}
+      {/* Background - Placeholder Image + Video */}
       <div className="absolute inset-0">
+        {/* Placeholder Image - shows instantly */}
+        <img
+          src={heroBg}
+          alt=""
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+            videoLoaded ? 'opacity-0' : 'opacity-100'
+          }`}
+        />
+        
+        {/* Video - fades in when loaded */}
         <video
           ref={videoRef}
           autoPlay
@@ -223,7 +235,10 @@ export const HeroSection = () => {
           loop
           playsInline
           preload="auto"
-          className="w-full h-full object-cover"
+          onLoadedData={() => setVideoLoaded(true)}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+            videoLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
           // @ts-ignore - webkit-playsinline for iOS Safari
           webkit-playsinline="true"
         >
