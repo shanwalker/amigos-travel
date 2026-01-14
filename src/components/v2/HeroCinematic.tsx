@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { MapPin, Calendar, Users, Sparkles } from 'lucide-react';
-import { MagneticButton, TypingText } from '../ui/animations';
+import { MagneticButton, TypingText, TextScramble, CountUp } from '../ui/animations';
 import { TextReveal } from './TextReveal';
 import heroVideo from '@/assets/hero-video.mp4';
 import heroBg from '@/assets/hero-bg.jpg';
@@ -141,9 +141,14 @@ export const HeroCinematic = () => {
               transition={{ delay: 0.2 }}
               className="flex items-center gap-2 mb-6"
             >
-              <Sparkles className="w-5 h-5 text-primary" />
+              <motion.div 
+                animate={{ rotate: [0, 360] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+              >
+                <Sparkles className="w-5 h-5 text-primary" />
+              </motion.div>
               <span className="font-jakarta text-sm font-semibold text-primary uppercase tracking-wider">
-                Premium Group Travel
+                <TextScramble text="Premium Group Travel" revealDelay={400} />
               </span>
             </motion.div>
 
@@ -151,7 +156,14 @@ export const HeroCinematic = () => {
               <TextReveal delay={0.3}>Travel with Friends</TextReveal>
               <br />
               <TextReveal delay={0.5}>You Haven't Met</TextReveal>
-              <span className="text-primary">.</span>
+              <motion.span 
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.2, type: "spring", stiffness: 400 }}
+                className="text-primary inline-block"
+              >
+                .
+              </motion.span>
             </h1>
 
             <p className="text-lg md:text-xl text-muted-foreground font-sans max-w-xl mb-8 leading-relaxed">
@@ -260,10 +272,10 @@ export const HeroCinematic = () => {
       >
         <div className="glass-card px-8 py-4 flex gap-10">
           {[
-            { value: '10K+', label: 'Amigos' },
-            { value: '50+', label: 'Countries' },
-            { value: '4.9', label: 'Rating' },
-            { value: '200+', label: 'Trips' },
+            { value: 10000, label: 'Amigos', suffix: '+' },
+            { value: 50, label: 'Countries', suffix: '+' },
+            { value: 49, label: 'Rating', prefix: '4.' },
+            { value: 200, label: 'Trips', suffix: '+' },
           ].map((stat, i) => (
             <motion.div 
               key={stat.label}
@@ -272,7 +284,11 @@ export const HeroCinematic = () => {
               transition={{ delay: 1.2 + i * 0.1 }}
               className="text-center"
             >
-              <div className="font-display text-2xl font-bold text-foreground">{stat.value}</div>
+              <div className="font-display text-2xl font-bold text-foreground">
+                {stat.prefix && stat.prefix}
+                <CountUp end={stat.value} duration={2500} />
+                {stat.suffix && stat.suffix}
+              </div>
               <div className="text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</div>
             </motion.div>
           ))}
