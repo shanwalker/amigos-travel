@@ -43,6 +43,9 @@
     --navy-light: 210 50% 30%;
     --amigo-orange: 42 100% 50%;
     --amigo-orange-glow: 42 100% 60%;
+    
+    /* Superlist-inspired dark background */
+    --superlist-dark: 0 0% 7%;
     --glass-white: 0 0% 100%;
     --glass-border: 0 0% 100%;
     

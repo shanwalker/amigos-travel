@@ -1,51 +1,14 @@
 import { motion } from 'framer-motion';
 import { MapPin, Calendar, Users } from 'lucide-react';
-import { useRef, useEffect } from 'react';
-import heroVideo from '@/assets/hero-video.mp4';
 import { MagneticButton, TypingText } from './ui/animations';
 
 export const HeroSectionV2 = () => {
   const destinations = ['Vietnam', 'Thailand', 'Bali', 'Japan', 'Greece'];
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  // Force video play on mount (handles browser autoplay restrictions)
-  useEffect(() => {
-    const video = videoRef.current;
-    if (video) {
-      video.play().catch(() => {
-        // Autoplay was prevented, add click handler to start video
-        const startVideo = () => {
-          video.play();
-          document.removeEventListener('click', startVideo);
-          document.removeEventListener('touchstart', startVideo);
-        };
-        document.addEventListener('click', startVideo);
-        document.addEventListener('touchstart', startVideo);
-      });
-    }
-  }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden film-grain vignette">
-      {/* Background Video */}
-      <div className="absolute inset-0">
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          className="w-full h-full object-cover"
-          // @ts-ignore - webkit-playsinline for iOS Safari
-          webkit-playsinline="true"
-        >
-          <source src={heroVideo} type="video/mp4" />
-        </video>
-      </div>
-      
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/90 via-navy-deep/70 to-navy-deep/50" />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-superlist-dark film-grain">
+      {/* Subtle gradient overlay for depth */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20" />
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 py-32 flex flex-col lg:flex-row items-center justify-between gap-12">
