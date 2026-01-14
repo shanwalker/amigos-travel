@@ -155,7 +155,7 @@ const StoryCard = ({ story, index }: { story: Story; index: number }) => {
 
 export const TravelStoriesSection = () => {
   return (
-    <section className="py-20 md:py-32 bg-background relative overflow-hidden">
+    <section className="py-16 md:py-20 bg-background relative overflow-hidden">
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-navy/30 via-transparent to-navy/30" />
 
@@ -191,7 +191,7 @@ export const TravelStoriesSection = () => {
 
         {/* Newsletter CTA */}
         <motion.div
-          className="mt-16 glass-card p-8 md:p-12 rounded-2xl text-center"
+          className="mt-12 glass-card p-8 md:p-10 rounded-2xl text-center"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

@@ -130,7 +130,7 @@ export const TravelQuizSection = () => {
   const progress = ((currentStep + 1) / quizSteps.length) * 100;
 
   return (
-    <section className="py-20 md:py-32 bg-gradient-to-b from-navy to-background relative overflow-hidden">
+    <section className="py-16 md:py-20 bg-gradient-to-b from-navy to-background relative overflow-hidden">
       {showConfetti && <Confetti />}
       
       {/* Background Decoration */}

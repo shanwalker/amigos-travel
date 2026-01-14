@@ -97,7 +97,7 @@ export const CountdownBannerSection = () => {
   }, []);
 
   return (
-    <section className="py-12 bg-gradient-to-r from-navy via-navy/95 to-navy relative overflow-hidden">
+    <section className="py-10 md:py-12 bg-gradient-to-r from-navy via-navy/95 to-navy relative overflow-hidden">
       {/* Animated Background */}
       <motion.div
         className="absolute inset-0 opacity-30"

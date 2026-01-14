@@ -69,7 +69,7 @@ const HighlightText = ({ text, highlightWord }: { text: string; highlightWord: s
 
 export const TestimonialsSection = () => {
   return (
-    <section className="relative py-32 bg-foreground overflow-hidden">
+    <section className="relative py-16 md:py-20 bg-foreground overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 left-0 w-full h-full" 
@@ -87,7 +87,7 @@ export const TestimonialsSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center max-w-3xl mx-auto mb-20"
+          className="text-center max-w-3xl mx-auto mb-12"
         >
           <span className="inline-block px-4 py-2 rounded-full bg-navy-deep/10 text-sm font-inter font-medium text-navy-deep mb-6">
             💬 What Amigos Say
@@ -143,7 +143,7 @@ export const TestimonialsSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 p-8 rounded-2xl bg-navy-deep"
+          className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-8 p-8 rounded-2xl bg-navy-deep"
         >
           {[
             { value: '4.9/5', label: 'Average Rating' },

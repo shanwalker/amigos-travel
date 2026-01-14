@@ -55,14 +55,14 @@ export const MemoryReelSection = () => {
   );
 
   return (
-    <section id="community" className="relative py-24 bg-navy-deep overflow-hidden">
+    <section id="community" className="relative py-16 md:py-20 bg-navy-deep overflow-hidden">
       {/* Section Header */}
       <motion.div 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="container mx-auto px-6 text-center mb-16"
+        className="container mx-auto px-6 text-center mb-12"
       >
         <span className="inline-block px-4 py-2 rounded-full glass-card text-sm font-inter font-medium text-primary mb-6">
           📸 Real Moments, Real People

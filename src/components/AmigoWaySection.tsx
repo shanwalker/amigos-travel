@@ -130,7 +130,7 @@ export const AmigoWaySection = () => {
     <section 
       ref={sectionRef}
       id="amigo-way"
-      className="relative py-32 bg-navy-gradient overflow-hidden"
+      className="relative py-16 md:py-20 bg-navy-gradient overflow-hidden"
     >
       {/* Background Elements */}
       <div className="absolute inset-0 opacity-30">
@@ -145,7 +145,7 @@ export const AmigoWaySection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center max-w-3xl mx-auto mb-20"
+          className="text-center max-w-3xl mx-auto mb-12"
         >
           <span className="inline-block px-4 py-2 rounded-full glass-card text-sm font-inter font-medium text-primary mb-6">
             🌍 Three Ways to Travel

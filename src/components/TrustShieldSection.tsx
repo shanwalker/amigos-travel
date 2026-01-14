@@ -85,7 +85,7 @@ const AnimatedCounter = ({ target, suffix = '' }: { target: number; suffix?: str
 
 export const TrustShieldSection = () => {
   return (
-    <section className="py-20 md:py-32 bg-navy relative overflow-hidden">
+    <section className="py-16 md:py-20 bg-navy relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" style={{
@@ -109,7 +109,7 @@ export const TrustShieldSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -135,7 +135,7 @@ export const TrustShieldSection = () => {
 
         {/* Counter Stat */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -147,7 +147,7 @@ export const TrustShieldSection = () => {
         </motion.div>
 
         {/* Trust Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {trustPillars.map((pillar, index) => (
             <motion.div
               key={pillar.title}

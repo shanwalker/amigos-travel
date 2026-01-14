@@ -118,7 +118,7 @@ const TribeGroup = ({ destination, count }: { destination: string; count: number
 
 export const MeetYourTribeSection = () => {
   return (
-    <section className="py-20 md:py-32 bg-background relative overflow-hidden">
+    <section className="py-16 md:py-20 bg-background relative overflow-hidden">
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-navy/50 via-transparent to-navy/50" />
       
@@ -131,7 +131,7 @@ export const MeetYourTribeSection = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
