@@ -75,19 +75,19 @@ export const MemoryReelSection = () => {
         </p>
       </motion.div>
 
-      {/* Infinite Scroll Row 1 - Left */}
+      {/* Infinite Scroll Row 1 - Left (tripled for seamless loop) */}
       <div className="relative mb-6 overflow-hidden">
         <div className="infinite-scroll">
-          {[...reelImages, ...reelImages].map((image, index) => (
+          {[...reelImages, ...reelImages, ...reelImages].map((image, index) => (
             <ReelItem key={`row1-${index}`} image={image} index={index} />
           ))}
         </div>
       </div>
 
-      {/* Infinite Scroll Row 2 - Right */}
+      {/* Infinite Scroll Row 2 - Right (tripled for seamless loop) */}
       <div className="relative overflow-hidden">
         <div className="infinite-scroll-reverse">
-          {[...reelImages.reverse(), ...reelImages].map((image, index) => (
+          {[...reelImages].reverse().concat([...reelImages].reverse(), [...reelImages].reverse()).map((image, index) => (
             <ReelItem key={`row2-${index}`} image={image} index={index} />
           ))}
         </div>

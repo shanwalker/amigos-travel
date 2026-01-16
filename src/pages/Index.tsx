@@ -6,7 +6,7 @@ import { CursorSpotlight } from '@/components/v2/CursorSpotlight';
 import { TripSearchBar } from '@/components/TripSearchBar';
 import { MeetYourTribeSection } from '@/components/MeetYourTribeSection';
 import { AmigoWaySection } from '@/components/AmigoWaySection';
-import { ItineraryPreviewSection } from '@/components/ItineraryPreviewSection';
+
 import { MemoryReelSection } from '@/components/MemoryReelSection';
 import { TrustShieldSection } from '@/components/TrustShieldSection';
 import { TestimonialsSection } from '@/components/TestimonialsSection';
@@ -31,7 +31,6 @@ const Index = () => {
           <TripSearchBar />
           <MeetYourTribeSection />
           <AmigoWaySection />
-          <ItineraryPreviewSection />
           <MemoryReelSection />
           <TrustShieldSection />
           <TestimonialsSection />
