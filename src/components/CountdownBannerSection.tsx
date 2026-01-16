@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { MapPin, Users, Clock } from 'lucide-react';
+import { useUpcomingTrip } from '@/hooks/useTrips';
 import tripThailand from '@/assets/trip-thailand.jpg';
 
 interface TimeLeft {
@@ -70,11 +71,13 @@ const FlipCard = ({ value, label }: { value: number; label: string }) => {
 
 export const CountdownBannerSection = () => {
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const { data: trip, isLoading } = useUpcomingTrip();
 
   useEffect(() => {
-    // Set target date to 12 days from now
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 12);
+    // Use trip start_date if available, otherwise 12 days from now
+    const targetDate = trip?.start_date 
+      ? new Date(trip.start_date)
+      : new Date(Date.now() + 12 * 24 * 60 * 60 * 1000);
     targetDate.setHours(10, 0, 0, 0);
 
     const calculateTimeLeft = () => {
@@ -94,7 +97,14 @@ export const CountdownBannerSection = () => {
     const timer = setInterval(calculateTimeLeft, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [trip?.start_date]);
+
+  // Fallback values when loading or no data
+  const tripTitle = trip?.title || 'Thailand Adventure';
+  const tripDestination = trip?.destination || 'Bangkok → Phuket';
+  const spotsLeft = trip?.spots_left ?? 3;
+  const price = trip?.price ? `₹${trip.price.toLocaleString()}` : '₹45,999';
+  const imageUrl = trip?.image_url || tripThailand;
 
   return (
     <section className="py-10 md:py-12 bg-gradient-to-r from-navy via-navy/95 to-navy relative overflow-hidden">
@@ -102,7 +112,7 @@ export const CountdownBannerSection = () => {
       <motion.div
         className="absolute inset-0 opacity-30"
         style={{
-          backgroundImage: `url(${tripThailand})`,
+          backgroundImage: `url(${typeof imageUrl === 'string' && imageUrl.startsWith('/') ? imageUrl : tripThailand})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
@@ -136,8 +146,8 @@ export const CountdownBannerSection = () => {
             <div className="relative hidden md:block">
               <div className="w-24 h-24 rounded-xl overflow-hidden">
                 <img 
-                  src={tripThailand} 
-                  alt="Thailand" 
+                  src={typeof imageUrl === 'string' && imageUrl.startsWith('/') ? imageUrl : tripThailand} 
+                  alt={tripTitle} 
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -155,15 +165,15 @@ export const CountdownBannerSection = () => {
                 <Clock className="w-4 h-4" /> Next Departure
               </span>
               <h3 className="font-serif text-2xl md:text-3xl text-foreground mt-1">
-                Thailand Adventure
+                {tripTitle}
               </h3>
               <div className="flex items-center gap-4 mt-2 text-muted-foreground text-sm">
                 <span className="flex items-center gap-1">
-                  <MapPin className="w-4 h-4" /> Bangkok → Phuket
+                  <MapPin className="w-4 h-4" /> {tripDestination}
                 </span>
                 <span className="flex items-center gap-1">
                   <Users className="w-4 h-4" /> 
-                  <span className="text-amigo-orange font-semibold">Only 3 spots left!</span>
+                  <span className="text-amigo-orange font-semibold">Only {spotsLeft} spots left!</span>
                 </span>
               </div>
             </div>
@@ -205,7 +215,7 @@ export const CountdownBannerSection = () => {
               </motion.span>
             </motion.button>
             <p className="text-muted-foreground text-xs mt-2 text-center">
-              Starting from <span className="text-amigo-orange font-semibold">₹45,999</span>
+              Starting from <span className="text-amigo-orange font-semibold">{price}</span>
             </p>
           </motion.div>
         </div>

@@ -1,44 +1,39 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Star } from 'lucide-react';
+import { useTestimonials, type Testimonial as DBTestimonial } from '@/hooks/useTestimonials';
 
-interface Testimonial {
-  id: number;
-  quote: string;
-  highlightWord: string;
-  name: string;
-  location: string;
-  avatar: string;
-  rating: number;
-}
-
-const testimonials: Testimonial[] = [
+// Fallback data when database is empty or loading
+const fallbackTestimonials = [
   {
-    id: 1,
+    id: '1',
     quote: "This was the most life-changing experience. I made friends who are now family.",
-    highlightWord: "life-changing",
-    name: "Sai Kiran Reddy",
-    location: "Hyderabad, India",
-    avatar: "SK",
+    highlight_word: "life-changing",
+    author_name: "Sai Kiran Reddy",
+    author_role: "Hyderabad, India",
+    author_image: null,
     rating: 5,
+    created_at: new Date().toISOString(),
   },
   {
-    id: 2,
+    id: '2',
     quote: "I felt completely safe traveling solo for the first time. The group was amazing!",
-    highlightWord: "safe",
-    name: "Anusha Sharma",
-    location: "Mumbai, India",
-    avatar: "AS",
+    highlight_word: "safe",
+    author_name: "Anusha Sharma",
+    author_role: "Mumbai, India",
+    author_image: null,
     rating: 5,
+    created_at: new Date().toISOString(),
   },
   {
-    id: 3,
+    id: '3',
     quote: "The best group travel experience ever. Every detail was perfectly planned.",
-    highlightWord: "best group",
-    name: "Aryan Mehta",
-    location: "Delhi, India",
-    avatar: "AM",
+    highlight_word: "best group",
+    author_name: "Aryan Mehta",
+    author_role: "Delhi, India",
+    author_image: null,
     rating: 5,
+    created_at: new Date().toISOString(),
   },
 ];
 
@@ -67,7 +62,19 @@ const HighlightText = ({ text, highlightWord }: { text: string; highlightWord: s
   );
 };
 
+// Helper to get initials from name
+const getInitials = (name: string) => {
+  return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+};
+
 export const TestimonialsSection = () => {
+  const { data: dbTestimonials, isLoading } = useTestimonials();
+  
+  // Use database testimonials if available, otherwise fallback
+  const testimonials = (dbTestimonials && dbTestimonials.length > 0) 
+    ? dbTestimonials 
+    : fallbackTestimonials;
+
   return (
     <section className="relative py-16 md:py-20 bg-foreground overflow-hidden">
       {/* Background Pattern */}
@@ -120,17 +127,20 @@ export const TestimonialsSection = () => {
 
               {/* Quote */}
               <blockquote className="text-xl md:text-2xl font-jakarta font-bold text-navy-deep leading-relaxed mb-8">
-                "<HighlightText text={testimonial.quote} highlightWord={testimonial.highlightWord} />"
+                "<HighlightText 
+                  text={testimonial.quote} 
+                  highlightWord={testimonial.highlight_word || ''} 
+                />"
               </blockquote>
 
               {/* Author */}
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-amigo-glow flex items-center justify-center text-primary-foreground font-bold text-lg">
-                  {testimonial.avatar}
+                  {getInitials(testimonial.author_name)}
                 </div>
                 <div>
-                  <div className="font-jakarta font-bold text-navy-deep">{testimonial.name}</div>
-                  <div className="text-sm text-navy-deep/60 font-inter">{testimonial.location}</div>
+                  <div className="font-jakarta font-bold text-navy-deep">{testimonial.author_name}</div>
+                  <div className="text-sm text-navy-deep/60 font-inter">{testimonial.author_role}</div>
                 </div>
               </div>
             </motion.div>
@@ -150,7 +160,7 @@ export const TestimonialsSection = () => {
             { value: '10K+', label: 'Happy Travelers' },
             { value: '98%', label: 'Would Recommend' },
             { value: '50+', label: 'Countries Explored' },
-          ].map((stat, index) => (
+          ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="text-3xl md:text-4xl font-jakarta font-extrabold text-primary">{stat.value}</div>
               <div className="text-sm text-foreground/70 font-inter mt-1">{stat.label}</div>

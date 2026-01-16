@@ -9,6 +9,7 @@ export type Json =
 export interface Trip {
   id: string
   title: string
+  slug: string
   destination: string
   country: string
   description: string | null
