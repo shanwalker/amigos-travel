@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import ForgotPassword from "./pages/auth/ForgotPassword";
+import AdminLogin from "./pages/auth/AdminLogin";
 
 // User Dashboard
 import { DashboardLayout } from "./components/dashboard/DashboardLayout";
@@ -53,6 +54,7 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
 
             {/* User Dashboard Routes */}
             <Route path="/dashboard" element={
