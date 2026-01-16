@@ -17,59 +17,29 @@ export interface UserProfile {
 export const useUsers = () => {
   return useQuery({
     queryKey: ['users'],
-    queryFn: async () => {
-      const { data: profiles, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .order('created_at', { ascending: false });
-
+    queryFn: async (): Promise<UserProfile[]> => {
+      const { data: profiles, error } = await supabase.from('profiles').select('*').order('created_at', { ascending: false });
       if (error) throw error;
       if (!profiles) return [];
-
-      // Fetch roles for all users
-      const { data: roles, error: rolesError } = await supabase
-        .from('user_roles')
-        .select('user_id, role');
-
-      if (rolesError) {
-        console.error('Error fetching roles:', rolesError);
-        return profiles.map(p => ({ ...p, roles: [] })) as UserProfile[];
-      }
-
+      const { data: roles } = await (supabase as any).from('user_roles').select('user_id, role');
       const rolesData = roles || [];
-
-      // Map roles to profiles
-      return profiles.map(profile => ({
-        ...profile,
-        roles: rolesData
-          .filter((r: any) => r.user_id === profile.id)
-          .map((r: any) => r.role),
-      })) as UserProfile[];
+      return profiles.map((p: any) => ({ ...p, roles: rolesData.filter((r: any) => r.user_id === p.id).map((r: any) => r.role) }));
     },
   });
 };
 
 export const useUpdateUserRole = () => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: async ({ userId, role, action }: { userId: string; role: string; action: 'add' | 'remove' }) => {
       if (action === 'add') {
-        const { error } = await supabase
-          .from('user_roles')
-          .insert({ user_id: userId, role } as any);
+        const { error } = await (supabase as any).from('user_roles').insert({ user_id: userId, role });
         if (error) throw error;
       } else {
-        const { error } = await supabase
-          .from('user_roles')
-          .delete()
-          .eq('user_id', userId)
-          .eq('role', role);
+        const { error } = await (supabase as any).from('user_roles').delete().eq('user_id', userId).eq('role', role);
         if (error) throw error;
       }
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['users'] });
-    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['users'] }),
   });
 };

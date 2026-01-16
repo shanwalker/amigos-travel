@@ -32,29 +32,29 @@ const AdminOverview = () => {
     { 
       title: 'Total Trips', 
       value: trips?.length || 0, 
-      icon: Map, 
-      trend: '+12%',
+      icon: <Map className="h-5 w-5" />, 
+      trend: { value: 12, isPositive: true },
       description: 'Active trips available'
     },
     { 
       title: 'Total Users', 
       value: users?.length || 0, 
-      icon: Users, 
-      trend: '+8%',
+      icon: <Users className="h-5 w-5" />, 
+      trend: { value: 8, isPositive: true },
       description: 'Registered users'
     },
     { 
       title: 'Total Bookings', 
       value: bookings?.length || 0, 
-      icon: CalendarCheck, 
-      trend: '+23%',
+      icon: <CalendarCheck className="h-5 w-5" />, 
+      trend: { value: 23, isPositive: true },
       description: `${confirmedBookings} confirmed, ${pendingBookings} pending`
     },
     { 
       title: 'Revenue', 
       value: `₹${totalRevenue.toLocaleString()}`, 
-      icon: DollarSign, 
-      trend: '+18%',
+      icon: <DollarSign className="h-5 w-5" />, 
+      trend: { value: 18, isPositive: true },
       description: 'Total earnings'
     },
   ];

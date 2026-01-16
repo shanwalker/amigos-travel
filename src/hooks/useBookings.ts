@@ -13,37 +13,19 @@ export interface Booking {
   notes: string | null;
   created_at: string;
   updated_at: string;
-  trip?: {
-    id: string;
-    title: string;
-    destination: string;
-    country: string;
-    image_url: string | null;
-    price: number | null;
-    duration_days: number;
-    start_date: string | null;
-  };
+  trip?: any;
+  profile?: any;
 }
 
 export const useBookings = () => {
   const { user } = useAuth();
-
   return useQuery({
     queryKey: ['bookings', user?.id],
-    queryFn: async () => {
+    queryFn: async (): Promise<Booking[]> => {
       if (!user) return [];
-
-      const { data, error } = await supabase
-        .from('bookings')
-        .select(`
-          *,
-          trip:trips(id, title, destination, country, image_url, price, duration_days, start_date)
-        `)
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
-
+      const { data, error } = await (supabase as any).from('bookings').select('*, trip:trips(*)').eq('user_id', user.id).order('created_at', { ascending: false });
       if (error) throw error;
-      return data as Booking[];
+      return data;
     },
     enabled: !!user,
   });
@@ -52,16 +34,8 @@ export const useBookings = () => {
 export const useAllBookings = () => {
   return useQuery({
     queryKey: ['all-bookings'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('bookings')
-        .select(`
-          *,
-          trip:trips(id, title, destination, country, image_url, price, duration_days, start_date),
-          profile:profiles(id, full_name, email, avatar_url)
-        `)
-        .order('created_at', { ascending: false });
-
+    queryFn: async (): Promise<Booking[]> => {
+      const { data, error } = await (supabase as any).from('bookings').select('*, trip:trips(*), profile:profiles(*)').order('created_at', { ascending: false });
       if (error) throw error;
       return data;
     },
@@ -71,30 +45,10 @@ export const useAllBookings = () => {
 export const useCreateBooking = () => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
-
   return useMutation({
-    mutationFn: async (booking: {
-      trip_id: string;
-      num_travelers: number;
-      total_amount: number;
-      notes?: string;
-    }) => {
+    mutationFn: async (booking: { trip_id: string; num_travelers: number; total_amount: number; notes?: string }) => {
       if (!user) throw new Error('User not authenticated');
-
-      const { data, error } = await supabase
-        .from('bookings')
-        .insert({
-          trip_id: booking.trip_id,
-          num_travelers: booking.num_travelers,
-          total_amount: booking.total_amount,
-          notes: booking.notes || null,
-          user_id: user.id,
-          status: 'pending' as const,
-          payment_status: 'unpaid',
-        } as any)
-        .select()
-        .single();
-
+      const { data, error } = await (supabase as any).from('bookings').insert({ ...booking, user_id: user.id, status: 'pending', payment_status: 'unpaid' }).select().single();
       if (error) throw error;
       return data;
     },
@@ -107,16 +61,9 @@ export const useCreateBooking = () => {
 
 export const useUpdateBookingStatus = () => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: async ({ id, status }: { id: string; status: string }) => {
-      const { data, error } = await supabase
-        .from('bookings')
-        .update({ status, updated_at: new Date().toISOString() } as any)
-        .eq('id', id)
-        .select()
-        .single();
-
+      const { data, error } = await (supabase as any).from('bookings').update({ status, updated_at: new Date().toISOString() }).eq('id', id).select().single();
       if (error) throw error;
       return data;
     },

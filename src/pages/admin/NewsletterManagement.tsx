@@ -42,23 +42,16 @@ const NewsletterManagement = () => {
 
   const { data: subscribers, isLoading } = useQuery({
     queryKey: ['newsletter-subscribers'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('newsletter_subscribers')
-        .select('*')
-        .order('subscribed_at', { ascending: false });
-      
+    queryFn: async (): Promise<NewsletterSubscriber[]> => {
+      const { data, error } = await (supabase as any).from('newsletter_subscribers').select('*').order('subscribed_at', { ascending: false });
       if (error) throw error;
-      return data as NewsletterSubscriber[];
+      return data;
     },
   });
 
   const toggleActive = useMutation({
     mutationFn: async ({ id, is_active }: { id: string; is_active: boolean }) => {
-      const { error } = await supabase
-        .from('newsletter_subscribers')
-        .update({ is_active } as any)
-        .eq('id', id);
+      const { error } = await (supabase as any).from('newsletter_subscribers').update({ is_active }).eq('id', id);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -69,10 +62,7 @@ const NewsletterManagement = () => {
 
   const deleteSubscriber = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from('newsletter_subscribers')
-        .delete()
-        .eq('id', id);
+      const { error } = await (supabase as any).from('newsletter_subscribers').delete().eq('id', id);
       if (error) throw error;
     },
     onSuccess: () => {
