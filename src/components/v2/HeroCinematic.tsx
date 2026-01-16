@@ -16,7 +16,7 @@ export const HeroCinematic = () => {
   // Mouse tracking for parallax orbs
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  
+
   const springConfig = { damping: 50, stiffness: 100 };
   const orbX1 = useSpring(useTransform(mouseX, [0, typeof window !== 'undefined' ? window.innerWidth : 1920], [40, -40]), springConfig);
   const orbY1 = useSpring(useTransform(mouseY, [0, typeof window !== 'undefined' ? window.innerHeight : 1080], [40, -40]), springConfig);
@@ -45,10 +45,10 @@ export const HeroCinematic = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden v2-hero-gradient film-grain vignette">
       {/* Parallax Gradient Orbs */}
-      <motion.div 
+      <motion.div
         className="absolute w-[600px] h-[600px] rounded-full pointer-events-none z-[1]"
-        style={{ 
-          x: orbX1, 
+        style={{
+          x: orbX1,
           y: orbY1,
           top: '10%',
           left: '10%',
@@ -56,10 +56,10 @@ export const HeroCinematic = () => {
           filter: 'blur(80px)',
         }}
       />
-      <motion.div 
+      <motion.div
         className="absolute w-[500px] h-[500px] rounded-full pointer-events-none z-[1]"
-        style={{ 
-          x: orbX2, 
+        style={{
+          x: orbX2,
           y: orbY2,
           bottom: '20%',
           right: '5%',
@@ -67,10 +67,10 @@ export const HeroCinematic = () => {
           filter: 'blur(60px)',
         }}
       />
-      <motion.div 
+      <motion.div
         className="absolute w-[400px] h-[400px] rounded-full pointer-events-none z-[1]"
-        style={{ 
-          x: orbX3, 
+        style={{
+          x: orbX3,
           y: orbY3,
           top: '50%',
           left: '50%',
@@ -81,7 +81,7 @@ export const HeroCinematic = () => {
 
       {/* Background Video with placeholder */}
       <div className="absolute inset-0 z-0">
-        <img 
+        <img
           src={heroBg}
           alt="Travel background"
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${videoLoaded ? 'opacity-0' : 'opacity-40'}`}
@@ -99,8 +99,22 @@ export const HeroCinematic = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-navy-deep/60 via-navy-deep/40 to-navy-deep/90" />
       </div>
 
+      {/* Test Site Banner */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+        className="absolute top-4 left-1/2 -translate-x-1/2 z-30"
+      >
+        <div className="glass-card px-6 py-3 border-2 border-primary/50 backdrop-blur-xl">
+          <span className="font-sans text-sm md:text-base font-semibold text-primary flex items-center gap-2">
+            🧪 Test Site - Demo Version
+          </span>
+        </div>
+      </motion.div>
+
       {/* Live Status Ticker */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
@@ -113,7 +127,7 @@ export const HeroCinematic = () => {
           </span>
           <span className="font-sans text-sm text-foreground/90">
             Joining <span className="font-bold text-primary">{amigoCount} Amigos</span> in{' '}
-            <motion.span 
+            <motion.span
               key={currentDestination}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -129,7 +143,7 @@ export const HeroCinematic = () => {
       <div className="relative z-10 container mx-auto px-6 py-32">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left: Text Content */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
@@ -141,7 +155,7 @@ export const HeroCinematic = () => {
               transition={{ delay: 0.2 }}
               className="flex items-center gap-2 mb-6"
             >
-              <motion.div 
+              <motion.div
                 animate={{ rotate: [0, 360] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
               >
@@ -156,7 +170,7 @@ export const HeroCinematic = () => {
               <TextReveal delay={0.3}>Travel with Friends</TextReveal>
               <br />
               <TextReveal delay={0.5}>You Haven't Met</TextReveal>
-              <motion.span 
+              <motion.span
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.2, type: "spring", stiffness: 400 }}
@@ -167,13 +181,13 @@ export const HeroCinematic = () => {
             </h1>
 
             <p className="text-lg md:text-xl text-muted-foreground font-sans max-w-xl mb-8 leading-relaxed">
-              Join curated group adventures with like-minded travelers. Fixed departures, 
+              Join curated group adventures with like-minded travelers. Fixed departures,
               flexible plans, and lifetime memories—all with your new global family.
             </p>
 
             <div className="mb-8">
               <span className="text-muted-foreground font-sans">Next adventure: </span>
-              <TypingText 
+              <TypingText
                 texts={destinations}
                 className="text-primary font-semibold font-jakarta text-lg"
               />
@@ -201,7 +215,7 @@ export const HeroCinematic = () => {
               {/* Card glow effect */}
               <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl" />
               <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl" />
-              
+
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-6">
                   <img src={logo} alt="Travel Amigo" className="w-10 h-10 object-contain" />
@@ -245,7 +259,7 @@ export const HeroCinematic = () => {
                     <span className="text-primary font-semibold">12/20</span>
                   </div>
                   <div className="h-2 rounded-full bg-background/30 overflow-hidden">
-                    <motion.div 
+                    <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: '60%' }}
                       transition={{ duration: 1.5, delay: 0.8 }}
@@ -264,7 +278,7 @@ export const HeroCinematic = () => {
       </div>
 
       {/* Stats Bar */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1 }}
@@ -277,7 +291,7 @@ export const HeroCinematic = () => {
             { value: 49, label: 'Rating', prefix: '4.' },
             { value: 200, label: 'Trips', suffix: '+' },
           ].map((stat, i) => (
-            <motion.div 
+            <motion.div
               key={stat.label}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -296,13 +310,13 @@ export const HeroCinematic = () => {
       </motion.div>
 
       {/* Scroll Indicator */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
         className="absolute bottom-32 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20"
       >
-        <motion.div 
+        <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
           className="w-6 h-10 rounded-full border-2 border-foreground/30 flex justify-center pt-2"

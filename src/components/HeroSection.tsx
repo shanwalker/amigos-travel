@@ -252,6 +252,20 @@ export const HeroSection = memo(() => {
 
   return (
     <section className="relative min-h-screen overflow-hidden">
+      {/* Test Site Banner */}
+      <div className="absolute top-0 left-0 right-0 z-50 flex justify-center pt-4">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="px-6 py-3 rounded-full glass-card border-2 border-primary/50 backdrop-blur-xl"
+        >
+          <span className="text-sm md:text-base font-sans font-semibold text-primary flex items-center gap-2">
+            🧪 Test Site - Demo Version
+          </span>
+        </motion.div>
+      </div>
+
       {/* Background - Placeholder Image + Video */}
       <div className="absolute inset-0">
         {/* Placeholder Image - shows instantly */}
