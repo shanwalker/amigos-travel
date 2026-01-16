@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -13,29 +14,55 @@ const AdminLogin = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signIn, refreshRoles } = useAuth();
+  const { signIn, user, isAdmin } = useAuth();
   const navigate = useNavigate();
+
+  // Redirect if already logged in as admin
+  useEffect(() => {
+    if (user && isAdmin) {
+      navigate('/admin', { replace: true });
+    }
+  }, [user, isAdmin, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
-    const { error } = await signIn(email, password);
+    const { error: signInError } = await signIn(email, password);
 
-    if (error) {
-      setError(error.message);
+    if (signInError) {
+      setError(signInError.message);
       setLoading(false);
       return;
     }
 
-    // Refresh roles and check if user is admin
-    await refreshRoles();
+    // Get the current user and check admin role directly from database
+    const { data: { user: currentUser } } = await supabase.auth.getUser();
     
-    // Small delay to allow state update
-    setTimeout(() => {
-      navigate('/admin', { replace: true });
-    }, 500);
+    if (!currentUser) {
+      setError('Authentication failed');
+      setLoading(false);
+      return;
+    }
+
+    // Check if user has admin role
+    const { data: roleData } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', currentUser.id)
+      .eq('role', 'admin')
+      .single();
+
+    if (!roleData) {
+      setError('Access denied. Admin privileges required.');
+      await supabase.auth.signOut();
+      setLoading(false);
+      return;
+    }
+
+    // User is admin, navigate to admin panel
+    navigate('/admin', { replace: true });
   };
 
   return (
