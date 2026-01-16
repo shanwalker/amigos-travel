@@ -99,20 +99,6 @@ export const HeroCinematic = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-navy-deep/60 via-navy-deep/40 to-navy-deep/90" />
       </div>
 
-      {/* Test Site Banner */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="absolute top-4 left-1/2 -translate-x-1/2 z-30"
-      >
-        <div className="glass-card px-6 py-3 border-2 border-primary/50 backdrop-blur-xl">
-          <span className="font-sans text-sm md:text-base font-semibold text-primary flex items-center gap-2">
-            🧪 Test Site - Demo Version
-          </span>
-        </div>
-      </motion.div>
-
       {/* Live Status Ticker */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
