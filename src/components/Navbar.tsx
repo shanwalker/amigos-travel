@@ -42,16 +42,16 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
         <a href="#" className="flex items-center relative group">
           {currentVersion === 'v1' ? (
             <>
-              {/* V1: Glass background pill */}
-              <div className="absolute -inset-x-3 -inset-y-2 bg-white/10 backdrop-blur-sm rounded-xl border border-white/10" />
+              {/* V1: Solid white background for logo visibility */}
+              <div className="absolute -inset-x-4 -inset-y-2.5 bg-white rounded-xl shadow-lg" />
               {/* Hover glow effect */}
-              <div className="absolute -inset-3 bg-primary/20 rounded-xl blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500" />
+              <div className="absolute -inset-4 bg-primary/30 rounded-2xl blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
               <img 
                 src={logo} 
                 alt="Travel Amigo" 
                 loading="eager"
                 fetchPriority="high"
-                className="relative h-10 md:h-12 w-auto brightness-125 contrast-110 drop-shadow-[0_2px_8px_rgba(255,180,0,0.3)]"
+                className="relative h-10 md:h-12 w-auto"
               />
             </>
           ) : (
