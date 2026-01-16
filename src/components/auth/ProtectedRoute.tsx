@@ -2,16 +2,19 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Loader2 } from 'lucide-react';
 
-interface ProtectedRouteProps {
+export interface ProtectedRouteProps {
   children: React.ReactNode;
   requireAdmin?: boolean;
+  requiredRole?: 'admin' | 'moderator' | 'user';
 }
 
 export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ 
   children, 
-  requireAdmin = false 
+  requireAdmin = false,
+  requiredRole
 }) => {
   const { user, loading, isAdmin } = useAuth();
+  const needsAdmin = requireAdmin || requiredRole === 'admin';
   const location = useLocation();
 
   if (loading) {
@@ -26,7 +29,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (requireAdmin && !isAdmin) {
+  if (needsAdmin && !isAdmin) {
     return <Navigate to="/dashboard" replace />;
   }
 

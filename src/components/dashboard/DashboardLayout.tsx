@@ -1,11 +1,15 @@
-import { useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { DashboardSidebar } from './DashboardSidebar';
 import { DashboardHeader } from './DashboardHeader';
 import { SidebarProvider } from '@/components/ui/sidebar';
 
-export const DashboardLayout = () => {
+interface DashboardLayoutProps {
+  children: ReactNode;
+}
+
+export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
 
@@ -24,7 +28,7 @@ export const DashboardLayout = () => {
         <div className="flex-1 flex flex-col">
           <DashboardHeader />
           <main className="flex-1 p-6 overflow-auto">
-            <Outlet />
+            {children}
           </main>
         </div>
       </div>
