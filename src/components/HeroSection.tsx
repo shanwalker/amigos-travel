@@ -72,7 +72,7 @@ const TripCard = memo(({ trip, index }: TripCardProps) => {
       transition={{ duration: 0.5, delay: 0.1 * (index % 4) }}
       className="flex-shrink-0 w-[280px] h-[380px] rounded-2xl overflow-hidden relative group cursor-pointer"
     >
-      <img 
+      <img
         src={trip.image}
         alt={trip.destination}
         loading={index < 4 ? "eager" : "lazy"}
@@ -81,10 +81,10 @@ const TripCard = memo(({ trip, index }: TripCardProps) => {
         height={380}
         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 will-change-transform"
       />
-      
+
       {/* Overlay Gradient */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-      
+
       {/* Spots Badge */}
       <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full glass-card text-sm font-sans font-semibold text-primary">
         {trip.spotsLeft} spots left
@@ -93,7 +93,7 @@ const TripCard = memo(({ trip, index }: TripCardProps) => {
       {/* Content */}
       <div className="absolute bottom-0 left-0 right-0 p-6">
         <h3 className="font-serif text-xl font-bold text-white mb-2">{trip.destination}</h3>
-        
+
         <div className="flex items-center gap-4 text-white/80 text-sm font-sans mb-3">
           <div className="flex items-center gap-1">
             <Calendar className="w-4 h-4" />
@@ -110,7 +110,7 @@ const TripCard = memo(({ trip, index }: TripCardProps) => {
             <span className="text-xs text-white/60 font-sans">Starting from</span>
             <div className="text-xl font-display font-bold text-primary">{trip.price}</div>
           </div>
-          <button 
+          <button
             className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-sans font-medium text-sm 
                        opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 
                        transition-all duration-300 will-change-[opacity,transform]"
@@ -159,7 +159,7 @@ export const HeroSection = memo(() => {
     if (scrollRef.current) {
       const { scrollLeft } = scrollRef.current;
       const singleSetWidth = upcomingTrips.length * cardWidth;
-      
+
       // If scrolled past the second set, jump back to first set
       if (scrollLeft >= singleSetWidth * 2) {
         scrollRef.current.scrollLeft = scrollLeft - singleSetWidth;
@@ -244,11 +244,11 @@ export const HeroSection = memo(() => {
   }, []);
 
   // Memoized trip cards
-  const tripCards = useMemo(() => 
+  const tripCards = useMemo(() =>
     infiniteTrips.map((trip, index) => (
       <TripCard key={`${trip.id}-${index}`} trip={trip} index={index % upcomingTrips.length} />
     )),
-  []);
+    []);
 
   return (
     <section className="relative min-h-screen overflow-hidden">
@@ -274,11 +274,10 @@ export const HeroSection = memo(() => {
           alt=""
           loading="eager"
           fetchPriority="high"
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
-            videoLoaded ? 'opacity-0' : 'opacity-100'
-          }`}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${videoLoaded ? 'opacity-0' : 'opacity-100'
+            }`}
         />
-        
+
         {/* Video - fades in when loaded, uses metadata preload for faster start */}
         <video
           ref={videoRef}
@@ -288,16 +287,15 @@ export const HeroSection = memo(() => {
           playsInline
           preload="metadata"
           onLoadedData={() => setVideoLoaded(true)}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 will-change-opacity ${
-            videoLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 will-change-opacity ${videoLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
           // @ts-ignore - webkit-playsinline for iOS Safari
           webkit-playsinline="true"
         >
           <source src={heroVideo} type="video/mp4" />
         </video>
       </div>
-      
+
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-navy-deep/95 via-navy-deep/80 to-navy-deep/60" />
 
@@ -311,7 +309,7 @@ export const HeroSection = memo(() => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="flex-shrink-0 lg:max-w-lg"
           >
-            <motion.span 
+            <motion.span
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
@@ -319,33 +317,114 @@ export const HeroSection = memo(() => {
             >
               ✈️ Premium Group Travel
             </motion.span>
-            
-            <h1 className="font-serif text-5xl md:text-6xl xl:text-7xl font-bold text-foreground leading-[1.1] mb-6">
-              Travel with
-              <span className="text-gradient"> Friends</span>
-              <br />
-              You Haven't Met
-              <span className="text-primary">.</span>
-            </h1>
-            
-            <p className="text-lg text-muted-foreground font-sans max-w-md mb-8">
-              Join curated group adventures with like-minded travelers. Fixed departures, 
-              flexible plans, and lifetime memories.
-            </p>
 
-            <div className="flex flex-wrap gap-4 mb-8">
+            {/* Enhanced Headline with Word-by-Word Animation */}
+            <h1 className="font-serif text-5xl md:text-6xl xl:text-7xl font-bold text-foreground leading-[1.1] mb-6 relative">
+              {/* Floating particles behind text */}
+              <div className="absolute -inset-4 pointer-events-none">
+                {[...Array(8)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-1 h-1 bg-primary/30 rounded-full"
+                    style={{
+                      left: `${Math.random() * 100}%`,
+                      top: `${Math.random() * 100}%`,
+                    }}
+                    animate={{
+                      y: [0, -20, 0],
+                      opacity: [0.3, 0.8, 0.3],
+                      scale: [1, 1.5, 1],
+                    }}
+                    transition={{
+                      duration: 3 + Math.random() * 2,
+                      repeat: Infinity,
+                      delay: Math.random() * 2,
+                    }}
+                  />
+                ))}
+              </div>
+
+              {/* Animated text with word-by-word reveal */}
+              <motion.span
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+                className="inline-block"
+              >
+                Travel with
+              </motion.span>
+              {' '}
+              <motion.span
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.8, type: "spring", stiffness: 200 }}
+                className="text-gradient inline-block relative"
+              >
+                Travellers
+                {/* Underline effect */}
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 0.8, delay: 1.2 }}
+                  className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-primary/50 via-primary to-primary/50 rounded-full origin-left"
+                />
+              </motion.span>
+              <br />
+              <motion.span
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 1.0 }}
+                className="inline-block"
+              >
+                You Haven't
+              </motion.span>
+              {' '}
+              <motion.span
+                initial={{ opacity: 0, rotateX: -90 }}
+                animate={{ opacity: 1, rotateX: 0 }}
+                transition={{ duration: 0.6, delay: 1.2, type: "spring" }}
+                className="inline-block"
+              >
+                Met
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: 1.4, type: "spring", stiffness: 400 }}
+                className="text-primary inline-block"
+              >
+                .
+              </motion.span>
+            </h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.5 }}
+              className="text-lg text-muted-foreground font-sans max-w-md mb-8"
+            >
+              Join curated group adventures with like-minded travelers. Fixed departures,
+              flexible plans, and lifetime memories.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.7 }}
+              className="flex flex-wrap gap-4 mb-8"
+            >
               <MagneticButton className="animate-glow-pulse">
                 View All Trips
               </MagneticButton>
               <button className="px-6 py-4 rounded-xl border border-foreground/20 text-foreground font-sans font-semibold hover:bg-foreground/5 transition-colors">
                 Watch Story
               </button>
-            </div>
+            </motion.div>
 
             {/* Stats */}
             <div className="flex gap-10">
               {stats.map((stat, i) => (
-                <motion.div 
+                <motion.div
                   key={stat.label}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -372,7 +451,7 @@ export const HeroSection = memo(() => {
                 <h2 className="font-serif text-2xl font-bold text-foreground">Upcoming Trips</h2>
                 <p className="text-sm text-muted-foreground font-sans">Curated departures filling fast</p>
               </div>
-              
+
               {/* Navigation Arrows */}
               <div className="flex gap-3 flex-shrink-0">
                 <button
@@ -410,14 +489,14 @@ export const HeroSection = memo(() => {
       </div>
 
       {/* Scroll Indicator */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
         <span className="text-xs text-muted-foreground font-sans">Scroll to explore</span>
-        <motion.div 
+        <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
           className="w-6 h-10 rounded-full border-2 border-foreground/30 flex justify-center pt-2"
