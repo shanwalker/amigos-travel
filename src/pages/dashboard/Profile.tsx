@@ -43,7 +43,7 @@ const Profile = () => {
           phone,
           bio,
           updated_at: new Date().toISOString(),
-        });
+        } as any);
 
       if (profileError) throw profileError;
 
