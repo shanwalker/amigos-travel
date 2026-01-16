@@ -67,10 +67,10 @@ export const useUpcomingTrip = () => {
         .gte('start_date', new Date().toISOString().split('T')[0])
         .order('start_date', { ascending: true })
         .limit(1)
-        .single();
+        .maybeSingle();
       
       if (error) throw error;
-      return data as Trip;
+      return data as Trip | null;
     },
   });
 };
