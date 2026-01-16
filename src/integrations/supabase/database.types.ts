@@ -64,9 +64,39 @@ export interface TravelStory {
 export interface Profile {
   id: string
   full_name: string | null
+  email: string | null
   avatar_url: string | null
+  phone: string | null
+  bio: string | null
+  travel_preferences: Json | null
   created_at: string
   updated_at: string
+}
+
+export interface UserRole {
+  id: string
+  user_id: string
+  role: 'admin' | 'moderator' | 'user'
+}
+
+export interface Booking {
+  id: string
+  user_id: string
+  trip_id: string
+  status: 'pending' | 'confirmed' | 'cancelled' | 'completed'
+  num_travelers: number
+  total_amount: number | null
+  payment_status: string
+  notes: string | null
+  created_at: string
+  updated_at: string
+}
+
+export interface NewsletterSubscriber {
+  id: string
+  email: string
+  subscribed_at: string
+  is_active: boolean
 }
 
 export type Database = {
@@ -98,14 +128,34 @@ export type Database = {
       }
       profiles: {
         Row: Profile
-        Insert: Profile
+        Insert: Partial<Profile> & { id: string }
         Update: Partial<Profile>
+        Relationships: []
+      }
+      user_roles: {
+        Row: UserRole
+        Insert: Omit<UserRole, 'id'> & { id?: string }
+        Update: Partial<UserRole>
+        Relationships: []
+      }
+      bookings: {
+        Row: Booking
+        Insert: Omit<Booking, 'id' | 'created_at' | 'updated_at'> & { id?: string; created_at?: string; updated_at?: string }
+        Update: Partial<Booking>
+        Relationships: []
+      }
+      newsletter_subscribers: {
+        Row: NewsletterSubscriber
+        Insert: Omit<NewsletterSubscriber, 'id' | 'subscribed_at'> & { id?: string; subscribed_at?: string }
+        Update: Partial<NewsletterSubscriber>
         Relationships: []
       }
     }
     Views: Record<string, never>
     Functions: Record<string, never>
-    Enums: Record<string, never>
+    Enums: {
+      app_role: 'admin' | 'moderator' | 'user'
+    }
     CompositeTypes: Record<string, never>
   }
 }
