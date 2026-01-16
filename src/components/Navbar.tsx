@@ -26,6 +26,7 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
     { label: 'The Amigo Way', href: '#amigo-way' },
     { label: 'Community', href: '#community' },
     { label: 'About', href: '#about' },
+    { label: 'Built by Shan', href: '#', special: true },
   ];
 
   return (
@@ -33,9 +34,8 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled ? 'glass-card py-3' : 'py-6'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'glass-card py-3' : 'py-6'
+        }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
         {/* Logo with version-specific styling */}
@@ -46,9 +46,9 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
               <div className="absolute -inset-x-4 -inset-y-2.5 bg-white rounded-xl shadow-lg" />
               {/* Hover glow effect */}
               <div className="absolute -inset-4 bg-primary/30 rounded-2xl blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
-              <img 
-                src={logo} 
-                alt="Travel Amigo" 
+              <img
+                src={logo}
+                alt="Travel Amigo"
                 loading="eager"
                 fetchPriority="high"
                 className="relative h-10 md:h-12 w-auto"
@@ -62,9 +62,9 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
               <div className="absolute -inset-4 bg-white/40 rounded-2xl blur-xl opacity-80" />
               {/* Hover glow effect */}
               <div className="absolute -inset-5 bg-primary/30 rounded-2xl blur-2xl opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
-              <img 
-                src={logo} 
-                alt="Travel Amigo" 
+              <img
+                src={logo}
+                alt="Travel Amigo"
                 loading="eager"
                 fetchPriority="high"
                 className="relative h-10 md:h-12 w-auto"
@@ -77,21 +77,19 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
         <div className="hidden md:flex items-center gap-1 bg-navy-medium/50 rounded-lg p-1">
           <button
             onClick={() => onVersionChange('v1')}
-            className={`px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${
-              currentVersion === 'v1'
-                ? 'bg-primary text-primary-foreground'
-                : 'text-muted-foreground hover:text-foreground'
-            }`}
+            className={`px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${currentVersion === 'v1'
+              ? 'bg-primary text-primary-foreground'
+              : 'text-muted-foreground hover:text-foreground'
+              }`}
           >
             V1
           </button>
           <button
             onClick={() => onVersionChange('v2')}
-            className={`px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${
-              currentVersion === 'v2'
-                ? 'bg-primary text-primary-foreground'
-                : 'text-muted-foreground hover:text-foreground'
-            }`}
+            className={`px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${currentVersion === 'v2'
+              ? 'bg-primary text-primary-foreground'
+              : 'text-muted-foreground hover:text-foreground'
+              }`}
           >
             V2
           </button>
@@ -103,10 +101,17 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
             <a
               key={link.label}
               href={link.href}
-              className="text-foreground/80 hover:text-foreground font-sans text-sm font-medium transition-colors relative group"
+              className={`font-sans text-sm font-medium transition-colors relative group ${link.special
+                ? 'text-gradient font-semibold flex items-center gap-1.5'
+                : 'text-foreground/80 hover:text-foreground'
+                }`}
             >
+              {link.special && (
+                <span className="text-primary animate-pulse">✨</span>
+              )}
               {link.label}
-              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+              <span className={`absolute bottom-0 left-0 w-full h-0.5 scale-x-0 group-hover:scale-x-100 transition-transform origin-left ${link.special ? 'bg-gradient-to-r from-primary via-purple-500 to-primary' : 'bg-primary'
+                }`} />
             </a>
           ))}
         </div>
@@ -141,33 +146,38 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
               <span className="text-sm text-muted-foreground font-sans">Version:</span>
               <button
                 onClick={() => onVersionChange('v1')}
-                className={`px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${
-                  currentVersion === 'v1'
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-muted-foreground hover:text-foreground bg-navy-medium/50'
-                }`}
+                className={`px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${currentVersion === 'v1'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'text-muted-foreground hover:text-foreground bg-navy-medium/50'
+                  }`}
               >
                 V1
               </button>
               <button
                 onClick={() => onVersionChange('v2')}
-                className={`px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${
-                  currentVersion === 'v2'
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-muted-foreground hover:text-foreground bg-navy-medium/50'
-                }`}
+                className={`px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${currentVersion === 'v2'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'text-muted-foreground hover:text-foreground bg-navy-medium/50'
+                  }`}
               >
                 V2
               </button>
             </div>
-            
+
+
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                className="text-foreground font-sans text-lg font-medium py-2"
+                className={`font-sans text-lg font-medium py-2 ${link.special
+                    ? 'text-gradient font-semibold flex items-center gap-2'
+                    : 'text-foreground'
+                  }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
+                {link.special && (
+                  <span className="text-primary animate-pulse">✨</span>
+                )}
                 {link.label}
               </a>
             ))}
