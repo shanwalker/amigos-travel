@@ -127,22 +127,16 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
   );
 };
 
+// Duplicate trips for infinite scroll effect
+const infiniteTrips = [...upcomingTrips, ...upcomingTrips, ...upcomingTrips];
+
 export const HeroSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const autoScrollRef = useRef<NodeJS.Timeout | null>(null);
-
-  const checkScrollButtons = useCallback(() => {
-    if (scrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
-    }
-  }, []);
+  const cardWidth = 300; // 280px card + 20px gap
 
   const scroll = useCallback((direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -151,24 +145,41 @@ export const HeroSection = () => {
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth',
       });
-      setTimeout(checkScrollButtons, 300);
     }
-  }, [checkScrollButtons]);
+  }, []);
+
+  // Infinite scroll logic - seamlessly loop
+  const handleInfiniteScroll = useCallback(() => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth } = scrollRef.current;
+      const singleSetWidth = upcomingTrips.length * cardWidth;
+      
+      // If scrolled past the second set, jump back to first set
+      if (scrollLeft >= singleSetWidth * 2) {
+        scrollRef.current.scrollLeft = scrollLeft - singleSetWidth;
+      }
+      // If scrolled before the first set, jump to second set
+      else if (scrollLeft <= 0) {
+        scrollRef.current.scrollLeft = singleSetWidth;
+      }
+    }
+  }, []);
 
   // Auto-scroll logic
   const autoScroll = useCallback(() => {
     if (scrollRef.current && !isPaused) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      
-      // If at the end, scroll back to start
-      if (scrollLeft >= scrollWidth - clientWidth - 10) {
-        scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' });
-      } else {
-        scrollRef.current.scrollBy({ left: 1, behavior: 'auto' });
-      }
-      checkScrollButtons();
+      scrollRef.current.scrollBy({ left: 1, behavior: 'auto' });
+      handleInfiniteScroll();
     }
-  }, [isPaused, checkScrollButtons]);
+  }, [isPaused, handleInfiniteScroll]);
+
+  // Initialize scroll position to middle set for seamless infinite scroll
+  useEffect(() => {
+    if (scrollRef.current) {
+      const singleSetWidth = upcomingTrips.length * cardWidth;
+      scrollRef.current.scrollLeft = singleSetWidth;
+    }
+  }, []);
 
   // Start/stop auto-scroll based on pause state
   useEffect(() => {
@@ -329,35 +340,25 @@ export const HeroSection = () => {
               <div className="flex gap-3 flex-shrink-0">
                 <button
                   onClick={() => scroll('left')}
-                  disabled={!canScrollLeft}
                   aria-label="Previous trips"
-                  className={`w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
-                    canScrollLeft 
-                      ? 'border-primary bg-primary/20 hover:bg-primary/40 text-primary cursor-pointer hover:scale-105' 
-                      : 'border-foreground/30 bg-foreground/5 opacity-50 cursor-not-allowed text-muted-foreground'
-                  }`}
+                  className="w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 border-primary bg-primary/20 hover:bg-primary/40 text-primary cursor-pointer hover:scale-105"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => scroll('right')}
-                  disabled={!canScrollRight}
                   aria-label="Next trips"
-                  className={`w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
-                    canScrollRight 
-                      ? 'border-primary bg-primary/20 hover:bg-primary/40 text-primary cursor-pointer hover:scale-105' 
-                      : 'border-foreground/30 bg-foreground/5 opacity-50 cursor-not-allowed text-muted-foreground'
-                  }`}
+                  className="w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 border-primary bg-primary/20 hover:bg-primary/40 text-primary cursor-pointer hover:scale-105"
                 >
                   <ChevronRight className="w-5 h-5" />
                 </button>
               </div>
             </div>
 
-            {/* Trip Cards Slider */}
+            {/* Trip Cards Slider - Infinite */}
             <div
               ref={scrollRef}
-              onScroll={checkScrollButtons}
+              onScroll={handleInfiniteScroll}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
               onTouchStart={handleTouchStart}
@@ -365,8 +366,8 @@ export const HeroSection = () => {
               className="flex gap-5 overflow-x-auto scrollbar-hide pb-4 pr-6"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-              {upcomingTrips.map((trip, index) => (
-                <TripCard key={trip.id} trip={trip} index={index} />
+              {infiniteTrips.map((trip, index) => (
+                <TripCard key={`${trip.id}-${index}`} trip={trip} index={index % upcomingTrips.length} />
               ))}
             </div>
           </motion.div>
