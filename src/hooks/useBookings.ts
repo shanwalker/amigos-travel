@@ -84,11 +84,14 @@ export const useCreateBooking = () => {
       const { data, error } = await supabase
         .from('bookings')
         .insert({
-          ...booking,
+          trip_id: booking.trip_id,
+          num_travelers: booking.num_travelers,
+          total_amount: booking.total_amount,
+          notes: booking.notes || null,
           user_id: user.id,
-          status: 'pending',
+          status: 'pending' as const,
           payment_status: 'unpaid',
-        })
+        } as any)
         .select()
         .single();
 
@@ -109,7 +112,7 @@ export const useUpdateBookingStatus = () => {
     mutationFn: async ({ id, status }: { id: string; status: string }) => {
       const { data, error } = await supabase
         .from('bookings')
-        .update({ status, updated_at: new Date().toISOString() })
+        .update({ status, updated_at: new Date().toISOString() } as any)
         .eq('id', id)
         .select()
         .single();
