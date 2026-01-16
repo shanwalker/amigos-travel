@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Calendar, Users } from 'lucide-react';
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, memo, useMemo } from 'react';
 import heroVideo from '@/assets/hero-video.mp4';
 import tripThailand from '@/assets/trip-thailand.jpg';
 import heroBg from '@/assets/hero-bg.jpg';
@@ -12,130 +12,136 @@ import { MagneticButton } from './ui/animations';
 interface Trip {
   id: number;
   destination: string;
-  duration: string;
+  dates: string;
+  spotsLeft: number;
   price: string;
   image: string;
-  departures: string;
-  spots: number;
+  duration: string;
 }
 
 const upcomingTrips: Trip[] = [
   {
     id: 1,
-    destination: 'Thailand Island Hopping',
-    duration: '15 days',
-    price: '₹89,999',
+    destination: 'Thailand Islands',
+    dates: 'Mar 15 - Mar 25',
+    spotsLeft: 4,
+    price: '₹45,999',
     image: tripThailand,
-    departures: 'Jan 25, Feb 10',
-    spots: 6,
+    duration: '10 Days'
   },
   {
     id: 2,
-    destination: 'Vietnam Discovery',
-    duration: '12 days',
-    price: '₹74,999',
+    destination: 'Vietnam Explorer',
+    dates: 'Apr 02 - Apr 12',
+    spotsLeft: 6,
+    price: '₹52,999',
     image: tripVietnam,
-    departures: 'Feb 5, Mar 1',
-    spots: 4,
+    duration: '10 Days'
   },
   {
     id: 3,
-    destination: 'Bali & Beyond',
-    duration: '10 days',
-    price: '₹69,999',
+    destination: 'Bali Adventure',
+    dates: 'Apr 18 - Apr 28',
+    spotsLeft: 3,
+    price: '₹48,999',
     image: tripBali,
-    departures: 'Jan 28, Feb 15',
-    spots: 8,
+    duration: '10 Days'
   },
   {
     id: 4,
-    destination: 'Japan Spring',
-    duration: '14 days',
-    price: '₹1,29,999',
+    destination: 'Japan Sakura',
+    dates: 'May 05 - May 15',
+    spotsLeft: 8,
+    price: '₹89,999',
     image: tripJapan,
-    departures: 'Mar 20, Apr 5',
-    spots: 3,
-  },
-  {
-    id: 5,
-    destination: 'Sri Lanka Explorer',
-    duration: '11 days',
-    price: '₹64,999',
-    image: tripThailand,
-    departures: 'Feb 12, Mar 8',
-    spots: 5,
+    duration: '10 Days'
   },
 ];
 
-const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
+interface TripCardProps {
+  trip: Trip;
+  index: number;
+}
+
+// Memoized TripCard for performance
+const TripCard = memo(({ trip, index }: TripCardProps) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-      className="relative flex-shrink-0 w-[280px] h-[380px] rounded-2xl overflow-hidden group cursor-pointer"
+      transition={{ duration: 0.5, delay: 0.1 * (index % 4) }}
+      className="flex-shrink-0 w-[280px] h-[380px] rounded-2xl overflow-hidden relative group cursor-pointer"
     >
-      {/* Background Image - with explicit dimensions for CLS */}
       <img 
         src={trip.image}
         alt={trip.destination}
-        loading="lazy"
+        loading={index < 4 ? "eager" : "lazy"}
         decoding="async"
         width={280}
         height={380}
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 will-change-transform"
       />
       
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/40 to-transparent" />
+      {/* Overlay Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
       
       {/* Spots Badge */}
-      <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-primary/90 backdrop-blur-sm">
-        <span className="text-xs font-sans font-semibold text-primary-foreground">
-          <span className="font-display">{trip.spots}</span> spots left
-        </span>
+      <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full glass-card text-sm font-sans font-semibold text-primary">
+        {trip.spotsLeft} spots left
       </div>
-      
+
       {/* Content */}
-      <div className="absolute bottom-0 left-0 right-0 p-5">
-        {/* Duration */}
-        <div className="flex items-center gap-2 mb-2">
-          <Calendar className="w-4 h-4 text-primary" />
-          <span className="text-sm font-sans text-foreground/80">
-            <span className="font-display">{trip.duration.split(' ')[0]}</span> {trip.duration.split(' ')[1]}
-          </span>
+      <div className="absolute bottom-0 left-0 right-0 p-6">
+        <h3 className="font-serif text-xl font-bold text-white mb-2">{trip.destination}</h3>
+        
+        <div className="flex items-center gap-4 text-white/80 text-sm font-sans mb-3">
+          <div className="flex items-center gap-1">
+            <Calendar className="w-4 h-4" />
+            <span>{trip.duration}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Users className="w-4 h-4" />
+            <span>12 travelers</span>
+          </div>
         </div>
-        
-        {/* Destination */}
-        <h3 className="font-serif text-2xl font-bold text-foreground mb-3 leading-tight">
-          {trip.destination}
-        </h3>
-        
-        {/* Departures */}
-        <div className="flex items-center gap-2 mb-4">
-          <Users className="w-4 h-4 text-muted-foreground" />
-          <span className="text-xs font-sans text-muted-foreground">{trip.departures}</span>
-        </div>
-        
-        {/* Price Button */}
-        <div className="glass-card px-4 py-2.5 inline-flex items-center gap-2 group-hover:bg-primary/20 transition-colors">
-          <span className="text-xs font-sans text-muted-foreground">from</span>
-          <span className="text-lg font-display font-bold text-primary tracking-tight">{trip.price}</span>
+
+        <div className="flex items-center justify-between">
+          <div>
+            <span className="text-xs text-white/60 font-sans">Starting from</span>
+            <div className="text-xl font-display font-bold text-primary">{trip.price}</div>
+          </div>
+          <button 
+            className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-sans font-medium text-sm 
+                       opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 
+                       transition-all duration-300 will-change-[opacity,transform]"
+          >
+            View Trip
+          </button>
         </div>
       </div>
     </motion.div>
   );
-};
+});
 
-// Duplicate trips for infinite scroll effect
+TripCard.displayName = 'TripCard';
+
+// Duplicate trips for infinite scroll effect - memoized
 const infiniteTrips = [...upcomingTrips, ...upcomingTrips, ...upcomingTrips];
 
-export const HeroSection = () => {
+// Memoized stats for performance
+const stats = [
+  { value: '10K+', label: 'Amigos' },
+  { value: '50+', label: 'Countries' },
+  { value: '4.9', label: 'Rating' },
+];
+
+export const HeroSection = memo(() => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
-  const autoScrollRef = useRef<NodeJS.Timeout | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
+  const lastTimeRef = useRef<number>(0);
   const cardWidth = 300; // 280px card + 20px gap
 
   const scroll = useCallback((direction: 'left' | 'right') => {
@@ -151,7 +157,7 @@ export const HeroSection = () => {
   // Infinite scroll logic - seamlessly loop
   const handleInfiniteScroll = useCallback(() => {
     if (scrollRef.current) {
-      const { scrollLeft, scrollWidth } = scrollRef.current;
+      const { scrollLeft } = scrollRef.current;
       const singleSetWidth = upcomingTrips.length * cardWidth;
       
       // If scrolled past the second set, jump back to first set
@@ -165,12 +171,17 @@ export const HeroSection = () => {
     }
   }, []);
 
-  // Auto-scroll logic
-  const autoScroll = useCallback(() => {
+  // Auto-scroll using requestAnimationFrame for smooth 60fps animation
+  const autoScroll = useCallback((timestamp: number) => {
     if (scrollRef.current && !isPaused) {
-      scrollRef.current.scrollBy({ left: 1, behavior: 'auto' });
-      handleInfiniteScroll();
+      // Throttle to ~30fps for battery efficiency while still smooth
+      if (timestamp - lastTimeRef.current >= 33) {
+        scrollRef.current.scrollLeft += 1;
+        handleInfiniteScroll();
+        lastTimeRef.current = timestamp;
+      }
     }
+    animationFrameRef.current = requestAnimationFrame(autoScroll);
   }, [isPaused, handleInfiniteScroll]);
 
   // Initialize scroll position to middle set for seamless infinite scroll
@@ -181,73 +192,89 @@ export const HeroSection = () => {
     }
   }, []);
 
-  // Start/stop auto-scroll based on pause state
+  // Start/stop auto-scroll based on pause state using RAF
   useEffect(() => {
     if (!isPaused) {
-      autoScrollRef.current = setInterval(autoScroll, 30);
+      animationFrameRef.current = requestAnimationFrame(autoScroll);
     } else {
-      if (autoScrollRef.current) {
-        clearInterval(autoScrollRef.current);
-        autoScrollRef.current = null;
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
       }
     }
 
     return () => {
-      if (autoScrollRef.current) {
-        clearInterval(autoScrollRef.current);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
       }
     };
   }, [isPaused, autoScroll]);
 
-  // Pause handlers
-  const handleMouseEnter = () => setIsPaused(true);
-  const handleMouseLeave = () => setIsPaused(false);
-  const handleTouchStart = () => setIsPaused(true);
-  const handleTouchEnd = () => {
-    // Resume after a short delay to allow for touch scrolling
-    setTimeout(() => setIsPaused(false), 3000);
-  };
+  const handleMouseEnter = useCallback(() => setIsPaused(true), []);
+  const handleMouseLeave = useCallback(() => setIsPaused(false), []);
+  const handleTouchStart = useCallback(() => setIsPaused(true), []);
+  const handleTouchEnd = useCallback(() => setIsPaused(false), []);
 
-  // Force video play on mount (handles browser autoplay restrictions)
+  // Start video playback with better performance
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
-      video.play().catch(() => {
-        // Autoplay was prevented, add click handler to start video
-        const startVideo = () => {
-          video.play();
-          document.removeEventListener('click', startVideo);
-          document.removeEventListener('touchstart', startVideo);
-        };
-        document.addEventListener('click', startVideo);
-        document.addEventListener('touchstart', startVideo);
-      });
+      // Use Intersection Observer to only load video when in view
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            video.play().catch(() => {
+              // Autoplay was prevented, add click handler to start video
+              const startVideo = () => {
+                video.play();
+                document.removeEventListener('click', startVideo);
+                document.removeEventListener('touchstart', startVideo);
+              };
+              document.addEventListener('click', startVideo, { passive: true });
+              document.addEventListener('touchstart', startVideo, { passive: true });
+            });
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.1 }
+      );
+      observer.observe(video);
+      return () => observer.disconnect();
     }
   }, []);
 
+  // Memoized trip cards
+  const tripCards = useMemo(() => 
+    infiniteTrips.map((trip, index) => (
+      <TripCard key={`${trip.id}-${index}`} trip={trip} index={index % upcomingTrips.length} />
+    )),
+  []);
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden film-grain vignette">
+    <section className="relative min-h-screen overflow-hidden">
       {/* Background - Placeholder Image + Video */}
       <div className="absolute inset-0">
         {/* Placeholder Image - shows instantly */}
         <img
           src={heroBg}
           alt=""
+          loading="eager"
+          fetchPriority="high"
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
             videoLoaded ? 'opacity-0' : 'opacity-100'
           }`}
         />
         
-        {/* Video - fades in when loaded */}
+        {/* Video - fades in when loaded, uses metadata preload for faster start */}
         <video
           ref={videoRef}
           autoPlay
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
           onLoadedData={() => setVideoLoaded(true)}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 will-change-opacity ${
             videoLoaded ? 'opacity-100' : 'opacity-0'
           }`}
           // @ts-ignore - webkit-playsinline for iOS Safari
@@ -303,11 +330,7 @@ export const HeroSection = () => {
 
             {/* Stats */}
             <div className="flex gap-10">
-              {[
-                { value: '10K+', label: 'Amigos' },
-                { value: '50+', label: 'Countries' },
-                { value: '4.9', label: 'Rating' },
-              ].map((stat, i) => (
+              {stats.map((stat, i) => (
                 <motion.div 
                   key={stat.label}
                   initial={{ opacity: 0, y: 20 }}
@@ -341,14 +364,14 @@ export const HeroSection = () => {
                 <button
                   onClick={() => scroll('left')}
                   aria-label="Previous trips"
-                  className="w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 border-primary bg-primary/20 hover:bg-primary/40 text-primary cursor-pointer hover:scale-105"
+                  className="w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 border-primary bg-primary/20 hover:bg-primary/40 text-primary cursor-pointer hover:scale-105 will-change-transform"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => scroll('right')}
                   aria-label="Next trips"
-                  className="w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 border-primary bg-primary/20 hover:bg-primary/40 text-primary cursor-pointer hover:scale-105"
+                  className="w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 border-primary bg-primary/20 hover:bg-primary/40 text-primary cursor-pointer hover:scale-105 will-change-transform"
                 >
                   <ChevronRight className="w-5 h-5" />
                 </button>
@@ -366,9 +389,7 @@ export const HeroSection = () => {
               className="flex gap-5 overflow-x-auto scrollbar-hide pb-4 pr-6"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
-              {infiniteTrips.map((trip, index) => (
-                <TripCard key={`${trip.id}-${index}`} trip={trip} index={index % upcomingTrips.length} />
-              ))}
+              {tripCards}
             </div>
           </motion.div>
         </div>
@@ -392,4 +413,6 @@ export const HeroSection = () => {
       </motion.div>
     </section>
   );
-};
+});
+
+HeroSection.displayName = 'HeroSection';
