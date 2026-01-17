@@ -1,21 +1,26 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { StatsCard } from '@/components/dashboard/StatsCard';
+import { AnalyticsChart } from '@/components/admin/AnalyticsChart';
+import { QuickActions } from '@/components/admin/QuickActions';
+import { ActivityFeed } from '@/components/admin/ActivityFeed';
+import { PerformanceMetrics } from '@/components/admin/PerformanceMetrics';
 import { useTrips } from '@/hooks/useTrips';
 import { useAllBookings } from '@/hooks/useBookings';
 import { useUsers } from '@/hooks/useUsers';
 import { useTestimonials } from '@/hooks/useTestimonials';
 import { useTravelStories } from '@/hooks/useTravelStories';
-import { 
-  Map, 
-  Users, 
-  CalendarCheck, 
-  Star, 
+import {
+  Map,
+  Users,
+  CalendarCheck,
+  Star,
   TrendingUp,
   DollarSign,
   BookOpen,
   MessageSquare
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useMemo } from 'react';
 
 const AdminOverview = () => {
   const { data: trips } = useTrips();
@@ -28,32 +33,62 @@ const AdminOverview = () => {
   const confirmedBookings = bookings?.filter((b: any) => b.status === 'confirmed').length || 0;
   const pendingBookings = bookings?.filter((b: any) => b.status === 'pending').length || 0;
 
+  // Generate revenue chart data (last 7 days)
+  const revenueChartData = useMemo(() => {
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    return days.map((day, index) => ({
+      day,
+      revenue: Math.floor(Math.random() * 50000) + 20000, // Sample data
+      bookings: Math.floor(Math.random() * 10) + 5,
+    }));
+  }, []);
+
+  // Generate user growth data (last 6 months)
+  const userGrowthData = useMemo(() => {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+    return months.map((month, index) => ({
+      month,
+      users: Math.floor(Math.random() * 50) + (index * 20) + 50,
+    }));
+  }, []);
+
+  // Generate booking trends data
+  const bookingTrendsData = useMemo(() => {
+    const weeks = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+    return weeks.map((week) => ({
+      week,
+      confirmed: Math.floor(Math.random() * 15) + 10,
+      pending: Math.floor(Math.random() * 8) + 3,
+      cancelled: Math.floor(Math.random() * 3) + 1,
+    }));
+  }, []);
+
   const stats = [
-    { 
-      title: 'Total Trips', 
-      value: trips?.length || 0, 
-      icon: <Map className="h-5 w-5" />, 
+    {
+      title: 'Total Trips',
+      value: trips?.length || 0,
+      icon: <Map className="h-5 w-5" />,
       trend: { value: 12, isPositive: true },
       description: 'Active trips available'
     },
-    { 
-      title: 'Total Users', 
-      value: users?.length || 0, 
-      icon: <Users className="h-5 w-5" />, 
+    {
+      title: 'Total Users',
+      value: users?.length || 0,
+      icon: <Users className="h-5 w-5" />,
       trend: { value: 8, isPositive: true },
       description: 'Registered users'
     },
-    { 
-      title: 'Total Bookings', 
-      value: bookings?.length || 0, 
-      icon: <CalendarCheck className="h-5 w-5" />, 
+    {
+      title: 'Total Bookings',
+      value: bookings?.length || 0,
+      icon: <CalendarCheck className="h-5 w-5" />,
       trend: { value: 23, isPositive: true },
       description: `${confirmedBookings} confirmed, ${pendingBookings} pending`
     },
-    { 
-      title: 'Revenue', 
-      value: `₹${totalRevenue.toLocaleString()}`, 
-      icon: <DollarSign className="h-5 w-5" />, 
+    {
+      title: 'Revenue',
+      value: `₹${totalRevenue.toLocaleString()}`,
+      icon: <DollarSign className="h-5 w-5" />,
       trend: { value: 18, isPositive: true },
       description: 'Total earnings'
     },
@@ -70,7 +105,7 @@ const AdminOverview = () => {
     <div className="space-y-8">
       <div>
         <h1 className="text-3xl font-display font-bold text-foreground">Admin Dashboard</h1>
-        <p className="text-muted-foreground mt-2">Overview of your travel platform</p>
+        <p className="text-muted-foreground mt-2">Complete overview of your travel platform</p>
       </div>
 
       {/* Main Stats */}
@@ -93,28 +128,59 @@ const AdminOverview = () => {
         ))}
       </div>
 
-      {/* Secondary Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {secondaryStats.map((stat, index) => (
-          <motion.div
-            key={stat.title}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3, delay: 0.4 + index * 0.05 }}
-          >
-            <Card className="bg-card/50 border-border/50">
-              <CardContent className="pt-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-muted-foreground">{stat.title}</p>
-                    <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+      {/* Performance Metrics */}
+      <PerformanceMetrics />
+
+      {/* Quick Actions */}
+      <QuickActions />
+
+      {/* Analytics Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <AnalyticsChart
+          title="Revenue Trend (Last 7 Days)"
+          data={revenueChartData}
+          type="area"
+          dataKey="revenue"
+          xAxisKey="day"
+          color="#FFB400"
+        />
+        <AnalyticsChart
+          title="User Growth (Last 6 Months)"
+          data={userGrowthData}
+          type="line"
+          dataKey="users"
+          xAxisKey="month"
+          color="#10B981"
+        />
+      </div>
+
+      {/* Activity Feed and Secondary Stats */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <ActivityFeed />
+        </div>
+        <div className="space-y-4">
+          {secondaryStats.map((stat, index) => (
+            <motion.div
+              key={stat.title}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: 0.4 + index * 0.05 }}
+            >
+              <Card className="bg-card/50 border-border/50">
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground">{stat.title}</p>
+                      <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                    </div>
+                    <stat.icon className="h-8 w-8 text-primary/60" />
                   </div>
-                  <stat.icon className="h-8 w-8 text-primary/60" />
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
       </div>
 
       {/* Recent Activity */}
@@ -131,18 +197,17 @@ const AdminOverview = () => {
                     <p className="font-medium text-foreground">{booking.trip?.title || 'Unknown Trip'}</p>
                     <p className="text-sm text-muted-foreground">{booking.profile?.full_name || booking.profile?.email}</p>
                   </div>
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                    booking.status === 'confirmed' ? 'bg-green-500/20 text-green-400' :
-                    booking.status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
-                    booking.status === 'cancelled' ? 'bg-red-500/20 text-red-400' :
-                    'bg-blue-500/20 text-blue-400'
-                  }`}>
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${booking.status === 'confirmed' ? 'bg-green-500/20 text-green-400' :
+                      booking.status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
+                        booking.status === 'cancelled' ? 'bg-red-500/20 text-red-400' :
+                          'bg-blue-500/20 text-blue-400'
+                    }`}>
                     {booking.status}
                   </span>
                 </div>
               )) || (
-                <p className="text-muted-foreground text-center py-4">No bookings yet</p>
-              )}
+                  <p className="text-muted-foreground text-center py-4">No bookings yet</p>
+                )}
             </div>
           </CardContent>
         </Card>
@@ -166,19 +231,18 @@ const AdminOverview = () => {
                   </div>
                   <div className="flex gap-1">
                     {user.roles?.map((role) => (
-                      <span key={role} className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        role === 'admin' ? 'bg-purple-500/20 text-purple-400' :
-                        role === 'moderator' ? 'bg-blue-500/20 text-blue-400' :
-                        'bg-gray-500/20 text-gray-400'
-                      }`}>
+                      <span key={role} className={`px-2 py-1 rounded-full text-xs font-medium ${role === 'admin' ? 'bg-purple-500/20 text-purple-400' :
+                          role === 'moderator' ? 'bg-blue-500/20 text-blue-400' :
+                            'bg-gray-500/20 text-gray-400'
+                        }`}>
                         {role}
                       </span>
                     ))}
                   </div>
                 </div>
               )) || (
-                <p className="text-muted-foreground text-center py-4">No users yet</p>
-              )}
+                  <p className="text-muted-foreground text-center py-4">No users yet</p>
+                )}
             </div>
           </CardContent>
         </Card>
