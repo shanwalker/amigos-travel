@@ -346,7 +346,7 @@ export const HeroSection = memo(() => {
                 transition={{ duration: 0.6, delay: 0.8, type: "spring", stiffness: 200 }}
                 className="text-gradient inline-block relative"
               >
-                Travellers
+                Friends
                 {/* Underline effect */}
                 <motion.div
                   initial={{ scaleX: 0 }}

@@ -100,35 +100,10 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
             <a
               key={link.label}
               href={link.href}
-              className={`font-sans text-sm font-medium transition-all duration-300 relative group ${link.special
-                ? 'text-gradient font-bold flex items-center gap-2 hover:scale-110'
-                : 'text-foreground/80 hover:text-foreground hover:scale-105'
-                }`}
+              className="font-sans text-sm font-medium transition-all duration-300 relative group text-foreground/80 hover:text-foreground hover:scale-105"
             >
-              {link.special && (
-                <motion.span
-                  animate={{
-                    rotate: [0, 15, -15, 0],
-                    scale: [1, 1.2, 1.2, 1]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    repeatDelay: 3
-                  }}
-                  className="text-primary"
-                >
-                  ✨
-                </motion.span>
-              )}
               {link.label}
-              <span className={`absolute -bottom-1 left-0 w-full h-0.5 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left ${link.special
-                ? 'bg-gradient-to-r from-primary via-purple-500 to-primary shadow-lg shadow-primary/50'
-                : 'bg-primary'
-                }`} />
-              {link.special && (
-                <span className="absolute -inset-2 bg-primary/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
-              )}
+              <span className="absolute -bottom-1 left-0 w-full h-0.5 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left bg-primary" />
             </a>
           ))}
         </div>
@@ -186,15 +161,9 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
               <a
                 key={link.label}
                 href={link.href}
-                className={`font-sans text-lg font-medium py-2 ${link.special
-                  ? 'text-gradient font-semibold flex items-center gap-2'
-                  : 'text-foreground'
-                  }`}
+                className="font-sans text-lg font-medium py-2 text-foreground"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                {link.special && (
-                  <span className="text-primary animate-pulse">✨</span>
-                )}
                 {link.label}
               </a>
             ))}
