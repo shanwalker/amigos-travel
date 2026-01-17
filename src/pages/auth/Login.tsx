@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,26 +15,59 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signIn, isAdmin } = useAuth();
+  const { signIn, user, isAdmin } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = (location.state as any)?.from?.pathname || '/dashboard';
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user && !loading) {
+      // Redirect based on role
+      if (isAdmin) {
+        navigate('/admin', { replace: true });
+      } else {
+        navigate('/dashboard', { replace: true });
+      }
+    }
+  }, [user, isAdmin, navigate, loading]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
-    const { error } = await signIn(email, password);
+    const { error: signInError } = await signIn(email, password);
 
-    if (error) {
-      setError(error.message);
+    if (signInError) {
+      setError(signInError.message);
       setLoading(false);
+      return;
+    }
+
+    // Get user and check role
+    const { data: { user: currentUser } } = await supabase.auth.getUser();
+
+    if (!currentUser) {
+      setError('Authentication failed');
+      setLoading(false);
+      return;
+    }
+
+    // Check if user has admin role
+    const { data: roleData } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', currentUser.id)
+      .eq('role', 'admin')
+      .maybeSingle();
+
+    // Redirect based on role
+    if (roleData) {
+      // User is admin, redirect to admin dashboard
+      navigate('/admin', { replace: true });
     } else {
-      // Small delay to allow role fetching
-      setTimeout(() => {
-        navigate(from, { replace: true });
-      }, 500);
+      // Regular user, redirect to user dashboard
+      navigate('/dashboard', { replace: true });
     }
   };
 
@@ -93,8 +127,8 @@ const Login = () => {
                 </div>
               </div>
               <div className="flex items-center justify-end">
-                <Link 
-                  to="/forgot-password" 
+                <Link
+                  to="/forgot-password"
                   className="text-sm text-primary hover:text-primary/80 transition-colors"
                 >
                   Forgot password?
@@ -102,8 +136,8 @@ const Login = () => {
               </div>
             </CardContent>
             <CardFooter className="flex flex-col space-y-4">
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
                 disabled={loading}
               >
