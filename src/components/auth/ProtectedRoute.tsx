@@ -38,13 +38,11 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
   // CRITICAL: Admin trying to access user dashboard - redirect to admin dashboard
   if (isAdmin && isUserRoute) {
-    console.log('Admin detected on user route, redirecting to admin dashboard');
     return <Navigate to="/admin" replace />;
   }
 
   // CRITICAL: Regular user trying to access admin routes - redirect to user dashboard
   if (!isAdmin && (needsAdmin || isAdminRoute)) {
-    console.log('Non-admin user detected on admin route, redirecting to user dashboard');
     return <Navigate to="/dashboard" replace />;
   }
 
