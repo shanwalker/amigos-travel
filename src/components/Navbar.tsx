@@ -26,7 +26,6 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
     { label: 'The Amigo Way', href: '#amigo-way' },
     { label: 'Community', href: '#community' },
     { label: 'About', href: '#about' },
-    { label: 'Built by Shan', href: '#', special: true },
   ];
 
   return (
@@ -102,8 +101,8 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
               key={link.label}
               href={link.href}
               className={`font-sans text-sm font-medium transition-all duration-300 relative group ${link.special
-                  ? 'text-gradient font-bold flex items-center gap-2 hover:scale-110'
-                  : 'text-foreground/80 hover:text-foreground hover:scale-105'
+                ? 'text-gradient font-bold flex items-center gap-2 hover:scale-110'
+                : 'text-foreground/80 hover:text-foreground hover:scale-105'
                 }`}
             >
               {link.special && (
@@ -124,8 +123,8 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
               )}
               {link.label}
               <span className={`absolute -bottom-1 left-0 w-full h-0.5 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left ${link.special
-                  ? 'bg-gradient-to-r from-primary via-purple-500 to-primary shadow-lg shadow-primary/50'
-                  : 'bg-primary'
+                ? 'bg-gradient-to-r from-primary via-purple-500 to-primary shadow-lg shadow-primary/50'
+                : 'bg-primary'
                 }`} />
               {link.special && (
                 <span className="absolute -inset-2 bg-primary/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
