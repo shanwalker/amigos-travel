@@ -1,14 +1,5 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
+# 🛡️ TEMPORARY BLOCK for Dev/Staging Site
+# Remove this block and allow indexing when you go live!
 
 User-agent: *
-Allow: /
+Disallow: /
