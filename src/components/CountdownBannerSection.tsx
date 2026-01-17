@@ -12,49 +12,19 @@ interface TimeLeft {
 }
 
 const FlipCard = ({ value, label }: { value: number; label: string }) => {
-  const [prevValue, setPrevValue] = useState(value);
-  const [isFlipping, setIsFlipping] = useState(false);
-
-  useEffect(() => {
-    if (value !== prevValue) {
-      setIsFlipping(true);
-      const timer = setTimeout(() => {
-        setPrevValue(value);
-        setIsFlipping(false);
-      }, 300);
-      return () => clearTimeout(timer);
-    }
-  }, [value, prevValue]);
-
   return (
     <div className="flex flex-col items-center">
       <div className="relative w-16 h-20 md:w-20 md:h-24">
         {/* Card Container */}
-        <div className="absolute inset-0 bg-navy/90 rounded-lg border border-amigo-orange/30 overflow-hidden">
-          {/* Top Half */}
-          <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-navy to-navy/80 flex items-end justify-center overflow-hidden">
-            <motion.span 
-              className="font-mono text-3xl md:text-4xl font-bold text-amigo-orange translate-y-1/2"
-              animate={isFlipping ? { rotateX: -90 } : { rotateX: 0 }}
-              transition={{ duration: 0.15 }}
-            >
-              {String(value).padStart(2, '0')}
-            </motion.span>
-          </div>
-          
-          {/* Divider Line */}
-          <div className="absolute top-1/2 left-0 right-0 h-px bg-navy/50 z-10" />
-          
-          {/* Bottom Half */}
-          <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-navy to-navy/80 flex items-start justify-center overflow-hidden">
-            <motion.span 
-              className="font-mono text-3xl md:text-4xl font-bold text-amigo-orange -translate-y-1/2"
-              animate={isFlipping ? { rotateX: 90 } : { rotateX: 0 }}
-              transition={{ duration: 0.15, delay: 0.15 }}
-            >
-              {String(value).padStart(2, '0')}
-            </motion.span>
-          </div>
+        <div className="absolute inset-0 bg-navy/90 rounded-lg border border-amigo-orange/30 overflow-hidden flex items-center justify-center">
+          <motion.span 
+            key={value}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="font-mono text-3xl md:text-4xl font-bold text-amigo-orange"
+          >
+            {String(value).padStart(2, '0')}
+          </motion.span>
         </div>
         
         {/* Glow Effect */}
