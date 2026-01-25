@@ -31,6 +31,27 @@ const Login = () => {
     }
   }, [user, isAdmin, navigate, loading]);
 
+  const checkNeedsOnboarding = async (userId: string): Promise<boolean> => {
+    try {
+      const { data, error } = await (supabase as any)
+        .from('profiles')
+        .select('travel_preferences')
+        .eq('id', userId)
+        .maybeSingle();
+      
+      if (error) return false;
+      if (!data) return true;
+      
+      const prefs = data?.travel_preferences;
+      if (!prefs) return true;
+      if (!prefs.completed_at) return true;
+      
+      return false;
+    } catch {
+      return false;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -66,8 +87,13 @@ const Login = () => {
       // User is admin, redirect to admin dashboard
       navigate('/admin', { replace: true });
     } else {
-      // Regular user, redirect to user dashboard
-      navigate('/dashboard', { replace: true });
+      // Regular user - check if needs onboarding
+      const needsOnboarding = await checkNeedsOnboarding(currentUser.id);
+      if (needsOnboarding) {
+        navigate('/onboarding', { replace: true });
+      } else {
+        navigate('/dashboard', { replace: true });
+      }
     }
   };
 

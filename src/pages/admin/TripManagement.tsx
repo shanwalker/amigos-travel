@@ -31,10 +31,37 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { Plus, Pencil, Trash2, Loader2, Search, Map } from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
+import { Plus, Pencil, Trash2, Loader2, Search, Map, Star, Users, Sparkles } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
-import type { Trip } from '@/integrations/supabase/database.types';
+import type { Trip, TripType, TripStatus } from '@/integrations/supabase/database.types';
+
+const TRIP_TYPE_LABELS: Record<TripType, string> = {
+  surprise: 'Surprise Trip',
+  group_fixed: 'Fixed Group Trip',
+  group_reservable: 'Reservable Group Trip',
+  standard: 'Standard Package',
+  custom: 'Custom Trip',
+};
+
+const TRIP_STATUS_LABELS: Record<TripStatus, string> = {
+  draft: 'Draft',
+  active: 'Active',
+  confirmed: 'Confirmed',
+  completed: 'Completed',
+  cancelled: 'Cancelled',
+};
+
+const CATEGORIES = ['Beach', 'Mountain', 'City', 'Countryside', 'Island', 'Adventure', 'Cultural', 'Wellness'];
 
 const TripManagement = () => {
   const { data: trips, isLoading } = useTrips();
@@ -43,6 +70,7 @@ const TripManagement = () => {
   const deleteTrip = useDeleteTrip();
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [typeFilter, setTypeFilter] = useState<TripType | 'all'>('all');
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
@@ -60,13 +88,24 @@ const TripManagement = () => {
     start_date: '',
     spots_left: '',
     total_spots: '',
+    // New fields
+    trip_type: 'standard' as TripType,
+    category: '',
+    min_budget: '',
+    max_budget: '',
+    is_featured: false,
+    min_reservations: '5',
+    reservation_fee: '999',
+    status: 'active' as TripStatus,
   });
 
-  const filteredTrips = trips?.filter(trip =>
-    trip.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    trip.destination.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    trip.country.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredTrips = trips?.filter(trip => {
+    const matchesSearch = trip.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      trip.destination.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      trip.country.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesType = typeFilter === 'all' || trip.trip_type === typeFilter;
+    return matchesSearch && matchesType;
+  });
 
   const resetForm = () => {
     setFormData({
@@ -81,6 +120,14 @@ const TripManagement = () => {
       start_date: '',
       spots_left: '',
       total_spots: '',
+      trip_type: 'standard',
+      category: '',
+      min_budget: '',
+      max_budget: '',
+      is_featured: false,
+      min_reservations: '5',
+      reservation_fee: '999',
+      status: 'active',
     });
   };
 
@@ -99,14 +146,14 @@ const TripManagement = () => {
         spots_left: parseInt(formData.spots_left) || 20,
         total_spots: parseInt(formData.total_spots) || 20,
         rating: null,
-        trip_type: 'group_fixed',
-        category: null,
-        min_budget: null,
-        max_budget: null,
-        is_featured: false,
-        min_reservations: null,
-        reservation_fee: null,
-        status: 'active',
+        trip_type: formData.trip_type,
+        category: formData.category || null,
+        min_budget: formData.min_budget ? parseFloat(formData.min_budget) : null,
+        max_budget: formData.max_budget ? parseFloat(formData.max_budget) : null,
+        is_featured: formData.is_featured,
+        min_reservations: formData.trip_type === 'group_reservable' ? parseInt(formData.min_reservations) || 5 : null,
+        reservation_fee: formData.trip_type === 'group_reservable' ? parseFloat(formData.reservation_fee) || 999 : null,
+        status: formData.status,
       });
       toast({ title: 'Success', description: 'Trip created successfully!' });
       setIsCreateOpen(false);
@@ -130,6 +177,14 @@ const TripManagement = () => {
       start_date: trip.start_date || '',
       spots_left: trip.spots_left.toString(),
       total_spots: trip.total_spots.toString(),
+      trip_type: trip.trip_type,
+      category: trip.category || '',
+      min_budget: trip.min_budget?.toString() || '',
+      max_budget: trip.max_budget?.toString() || '',
+      is_featured: trip.is_featured,
+      min_reservations: trip.min_reservations?.toString() || '5',
+      reservation_fee: trip.reservation_fee?.toString() || '999',
+      status: trip.status,
     });
     setIsEditOpen(true);
   };
@@ -150,6 +205,14 @@ const TripManagement = () => {
         start_date: formData.start_date || null,
         spots_left: parseInt(formData.spots_left) || 20,
         total_spots: parseInt(formData.total_spots) || 20,
+        trip_type: formData.trip_type,
+        category: formData.category || null,
+        min_budget: formData.min_budget ? parseFloat(formData.min_budget) : null,
+        max_budget: formData.max_budget ? parseFloat(formData.max_budget) : null,
+        is_featured: formData.is_featured,
+        min_reservations: formData.trip_type === 'group_reservable' ? parseInt(formData.min_reservations) || 5 : null,
+        reservation_fee: formData.trip_type === 'group_reservable' ? parseFloat(formData.reservation_fee) || 999 : null,
+        status: formData.status,
       });
       toast({ title: 'Success', description: 'Trip updated successfully!' });
       setIsEditOpen(false);
@@ -172,7 +235,73 @@ const TripManagement = () => {
   };
 
   const TripForm = ({ onSubmit, submitLabel }: { onSubmit: () => void; submitLabel: string }) => (
-    <div className="grid gap-4 py-4 max-h-[60vh] overflow-y-auto">
+    <div className="grid gap-4 py-4 max-h-[60vh] overflow-y-auto pr-2">
+      {/* Trip Type & Status Row */}
+      <div className="grid grid-cols-3 gap-4">
+        <div className="space-y-2">
+          <Label>Trip Type *</Label>
+          <Select
+            value={formData.trip_type}
+            onValueChange={(value: TripType) => setFormData({ ...formData, trip_type: value })}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select type" />
+            </SelectTrigger>
+            <SelectContent>
+              {Object.entries(TRIP_TYPE_LABELS).map(([value, label]) => (
+                <SelectItem key={value} value={value}>{label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="space-y-2">
+          <Label>Category</Label>
+          <Select
+            value={formData.category}
+            onValueChange={(value) => setFormData({ ...formData, category: value })}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select category" />
+            </SelectTrigger>
+            <SelectContent>
+              {CATEGORIES.map((cat) => (
+                <SelectItem key={cat} value={cat.toLowerCase()}>{cat}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="space-y-2">
+          <Label>Status</Label>
+          <Select
+            value={formData.status}
+            onValueChange={(value: TripStatus) => setFormData({ ...formData, status: value })}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select status" />
+            </SelectTrigger>
+            <SelectContent>
+              {Object.entries(TRIP_STATUS_LABELS).map(([value, label]) => (
+                <SelectItem key={value} value={value}>{label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      {/* Featured Toggle */}
+      <div className="flex items-center justify-between p-3 rounded-lg border border-border/50 bg-muted/30">
+        <div className="flex items-center gap-2">
+          <Star className="h-4 w-4 text-amber-500" />
+          <Label htmlFor="is_featured" className="text-sm font-medium cursor-pointer">Featured Trip</Label>
+        </div>
+        <Switch
+          id="is_featured"
+          checked={formData.is_featured}
+          onCheckedChange={(checked) => setFormData({ ...formData, is_featured: checked })}
+        />
+      </div>
+
+      {/* Title & Slug */}
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="title">Title *</Label>
@@ -193,6 +322,8 @@ const TripManagement = () => {
           />
         </div>
       </div>
+
+      {/* Destination & Country */}
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="destination">Destination *</Label>
@@ -213,6 +344,8 @@ const TripManagement = () => {
           />
         </div>
       </div>
+
+      {/* Description */}
       <div className="space-y-2">
         <Label htmlFor="description">Description</Label>
         <Textarea
@@ -223,6 +356,8 @@ const TripManagement = () => {
           rows={3}
         />
       </div>
+
+      {/* Image URL */}
       <div className="space-y-2">
         <Label htmlFor="image_url">Image URL</Label>
         <Input
@@ -232,6 +367,8 @@ const TripManagement = () => {
           placeholder="https://..."
         />
       </div>
+
+      {/* Price, Duration, Start Date */}
       <div className="grid grid-cols-3 gap-4">
         <div className="space-y-2">
           <Label htmlFor="price">Price (₹)</Label>
@@ -263,6 +400,32 @@ const TripManagement = () => {
           />
         </div>
       </div>
+
+      {/* Budget Range */}
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="min_budget">Min Budget (₹)</Label>
+          <Input
+            id="min_budget"
+            type="number"
+            value={formData.min_budget}
+            onChange={(e) => setFormData({ ...formData, min_budget: e.target.value })}
+            placeholder="3000"
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="max_budget">Max Budget (₹)</Label>
+          <Input
+            id="max_budget"
+            type="number"
+            value={formData.max_budget}
+            onChange={(e) => setFormData({ ...formData, max_budget: e.target.value })}
+            placeholder="50000"
+          />
+        </div>
+      </div>
+
+      {/* Spots */}
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="spots_left">Spots Left</Label>
@@ -285,7 +448,38 @@ const TripManagement = () => {
           />
         </div>
       </div>
-      <DialogFooter>
+
+      {/* Reservable Trip Fields */}
+      {formData.trip_type === 'group_reservable' && (
+        <div className="grid grid-cols-2 gap-4 p-4 rounded-lg border border-primary/30 bg-primary/5">
+          <div className="col-span-2 flex items-center gap-2 text-sm text-primary font-medium">
+            <Users className="h-4 w-4" />
+            Reservation Settings
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="min_reservations">Min Reservations</Label>
+            <Input
+              id="min_reservations"
+              type="number"
+              value={formData.min_reservations}
+              onChange={(e) => setFormData({ ...formData, min_reservations: e.target.value })}
+              placeholder="5"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="reservation_fee">Reservation Fee (₹)</Label>
+            <Input
+              id="reservation_fee"
+              type="number"
+              value={formData.reservation_fee}
+              onChange={(e) => setFormData({ ...formData, reservation_fee: e.target.value })}
+              placeholder="999"
+            />
+          </div>
+        </div>
+      )}
+
+      <DialogFooter className="pt-4">
         <Button onClick={onSubmit} disabled={!formData.title || !formData.destination || !formData.country}>
           {submitLabel}
         </Button>
@@ -324,15 +518,31 @@ const TripManagement = () => {
         </Dialog>
       </div>
 
-      {/* Search */}
-      <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder="Search trips..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-10"
-        />
+      {/* Filters */}
+      <div className="flex flex-wrap gap-4">
+        <div className="relative flex-1 max-w-sm">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search trips..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+        <Select
+          value={typeFilter}
+          onValueChange={(value) => setTypeFilter(value as TripType | 'all')}
+        >
+          <SelectTrigger className="w-[200px]">
+            <SelectValue placeholder="Filter by type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Types</SelectItem>
+            {Object.entries(TRIP_TYPE_LABELS).map(([value, label]) => (
+              <SelectItem key={value} value={value}>{label}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Trips Table */}
@@ -347,11 +557,11 @@ const TripManagement = () => {
               <TableHeader>
                 <TableRow className="border-border/50">
                   <TableHead>Trip</TableHead>
+                  <TableHead>Type</TableHead>
                   <TableHead>Location</TableHead>
-                  <TableHead>Duration</TableHead>
                   <TableHead>Price</TableHead>
+                  <TableHead>Status</TableHead>
                   <TableHead>Spots</TableHead>
-                  <TableHead>Start Date</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -367,14 +577,39 @@ const TripManagement = () => {
                             <Map className="h-5 w-5 text-primary" />
                           </div>
                         )}
-                        <span className="font-medium">{trip.title}</span>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium">{trip.title}</span>
+                            {trip.is_featured && <Star className="h-3 w-3 text-amber-500 fill-amber-500" />}
+                          </div>
+                          <span className="text-xs text-muted-foreground">{trip.duration_days} days</span>
+                        </div>
                       </div>
                     </TableCell>
+                    <TableCell>
+                      <Badge variant="outline" className="text-xs">
+                        {TRIP_TYPE_LABELS[trip.trip_type]}
+                      </Badge>
+                    </TableCell>
                     <TableCell>{trip.destination}, {trip.country}</TableCell>
-                    <TableCell>{trip.duration_days} days</TableCell>
                     <TableCell>₹{trip.price?.toLocaleString() || 'N/A'}</TableCell>
-                    <TableCell>{trip.spots_left}/{trip.total_spots}</TableCell>
-                    <TableCell>{trip.start_date || 'TBD'}</TableCell>
+                    <TableCell>
+                      <Badge 
+                        variant={trip.status === 'active' ? 'default' : trip.status === 'confirmed' ? 'secondary' : 'outline'}
+                        className="text-xs"
+                      >
+                        {TRIP_STATUS_LABELS[trip.status]}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      {trip.trip_type === 'group_reservable' ? (
+                        <span className="text-xs">
+                          {trip.reservation_count}/{trip.min_reservations} reserved
+                        </span>
+                      ) : (
+                        <span>{trip.spots_left}/{trip.total_spots}</span>
+                      )}
+                    </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
                         <Button variant="ghost" size="icon" onClick={() => handleEdit(trip)}>

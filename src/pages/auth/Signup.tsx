@@ -65,12 +65,18 @@ const Signup = () => {
                 We've sent a confirmation link to <strong>{email}</strong>. 
                 Please verify your email to complete registration.
               </p>
-              <Button 
-                onClick={() => navigate('/login')}
-                className="mt-4 bg-primary text-primary-foreground hover:bg-primary/90"
-              >
-                Back to Login
-              </Button>
+              <div className="flex gap-3 justify-center">
+                <Button 
+                  variant="outline"
+                  onClick={() => navigate('/login')}
+                  className="border-border"
+                >
+                  Back to Login
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">
+                After verifying your email, you'll complete a quick quiz to personalize your experience.
+              </p>
             </CardContent>
           </Card>
         </motion.div>
