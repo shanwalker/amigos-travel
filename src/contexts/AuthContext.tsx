@@ -103,7 +103,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           emailRedirectTo: window.location.origin,
           data: {
             full_name: fullName,
-            email_confirmed: true, // Signal that we want auto-confirm
           },
         },
       });
@@ -117,31 +116,46 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { error: null };
       }
 
-      // If user was created, the account exists
-      // Check if user's email is already confirmed by looking at identities
+      // User was created but needs confirmation
+      // Call our edge function to auto-confirm the user
       if (data?.user) {
-        // Check if user has confirmed email (identities array has entry)
-        const hasConfirmedIdentity = data.user.identities && data.user.identities.length > 0;
-        
-        if (hasConfirmedIdentity || data.user.email_confirmed_at) {
-          // User is confirmed, try to sign in
-          const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-            email,
-            password,
+        try {
+          const { data: confirmData, error: confirmError } = await supabase.functions.invoke('confirm-user', {
+            body: { email, password },
           });
-          
-          if (signInData?.session) {
+
+          if (confirmError) {
+            console.error('Confirm user error:', confirmError);
+            // Fall back to email confirmation flow
+            return { error: null, needsEmailConfirmation: true } as any;
+          }
+
+          if (confirmData?.session) {
+            // Set the session from the edge function response
+            await supabase.auth.setSession({
+              access_token: confirmData.session.access_token,
+              refresh_token: confirmData.session.refresh_token,
+            });
             return { error: null };
           }
-          
-          // Even if sign in fails, user was created successfully
-          if (signInError) {
-            return { error: signInError as Error };
+
+          if (confirmData?.confirmed) {
+            // User is confirmed but we need to sign in
+            const { error: signInError } = await supabase.auth.signInWithPassword({
+              email,
+              password,
+            });
+            
+            if (signInError) {
+              return { error: signInError as Error };
+            }
+            return { error: null };
           }
+        } catch (fnError) {
+          console.error('Edge function call failed:', fnError);
+          // Fall back to email confirmation flow
+          return { error: null, needsEmailConfirmation: true } as any;
         }
-        
-        // No confirmation, but user was created - needs email verification
-        return { error: null, needsEmailConfirmation: true } as any;
       }
       
       return { error: null };
