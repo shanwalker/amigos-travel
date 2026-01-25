@@ -22,6 +22,7 @@ const FeaturedTripsCarousel = lazy(() => import('@/components/trips/FeaturedTrip
 const ReservableTripsGrid = lazy(() => import('@/components/trips/ReservableTripsGrid'));
 const StandardPackagesGrid = lazy(() => import('@/components/trips/StandardPackagesGrid'));
 const CustomTripCTA = lazy(() => import('@/components/trips/CustomTripCTA'));
+const LocalBuddiesSection = lazy(() => import('@/components/buddies/LocalBuddiesSection'));
 
 // V2 Components - lazy loaded
 const CursorSpotlight = lazy(() => import('@/components/v2/CursorSpotlight').then(m => ({ default: m.CursorSpotlight })));
@@ -121,6 +122,13 @@ const Index = () => {
           <LazySection>
             <Suspense fallback={<SectionLoader />}>
               <TestimonialsSection />
+            </Suspense>
+          </LazySection>
+
+          {/* NEW: Local Buddies Section */}
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <LocalBuddiesSection />
             </Suspense>
           </LazySection>
 
