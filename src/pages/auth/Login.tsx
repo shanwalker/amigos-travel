@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,13 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, Mail, Lock, Plane } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { toast } from '@/hooks/use-toast';
+import { 
+  getSignupSession, 
+  clearSignupSession, 
+  prepareForDatabaseInsert,
+  getTripTypeLabel 
+} from '@/lib/signupSession';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -17,12 +24,10 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const { signIn, user, isAdmin } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
 
   // Redirect if already logged in
   useEffect(() => {
     if (user && !loading) {
-      // Redirect based on role
       if (isAdmin) {
         navigate('/admin', { replace: true });
       } else {
@@ -52,6 +57,128 @@ const Login = () => {
     }
   };
 
+  const processSignupSession = async (userId: string) => {
+    const sessionData = prepareForDatabaseInsert();
+    if (!sessionData) return false;
+
+    const { tripType, questionnaireAnswers, profileData, signupContext } = sessionData;
+
+    try {
+      // 1. Update profile with additional data
+      if (profileData) {
+        const fullName = `${profileData.firstName} ${profileData.lastName}`.trim();
+        await (supabase as any)
+          .from('profiles')
+          .update({
+            full_name: fullName,
+            phone: profileData.phone,
+          })
+          .eq('id', userId);
+      }
+
+      // 2. Update travel preferences with questionnaire answers
+      const getBudgetStyle = (minBudget: number): string => {
+        if (minBudget <= 15000) return 'budget_backpacker';
+        if (minBudget <= 50000) return 'smart_saver';
+        if (minBudget <= 150000) return 'comfort_seeker';
+        return 'luxury_lover';
+      };
+
+      const travelPreferences = {
+        interests: questionnaireAnswers.interests || [],
+        budget_style: getBudgetStyle(questionnaireAnswers.budget_min || 0),
+        travel_style: questionnaireAnswers.travel_style || 'solo',
+        accommodation_pref: questionnaireAnswers.accommodation_pref || 'mid_range',
+        activity_level: questionnaireAnswers.activity_level || 'moderate',
+        dietary: [],
+        completed_at: new Date().toISOString(),
+        signup_trip_type: tripType,
+        signup_context: signupContext,
+      };
+
+      await (supabase as any)
+        .from('profiles')
+        .update({ travel_preferences: travelPreferences })
+        .eq('id', userId);
+
+      // 3. Create appropriate request based on trip type
+      switch (tripType) {
+        case 'surprise':
+          await (supabase as any)
+            .from('surprise_requests')
+            .insert({
+              user_id: userId,
+              interests_data: {
+                interests: questionnaireAnswers.interests || [],
+                activities: questionnaireAnswers.activities || [],
+                travel_style: questionnaireAnswers.travel_style || 'solo',
+                special_requests: questionnaireAnswers.special_requests || null,
+              },
+              budget_min: questionnaireAnswers.budget_min || 15000,
+              budget_max: questionnaireAnswers.budget_max || 50000,
+              preferred_dates: questionnaireAnswers.preferred_dates || null,
+              flexible_dates: questionnaireAnswers.flexible_dates ?? true,
+              status: 'pending',
+            });
+          toast({
+            title: 'Surprise Trip Request Submitted!',
+            description: "We're matching you with the perfect adventure.",
+          });
+          break;
+
+        case 'custom':
+          await (supabase as any)
+            .from('custom_trip_requests')
+            .insert({
+              user_id: userId,
+              requirements: {
+                destination_ideas: questionnaireAnswers.destination_ideas || [],
+                activities: questionnaireAnswers.activities || [],
+                accommodation_type: questionnaireAnswers.accommodation_pref || 'mid_range',
+                special_requirements: questionnaireAnswers.special_requests || null,
+              },
+              budget_min: questionnaireAnswers.budget_min || 15000,
+              budget_max: questionnaireAnswers.budget_max || 50000,
+              num_travelers: questionnaireAnswers.num_travelers || 1,
+              preferred_dates: questionnaireAnswers.preferred_dates || null,
+              flexible_dates: questionnaireAnswers.flexible_dates ?? true,
+              status: 'pending',
+            });
+          toast({
+            title: 'Custom Trip Request Submitted!',
+            description: 'Our travel experts will design your perfect itinerary.',
+          });
+          break;
+
+        case 'group':
+          if (questionnaireAnswers.selected_trip_id) {
+            await (supabase as any)
+              .from('trip_reservations')
+              .insert({
+                user_id: userId,
+                trip_id: questionnaireAnswers.selected_trip_id,
+                reservation_fee_paid: false,
+                preferred_dates: questionnaireAnswers.preferred_dates ? [questionnaireAnswers.preferred_dates] : null,
+                status: 'pending',
+              });
+            toast({
+              title: 'Group Trip Reservation Made!',
+              description: 'Your spot is reserved. Complete payment to confirm.',
+            });
+          }
+          break;
+      }
+
+      // 4. Clear the signup session
+      clearSignupSession();
+      return true;
+    } catch (error) {
+      console.error('Error processing signup session:', error);
+      clearSignupSession();
+      return false;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -74,6 +201,12 @@ const Login = () => {
       return;
     }
 
+    // Check for pending signup session and process it
+    const hasPendingSession = getSignupSession() !== null;
+    if (hasPendingSession) {
+      await processSignupSession(currentUser.id);
+    }
+
     // Check if user has admin role
     const { data: roleData } = await supabase
       .from('user_roles')
@@ -84,16 +217,17 @@ const Login = () => {
 
     // Redirect based on role
     if (roleData) {
-      // User is admin, redirect to admin dashboard
       navigate('/admin', { replace: true });
     } else {
-      // Regular user - check if needs onboarding
-      const needsOnboarding = await checkNeedsOnboarding(currentUser.id);
-      if (needsOnboarding) {
-        navigate('/onboarding', { replace: true });
-      } else {
-        navigate('/dashboard', { replace: true });
+      // Regular user - check if needs onboarding (only if no pending session was processed)
+      if (!hasPendingSession) {
+        const needsOnboarding = await checkNeedsOnboarding(currentUser.id);
+        if (needsOnboarding) {
+          navigate('/onboarding', { replace: true });
+          return;
+        }
       }
+      navigate('/dashboard', { replace: true });
     }
   };
 
@@ -178,8 +312,8 @@ const Login = () => {
               </Button>
               <p className="text-sm text-muted-foreground text-center">
                 Don't have an account?{' '}
-                <Link to="/signup" className="text-primary hover:text-primary/80 transition-colors font-medium">
-                  Sign up
+                <Link to="/get-started" className="text-primary hover:text-primary/80 transition-colors font-medium">
+                  Get Started
                 </Link>
               </p>
             </CardFooter>
