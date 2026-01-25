@@ -26,12 +26,33 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, Search, MoreHorizontal, Shield, ShieldCheck, User } from 'lucide-react';
+import { Loader2, Search, MoreHorizontal, Shield, ShieldCheck, User, Eye, Palmtree, Mountain, Building2, Wallet, Users as UsersIcon } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 import { format } from 'date-fns';
+import type { TravelPreferences } from '@/integrations/supabase/database.types';
+
+const BUDGET_LABELS: Record<string, string> = {
+  budget_backpacker: 'Budget Backpacker (Under ₹3K/day)',
+  smart_saver: 'Smart Saver (₹3K-7K/day)',
+  comfort_seeker: 'Comfort Seeker (₹7K-15K/day)',
+  luxury_lover: 'Luxury Lover (₹15K+/day)',
+};
+
+const TRAVEL_STYLE_LABELS: Record<string, string> = {
+  solo: 'Solo Explorer',
+  couple: 'Couple/Partner',
+  friends: 'Friends Group',
+  family: 'Family',
+};
 
 const UserManagement = () => {
   const { data: users, isLoading } = useUsers();
@@ -39,7 +60,7 @@ const UserManagement = () => {
 
   const [searchQuery, setSearchQuery] = useState('');
   const [roleFilter, setRoleFilter] = useState<string>('all');
-
+  const [selectedUser, setSelectedUser] = useState<any>(null);
   const filteredUsers = users?.filter((user) => {
     const matchesSearch = 
       user.full_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -124,8 +145,8 @@ const UserManagement = () => {
                 <TableRow className="border-border/50">
                   <TableHead>User</TableHead>
                   <TableHead>Email</TableHead>
-                  <TableHead>Phone</TableHead>
                   <TableHead>Roles</TableHead>
+                  <TableHead>Preferences</TableHead>
                   <TableHead>Joined</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
@@ -144,8 +165,9 @@ const UserManagement = () => {
                         <span className="font-medium">{user.full_name || 'No name'}</span>
                       </div>
                     </TableCell>
-                    <TableCell className="text-muted-foreground">{user.email}</TableCell>
-                    <TableCell className="text-muted-foreground">{user.phone || '-'}</TableCell>
+                    <TableCell className="text-muted-foreground text-sm max-w-[200px] truncate">
+                      {user.email}
+                    </TableCell>
                     <TableCell>
                       <div className="flex gap-1 flex-wrap">
                         {user.roles?.length ? (
@@ -161,6 +183,17 @@ const UserManagement = () => {
                         )}
                       </div>
                     </TableCell>
+                    <TableCell>
+                      {user.travel_preferences?.completed_at ? (
+                        <Badge variant="outline" className="bg-green-500/10 text-green-400 border-green-500/30">
+                          Complete
+                        </Badge>
+                      ) : (
+                        <Badge variant="outline" className="bg-gray-500/10 text-gray-400 border-gray-500/30">
+                          Pending
+                        </Badge>
+                      )}
+                    </TableCell>
                     <TableCell className="text-muted-foreground">
                       {format(new Date(user.created_at), 'MMM d, yyyy')}
                     </TableCell>
@@ -172,6 +205,11 @@ const UserManagement = () => {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
+                          <DropdownMenuItem onClick={() => setSelectedUser(user)}>
+                            <Eye className="mr-2 h-4 w-4" />
+                            View Preferences
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
                           <DropdownMenuLabel>Manage Roles</DropdownMenuLabel>
                           <DropdownMenuSeparator />
                           {!user.roles?.includes('admin') ? (
@@ -246,6 +284,89 @@ const UserManagement = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* User Preferences Dialog */}
+      <Dialog open={!!selectedUser} onOpenChange={() => setSelectedUser(null)}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-3">
+              <Avatar className="h-10 w-10">
+                <AvatarImage src={selectedUser?.avatar_url || undefined} />
+                <AvatarFallback className="bg-primary/20 text-primary">
+                  {selectedUser?.full_name?.[0] || 'U'}
+                </AvatarFallback>
+              </Avatar>
+              <div>
+                <span>{selectedUser?.full_name || 'User'}</span>
+                <p className="text-sm font-normal text-muted-foreground">{selectedUser?.email}</p>
+              </div>
+            </DialogTitle>
+          </DialogHeader>
+          
+          {selectedUser?.travel_preferences?.completed_at ? (
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-3 rounded-lg bg-muted/30 border border-border/50">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
+                    <Wallet className="h-4 w-4" />
+                    Budget Style
+                  </div>
+                  <p className="font-medium text-foreground">
+                    {BUDGET_LABELS[selectedUser.travel_preferences.budget_style] || selectedUser.travel_preferences.budget_style}
+                  </p>
+                </div>
+                <div className="p-3 rounded-lg bg-muted/30 border border-border/50">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
+                    <UsersIcon className="h-4 w-4" />
+                    Travel Style
+                  </div>
+                  <p className="font-medium text-foreground">
+                    {TRAVEL_STYLE_LABELS[selectedUser.travel_preferences.travel_style] || selectedUser.travel_preferences.travel_style}
+                  </p>
+                </div>
+              </div>
+              
+              <div className="p-3 rounded-lg bg-muted/30 border border-border/50">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                  <Palmtree className="h-4 w-4" />
+                  Interests
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {(selectedUser.travel_preferences.interests as string[])?.map((interest: string) => (
+                    <Badge key={interest} variant="outline" className="bg-primary/10 text-primary border-primary/30">
+                      {interest.replace(/_/g, ' ')}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-3 rounded-lg bg-muted/30 border border-border/50">
+                  <p className="text-sm text-muted-foreground mb-1">Accommodation</p>
+                  <p className="font-medium text-foreground capitalize">
+                    {selectedUser.travel_preferences.accommodation_pref?.replace(/_/g, ' ')}
+                  </p>
+                </div>
+                <div className="p-3 rounded-lg bg-muted/30 border border-border/50">
+                  <p className="text-sm text-muted-foreground mb-1">Activity Level</p>
+                  <p className="font-medium text-foreground capitalize">
+                    {selectedUser.travel_preferences.activity_level}
+                  </p>
+                </div>
+              </div>
+              
+              <p className="text-xs text-muted-foreground text-right">
+                Completed: {format(new Date(selectedUser.travel_preferences.completed_at), 'MMM d, yyyy')}
+              </p>
+            </div>
+          ) : (
+            <div className="text-center py-8 text-muted-foreground">
+              <Mountain className="h-12 w-12 mx-auto mb-3 opacity-50" />
+              <p>This user hasn't completed the onboarding quiz yet.</p>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
