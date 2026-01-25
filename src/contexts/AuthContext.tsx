@@ -119,18 +119,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // User was created but needs confirmation
       // Try calling our edge function to auto-confirm the user
       if (data?.user) {
+        const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoZGJ0a2tnZXNmZ3F0a2ZlZG5lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1NTYwODgsImV4cCI6MjA4NDEzMjA4OH0.GeQsaI7LW29-FL1AIm-lMPqduKaWUyRkH_JNEWTBKms';
+        
         try {
+          console.log('Attempting auto-confirm via edge function after signup...');
           const response = await fetch(
             `https://whdbtkkgesfgqtkfedne.supabase.co/functions/v1/confirm-user`,
             {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
-                'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoZGJ0a2tnZXNmZ3F0a2ZlZG5lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1NTYwODgsImV4cCI6MjA4NDEzMjA4OH0.GeQsaI7LW29-FL1AIm-lMPqduKaWUyRkH_JNEWTBKms',
+                'apikey': ANON_KEY,
+                'Authorization': `Bearer ${ANON_KEY}`,
               },
               body: JSON.stringify({ email, password }),
             }
           );
+          
+          console.log('Edge function response status:', response.status);
 
           if (response.ok) {
             const confirmData = await response.json();
