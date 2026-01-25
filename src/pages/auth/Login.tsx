@@ -7,17 +7,27 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, Mail, Lock, Plane } from 'lucide-react';
+import { Loader2, Mail, Lock, Plane, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { getSignupSession, clearSignupSession } from '@/lib/signupSession';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
   const { signIn, user, isAdmin } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Check for signup success message
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('signup') === 'success') {
+      setSuccessMessage('Account created successfully! Please sign in to continue.');
+    }
+  }, [location]);
 
   // Redirect if already logged in
   useEffect(() => {
@@ -31,9 +41,94 @@ const Login = () => {
     }
   }, [user, isAdmin, navigate, loading]);
 
+  const processSignupSession = async (userId: string) => {
+    const sessionData = getSignupSession();
+
+    if (!sessionData) {
+      console.log('[Login] No signup session to process');
+      return;
+    }
+
+    console.log('[Login] Processing signup session:', sessionData);
+
+    try {
+      // Update profile with travel preferences
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({
+          travel_preferences: sessionData.questionnaireData,
+        } as any)
+        .eq('id', userId);
+
+      if (profileError) {
+        console.error('[Login] Error updating profile:', profileError);
+        throw profileError;
+      }
+
+      // Create trip-specific request based on trip type
+      switch (sessionData.tripType) {
+        case 'surprise':
+          const { error: surpriseError } = await supabase
+            .from('surprise_requests' as any)
+            .insert({
+              user_id: userId,
+              budget: sessionData.questionnaireData.budget,
+              duration_days: sessionData.questionnaireData.duration,
+              interests: sessionData.questionnaireData.interests,
+              preferred_climate: sessionData.questionnaireData.climate,
+              status: 'pending',
+            } as any);
+          if (surpriseError) throw surpriseError;
+          break;
+
+        case 'custom':
+          const { error: customError } = await supabase
+            .from('custom_trip_requests' as any)
+            .insert({
+              user_id: userId,
+              destination: sessionData.questionnaireData.destination,
+              budget: sessionData.questionnaireData.budget,
+              duration_days: sessionData.questionnaireData.duration,
+              travel_style: sessionData.questionnaireData.travelStyle,
+              must_have_experiences: sessionData.questionnaireData.mustHave,
+              things_to_avoid: sessionData.questionnaireData.avoid,
+              status: 'pending',
+            } as any);
+          if (customError) throw customError;
+          break;
+
+        case 'group':
+          const { error: groupError } = await supabase
+            .from('trip_reservations' as any)
+            .insert({
+              user_id: userId,
+              group_size: sessionData.questionnaireData.groupSize,
+              preferred_date: sessionData.questionnaireData.preferredDate,
+              destination: sessionData.questionnaireData.destination,
+              special_requests: sessionData.questionnaireData.specialRequests,
+              status: 'pending',
+            } as any);
+          if (groupError) throw groupError;
+          break;
+
+        // For standard packages, just save preferences to profile (already done above)
+        case 'standard':
+          console.log('[Login] Standard package preferences saved to profile');
+          break;
+      }
+
+      console.log('[Login] Signup session processed successfully');
+      clearSignupSession();
+    } catch (error) {
+      console.error('[Login] Error processing signup session:', error);
+      // Don't throw - we still want user to be logged in even if this fails
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setSuccessMessage('');
     setLoading(true);
 
     const { error: signInError } = await signIn(email, password);
@@ -52,6 +147,9 @@ const Login = () => {
       setLoading(false);
       return;
     }
+
+    // Process any pending signup session data
+    await processSignupSession(currentUser.id);
 
     // Check if user has admin role
     const { data: roleData } = await supabase
@@ -91,6 +189,12 @@ const Login = () => {
           </CardHeader>
           <form onSubmit={handleSubmit}>
             <CardContent className="space-y-4">
+              {successMessage && (
+                <Alert className="bg-green-500/10 border-green-500/30 text-green-600">
+                  <CheckCircle className="h-4 w-4" />
+                  <AlertDescription>{successMessage}</AlertDescription>
+                </Alert>
+              )}
               {error && (
                 <Alert variant="destructive" className="bg-destructive/10 border-destructive/30">
                   <AlertDescription>{error}</AlertDescription>

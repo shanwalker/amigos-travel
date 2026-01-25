@@ -15,6 +15,10 @@ import Index from "./pages/Index";
 const Thailand = lazy(() => import("./pages/destinations/Thailand"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
+// Trip Signup Flow - lazy loaded
+const GetStarted = lazy(() => import("./pages/GetStarted"));
+const TripSignup = lazy(() => import("./pages/TripSignup"));
+
 // Auth Pages - lazy loaded
 const Login = lazy(() => import("./pages/auth/Login"));
 const Signup = lazy(() => import("./pages/auth/Signup"));
@@ -63,7 +67,11 @@ const App = () => (
               {/* Public Routes */}
               <Route path="/" element={<Index />} />
               <Route path="/destinations/thailand" element={<Thailand />} />
-              
+
+              {/* Trip Signup Flow */}
+              <Route path="/get-started" element={<GetStarted />} />
+              <Route path="/signup/:tripType" element={<TripSignup />} />
+
               {/* Auth Routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
