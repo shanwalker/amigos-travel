@@ -108,18 +108,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
       
       if (error) {
-        console.error('Signup error:', error);
         return { error: error as Error };
       }
 
-      // If we got a session directly, user is auto-confirmed - success!
+      // If we got a session directly, user is auto-confirmed
       if (data?.session) {
         return { error: null };
       }
 
-      // If user exists but no session, try to sign in
-      // This works when email confirmation is disabled
+      // User created but no session - could be email confirmation is enabled
+      // OR there might be a slight delay. Wait and check for session.
       if (data?.user) {
+        // Wait a moment for Supabase to process
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Check if session is now available
+        const { data: sessionData } = await supabase.auth.getSession();
+        if (sessionData?.session) {
+          return { error: null };
+        }
+        
+        // Try signing in directly
         const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
           email,
           password,
@@ -129,11 +138,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           return { error: null };
         }
         
-        // If email not confirmed, don't show as error - user account was created
-        // They just need to verify email or admin needs to disable confirmation
+        // If we still can't sign in, email confirmation is likely required
         if (signInError?.message?.includes('Email not confirmed')) {
-          // Return success but with a flag that email needs confirmation
-          // The TripSignup will handle showing appropriate message
           return { error: null, needsEmailConfirmation: true } as any;
         }
         
@@ -144,7 +150,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       return { error: null };
     } catch (err) {
-      console.error('Signup exception:', err);
       return { error: err as Error };
     }
   };
