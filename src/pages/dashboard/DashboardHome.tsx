@@ -103,11 +103,20 @@ const DashboardHome = () => {
                   {getTripTypeLabel(signupTripType as any)}
                 </p>
               </div>
-              <Link to="/dashboard/requests">
-                <Button variant="outline" size="sm" className="border-primary/30 text-primary hover:bg-primary/10">
-                  View Status <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+              {signupTripType === 'surprise' ? (
+                <Link to="/dashboard/surprise-suggestions">
+                  <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90">
+                    <Sparkles className="mr-2 h-4 w-4" />
+                    View Suggested Trips <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              ) : (
+                <Link to="/dashboard/requests">
+                  <Button variant="outline" size="sm" className="border-primary/30 text-primary hover:bg-primary/10">
+                    View Status <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+              )}
             </CardContent>
           </Card>
         </motion.div>
