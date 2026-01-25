@@ -22,8 +22,48 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [confirmingUser, setConfirmingUser] = useState(false);
   const { signIn, user, isAdmin } = useAuth();
   const navigate = useNavigate();
+
+  // Function to auto-confirm user via edge function
+  const tryAutoConfirm = async (userEmail: string, userPassword: string): Promise<boolean> => {
+    try {
+      const response = await fetch(
+        `https://whdbtkkgesfgqtkfedne.supabase.co/functions/v1/confirm-user`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoZGJ0a2tnZXNmZ3F0a2ZlZG5lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1NTYwODgsImV4cCI6MjA4NDEzMjA4OH0.GeQsaI7LW29-FL1AIm-lMPqduKaWUyRkH_JNEWTBKms',
+          },
+          body: JSON.stringify({ email: userEmail, password: userPassword }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data?.session) {
+          await supabase.auth.setSession({
+            access_token: data.session.access_token,
+            refresh_token: data.session.refresh_token,
+          });
+          return true;
+        }
+        if (data?.confirmed) {
+          // Try signing in again
+          const { error: signInError } = await supabase.auth.signInWithPassword({
+            email: userEmail,
+            password: userPassword,
+          });
+          return !signInError;
+        }
+      }
+      return false;
+    } catch {
+      return false;
+    }
+  };
 
   // Redirect if already logged in
   useEffect(() => {
@@ -187,16 +227,36 @@ const Login = () => {
     const { error: signInError } = await signIn(email, password);
 
     if (signInError) {
-      // Provide user-friendly error message for email not confirmed
+      // If email not confirmed, try to auto-confirm via edge function
       if (signInError.message?.includes('Email not confirmed')) {
-        setError('Please confirm your email address first. Check your inbox for a confirmation link, or ask your admin to disable email confirmation in Supabase Dashboard → Authentication → Email Settings.');
+        setConfirmingUser(true);
+        setError('');
+        
+        const confirmed = await tryAutoConfirm(email, password);
+        
+        if (confirmed) {
+          // Successfully confirmed and signed in
+          toast({
+            title: 'Account Verified!',
+            description: 'Your email has been confirmed automatically.',
+          });
+          setConfirmingUser(false);
+          // Continue with the normal flow - the auth state will update
+        } else {
+          setConfirmingUser(false);
+          setError('Your email is not yet confirmed. Please check your inbox for a confirmation link, or contact support.');
+          setLoading(false);
+          return;
+        }
       } else if (signInError.message?.includes('Invalid login credentials')) {
         setError('Invalid email or password. Please check your credentials and try again.');
+        setLoading(false);
+        return;
       } else {
         setError(signInError.message);
+        setLoading(false);
+        return;
       }
-      setLoading(false);
-      return;
     }
 
     // Get user and check role
@@ -306,9 +366,14 @@ const Login = () => {
               <Button
                 type="submit"
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
-                disabled={loading}
+                disabled={loading || confirmingUser}
               >
-                {loading ? (
+                {confirmingUser ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Verifying account...
+                  </>
+                ) : loading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Signing in...
