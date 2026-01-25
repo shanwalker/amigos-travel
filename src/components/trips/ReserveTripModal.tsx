@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -8,7 +9,8 @@ import { Badge } from '@/components/ui/badge';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCreateReservation } from '@/hooks/useReservations';
 import { toast } from 'sonner';
-import { Users, Calendar, MapPin, Check, Loader2, Sparkles } from 'lucide-react';
+import { Users, Calendar, MapPin, Check, Loader2, Sparkles, LogIn } from 'lucide-react';
+import { createSignupSession, setSelectedTripId } from '@/lib/signupSession';
 
 import type { Trip } from '@/integrations/supabase/database.types';
 
@@ -20,6 +22,7 @@ interface ReserveTripModalProps {
 
 export const ReserveTripModal = ({ trip, isOpen, onClose }: ReserveTripModalProps) => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const createReservation = useCreateReservation();
   const [spots, setSpots] = useState(1);
   const [contactName, setContactName] = useState('');
@@ -33,7 +36,12 @@ export const ReserveTripModal = ({ trip, isOpen, onClose }: ReserveTripModalProp
 
   const handleReserve = async () => {
     if (!user) {
-      toast.error('Please login to reserve a spot');
+      // Create signup session and redirect to group signup flow
+      createSignupSession('group', `/trips/${trip.id}`);
+      setSelectedTripId(trip.id);
+      toast.info('Please create an account to reserve your spot');
+      onClose();
+      navigate('/signup/group');
       return;
     }
 
@@ -207,6 +215,11 @@ export const ReserveTripModal = ({ trip, isOpen, onClose }: ReserveTripModalProp
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                   Reserving...
+                </>
+              ) : !user ? (
+                <>
+                  <LogIn className="w-4 h-4 mr-2" />
+                  Sign Up to Reserve
                 </>
               ) : (
                 <>

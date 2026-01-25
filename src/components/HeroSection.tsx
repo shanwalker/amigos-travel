@@ -399,8 +399,11 @@ export const HeroSection = memo(() => {
               transition={{ duration: 0.6, delay: 1.7 }}
               className="flex flex-wrap gap-4 mb-8"
             >
-              <MagneticButton className="animate-glow-pulse">
-                View All Trips
+              <MagneticButton 
+                className="animate-glow-pulse"
+                onClick={() => window.location.href = '/get-started'}
+              >
+                Start Your Journey
               </MagneticButton>
               <button className="px-6 py-4 rounded-xl border border-foreground/20 text-foreground font-sans font-semibold hover:bg-foreground/5 transition-colors">
                 Watch Story
