@@ -117,45 +117,51 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       // User was created but needs confirmation
-      // Call our edge function to auto-confirm the user
+      // Try calling our edge function to auto-confirm the user
       if (data?.user) {
         try {
-          const { data: confirmData, error: confirmError } = await supabase.functions.invoke('confirm-user', {
-            body: { email, password },
-          });
-
-          if (confirmError) {
-            console.error('Confirm user error:', confirmError);
-            // Fall back to email confirmation flow
-            return { error: null, needsEmailConfirmation: true } as any;
-          }
-
-          if (confirmData?.session) {
-            // Set the session from the edge function response
-            await supabase.auth.setSession({
-              access_token: confirmData.session.access_token,
-              refresh_token: confirmData.session.refresh_token,
-            });
-            return { error: null };
-          }
-
-          if (confirmData?.confirmed) {
-            // User is confirmed but we need to sign in
-            const { error: signInError } = await supabase.auth.signInWithPassword({
-              email,
-              password,
-            });
-            
-            if (signInError) {
-              return { error: signInError as Error };
+          const response = await fetch(
+            `https://whdbtkkgesfgqtkfedne.supabase.co/functions/v1/confirm-user`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoZGJ0a2tnZXNmZ3F0a2ZlZG5lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1NTYwODgsImV4cCI6MjA4NDEzMjA4OH0.GeQsaI7LW29-FL1AIm-lMPqduKaWUyRkH_JNEWTBKms',
+              },
+              body: JSON.stringify({ email, password }),
             }
-            return { error: null };
+          );
+
+          if (response.ok) {
+            const confirmData = await response.json();
+            
+            if (confirmData?.session) {
+              // Set the session from the edge function response
+              await supabase.auth.setSession({
+                access_token: confirmData.session.access_token,
+                refresh_token: confirmData.session.refresh_token,
+              });
+              return { error: null };
+            }
+
+            if (confirmData?.confirmed) {
+              // User is confirmed, try to sign in
+              const { error: signInError } = await supabase.auth.signInWithPassword({
+                email,
+                password,
+              });
+              
+              if (!signInError) {
+                return { error: null };
+              }
+            }
           }
         } catch (fnError) {
-          console.error('Edge function call failed:', fnError);
-          // Fall back to email confirmation flow
-          return { error: null, needsEmailConfirmation: true } as any;
+          console.log('Edge function not available, falling back to email confirmation');
         }
+
+        // Fall back to email confirmation flow
+        return { error: null, needsEmailConfirmation: true } as any;
       }
       
       return { error: null };
