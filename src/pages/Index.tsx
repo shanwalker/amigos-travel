@@ -16,6 +16,13 @@ const TestimonialsSection = lazy(() => import('@/components/TestimonialsSection'
 const TravelQuizSection = lazy(() => import('@/components/TravelQuizSection').then(m => ({ default: m.TravelQuizSection })));
 const TravelStoriesSection = lazy(() => import('@/components/TravelStoriesSection').then(m => ({ default: m.TravelStoriesSection })));
 
+// Trip type sections - lazy loaded
+const SurpriseTripSection = lazy(() => import('@/components/trips/SurpriseTripSection'));
+const FeaturedTripsCarousel = lazy(() => import('@/components/trips/FeaturedTripsCarousel'));
+const ReservableTripsGrid = lazy(() => import('@/components/trips/ReservableTripsGrid'));
+const StandardPackagesGrid = lazy(() => import('@/components/trips/StandardPackagesGrid'));
+const CustomTripCTA = lazy(() => import('@/components/trips/CustomTripCTA'));
+
 // V2 Components - lazy loaded
 const CursorSpotlight = lazy(() => import('@/components/v2/CursorSpotlight').then(m => ({ default: m.CursorSpotlight })));
 const HeroSectionV2 = lazy(() => import('@/components/HeroSectionV2').then(m => ({ default: m.HeroSectionV2 })));
@@ -52,6 +59,27 @@ const Index = () => {
               <TripSearchBar />
             </Suspense>
           </LazySection>
+
+          {/* NEW: Surprise Trip Hero Section */}
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <SurpriseTripSection />
+            </Suspense>
+          </LazySection>
+
+          {/* NEW: Featured Group Trips Carousel */}
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <FeaturedTripsCarousel />
+            </Suspense>
+          </LazySection>
+
+          {/* NEW: Reservable Trips Grid */}
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <ReservableTripsGrid />
+            </Suspense>
+          </LazySection>
           
           <LazySection>
             <Suspense fallback={<SectionLoader />}>
@@ -62,6 +90,13 @@ const Index = () => {
           <LazySection>
             <Suspense fallback={<SectionLoader />}>
               <MeetYourTribeSection />
+            </Suspense>
+          </LazySection>
+
+          {/* NEW: Standard Packages Grid */}
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <StandardPackagesGrid />
             </Suspense>
           </LazySection>
           
@@ -86,6 +121,13 @@ const Index = () => {
           <LazySection>
             <Suspense fallback={<SectionLoader />}>
               <TestimonialsSection />
+            </Suspense>
+          </LazySection>
+
+          {/* NEW: Custom Trip CTA */}
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <CustomTripCTA />
             </Suspense>
           </LazySection>
           

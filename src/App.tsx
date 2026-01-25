@@ -14,6 +14,7 @@ import Index from "./pages/Index";
 // Lazy load all other pages for code splitting
 const Thailand = lazy(() => import("./pages/destinations/Thailand"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const SurpriseTrip = lazy(() => import("./pages/SurpriseTrip"));
 const Onboarding = lazy(() => import("./pages/Onboarding"));
 
 // Auth Pages - lazy loaded
@@ -64,6 +65,7 @@ const App = () => (
               {/* Public Routes */}
               <Route path="/" element={<Index />} />
               <Route path="/destinations/thailand" element={<Thailand />} />
+              <Route path="/surprise-trip" element={<SurpriseTrip />} />
               
               {/* Auth Routes */}
               <Route path="/login" element={<Login />} />
