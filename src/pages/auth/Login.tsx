@@ -187,7 +187,14 @@ const Login = () => {
     const { error: signInError } = await signIn(email, password);
 
     if (signInError) {
-      setError(signInError.message);
+      // Provide user-friendly error message for email not confirmed
+      if (signInError.message?.includes('Email not confirmed')) {
+        setError('Please confirm your email address first. Check your inbox for a confirmation link, or ask your admin to disable email confirmation in Supabase Dashboard → Authentication → Email Settings.');
+      } else if (signInError.message?.includes('Invalid login credentials')) {
+        setError('Invalid email or password. Please check your credentials and try again.');
+      } else {
+        setError(signInError.message);
+      }
       setLoading(false);
       return;
     }

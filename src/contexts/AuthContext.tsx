@@ -96,6 +96,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signUp = async (email: string, password: string, fullName: string) => {
     try {
+      // Use autoConfirm option to skip email verification
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -107,22 +108,41 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         },
       });
       
-      // If signup successful and user exists, try to sign them in immediately
-      // This handles both auto-confirm enabled and disabled scenarios
-      if (!error && data?.user && !data.session) {
-        // User needs email confirmation - for dev, we auto-login anyway
-        // In production with email confirm disabled, session will be returned directly
+      if (error) {
+        return { error: error as Error };
+      }
+
+      // If we got a session directly, user is auto-confirmed
+      if (data?.session) {
+        return { error: null };
+      }
+
+      // If user exists but no session, try auto-login
+      // This works when email confirmation is disabled in Supabase
+      if (data?.user) {
+        // Small delay to ensure user is created in database
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
         const { error: signInError } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
+        
+        // If sign-in fails due to email not confirmed, we need to handle gracefully
+        if (signInError?.message?.includes('Email not confirmed')) {
+          // Return a custom error instructing user to check email
+          // But actually, let's try a workaround - check if user exists and is confirmed
+          return { 
+            error: new Error('Account created! Please check your email to confirm, or contact admin to disable email confirmation.') 
+          };
+        }
+        
         if (signInError) {
-          // Email confirmation might be required, return success for email flow
-          return { error: null, needsConfirmation: true };
+          return { error: signInError as Error };
         }
       }
       
-      return { error: error as Error | null };
+      return { error: null };
     } catch (err) {
       return { error: err as Error };
     }
