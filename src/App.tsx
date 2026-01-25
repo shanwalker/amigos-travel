@@ -34,6 +34,7 @@ const BrowseTrips = lazy(() => import("./pages/dashboard/BrowseTrips"));
 const TripDetails = lazy(() => import("./pages/dashboard/TripDetails"));
 const MyBookings = lazy(() => import("./pages/dashboard/MyBookings"));
 const MyRequests = lazy(() => import("./pages/dashboard/MyRequests"));
+const SurpriseTripSuggestions = lazy(() => import("./pages/dashboard/SurpriseTripSuggestions"));
 const Profile = lazy(() => import("./pages/dashboard/Profile"));
 const Wishlist = lazy(() => import("./pages/dashboard/Wishlist"));
 
@@ -127,6 +128,13 @@ const App = () => (
                 <ProtectedRoute>
                   <DashboardLayout>
                     <MyRequests />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/dashboard/surprise-suggestions" element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <SurpriseTripSuggestions />
                   </DashboardLayout>
                 </ProtectedRoute>
               } />
