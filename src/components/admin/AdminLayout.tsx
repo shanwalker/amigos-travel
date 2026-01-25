@@ -31,6 +31,10 @@ import {
   Search,
   Settings,
   Shield,
+  Sparkles,
+  Ticket,
+  Wand2,
+  UserCheck,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
@@ -44,6 +48,10 @@ const sidebarItems = [
   { icon: Map, label: 'Trips', path: '/admin/trips' },
   { icon: CalendarCheck, label: 'Bookings', path: '/admin/bookings' },
   { icon: Users, label: 'Users', path: '/admin/users' },
+  { icon: Sparkles, label: 'Surprise Requests', path: '/admin/surprise-requests' },
+  { icon: Ticket, label: 'Reservations', path: '/admin/reservations' },
+  { icon: Wand2, label: 'Custom Requests', path: '/admin/custom-requests' },
+  { icon: UserCheck, label: 'Local Buddies', path: '/admin/local-buddies' },
   { icon: MessageSquare, label: 'Testimonials', path: '/admin/testimonials' },
   { icon: BookOpen, label: 'Stories', path: '/admin/stories' },
   { icon: Mail, label: 'Newsletter', path: '/admin/newsletter' },

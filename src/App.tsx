@@ -44,6 +44,9 @@ const TestimonialsManagement = lazy(() => import("./pages/admin/TestimonialsMana
 const StoriesManagement = lazy(() => import("./pages/admin/StoriesManagement"));
 const NewsletterManagement = lazy(() => import("./pages/admin/NewsletterManagement"));
 const LocalBuddiesManagement = lazy(() => import("./pages/admin/LocalBuddiesManagement"));
+const SurpriseRequestsManagement = lazy(() => import("./pages/admin/SurpriseRequestsManagement"));
+const ReservationsManagement = lazy(() => import("./pages/admin/ReservationsManagement"));
+const CustomRequestsManagement = lazy(() => import("./pages/admin/CustomRequestsManagement"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -183,6 +186,27 @@ const App = () => (
                 <ProtectedRoute requiredRole="admin">
                   <AdminLayout>
                     <LocalBuddiesManagement />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/surprise-requests" element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminLayout>
+                    <SurpriseRequestsManagement />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/reservations" element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminLayout>
+                    <ReservationsManagement />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/custom-requests" element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminLayout>
+                    <CustomRequestsManagement />
                   </AdminLayout>
                 </ProtectedRoute>
               } />
