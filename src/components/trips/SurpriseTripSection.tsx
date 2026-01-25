@@ -57,7 +57,7 @@ export const SurpriseTripSection = () => {
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
               <Button 
                 size="lg" 
-                onClick={() => navigate('/surprise-trip')}
+                onClick={() => navigate('/signup/surprise')}
                 className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/30"
               >
                 <Sparkles className="w-5 h-5" />
