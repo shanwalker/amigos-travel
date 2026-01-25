@@ -2,10 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Wand2, MessageCircle, ArrowRight, Sparkles } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
 export const CustomTripCTA = () => {
   const navigate = useNavigate();
-
+  const { user } = useAuth();
   return (
     <section className="py-20 px-4 relative overflow-hidden">
       {/* Background */}
@@ -66,7 +67,7 @@ export const CustomTripCTA = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
-              onClick={() => navigate('/signup/custom')}
+              onClick={() => navigate(user ? '/custom-trip' : '/signup/custom')}
               className="gap-2 bg-primary hover:bg-primary/90"
             >
               <Wand2 className="w-5 h-5" />

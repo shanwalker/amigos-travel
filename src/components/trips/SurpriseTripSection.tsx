@@ -2,10 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Sparkles, Gift, MapPin, Users, ArrowRight } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
 export const SurpriseTripSection = () => {
   const navigate = useNavigate();
-
+  const { user } = useAuth();
   const steps = [
     { icon: <Sparkles className="w-5 h-5" />, title: 'Tell Us Your Vibe', desc: 'Answer a few quick questions' },
     { icon: <MapPin className="w-5 h-5" />, title: 'We Plan Everything', desc: 'Curated by local experts' },
@@ -57,7 +58,7 @@ export const SurpriseTripSection = () => {
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
               <Button 
                 size="lg" 
-                onClick={() => navigate('/signup/surprise')}
+                onClick={() => navigate(user ? '/surprise-trip' : '/signup/surprise')}
                 className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/30"
               >
                 <Sparkles className="w-5 h-5" />

@@ -92,7 +92,7 @@ const SurpriseRequestsManagement = () => {
     }
   };
 
-  const RequestCard = ({ request }: { request: SurpriseRequest }) => (
+  const RequestCard = ({ request }: { request: any }) => (
     <Card className="bg-card/50 border-border/50 hover:border-primary/50 transition-all">
       <CardContent className="p-5">
         <div className="flex items-start justify-between mb-4">
@@ -102,10 +102,13 @@ const SurpriseRequestsManagement = () => {
             </div>
             <div>
               <p className="font-medium text-foreground text-sm">
-                Request #{request.id.slice(0, 8)}
+                {request.profiles?.full_name || 'Unknown User'}
               </p>
               <p className="text-xs text-muted-foreground">
-                {format(new Date(request.created_at), 'MMM dd, yyyy')}
+                {request.profiles?.email || request.profiles?.phone || `ID: ${request.id.slice(0, 8)}`}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                {format(new Date(request.created_at), 'MMM dd, yyyy h:mm a')}
               </p>
             </div>
           </div>
