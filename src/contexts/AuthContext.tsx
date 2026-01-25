@@ -103,6 +103,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           emailRedirectTo: window.location.origin,
           data: {
             full_name: fullName,
+            email_confirmed: true, // Signal that we want auto-confirm
           },
         },
       });
@@ -111,41 +112,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { error: error as Error };
       }
 
-      // If we got a session directly, user is auto-confirmed
+      // If we got a session directly, user is auto-confirmed - great!
       if (data?.session) {
         return { error: null };
       }
 
-      // User created but no session - could be email confirmation is enabled
-      // OR there might be a slight delay. Wait and check for session.
+      // If user was created, the account exists
+      // Check if user's email is already confirmed by looking at identities
       if (data?.user) {
-        // Wait a moment for Supabase to process
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Check if user has confirmed email (identities array has entry)
+        const hasConfirmedIdentity = data.user.identities && data.user.identities.length > 0;
         
-        // Check if session is now available
-        const { data: sessionData } = await supabase.auth.getSession();
-        if (sessionData?.session) {
-          return { error: null };
+        if (hasConfirmedIdentity || data.user.email_confirmed_at) {
+          // User is confirmed, try to sign in
+          const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+          });
+          
+          if (signInData?.session) {
+            return { error: null };
+          }
+          
+          // Even if sign in fails, user was created successfully
+          if (signInError) {
+            return { error: signInError as Error };
+          }
         }
         
-        // Try signing in directly
-        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-        
-        if (signInData?.session) {
-          return { error: null };
-        }
-        
-        // If we still can't sign in, email confirmation is likely required
-        if (signInError?.message?.includes('Email not confirmed')) {
-          return { error: null, needsEmailConfirmation: true } as any;
-        }
-        
-        if (signInError) {
-          return { error: signInError as Error };
-        }
+        // No confirmation, but user was created - needs email verification
+        return { error: null, needsEmailConfirmation: true } as any;
       }
       
       return { error: null };
