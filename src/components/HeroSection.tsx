@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Calendar, Users } from 'lucide-react';
 import { useState, useRef, useEffect, useCallback, memo, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import heroVideo from '@/assets/hero-video.mp4';
 import tripThailand from '@/assets/trip-thailand.jpg';
 import heroBg from '@/assets/hero-bg.jpg';
@@ -8,6 +9,7 @@ import tripVietnam from '@/assets/trip-vietnam.jpg';
 import tripBali from '@/assets/trip-bali.jpg';
 import tripJapan from '@/assets/trip-japan.jpg';
 import { MagneticButton } from './ui/animations';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface Trip {
   id: number;
@@ -143,6 +145,8 @@ export const HeroSection = memo(() => {
   const animationFrameRef = useRef<number | null>(null);
   const lastTimeRef = useRef<number>(0);
   const cardWidth = 300; // 280px card + 20px gap
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   const scroll = useCallback((direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -399,8 +403,11 @@ export const HeroSection = memo(() => {
               transition={{ duration: 0.6, delay: 1.7 }}
               className="flex flex-wrap gap-4 mb-8"
             >
-              <MagneticButton className="animate-glow-pulse">
-                View All Trips
+              <MagneticButton 
+                className="animate-glow-pulse"
+                onClick={() => navigate(user ? '/dashboard' : '/get-started')}
+              >
+                {user ? 'Go to Dashboard' : 'Start Your Journey'}
               </MagneticButton>
               <button className="px-6 py-4 rounded-xl border border-foreground/20 text-foreground font-sans font-semibold hover:bg-foreground/5 transition-colors">
                 Watch Story

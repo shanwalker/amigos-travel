@@ -9,6 +9,11 @@ import { useAllBookings } from '@/hooks/useBookings';
 import { useUsers } from '@/hooks/useUsers';
 import { useTestimonials } from '@/hooks/useTestimonials';
 import { useTravelStories } from '@/hooks/useTravelStories';
+import { useSurpriseRequests } from '@/hooks/useSurpriseRequests';
+import { useLocalBuddies } from '@/hooks/useLocalBuddies';
+import { useReservations } from '@/hooks/useReservations';
+import { useCustomRequests } from '@/hooks/useCustomRequests';
+import { useRealtimeAdminRequests } from '@/hooks/useRealtimeRequests';
 import {
   Map,
   Users,
@@ -17,17 +22,27 @@ import {
   TrendingUp,
   DollarSign,
   BookOpen,
-  MessageSquare
+  MessageSquare,
+  Sparkles,
+  UserCheck,
+  Ticket,
+  Wand2
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useMemo } from 'react';
 
 const AdminOverview = () => {
+  // Enable real-time updates for admin
+  useRealtimeAdminRequests();
   const { data: trips } = useTrips();
   const { data: bookings } = useAllBookings();
   const { data: users } = useUsers();
   const { data: testimonials } = useTestimonials();
   const { data: stories } = useTravelStories();
+  const { data: surpriseRequests } = useSurpriseRequests();
+  const { data: localBuddies } = useLocalBuddies();
+  const { data: reservations } = useReservations();
+  const { data: customRequests } = useCustomRequests();
 
   const totalRevenue = bookings?.reduce((sum, b: any) => sum + (b.total_amount || 0), 0) || 0;
   const confirmedBookings = bookings?.filter((b: any) => b.status === 'confirmed').length || 0;
@@ -94,7 +109,20 @@ const AdminOverview = () => {
     },
   ];
 
+  // Stats for new trip types system
+  const pendingSurpriseRequests = surpriseRequests?.filter(r => r.status === 'pending').length || 0;
+  const pendingReservations = reservations?.filter(r => r.status === 'pending').length || 0;
+  const verifiedBuddies = localBuddies?.filter(b => b.is_verified).length || 0;
+  const pendingCustomRequests = customRequests?.filter(r => r.status === 'pending').length || 0;
+
   const secondaryStats = [
+    { title: 'Surprise Requests', value: surpriseRequests?.length || 0, icon: Sparkles, pending: pendingSurpriseRequests },
+    { title: 'Reservations', value: reservations?.length || 0, icon: Ticket, pending: pendingReservations },
+    { title: 'Local Buddies', value: localBuddies?.length || 0, icon: UserCheck, verified: verifiedBuddies },
+    { title: 'Custom Requests', value: customRequests?.length || 0, icon: Wand2, pending: pendingCustomRequests },
+  ];
+
+  const tertiaryStats = [
     { title: 'Testimonials', value: testimonials?.length || 0, icon: MessageSquare },
     { title: 'Travel Stories', value: stories?.length || 0, icon: BookOpen },
     { title: 'Avg Rating', value: '4.8', icon: Star },
@@ -154,18 +182,54 @@ const AdminOverview = () => {
         />
       </div>
 
-      {/* Activity Feed and Secondary Stats */}
+      {/* Trip Types System Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {secondaryStats.map((stat, index) => (
+          <motion.div
+            key={stat.title}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3, delay: 0.4 + index * 0.05 }}
+          >
+            <Card className="bg-card/50 border-border/50">
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-muted-foreground">{stat.title}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                      {'pending' in stat && stat.pending > 0 && (
+                        <span className="px-2 py-0.5 text-xs rounded-full bg-amber-500/20 text-amber-400">
+                          {stat.pending} pending
+                        </span>
+                      )}
+                      {'verified' in stat && (
+                        <span className="px-2 py-0.5 text-xs rounded-full bg-green-500/20 text-green-400">
+                          {stat.verified} verified
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <stat.icon className="h-8 w-8 text-primary/60" />
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Activity Feed and Tertiary Stats */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <ActivityFeed />
         </div>
         <div className="space-y-4">
-          {secondaryStats.map((stat, index) => (
+          {tertiaryStats.map((stat, index) => (
             <motion.div
               key={stat.title}
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: 0.4 + index * 0.05 }}
+              transition={{ duration: 0.3, delay: 0.6 + index * 0.05 }}
             >
               <Card className="bg-card/50 border-border/50">
                 <CardContent className="pt-6">
