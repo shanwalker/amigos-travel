@@ -7,7 +7,8 @@ import {
   Settings,
   LogOut,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  ClipboardList
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -30,6 +31,7 @@ import { Button } from '@/components/ui/button';
 const menuItems = [
   { title: 'Dashboard', url: '/dashboard', icon: Home },
   { title: 'Browse Trips', url: '/dashboard/trips', icon: Plane },
+  { title: 'My Requests', url: '/dashboard/requests', icon: ClipboardList },
   { title: 'My Bookings', url: '/dashboard/bookings', icon: Calendar },
   { title: 'Wishlist', url: '/dashboard/wishlist', icon: Heart },
   { title: 'Profile', url: '/dashboard/profile', icon: User },

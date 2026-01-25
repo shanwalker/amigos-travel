@@ -18,6 +18,8 @@ const SurpriseTrip = lazy(() => import("./pages/SurpriseTrip"));
 const CustomTrip = lazy(() => import("./pages/CustomTrip"));
 const BecomeABuddy = lazy(() => import("./pages/BecomeABuddy"));
 const Onboarding = lazy(() => import("./pages/Onboarding"));
+const TripSignup = lazy(() => import("./pages/TripSignup"));
+const TripTypeSelector = lazy(() => import("./components/auth/TripTypeSelector"));
 
 // Auth Pages - lazy loaded
 const Login = lazy(() => import("./pages/auth/Login"));
@@ -31,6 +33,7 @@ const DashboardHome = lazy(() => import("./pages/dashboard/DashboardHome"));
 const BrowseTrips = lazy(() => import("./pages/dashboard/BrowseTrips"));
 const TripDetails = lazy(() => import("./pages/dashboard/TripDetails"));
 const MyBookings = lazy(() => import("./pages/dashboard/MyBookings"));
+const MyRequests = lazy(() => import("./pages/dashboard/MyRequests"));
 const Profile = lazy(() => import("./pages/dashboard/Profile"));
 const Wishlist = lazy(() => import("./pages/dashboard/Wishlist"));
 
@@ -78,6 +81,8 @@ const App = () => (
               {/* Auth Routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/get-started" element={<TripTypeSelector />} />
+              <Route path="/signup/:tripType" element={<TripSignup />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/admin/login" element={<AdminLogin />} />
               
@@ -114,6 +119,13 @@ const App = () => (
                 <ProtectedRoute>
                   <DashboardLayout>
                     <MyBookings />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/dashboard/requests" element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <MyRequests />
                   </DashboardLayout>
                 </ProtectedRoute>
               } />
