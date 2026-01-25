@@ -16,6 +16,7 @@ const Thailand = lazy(() => import("./pages/destinations/Thailand"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const SurpriseTrip = lazy(() => import("./pages/SurpriseTrip"));
 const CustomTrip = lazy(() => import("./pages/CustomTrip"));
+const BecomeABuddy = lazy(() => import("./pages/BecomeABuddy"));
 const Onboarding = lazy(() => import("./pages/Onboarding"));
 
 // Auth Pages - lazy loaded
@@ -42,6 +43,7 @@ const UserManagement = lazy(() => import("./pages/admin/UserManagement"));
 const TestimonialsManagement = lazy(() => import("./pages/admin/TestimonialsManagement"));
 const StoriesManagement = lazy(() => import("./pages/admin/StoriesManagement"));
 const NewsletterManagement = lazy(() => import("./pages/admin/NewsletterManagement"));
+const LocalBuddiesManagement = lazy(() => import("./pages/admin/LocalBuddiesManagement"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -68,6 +70,8 @@ const App = () => (
               <Route path="/destinations/thailand" element={<Thailand />} />
               <Route path="/surprise-trip" element={<SurpriseTrip />} />
               <Route path="/custom-trip" element={<CustomTrip />} />
+              <Route path="/become-a-buddy" element={<BecomeABuddy />} />
+              
               {/* Auth Routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
@@ -172,6 +176,13 @@ const App = () => (
                 <ProtectedRoute requiredRole="admin">
                   <AdminLayout>
                     <NewsletterManagement />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/local-buddies" element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminLayout>
+                    <LocalBuddiesManagement />
                   </AdminLayout>
                 </ProtectedRoute>
               } />

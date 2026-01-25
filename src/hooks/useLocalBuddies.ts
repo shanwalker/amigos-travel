@@ -62,6 +62,20 @@ export const useActiveBuddies = (city?: string, country?: string) => useQuery({
   }
 });
 
+export const useVerifiedBuddies = () => useQuery({
+  queryKey: ['verified-buddies'],
+  queryFn: async () => {
+    const { data, error } = await supabase
+      .from('local_buddies')
+      .select('*')
+      .eq('is_active', true)
+      .eq('is_verified', true)
+      .order('rating', { ascending: false });
+    if (error) throw error;
+    return data as LocalBuddy[];
+  }
+});
+
 export const useCreateLocalBuddy = () => {
   const qc = useQueryClient();
   return useMutation({
