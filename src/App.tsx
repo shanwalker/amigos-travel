@@ -15,6 +15,7 @@ import Index from "./pages/Index";
 const Thailand = lazy(() => import("./pages/destinations/Thailand"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const SurpriseTrip = lazy(() => import("./pages/SurpriseTrip"));
+const CustomTrip = lazy(() => import("./pages/CustomTrip"));
 const Onboarding = lazy(() => import("./pages/Onboarding"));
 
 // Auth Pages - lazy loaded
@@ -66,7 +67,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/destinations/thailand" element={<Thailand />} />
               <Route path="/surprise-trip" element={<SurpriseTrip />} />
-              
+              <Route path="/custom-trip" element={<CustomTrip />} />
               {/* Auth Routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
