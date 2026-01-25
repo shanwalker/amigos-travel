@@ -34,11 +34,13 @@ import {
 } from '@/components/ui/dialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, Search, MoreHorizontal, Shield, ShieldCheck, User, Eye, Palmtree, Mountain, Building2, Wallet, Users as UsersIcon } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Loader2, Search, MoreHorizontal, Shield, ShieldCheck, User, Eye, Palmtree, Mountain, Wallet, Users as UsersIcon, Sparkles, Compass, Map } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 import { format } from 'date-fns';
 import type { TravelPreferences } from '@/integrations/supabase/database.types';
+import { UserJourneyCard } from '@/components/admin/UserJourneyCard';
 
 const BUDGET_LABELS: Record<string, string> = {
   budget_backpacker: 'Budget Backpacker (Under ₹3K/day)',
@@ -287,7 +289,7 @@ const UserManagement = () => {
 
       {/* User Preferences Dialog */}
       <Dialog open={!!selectedUser} onOpenChange={() => setSelectedUser(null)}>
-        <DialogContent className="max-w-lg">
+        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-3">
               <Avatar className="h-10 w-10">
@@ -303,68 +305,86 @@ const UserManagement = () => {
             </DialogTitle>
           </DialogHeader>
           
-          {selectedUser?.travel_preferences?.completed_at ? (
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-3 rounded-lg bg-muted/30 border border-border/50">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
-                    <Wallet className="h-4 w-4" />
-                    Budget Style
+          <Tabs defaultValue="journey" className="mt-4">
+            <TabsList className="grid w-full grid-cols-2 bg-muted/30">
+              <TabsTrigger value="journey">Signup Journey</TabsTrigger>
+              <TabsTrigger value="preferences">Travel Preferences</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="journey" className="mt-4">
+              {selectedUser && (
+                <UserJourneyCard 
+                  travelPreferences={selectedUser.travel_preferences}
+                  createdAt={selectedUser.created_at}
+                />
+              )}
+            </TabsContent>
+            
+            <TabsContent value="preferences" className="mt-4">
+              {selectedUser?.travel_preferences?.completed_at ? (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-3 rounded-lg bg-muted/30 border border-border/50">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
+                        <Wallet className="h-4 w-4" />
+                        Budget Style
+                      </div>
+                      <p className="font-medium text-foreground">
+                        {BUDGET_LABELS[selectedUser.travel_preferences.budget_style] || selectedUser.travel_preferences.budget_style}
+                      </p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-muted/30 border border-border/50">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
+                        <UsersIcon className="h-4 w-4" />
+                        Travel Style
+                      </div>
+                      <p className="font-medium text-foreground">
+                        {TRAVEL_STYLE_LABELS[selectedUser.travel_preferences.travel_style] || selectedUser.travel_preferences.travel_style}
+                      </p>
+                    </div>
                   </div>
-                  <p className="font-medium text-foreground">
-                    {BUDGET_LABELS[selectedUser.travel_preferences.budget_style] || selectedUser.travel_preferences.budget_style}
-                  </p>
-                </div>
-                <div className="p-3 rounded-lg bg-muted/30 border border-border/50">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
-                    <UsersIcon className="h-4 w-4" />
-                    Travel Style
+                  
+                  <div className="p-3 rounded-lg bg-muted/30 border border-border/50">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                      <Palmtree className="h-4 w-4" />
+                      Interests
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {(selectedUser.travel_preferences.interests as string[])?.map((interest: string) => (
+                        <Badge key={interest} variant="outline" className="bg-primary/10 text-primary border-primary/30">
+                          {interest.replace(/_/g, ' ')}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
-                  <p className="font-medium text-foreground">
-                    {TRAVEL_STYLE_LABELS[selectedUser.travel_preferences.travel_style] || selectedUser.travel_preferences.travel_style}
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-3 rounded-lg bg-muted/30 border border-border/50">
+                      <p className="text-sm text-muted-foreground mb-1">Accommodation</p>
+                      <p className="font-medium text-foreground capitalize">
+                        {selectedUser.travel_preferences.accommodation_pref?.replace(/_/g, ' ')}
+                      </p>
+                    </div>
+                    <div className="p-3 rounded-lg bg-muted/30 border border-border/50">
+                      <p className="text-sm text-muted-foreground mb-1">Activity Level</p>
+                      <p className="font-medium text-foreground capitalize">
+                        {selectedUser.travel_preferences.activity_level}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <p className="text-xs text-muted-foreground text-right">
+                    Completed: {format(new Date(selectedUser.travel_preferences.completed_at), 'MMM d, yyyy')}
                   </p>
                 </div>
-              </div>
-              
-              <div className="p-3 rounded-lg bg-muted/30 border border-border/50">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                  <Palmtree className="h-4 w-4" />
-                  Interests
+              ) : (
+                <div className="text-center py-8 text-muted-foreground">
+                  <Mountain className="h-12 w-12 mx-auto mb-3 opacity-50" />
+                  <p>This user hasn't completed the onboarding quiz yet.</p>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {(selectedUser.travel_preferences.interests as string[])?.map((interest: string) => (
-                    <Badge key={interest} variant="outline" className="bg-primary/10 text-primary border-primary/30">
-                      {interest.replace(/_/g, ' ')}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-3 rounded-lg bg-muted/30 border border-border/50">
-                  <p className="text-sm text-muted-foreground mb-1">Accommodation</p>
-                  <p className="font-medium text-foreground capitalize">
-                    {selectedUser.travel_preferences.accommodation_pref?.replace(/_/g, ' ')}
-                  </p>
-                </div>
-                <div className="p-3 rounded-lg bg-muted/30 border border-border/50">
-                  <p className="text-sm text-muted-foreground mb-1">Activity Level</p>
-                  <p className="font-medium text-foreground capitalize">
-                    {selectedUser.travel_preferences.activity_level}
-                  </p>
-                </div>
-              </div>
-              
-              <p className="text-xs text-muted-foreground text-right">
-                Completed: {format(new Date(selectedUser.travel_preferences.completed_at), 'MMM d, yyyy')}
-              </p>
-            </div>
-          ) : (
-            <div className="text-center py-8 text-muted-foreground">
-              <Mountain className="h-12 w-12 mx-auto mb-3 opacity-50" />
-              <p>This user hasn't completed the onboarding quiz yet.</p>
-            </div>
-          )}
+              )}
+            </TabsContent>
+          </Tabs>
         </DialogContent>
       </Dialog>
     </div>

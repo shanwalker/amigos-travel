@@ -66,7 +66,7 @@ export const CustomTripCTA = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
-              onClick={() => navigate('/custom-trip')}
+              onClick={() => navigate('/signup/custom')}
               className="gap-2 bg-primary hover:bg-primary/90"
             >
               <Wand2 className="w-5 h-5" />
