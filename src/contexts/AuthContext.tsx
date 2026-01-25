@@ -96,7 +96,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signUp = async (email: string, password: string, fullName: string) => {
     try {
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -106,6 +106,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           },
         },
       });
+      
+      // If signup successful and user exists, try to sign them in immediately
+      // This handles both auto-confirm enabled and disabled scenarios
+      if (!error && data?.user && !data.session) {
+        // User needs email confirmation - for dev, we auto-login anyway
+        // In production with email confirm disabled, session will be returned directly
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        if (signInError) {
+          // Email confirmation might be required, return success for email flow
+          return { error: null, needsConfirmation: true };
+        }
+      }
+      
       return { error: error as Error | null };
     } catch (err) {
       return { error: err as Error };

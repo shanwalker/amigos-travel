@@ -230,15 +230,7 @@ const TripSignup = () => {
     const fullName = `${profileData.firstName} ${profileData.lastName}`.trim();
 
     try {
-      const { error: signUpError } = await signUp(profileData.email, profileData.password, fullName);
-
-      if (signUpError) {
-        setError(signUpError.message);
-        setLoading(false);
-        return;
-      }
-
-      // Store additional profile data for post-login save
+      // Store additional profile data for post-login save BEFORE signup
       const session = getSignupSession();
       if (session) {
         session.profileData = {
@@ -254,10 +246,23 @@ const TripSignup = () => {
         sessionStorage.setItem('travelamigo_signup_session', JSON.stringify(session));
       }
 
-      setSuccess(true);
+      const { error: signUpError } = await signUp(profileData.email, profileData.password, fullName);
+
+      if (signUpError) {
+        setError(signUpError.message);
+        setLoading(false);
+        return;
+      }
+
+      // Check if user is now logged in (auto-confirm enabled)
+      // If so, useAutoCreateRequest will handle the rest
+      // Small delay to let auth state update
+      setTimeout(() => {
+        navigate('/dashboard');
+      }, 500);
+      
     } catch (err: any) {
       setError(err.message || 'Failed to create account');
-    } finally {
       setLoading(false);
     }
   };
@@ -487,104 +492,241 @@ const TripSignup = () => {
     }
   };
 
+  const getGradientColors = () => {
+    const gradients: Record<TripTypeSelection, string> = {
+      surprise: 'from-purple-600/20 via-pink-500/10 to-orange-400/20',
+      group: 'from-blue-600/20 via-cyan-500/10 to-teal-400/20',
+      custom: 'from-orange-600/20 via-amber-500/10 to-yellow-400/20',
+      standard: 'from-green-600/20 via-emerald-500/10 to-teal-400/20',
+    };
+    return gradients[validTripType];
+  };
+
+  const getAccentColor = () => {
+    const accents: Record<TripTypeSelection, string> = {
+      surprise: 'bg-gradient-to-r from-purple-500 to-pink-500',
+      group: 'bg-gradient-to-r from-blue-500 to-cyan-500',
+      custom: 'bg-gradient-to-r from-orange-500 to-amber-500',
+      standard: 'bg-gradient-to-r from-green-500 to-emerald-500',
+    };
+    return accents[validTripType];
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-navy-deep via-navy-medium to-navy-deep py-8 px-4">
-      <div className="max-w-2xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-between mb-8"
-        >
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleBack}
-            className="text-muted-foreground hover:text-foreground"
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="fixed inset-0 bg-gradient-to-br from-navy-deep via-navy-medium to-navy-deep" />
+      
+      {/* Floating Orbs */}
+      <motion.div 
+        className={`fixed top-20 -left-20 w-96 h-96 rounded-full blur-3xl opacity-30 ${getAccentColor()}`}
+        animate={{ 
+          x: [0, 50, 0], 
+          y: [0, 30, 0],
+          scale: [1, 1.1, 1]
+        }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div 
+        className={`fixed bottom-20 -right-20 w-80 h-80 rounded-full blur-3xl opacity-20 ${getAccentColor()}`}
+        animate={{ 
+          x: [0, -30, 0], 
+          y: [0, -50, 0],
+          scale: [1, 1.2, 1]
+        }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div 
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl opacity-10 bg-primary"
+        animate={{ 
+          scale: [1, 1.3, 1],
+          rotate: [0, 180, 360]
+        }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+      />
+
+      {/* Content */}
+      <div className="relative z-10 min-h-screen py-8 px-4">
+        <div className="max-w-2xl mx-auto">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center justify-between mb-6"
           >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back
-          </Button>
-          <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30">
-            {getTripIcon()}
-            <span className="ml-2">{getTripTypeLabel(validTripType)}</span>
-          </Badge>
-        </motion.div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleBack}
+              className="text-muted-foreground hover:text-foreground backdrop-blur-sm bg-white/5 hover:bg-white/10"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back
+            </Button>
+            <motion.div 
+              className={`flex items-center gap-2 px-4 py-2 rounded-full ${getAccentColor()} text-white shadow-lg`}
+              whileHover={{ scale: 1.05 }}
+            >
+              {getTripIcon()}
+              <span className="font-medium text-sm">{getTripTypeLabel(validTripType)}</span>
+            </motion.div>
+          </motion.div>
 
-        {/* Progress */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="mb-8"
-        >
-          <div className="flex justify-between text-sm text-muted-foreground mb-2">
-            <span>Step {currentStep + 1} of {totalSteps}</span>
-            <span>{Math.round(progress)}% complete</span>
-          </div>
-          <Progress value={progress} className="h-2" />
-        </motion.div>
-
-        {/* Error */}
-        {error && (
-          <Alert variant="destructive" className="mb-6 bg-destructive/10 border-destructive/30">
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        )}
-
-        {/* Step Content */}
-        <div className="min-h-[400px]">
-          <AnimatePresence mode="wait">
-            {renderStep()}
-          </AnimatePresence>
-        </div>
-
-        {/* Navigation */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex justify-between mt-8"
-        >
-          <Button
-            variant="outline"
-            onClick={handleBack}
-            className="border-border"
+          {/* Progress Bar - Creative Design */}
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            className="mb-8"
           >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Previous
-          </Button>
-          <Button
-            onClick={handleNext}
-            disabled={!canProceed() || loading}
-            className="bg-primary text-primary-foreground"
-          >
-            {loading ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Creating Account...
-              </>
-            ) : currentStep === totalSteps - 1 ? (
-              'Create Account'
-            ) : (
-              <>
-                Continue
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </>
+            <div className="flex items-center gap-2 mb-3">
+              {steps.map((_, index) => (
+                <motion.div
+                  key={index}
+                  className={`h-2 flex-1 rounded-full transition-all duration-500 ${
+                    index < currentStep 
+                      ? getAccentColor()
+                      : index === currentStep 
+                        ? 'bg-primary animate-pulse'
+                        : 'bg-white/10'
+                  }`}
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ delay: index * 0.1 }}
+                />
+              ))}
+            </div>
+            <div className="flex justify-between text-sm">
+              <span className="text-muted-foreground">Step {currentStep + 1} of {totalSteps}</span>
+              <motion.span 
+                className="text-primary font-semibold"
+                key={progress}
+                initial={{ scale: 1.2 }}
+                animate={{ scale: 1 }}
+              >
+                {Math.round(progress)}% complete
+              </motion.span>
+            </div>
+          </motion.div>
+
+          {/* Error */}
+          <AnimatePresence>
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10, height: 0 }}
+                animate={{ opacity: 1, y: 0, height: 'auto' }}
+                exit={{ opacity: 0, y: -10, height: 0 }}
+              >
+                <Alert variant="destructive" className="mb-6 bg-red-500/10 border-red-500/30 backdrop-blur-sm">
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              </motion.div>
             )}
-          </Button>
-        </motion.div>
+          </AnimatePresence>
 
-        {/* Login Link */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="text-center text-muted-foreground mt-8 text-sm"
-        >
-          Already have an account?{' '}
-          <Link to="/login" className="text-primary hover:underline">
-            Sign in
-          </Link>
-        </motion.p>
+          {/* Main Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="relative"
+          >
+            {/* Glow Effect */}
+            <div className={`absolute -inset-1 ${getAccentColor()} rounded-3xl blur-xl opacity-20`} />
+            
+            {/* Card */}
+            <Card className="relative border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl rounded-3xl overflow-hidden">
+              {/* Card Header Decoration */}
+              <div className={`absolute top-0 left-0 right-0 h-1 ${getAccentColor()}`} />
+              
+              <CardContent className="p-8 min-h-[450px] flex flex-col">
+                {/* Step Content */}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentStep}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="flex-1"
+                  >
+                    {renderStep()}
+                  </motion.div>
+                </AnimatePresence>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Navigation */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="flex justify-between mt-8 gap-4"
+          >
+            <Button
+              variant="outline"
+              onClick={handleBack}
+              className="flex-1 h-14 border-white/20 bg-white/5 backdrop-blur-sm hover:bg-white/10 text-foreground rounded-xl"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Previous
+            </Button>
+            <motion.div className="flex-1" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <Button
+                onClick={handleNext}
+                disabled={!canProceed() || loading}
+                className={`w-full h-14 ${getAccentColor()} text-white font-semibold shadow-lg rounded-xl border-0 disabled:opacity-50`}
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                    Creating Account...
+                  </>
+                ) : currentStep === totalSteps - 1 ? (
+                  <>
+                    <CheckCircle className="h-5 w-5 mr-2" />
+                    Create Account
+                  </>
+                ) : (
+                  <>
+                    Continue
+                    <ArrowRight className="h-5 w-5 ml-2" />
+                  </>
+                )}
+              </Button>
+            </motion.div>
+          </motion.div>
+
+          {/* Login Link */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="text-center text-muted-foreground mt-8 text-sm"
+          >
+            Already have an account?{' '}
+            <Link to="/login" className="text-primary hover:text-primary/80 font-medium transition-colors">
+              Sign in
+            </Link>
+          </motion.p>
+
+          {/* Fun Facts / Tips */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="mt-8 text-center"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm border border-white/10">
+              <Sparkles className="h-4 w-4 text-primary" />
+              <span className="text-xs text-muted-foreground">
+                {validTripType === 'surprise' && "10,000+ travelers surprised with unforgettable trips!"}
+                {validTripType === 'group' && "Join 500+ group trips happening every month!"}
+                {validTripType === 'custom' && "Our experts have planned 2,000+ custom trips!"}
+                {validTripType === 'standard' && "50+ curated packages to choose from!"}
+              </span>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </div>
   );
