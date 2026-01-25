@@ -112,42 +112,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { error: error as Error };
       }
 
-      console.log('Signup response:', { user: data?.user?.id, session: !!data?.session });
-
       // If we got a session directly, user is auto-confirmed - success!
       if (data?.session) {
-        console.log('User auto-confirmed with session');
         return { error: null };
       }
 
-      // If user exists but no session, Supabase might have email confirmation enabled
-      // OR there might be a slight delay. Try to sign in immediately.
+      // If user exists but no session, try to sign in
+      // This works when email confirmation is disabled
       if (data?.user) {
-        console.log('User created, attempting auto-login...');
-        
-        // Try signing in - this will work if email confirmation is disabled
         const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
         
         if (signInData?.session) {
-          console.log('Auto-login successful');
           return { error: null };
         }
         
+        // If email not confirmed, don't show as error - user account was created
+        // They just need to verify email or admin needs to disable confirmation
+        if (signInError?.message?.includes('Email not confirmed')) {
+          // Return success but with a flag that email needs confirmation
+          // The TripSignup will handle showing appropriate message
+          return { error: null, needsEmailConfirmation: true } as any;
+        }
+        
         if (signInError) {
-          console.log('Auto-login failed:', signInError.message);
-          // If it's an email confirmation issue, the signup still succeeded
-          // The user just needs to verify their email
-          if (signInError.message?.includes('Email not confirmed')) {
-            // Check if user is already confirmed (race condition)
-            const { data: userData } = await supabase.auth.getUser();
-            if (userData?.user) {
-              return { error: null };
-            }
-          }
-          // Return the actual error for other cases
           return { error: signInError as Error };
         }
       }
