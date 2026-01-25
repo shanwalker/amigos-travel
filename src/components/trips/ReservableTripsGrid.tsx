@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -5,11 +6,14 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { useReservableTripsWithCount } from '@/hooks/useTripsByType';
+import { ReserveTripModal } from './ReserveTripModal';
+import type { Trip } from '@/integrations/supabase/database.types';
 import { Users, MapPin, Ticket, ArrowRight, Loader2, Clock } from 'lucide-react';
 
 export const ReservableTripsGrid = () => {
   const { data: trips, isLoading } = useReservableTripsWithCount();
   const navigate = useNavigate();
+  const [selectedTrip, setSelectedTrip] = useState<Trip | null>(null);
 
   if (isLoading) {
     return (
@@ -132,7 +136,13 @@ export const ReservableTripsGrid = () => {
                     </div>
 
                     {/* CTA */}
-                    <Button className="w-full bg-primary hover:bg-primary/90 gap-2">
+                    <Button 
+                      className="w-full bg-primary hover:bg-primary/90 gap-2"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedTrip(trip);
+                      }}
+                    >
                       <Ticket className="w-4 h-4" />
                       Reserve for ₹{trip.reservation_fee || 999}
                     </Button>
@@ -156,6 +166,15 @@ export const ReservableTripsGrid = () => {
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </div>
+        )}
+
+        {/* Reservation Modal */}
+        {selectedTrip && (
+          <ReserveTripModal
+            trip={selectedTrip}
+            isOpen={!!selectedTrip}
+            onClose={() => setSelectedTrip(null)}
+          />
         )}
       </div>
     </section>
