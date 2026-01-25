@@ -246,17 +246,24 @@ const TripSignup = () => {
         sessionStorage.setItem('travelamigo_signup_session', JSON.stringify(session));
       }
 
-      const { error: signUpError } = await signUp(profileData.email, profileData.password, fullName);
+      const result = await signUp(profileData.email, profileData.password, fullName);
 
-      if (signUpError) {
-        setError(signUpError.message);
+      if (result.error) {
+        setError(result.error.message);
         setLoading(false);
         return;
       }
 
-      // Check if user is now logged in (auto-confirm enabled)
-      // If so, useAutoCreateRequest will handle the rest
-      // Small delay to let auth state update
+      // Check if email confirmation is required
+      if ((result as any).needsEmailConfirmation) {
+        // Show success state with email confirmation message
+        setSuccess(true);
+        setLoading(false);
+        return;
+      }
+
+      // User is logged in, redirect to dashboard
+      // The dashboard or login page will process the signup session
       setTimeout(() => {
         navigate('/dashboard');
       }, 500);
