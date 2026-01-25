@@ -1,378 +1,415 @@
 
 
-# Travel Amigo - Trip Types Implementation Plan
+# Unified User Flow: Trip-Type-Specific Signup with Seamless Admin Integration
 
-## Overview
+## Executive Summary
 
-This plan transforms the current single trip type system into a comprehensive multi-type trip platform that supports your 4 unique trip categories: Surprise Trips, Group Trips (Fixed & Reservable), Standard Packages, and Fully Customized trips. It also implements an interests collection system during signup and displays this data in the admin dashboard.
+This plan creates a complete, interconnected flow where:
+1. Users choose a trip type from the homepage
+2. Complete trip-specific questionnaires BEFORE registration
+3. Create their profile with all personal details
+4. All questionnaire answers are preserved and linked to their profile
+5. Users can make reservations visible in both their dashboard and admin panel
+6. Admins see complete user journey data including interests, questionnaire answers, and bookings
 
 ---
 
-## Architecture Design
+## Current State Analysis
 
-### Database Schema Changes
+**What exists:**
+- Basic signup flow (email, password, full name)
+- Post-signup onboarding quiz (6 steps - interests, budget, travel style, accommodation, activity level)
+- Separate wizards for Surprise Trip and Custom Trip (but they require login first)
+- User dashboard with bookings display
+- Admin panel with user management (shows travel_preferences)
+- Profiles table with `travel_preferences` JSON column
 
-We need to extend the database to support:
+**Gaps identified:**
+1. No trip-type selection BEFORE signup
+2. Questionnaire answers from trip wizards not linked to user profile
+3. No phone number captured during signup
+4. No unified flow connecting trip selection to signup to profile creation
+5. Admin cannot see which trip type the user was interested in when signing up
 
-1. **Trip Types & Categories**
-2. **User Interest Profiles**
-3. **Local Buddies Network**
-4. **Reservations System** (for reservable group trips)
-5. **Custom Trip Requests**
+---
+
+## Implementation Architecture
 
 ```text
-+------------------+       +------------------+       +------------------+
-|     trips        |       |    bookings      |       |     profiles     |
-+------------------+       +------------------+       +------------------+
-| trip_type (enum) |<------| trip_id          |       | travel_interests |
-| category         |       | user_id -------->|------>| budget_range     |
-| min_budget       |       | reservation_fee  |       | travel_style     |
-| max_budget       |       | ...              |       | ...              |
-| is_featured      |       +------------------+       +------------------+
-| min_reservations |              |
-| reservation_fee  |              v
-| status (enum)    |       +-------------------+
-+------------------+       | surprise_requests |
-        |                  +-------------------+
-        v                  | user_id           |
-+------------------+       | interests_data    |
-| local_buddies    |       | budget            |
-+------------------+       | matched_buddy_id  |
-| user_id          |       | assigned_trip_id  |
-| location         |       | status            |
-| bio              |       +-------------------+
-| interests        |
-| has_vehicle      |
-| is_active        |
-+------------------+
+                    HOMEPAGE
+                        |
+         +--------------+---------------+
+         |              |               |
+    [Surprise]    [Group Trip]    [Custom Trip]
+         |              |               |
+         +--------> TRIP WIZARD <-------+
+              (Type-specific questions)
+                        |
+              Answers stored in sessionStorage
+                        |
+                   SIGNUP PAGE
+            (First name, Last name, 
+             Email, Phone, Password)
+                        |
+                 Email Verification
+                        |
+                   LOGIN PAGE
+                        |
+            System detects pending data
+                        |
+                 AUTO-SAVE TO DB
+         (Profile + TravelPreferences + 
+          TripRequest linked together)
+                        |
+         +-------> USER DASHBOARD <------+
+         |              |                |
+    [My Trips]    [My Requests]    [Browse Trips]
+         |              |                |
+         +-------> ADMIN DASHBOARD <-----+
+                        |
+         +--------------+---------------+
+         |              |               |
+    [User Profile]  [Requests]   [Reservations]
+    (Shows journey) (All types)  (All bookings)
 ```
 
 ---
 
-## Implementation Phases
+## Technical Implementation Plan
 
-### Phase 1: Database Schema Updates
+### Phase 1: Enhanced Signup Flow with Trip Context
 
-**New Enums:**
-- `trip_type`: 'surprise', 'group_fixed', 'group_reservable', 'standard', 'custom'
-- `trip_status`: 'draft', 'active', 'confirmed', 'completed', 'cancelled'
-- `request_status`: 'pending', 'matched', 'planning', 'confirmed', 'completed'
+**1.1 Create Trip Selection Landing Component**
 
-**Updated `trips` Table:**
-Add columns:
-- `trip_type` (enum) - Type of trip
-- `category` (text) - e.g., "Beach", "Mountain", "City"
-- `min_budget` (numeric) - Minimum budget for this trip
-- `max_budget` (numeric) - Maximum budget
-- `is_featured` (boolean) - For featured group trips
-- `min_reservations` (integer) - Minimum people needed (for reservable)
-- `reservation_fee` (numeric) - Default ₹999
-- `reservation_count` (integer) - Current reservations
-- `status` (enum) - Trip status
+New file: `src/components/auth/TripTypeSelector.tsx`
 
-**New `surprise_requests` Table:**
-- `id`, `user_id`, `interests_data` (JSON)
-- `budget`, `preferred_dates`, `travel_style`
-- `matched_buddy_id`, `assigned_trip_id`
-- `status`, `admin_notes`, `created_at`, `updated_at`
+This component will be displayed before the signup page when a user clicks "Get Started" on any trip type from the homepage.
 
-**New `local_buddies` Table:**
-- `id`, `user_id` (references profiles)
-- `location`, `city`, `country`
-- `bio`, `interests` (JSON array)
-- `has_vehicle`, `vehicle_type`
-- `languages` (array)
-- `is_active`, `is_verified`
-- `rating`, `total_trips`
-- `created_at`
+Features:
+- Visual cards for each trip type (Surprise, Group/Reservable, Custom, Standard)
+- Each card shows brief description of what the user will get
+- Clicking a card stores the selection and navigates to the appropriate questionnaire
 
-**New `trip_reservations` Table:**
-- `id`, `trip_id`, `user_id`
-- `reservation_fee_paid`
-- `preferred_dates` (JSON array)
-- `status`: 'pending', 'confirmed', 'refunded'
-- `created_at`
+**1.2 Create Pre-Signup Questionnaire Wrapper**
 
-**New `custom_trip_requests` Table:**
-- `id`, `user_id`
-- `requirements` (JSON - detailed preferences)
-- `budget_min`, `budget_max`
-- `num_travelers`, `preferred_dates`
-- `status`, `assigned_trip_id`
-- `admin_notes`, `created_at`, `updated_at`
+New file: `src/pages/TripSignup.tsx`
 
-**Updated `profiles` Table:**
-Expand `travel_preferences` JSON structure:
-```json
+A unified page that handles the complete pre-signup journey:
+- Step 1: Trip-specific questions (budget, interests, dates, preferences)
+- Step 2: Profile creation form (first name, last name, email, phone, password)
+- All data stored in sessionStorage until account creation
+
+The questionnaire adapts based on trip type:
+- **Surprise Trip**: Budget slider, interests, travel style, activities, dates, special requests
+- **Group Trip**: Interests, budget, travel companions, activity level
+- **Custom Trip**: Destinations, activities, stay type, travelers, budget, dates
+- **Standard Trip**: Uses general onboarding questions
+
+**1.3 Enhanced Signup Form**
+
+Modify: `src/pages/auth/Signup.tsx`
+
+Add new fields:
+- First Name (separate field)
+- Last Name (separate field)
+- Phone Number (with country code picker)
+- Password with strength indicator
+
+The form will:
+1. Check sessionStorage for pending questionnaire answers
+2. Display a summary of their trip interests
+3. After successful signup, show email verification message
+
+**1.4 Session Storage Manager**
+
+New file: `src/lib/signupSession.ts`
+
+Utility to manage pre-signup data:
+```text
 {
-  "interests": ["beaches", "food", "adventure"],
-  "budget_style": "smart_saver",
-  "travel_style": "solo",
-  "accommodation_pref": "budget",
-  "activity_level": "active",
-  "dietary": [],
-  "completed_at": "2024-01-25"
+  tripType: 'surprise' | 'group' | 'custom' | 'standard'
+  questionnaireAnswers: {
+    // Type-specific answers
+  }
+  profileData: {
+    firstName: string
+    lastName: string
+    phone: string
+  }
+  createdAt: timestamp
+  expiresAt: timestamp (24 hours)
 }
 ```
 
 ---
 
-### Phase 2: User-Facing Interest Collection
+### Phase 2: Post-Verification Data Linking
 
-**2.1 Multi-Step Onboarding Quiz (After Signup)**
+**2.1 Enhanced Login Flow**
 
-Create a new `OnboardingQuiz` component that appears after signup:
+Modify: `src/pages/auth/Login.tsx`
 
-**Questions to collect:**
+After successful login:
+1. Check sessionStorage for pending signup data
+2. If found, auto-save to database:
+   - Update profile with full_name, phone
+   - Save travel_preferences with questionnaire answers
+   - Create trip request record (surprise_requests, custom_trip_requests, or trip_reservations)
+3. Clear sessionStorage
+4. Redirect to appropriate page (dashboard or trip confirmation)
 
-| Step | Question | Options |
-|------|----------|---------|
-| 1 | What kind of places excite you? | Beaches, Mountains, Cities, Countryside, Islands |
-| 2 | What activities do you love? | Food Tours, Adventure Sports, Cultural Sites, Nightlife, Relaxation/Spa, Photography |
-| 3 | What's your travel budget style? | Budget Backpacker (Under ₹3K/day), Smart Saver (₹3K-7K/day), Comfort Seeker (₹7K-15K/day), Luxury Lover (₹15K+/day) |
-| 4 | Who do you travel with? | Solo Explorer, Couple/Partner, Friends Group, Family |
-| 5 | Your accommodation preference? | Hostels/Dorms, Budget Hotels, Mid-range Hotels, Luxury Resorts, Unique Stays (Airbnb) |
-| 6 | How active are you on trips? | Chill & Relax, Moderately Active, Very Active/Adventure |
+**2.2 Profile Data Structure Enhancement**
 
-**2.2 Signup Flow Update:**
+Modify: `src/integrations/supabase/database.types.ts`
 
+Extend TravelPreferences type:
 ```text
-Signup Form -> Email Verification -> Login -> Onboarding Quiz -> Dashboard
+TravelPreferences {
+  // Existing fields...
+  signup_trip_type: 'surprise' | 'group' | 'custom' | 'standard' | null
+  signup_context: {
+    trip_type: string
+    selected_trip_id?: string
+    questionnaire_completed_at: string
+    source_page: string
+  }
+}
 ```
 
-Save all responses to `profiles.travel_preferences` as structured JSON.
+**2.3 Automatic Request Creation**
+
+New hook: `src/hooks/useAutoCreateRequest.ts`
+
+This hook runs after login when pending data exists:
+- For Surprise Trip: Creates entry in `surprise_requests` table
+- For Custom Trip: Creates entry in `custom_trip_requests` table
+- For Group Trip: Creates entry in `trip_reservations` table
+- Links all records to user_id
 
 ---
 
-### Phase 3: Homepage & Trip Display Sections
+### Phase 3: User Dashboard Enhancements
 
-**3.1 Update Hero Section**
+**3.1 My Trip Requests Section**
 
-Add a prominent "Surprise Me!" CTA button that leads to the Surprise Trip flow.
+New file: `src/pages/dashboard/MyRequests.tsx`
 
-**3.2 Create Trip Type Sections on Homepage**
+Unified view showing:
+- Surprise trip requests (with status: pending/matched/planning)
+- Custom trip requests (with status: pending/quoted/approved)
+- Group trip reservations (with confirmation status)
 
-Replace or enhance current sections with:
+Features:
+- Status timeline visualization
+- Assigned buddy/planner display
+- Trip assignment when available
+- Communication thread (future)
 
-**Section A: Surprise Trip Hero Block**
-- Large, eye-catching card
-- "Don't know where to go? Let us surprise you!"
-- CTA: "Take the Quiz" or "Surprise Me!"
-- Shows how it works: Answer questions -> We plan -> Match with local buddy -> Go!
+**3.2 Enhanced Dashboard Home**
 
-**Section B: Featured Group Trips (Fixed)**
-- Horizontal scroll carousel
-- Shows trips with fixed dates
-- Badge: "Confirmed - 12 spots left"
-- CTA: "Reserve Now"
-
-**Section C: Explore Destinations (Reservable Group Trips)**
-- Grid of destination cards (Thailand, Bali, Vietnam, etc.)
-- Shows: "X people interested"
-- Badge: "Starting from ₹XX,XXX"
-- CTA: "Reserve for ₹999"
-
-**Section D: Standard Packages**
-- Card grid showing pre-made itineraries
-- "Perfect for your own group"
-- CTA: "View Package"
-
-**Section E: Custom Trip CTA**
-- Simple banner/section
-- "Want something unique? Let's plan together"
-- CTA: "Request Custom Trip"
-
----
-
-### Phase 4: Surprise Trip Flow (Your Hero Feature)
-
-**4.1 Create Surprise Trip Request Page (`/surprise-trip`)**
-
-Multi-step wizard:
-
-| Step | Content |
-|------|---------|
-| 1 | Budget Input - Slider for budget range (₹2,000 - ₹50,000) |
-| 2 | Interests - Multi-select: Beaches, Mountains, Food, Culture, Nightlife, Adventure, Relaxation |
-| 3 | Travel Style - Solo, With friends, Couple, Family |
-| 4 | Activities - Checkboxes: Local transport, Walking tours, Food crawls, Adventure activities |
-| 5 | Dates - Date range picker or "Flexible" |
-| 6 | Special Requests - Text area |
-| 7 | Confirmation - Review & Submit |
-
-**4.2 Submission Flow:**
-- Save to `surprise_requests` table
-- Show confirmation: "We're planning your surprise! We'll match you with a local buddy and email you within 48 hours."
-- Admin gets notification
-
-**4.3 Admin Matching Panel:**
-- View all surprise requests
-- See user's interests & budget
-- Select trip to assign
-- Select local buddy to match
-- Send notification to user
-
----
-
-### Phase 5: Group Trips (Fixed & Reservable)
-
-**5.1 Fixed Group Trips**
-
-Update trip cards to show:
-- Fixed date badge
-- "Confirmed Trip" indicator
-- Countdown to departure
-- Spots remaining
-- Direct booking flow
-
-**5.2 Reservable Group Trips**
-
-New reservation flow:
-1. User clicks "Reserve for ₹999"
-2. Payment gateway integration (or manual payment tracking)
-3. Save to `trip_reservations`
-4. Show: "X more people needed to confirm this trip"
-5. Admin can confirm trip when threshold reached
-6. All reservers get notified, remaining payment collected
-
-**5.3 Admin Reservable Trips Panel:**
-- View all reservable trips
-- See reservation count vs minimum
-- Confirm trip (triggers email to all reservers)
-- Cancel trip (triggers refund process)
-- Collect preferred dates from reservers
-
----
-
-### Phase 6: Local Buddies System
-
-**6.1 Local Buddy Registration:**
-- New page: `/become-a-buddy`
-- Form: Location, interests, bio, vehicle info, languages
-- Saved to `local_buddies` table
-- Admin approval required
-
-**6.2 Admin Buddy Management:**
-- View all registered buddies
-- Verify/approve buddies
-- See buddy availability
-- Match buddies to surprise requests
-
-**6.3 Buddy Dashboard (Future):**
-- Buddies can see their matched trips
-- Update availability
-- Rate travelers
-
----
-
-### Phase 7: Enhanced Admin Dashboard
-
-**7.1 New Admin Pages:**
-
-| Page | Purpose |
-|------|---------|
-| `/admin/surprise-requests` | Manage all surprise trip requests |
-| `/admin/reservations` | View all trip reservations |
-| `/admin/local-buddies` | Manage local buddy network |
-| `/admin/custom-requests` | Handle custom trip requests |
-
-**7.2 Update Admin Overview Dashboard:**
-
-Add new stat cards:
-- Total Surprise Requests (Pending/Completed)
-- Total Reservations (Active/Confirmed)
-- Local Buddies (Active/Pending Verification)
-- Custom Requests (In Progress)
+Modify: `src/pages/dashboard/DashboardHome.tsx`
 
 Add new sections:
-- **User Interests Analytics**: Chart showing popular interests, budget distributions
-- **Pending Surprise Matches**: Quick list of requests needing matching
-- **Reservation Thresholds**: Trips close to confirmation
+- "Your Journey Started" card (shows their original trip interest)
+- "Request Status" widget for pending requests
+- Quick links to their specific trip type
 
-**7.3 User Management Enhancement:**
+**3.3 Dashboard Sidebar Update**
 
-When viewing a user, show:
-- Their travel preferences (interests, budget style, etc.)
-- Past bookings
-- Surprise request history
-- Whether they're a local buddy
+Modify: `src/components/dashboard/DashboardSidebar.tsx`
 
----
-
-### Phase 8: Browse Trips Page Enhancement
-
-**8.1 Update `/dashboard/trips`:**
-
-Add filters:
-- Trip Type (All, Group Fixed, Group Reservable, Standard Packages)
-- Budget Range
-- Category (Beach, Mountain, etc.)
-- Date Range
-
-Add tabs:
-- "All Trips"
-- "Featured Group Trips"
-- "Reserve a Trip"
-- "Standard Packages"
+Add new menu item:
+- "My Requests" - links to `/dashboard/requests`
 
 ---
 
-## Technical Implementation Details
+### Phase 4: Admin Dashboard Enhancements
 
-### New Files to Create
+**4.1 Enhanced User Profile View**
 
-**Pages:**
-- `src/pages/SurpriseTrip.tsx` - Surprise trip wizard
-- `src/pages/BecomeABuddy.tsx` - Local buddy registration
-- `src/pages/admin/SurpriseRequestsManagement.tsx`
-- `src/pages/admin/LocalBuddiesManagement.tsx`
-- `src/pages/admin/ReservationsManagement.tsx`
-- `src/pages/admin/CustomRequestsManagement.tsx`
+Modify: `src/pages/admin/UserManagement.tsx`
 
-**Components:**
-- `src/components/onboarding/OnboardingQuiz.tsx` - Post-signup quiz
-- `src/components/trips/SurpriseTripSection.tsx` - Homepage section
-- `src/components/trips/FeaturedTripsCarousel.tsx`
-- `src/components/trips/ReservableTripsGrid.tsx`
-- `src/components/trips/StandardPackagesGrid.tsx`
-- `src/components/trips/TripTypeFilter.tsx`
+Add to user dialog:
+- **Signup Journey** section showing:
+  - Original trip type they were interested in
+  - Complete questionnaire answers
+  - Timestamp of signup flow
+- **Activity Timeline** showing:
+  - Account creation
+  - Profile completion
+  - Requests submitted
+  - Bookings made
 
-**Hooks:**
-- `src/hooks/useSurpriseRequests.ts`
-- `src/hooks/useLocalBuddies.ts`
-- `src/hooks/useReservations.ts`
-- `src/hooks/useCustomRequests.ts`
+**4.2 Unified Request Dashboard**
 
-**Database Migrations:**
-- Add new tables and enums
-- Update existing tables
-- Create RLS policies
+New file: `src/pages/admin/AllRequestsManagement.tsx`
 
----
+Combined view of all user requests with:
+- Tabs: All / Surprise / Custom / Reservations
+- Filter by status, date range, user
+- Bulk actions for status updates
+- Quick user profile preview
+- One-click trip assignment
 
-## Summary
+**4.3 User Journey Analytics**
 
-This implementation will transform Travel Amigo into a unique travel platform with:
+New component: `src/components/admin/UserJourneyCard.tsx`
 
-1. A clear separation of trip types with dedicated flows
-2. A rich user preference system that admins can leverage
-3. Your unique "Surprise Trip + Local Buddy" feature prominently displayed
-4. A reservable group trip system with threshold-based confirmations
-5. A local buddy network management system
-6. Comprehensive admin tools to manage all request types
-
-The approach builds on your existing codebase and database structure, extending rather than replacing.
+Visual display for each user showing:
+- Entry point (which trip type they clicked)
+- Questionnaire completion rate
+- Time from signup to first booking
+- Engagement score
 
 ---
 
-## Suggested Implementation Order
+### Phase 5: Data Flow Integration
 
-1. **Start with database migrations** - Create new tables and update existing ones
-2. **Build onboarding quiz** - Collect user interests after signup
-3. **Update admin dashboard** - Show user preferences
-4. **Create Surprise Trip flow** - Your hero feature
-5. **Implement trip type filtering** - Browse trips by type
-6. **Add reservable trips system** - Reservation and confirmation logic
-7. **Build Local Buddies system** - Registration and matching
-8. **Add homepage sections** - Showcase all trip types
+**5.1 Real-time Sync**
+
+Implement Supabase realtime subscriptions:
+- User dashboard updates when admin changes request status
+- Admin sees new requests immediately
+- Notification badges update in real-time
+
+**5.2 Request-to-Booking Conversion**
+
+New hook: `src/hooks/useConvertRequestToBooking.ts`
+
+Admin action to:
+1. Assign a trip to a request
+2. Auto-create booking entry
+3. Update request status to "confirmed"
+4. Notify user (future: email/push)
+
+**5.3 Profile-Request Linkage**
+
+Ensure all request tables have proper foreign keys:
+- `surprise_requests.user_id` -> `profiles.id`
+- `custom_trip_requests.user_id` -> `profiles.id`
+- `trip_reservations.user_id` -> `profiles.id`
+
+---
+
+## Database Changes Required
+
+### Migration 1: Add signup context to profiles
+
+```text
+ALTER TABLE profiles 
+ADD COLUMN first_name TEXT,
+ADD COLUMN last_name TEXT,
+ADD COLUMN signup_trip_type TEXT CHECK (signup_trip_type IN ('surprise', 'group', 'custom', 'standard')),
+ADD COLUMN signup_context JSONB DEFAULT '{}';
+```
+
+### Migration 2: Add questionnaire answers to request tables
+
+```text
+ALTER TABLE surprise_requests 
+ADD COLUMN signup_questionnaire JSONB DEFAULT '{}';
+
+ALTER TABLE custom_trip_requests 
+ADD COLUMN signup_questionnaire JSONB DEFAULT '{}';
+
+ALTER TABLE trip_reservations
+ADD COLUMN signup_questionnaire JSONB DEFAULT '{}';
+```
+
+---
+
+## UI/UX Flow Details
+
+### Step-by-Step User Journey
+
+1. **Homepage**: User sees trip options (Surprise Me, Join Group Trip, Plan Custom Trip)
+
+2. **Click any option**: Navigates to `/signup/surprise`, `/signup/group`, or `/signup/custom`
+
+3. **Trip Questionnaire**: 
+   - 5-7 questions specific to trip type
+   - Beautiful animated progress bar
+   - Skip option available
+   - Answers saved to sessionStorage
+
+4. **Profile Creation**:
+   - Form with: First Name, Last Name, Email, Phone, Password
+   - Summary card showing "Your Trip Preferences"
+   - Clear CTA: "Create Account & Submit Request"
+
+5. **Email Verification**:
+   - Friendly confirmation screen
+   - Instructions to check email
+   - Link to login page
+
+6. **First Login**:
+   - System detects pending data
+   - Auto-saves everything to database
+   - Creates trip request record
+   - Shows success toast: "Your [Surprise/Custom/Group] trip request has been submitted!"
+   - Redirects to dashboard
+
+7. **User Dashboard**:
+   - Welcome message with trip type context
+   - Request status card
+   - "We're matching you with..." or "Your request is being reviewed"
+
+8. **Admin Dashboard**:
+   - New request appears with full context
+   - User profile shows complete journey
+   - Easy assignment workflow
+
+---
+
+## File Changes Summary
+
+### New Files to Create:
+1. `src/components/auth/TripTypeSelector.tsx`
+2. `src/pages/TripSignup.tsx`
+3. `src/lib/signupSession.ts`
+4. `src/hooks/useAutoCreateRequest.ts`
+5. `src/pages/dashboard/MyRequests.tsx`
+6. `src/pages/admin/AllRequestsManagement.tsx`
+7. `src/components/admin/UserJourneyCard.tsx`
+8. `src/hooks/useConvertRequestToBooking.ts`
+
+### Files to Modify:
+1. `src/pages/auth/Signup.tsx` - Enhanced form with phone, separate name fields
+2. `src/pages/auth/Login.tsx` - Auto-save pending data logic
+3. `src/pages/dashboard/DashboardHome.tsx` - Add request status widgets
+4. `src/components/dashboard/DashboardSidebar.tsx` - Add My Requests link
+5. `src/pages/admin/UserManagement.tsx` - Enhanced user journey view
+6. `src/App.tsx` - Add new routes
+7. `src/integrations/supabase/database.types.ts` - Extended types
+
+### Database Migrations:
+1. Add signup context columns to profiles
+2. Add questionnaire storage to request tables
+
+---
+
+## Implementation Order
+
+1. **Phase 1A**: Create session storage manager and types
+2. **Phase 1B**: Build TripSignup page with questionnaires
+3. **Phase 1C**: Enhance Signup form with new fields
+4. **Phase 2A**: Update Login to detect and save pending data
+5. **Phase 2B**: Create auto-request creation hook
+6. **Phase 3A**: Build MyRequests dashboard page
+7. **Phase 3B**: Update DashboardHome with request widgets
+8. **Phase 4A**: Enhance UserManagement with journey view
+9. **Phase 4B**: Create unified AllRequestsManagement page
+10. **Phase 5**: Add real-time sync and notifications
+
+---
+
+## Success Criteria
+
+- User can select trip type and answer questions BEFORE creating account
+- All questionnaire data persists through email verification
+- First login automatically creates appropriate trip request
+- User dashboard shows request status with clear progress
+- Admin can see complete user journey from first click to booking
+- Data flows seamlessly between user and admin dashboards
+- No data loss during the signup flow
 
