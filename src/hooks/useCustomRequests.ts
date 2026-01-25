@@ -9,10 +9,18 @@ export const useCustomRequests = () => useQuery({
   queryFn: async () => {
     const { data, error } = await supabase
       .from('custom_trip_requests')
-      .select('*')
+      .select(`
+        *,
+        profiles:user_id (
+          id,
+          full_name,
+          email,
+          phone
+        )
+      `)
       .order('created_at', { ascending: false });
     if (error) throw error;
-    return data as CustomTripRequest[];
+    return data as (CustomTripRequest & { profiles: { id: string; full_name: string | null; email: string | null; phone: string | null } | null })[];
   }
 });
 

@@ -9,10 +9,18 @@ export const useSurpriseRequests = () => useQuery({
   queryFn: async () => {
     const { data, error } = await supabase
       .from('surprise_requests')
-      .select('*')
+      .select(`
+        *,
+        profiles:user_id (
+          id,
+          full_name,
+          email,
+          phone
+        )
+      `)
       .order('created_at', { ascending: false });
     if (error) throw error;
-    return data as SurpriseRequest[];
+    return data as (SurpriseRequest & { profiles: { id: string; full_name: string | null; email: string | null; phone: string | null } | null })[];
   }
 });
 
