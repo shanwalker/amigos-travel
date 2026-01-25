@@ -352,19 +352,23 @@ const TripSignup = () => {
               <div className="mx-auto w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center">
                 <CheckCircle className="h-8 w-8 text-green-500" />
               </div>
-              <h2 className="text-xl font-display text-foreground">Check your email!</h2>
+              <h2 className="text-xl font-display text-foreground">Account Created Successfully!</h2>
               <p className="text-muted-foreground">
-                We've sent a confirmation link to <strong>{profileData.email}</strong>.
-                Please verify your email to complete your {getTripTypeLabel(validTripType)} request.
+                Your {getTripTypeLabel(validTripType).toLowerCase()} preferences have been saved.
               </p>
-              <div className="pt-4">
-                <Button onClick={() => navigate('/login')} variant="outline">
+              <Alert className="bg-primary/10 border-primary/30">
+                <AlertDescription className="text-sm">
+                  <strong>Next step:</strong> Go to login and sign in with your credentials to access your dashboard and complete your booking.
+                </AlertDescription>
+              </Alert>
+              <div className="pt-4 space-y-2">
+                <Button onClick={() => navigate('/login')} className="w-full bg-primary text-primary-foreground">
                   Go to Login
                 </Button>
+                <p className="text-xs text-muted-foreground">
+                  Use email: <strong>{profileData.email}</strong>
+                </p>
               </div>
-              <p className="text-xs text-muted-foreground">
-                Your {getTripTypeLabel(validTripType).toLowerCase()} preferences have been saved and will be submitted after verification.
-              </p>
             </CardContent>
           </Card>
         </motion.div>
