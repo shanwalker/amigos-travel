@@ -99,6 +99,14 @@ const TripManagement = () => {
         spots_left: parseInt(formData.spots_left) || 20,
         total_spots: parseInt(formData.total_spots) || 20,
         rating: null,
+        trip_type: 'group_fixed',
+        category: null,
+        min_budget: null,
+        max_budget: null,
+        is_featured: false,
+        min_reservations: null,
+        reservation_fee: null,
+        status: 'active',
       });
       toast({ title: 'Success', description: 'Trip created successfully!' });
       setIsCreateOpen(false);

@@ -6,6 +6,12 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
+// Enums
+export type TripType = 'surprise' | 'group_fixed' | 'group_reservable' | 'standard' | 'custom';
+export type TripStatus = 'draft' | 'active' | 'confirmed' | 'completed' | 'cancelled';
+export type RequestStatus = 'pending' | 'matched' | 'planning' | 'confirmed' | 'completed' | 'cancelled';
+export type ReservationStatus = 'pending' | 'confirmed' | 'refunded' | 'cancelled';
+
 export interface Trip {
   id: string
   title: string
@@ -21,6 +27,16 @@ export interface Trip {
   total_spots: number
   rating: number | null
   created_at: string
+  // New fields for trip types
+  trip_type: TripType
+  category: string | null
+  min_budget: number | null
+  max_budget: number | null
+  is_featured: boolean
+  min_reservations: number | null
+  reservation_fee: number | null
+  reservation_count: number
+  status: TripStatus
 }
 
 export interface Testimonial {
@@ -61,6 +77,17 @@ export interface TravelStory {
   created_at: string
 }
 
+export interface TravelPreferences {
+  interests: string[]
+  budget_style: 'budget_backpacker' | 'smart_saver' | 'comfort_seeker' | 'luxury_lover'
+  travel_style: 'solo' | 'couple' | 'friends' | 'family'
+  accommodation_pref: 'hostels' | 'budget_hotels' | 'mid_range' | 'luxury' | 'unique_stays'
+  activity_level: 'chill' | 'moderate' | 'active'
+  dietary: string[]
+  completed_at: string | null
+  [key: string]: unknown
+}
+
 export interface Profile {
   id: string
   full_name: string | null
@@ -68,7 +95,7 @@ export interface Profile {
   avatar_url: string | null
   phone: string | null
   bio: string | null
-  travel_preferences: Json | null
+  travel_preferences: TravelPreferences | null
   created_at: string
   updated_at: string
 }
@@ -99,12 +126,84 @@ export interface NewsletterSubscriber {
   is_active: boolean
 }
 
+// New interfaces for Trip Types System
+export interface SurpriseRequest {
+  id: string
+  user_id: string
+  interests_data: {
+    interests: string[]
+    activities: string[]
+    travel_style: string
+    special_requests: string | null
+  }
+  budget_min: number
+  budget_max: number
+  preferred_dates: string | null
+  flexible_dates: boolean
+  matched_buddy_id: string | null
+  assigned_trip_id: string | null
+  status: RequestStatus
+  admin_notes: string | null
+  created_at: string
+  updated_at: string
+}
+
+export interface LocalBuddy {
+  id: string
+  user_id: string
+  location: string
+  city: string
+  country: string
+  bio: string | null
+  interests: string[]
+  has_vehicle: boolean
+  vehicle_type: string | null
+  languages: string[]
+  is_active: boolean
+  is_verified: boolean
+  rating: number | null
+  total_trips: number
+  created_at: string
+}
+
+export interface TripReservation {
+  id: string
+  trip_id: string
+  user_id: string
+  reservation_fee_paid: boolean
+  preferred_dates: string[] | null
+  status: ReservationStatus
+  created_at: string
+  updated_at: string
+}
+
+export interface CustomTripRequest {
+  id: string
+  user_id: string
+  requirements: {
+    destination_ideas: string[]
+    activities: string[]
+    accommodation_type: string
+    special_requirements: string | null
+  }
+  budget_min: number
+  budget_max: number
+  num_travelers: number
+  preferred_dates: string | null
+  flexible_dates: boolean
+  status: RequestStatus
+  assigned_trip_id: string | null
+  admin_notes: string | null
+  created_at: string
+  updated_at: string
+}
+
 export type Database = {
   public: {
     Tables: {
       trips: {
         Row: Trip
-        Insert: Omit<Trip, 'id' | 'created_at'> & { id?: string; created_at?: string }
+        Insert: Partial<Omit<Trip, 'id' | 'created_at'>> & { title: string; slug: string; destination: string; country: string; duration_days: number; spots_left: number; total_spots: number }
         Update: Partial<Trip>
         Relationships: []
       }
@@ -150,11 +249,44 @@ export type Database = {
         Update: Partial<NewsletterSubscriber>
         Relationships: []
       }
+      surprise_requests: {
+        Row: SurpriseRequest
+        Insert: Omit<SurpriseRequest, 'id' | 'created_at' | 'updated_at'> & { id?: string; created_at?: string; updated_at?: string }
+        Update: Partial<SurpriseRequest>
+        Relationships: []
+      }
+      local_buddies: {
+        Row: LocalBuddy
+        Insert: Omit<LocalBuddy, 'id' | 'created_at' | 'total_trips'> & { id?: string; created_at?: string; total_trips?: number }
+        Update: Partial<LocalBuddy>
+        Relationships: []
+      }
+      trip_reservations: {
+        Row: TripReservation
+        Insert: Omit<TripReservation, 'id' | 'created_at' | 'updated_at'> & { id?: string; created_at?: string; updated_at?: string }
+        Update: Partial<TripReservation>
+        Relationships: []
+      }
+      custom_trip_requests: {
+        Row: CustomTripRequest
+        Insert: Omit<CustomTripRequest, 'id' | 'created_at' | 'updated_at'> & { id?: string; created_at?: string; updated_at?: string }
+        Update: Partial<CustomTripRequest>
+        Relationships: []
+      }
     }
     Views: Record<string, never>
-    Functions: Record<string, never>
+    Functions: {
+      has_role: {
+        Args: { _user_id: string; _role: string }
+        Returns: boolean
+      }
+    }
     Enums: {
       app_role: 'admin' | 'moderator' | 'user'
+      trip_type: TripType
+      trip_status: TripStatus
+      request_status: RequestStatus
+      reservation_status: ReservationStatus
     }
     CompositeTypes: Record<string, never>
   }
