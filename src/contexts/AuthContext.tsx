@@ -96,7 +96,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signUp = async (email: string, password: string, fullName: string) => {
     try {
-      // Use autoConfirm option to skip email verification
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -109,41 +108,53 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
       
       if (error) {
+        console.error('Signup error:', error);
         return { error: error as Error };
       }
 
-      // If we got a session directly, user is auto-confirmed
+      console.log('Signup response:', { user: data?.user?.id, session: !!data?.session });
+
+      // If we got a session directly, user is auto-confirmed - success!
       if (data?.session) {
+        console.log('User auto-confirmed with session');
         return { error: null };
       }
 
-      // If user exists but no session, try auto-login
-      // This works when email confirmation is disabled in Supabase
+      // If user exists but no session, Supabase might have email confirmation enabled
+      // OR there might be a slight delay. Try to sign in immediately.
       if (data?.user) {
-        // Small delay to ensure user is created in database
-        await new Promise(resolve => setTimeout(resolve, 500));
+        console.log('User created, attempting auto-login...');
         
-        const { error: signInError } = await supabase.auth.signInWithPassword({
+        // Try signing in - this will work if email confirmation is disabled
+        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
         
-        // If sign-in fails due to email not confirmed, we need to handle gracefully
-        if (signInError?.message?.includes('Email not confirmed')) {
-          // Return a custom error instructing user to check email
-          // But actually, let's try a workaround - check if user exists and is confirmed
-          return { 
-            error: new Error('Account created! Please check your email to confirm, or contact admin to disable email confirmation.') 
-          };
+        if (signInData?.session) {
+          console.log('Auto-login successful');
+          return { error: null };
         }
         
         if (signInError) {
+          console.log('Auto-login failed:', signInError.message);
+          // If it's an email confirmation issue, the signup still succeeded
+          // The user just needs to verify their email
+          if (signInError.message?.includes('Email not confirmed')) {
+            // Check if user is already confirmed (race condition)
+            const { data: userData } = await supabase.auth.getUser();
+            if (userData?.user) {
+              return { error: null };
+            }
+          }
+          // Return the actual error for other cases
           return { error: signInError as Error };
         }
       }
       
       return { error: null };
     } catch (err) {
+      console.error('Signup exception:', err);
       return { error: err as Error };
     }
   };
