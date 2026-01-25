@@ -77,6 +77,13 @@ export interface TravelStory {
   created_at: string
 }
 
+export interface SignupContext {
+  trip_type: string
+  selected_trip_id?: string
+  questionnaire_completed_at: string
+  source_page: string
+}
+
 export interface TravelPreferences {
   interests: string[]
   budget_style: 'budget_backpacker' | 'smart_saver' | 'comfort_seeker' | 'luxury_lover'
@@ -85,6 +92,9 @@ export interface TravelPreferences {
   activity_level: 'chill' | 'moderate' | 'active'
   dietary: string[]
   completed_at: string | null
+  // Signup context fields
+  signup_trip_type?: 'surprise' | 'group' | 'custom' | 'standard' | null
+  signup_context?: SignupContext | null
   [key: string]: unknown
 }
 

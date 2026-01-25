@@ -5,6 +5,7 @@ import { useSurpriseRequests } from '@/hooks/useSurpriseRequests';
 import { useCustomRequests } from '@/hooks/useCustomRequests';
 import { useReservations } from '@/hooks/useReservations';
 import { useProfile } from '@/hooks/useProfile';
+import { useRealtimeUserRequests } from '@/hooks/useRealtimeRequests';
 import { StatsCard } from '@/components/dashboard/StatsCard';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -17,6 +18,9 @@ import { getTripTypeLabel } from '@/lib/signupSession';
 
 const DashboardHome = () => {
   const { user } = useAuth();
+  
+  // Enable real-time updates for user requests
+  useRealtimeUserRequests(user?.id);
   const { data: bookings = [] } = useBookings();
   const { data: trips = [] } = useTrips();
   const { data: profile, isLoading: loadingProfile } = useProfile(user?.id || '');
