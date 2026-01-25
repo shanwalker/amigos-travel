@@ -28,21 +28,29 @@ const Login = () => {
 
   // Function to auto-confirm user via edge function
   const tryAutoConfirm = async (userEmail: string, userPassword: string): Promise<boolean> => {
+    const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoZGJ0a2tnZXNmZ3F0a2ZlZG5lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1NTYwODgsImV4cCI6MjA4NDEzMjA4OH0.GeQsaI7LW29-FL1AIm-lMPqduKaWUyRkH_JNEWTBKms';
+    
     try {
+      console.log('Attempting auto-confirm via edge function...');
       const response = await fetch(
         `https://whdbtkkgesfgqtkfedne.supabase.co/functions/v1/confirm-user`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoZGJ0a2tnZXNmZ3F0a2ZlZG5lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1NTYwODgsImV4cCI6MjA4NDEzMjA4OH0.GeQsaI7LW29-FL1AIm-lMPqduKaWUyRkH_JNEWTBKms',
+            'apikey': ANON_KEY,
+            'Authorization': `Bearer ${ANON_KEY}`,
           },
           body: JSON.stringify({ email: userEmail, password: userPassword }),
         }
       );
 
+      console.log('Edge function response status:', response.status);
+
       if (response.ok) {
         const data = await response.json();
+        console.log('Edge function response:', data);
+        
         if (data?.session) {
           await supabase.auth.setSession({
             access_token: data.session.access_token,
@@ -58,9 +66,13 @@ const Login = () => {
           });
           return !signInError;
         }
+      } else {
+        const errorText = await response.text();
+        console.error('Edge function error:', response.status, errorText);
       }
       return false;
-    } catch {
+    } catch (err) {
+      console.error('Edge function fetch error:', err);
       return false;
     }
   };
@@ -241,10 +253,13 @@ const Login = () => {
             description: 'Your email has been confirmed automatically.',
           });
           setConfirmingUser(false);
-          // Continue with the normal flow - the auth state will update
+          setLoading(false);
+          // The auth state will update automatically via onAuthStateChange
+          return;
         } else {
           setConfirmingUser(false);
-          setError('Your email is not yet confirmed. Please check your inbox for a confirmation link, or contact support.');
+          // More helpful error message with action to take
+          setError('Email verification is pending. Please ask the site administrator to disable email confirmation in Supabase (Authentication → Providers → Email → Confirm email → OFF), or check your inbox for a confirmation link.');
           setLoading(false);
           return;
         }

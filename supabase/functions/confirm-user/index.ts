@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient } from "npm:@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -25,17 +25,25 @@ serve(async (req) => {
 
     console.log(`Attempting to confirm user: ${email}`);
 
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    const anonKey = Deno.env.get("SUPABASE_ANON_KEY");
+
+    if (!supabaseUrl || !serviceRoleKey) {
+      console.error("Missing environment variables");
+      return new Response(
+        JSON.stringify({ error: "Server configuration error" }),
+        { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     // Create admin client with service role key
-    const supabaseAdmin = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
-      {
-        auth: {
-          autoRefreshToken: false,
-          persistSession: false,
-        },
-      }
-    );
+    const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    });
 
     // Find the user by email
     const { data: users, error: listError } = await supabaseAdmin.auth.admin.listUsers();
@@ -48,7 +56,7 @@ serve(async (req) => {
       );
     }
 
-    const user = users.users.find((u) => u.email === email);
+    const user = users.users.find((u: any) => u.email === email);
 
     if (!user) {
       console.log(`User not found: ${email}`);
@@ -59,7 +67,7 @@ serve(async (req) => {
     }
 
     // Update user to confirm email
-    const { data: updatedUser, error: updateError } = await supabaseAdmin.auth.admin.updateUserById(
+    const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(
       user.id,
       { email_confirm: true }
     );
@@ -75,10 +83,7 @@ serve(async (req) => {
     console.log(`User confirmed successfully: ${email}`);
 
     // Now sign in the user to return a session
-    const supabaseClient = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_ANON_KEY") ?? ""
-    );
+    const supabaseClient = createClient(supabaseUrl, anonKey || serviceRoleKey);
 
     const { data: signInData, error: signInError } = await supabaseClient.auth.signInWithPassword({
       email,
