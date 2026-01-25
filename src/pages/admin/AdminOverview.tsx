@@ -13,6 +13,7 @@ import { useSurpriseRequests } from '@/hooks/useSurpriseRequests';
 import { useLocalBuddies } from '@/hooks/useLocalBuddies';
 import { useReservations } from '@/hooks/useReservations';
 import { useCustomRequests } from '@/hooks/useCustomRequests';
+import { useRealtimeAdminRequests } from '@/hooks/useRealtimeRequests';
 import {
   Map,
   Users,
@@ -31,6 +32,8 @@ import { motion } from 'framer-motion';
 import { useMemo } from 'react';
 
 const AdminOverview = () => {
+  // Enable real-time updates for admin
+  useRealtimeAdminRequests();
   const { data: trips } = useTrips();
   const { data: bookings } = useAllBookings();
   const { data: users } = useUsers();
