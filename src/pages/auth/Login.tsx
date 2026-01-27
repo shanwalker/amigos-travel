@@ -53,11 +53,11 @@ const Login = () => {
 
     try {
       // Update profile with travel preferences
-      const { error: profileError } = await supabase
+      const { error: profileError } = await (supabase as any)
         .from('profiles')
         .update({
           travel_preferences: sessionData.questionnaireData,
-        } as any)
+        })
         .eq('id', userId);
 
       if (profileError) {

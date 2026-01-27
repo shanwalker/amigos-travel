@@ -18,7 +18,9 @@ export const useAutoCreateRequest = (userId: string | undefined) => {
       const sessionData = prepareForDatabaseInsert();
       if (!sessionData) return;
 
-      const { tripType, questionnaireAnswers, profileData, signupContext } = sessionData;
+      const { tripType, questionnaireAnswers, questionnaireData } = sessionData;
+      const profileData = questionnaireData?.profileData;
+      const signupContext = questionnaireData?.signupContext;
 
       try {
         // 1. Update profile with additional data
