@@ -14,6 +14,9 @@ import Index from "./pages/Index";
 // Lazy load all other pages for code splitting
 const Thailand = lazy(() => import("./pages/destinations/Thailand"));
 const SurpriseTrip = lazy(() => import("./pages/SurpriseTrip"));
+const CustomTrip = lazy(() => import("./pages/CustomTrip"));
+const BecomeABuddy = lazy(() => import("./pages/BecomeABuddy"));
+const Onboarding = lazy(() => import("./pages/Onboarding"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Trip Signup Flow - lazy loaded
@@ -32,8 +35,10 @@ const DashboardHome = lazy(() => import("./pages/dashboard/DashboardHome"));
 const BrowseTrips = lazy(() => import("./pages/dashboard/BrowseTrips"));
 const TripDetails = lazy(() => import("./pages/dashboard/TripDetails"));
 const MyBookings = lazy(() => import("./pages/dashboard/MyBookings"));
+const MyRequests = lazy(() => import("./pages/dashboard/MyRequests"));
 const Profile = lazy(() => import("./pages/dashboard/Profile"));
 const Wishlist = lazy(() => import("./pages/dashboard/Wishlist"));
+const SurpriseTripSuggestions = lazy(() => import("./pages/dashboard/SurpriseTripSuggestions"));
 
 // Admin Dashboard - lazy loaded
 const AdminLayout = lazy(() => import("./components/admin/AdminLayout").then(m => ({ default: m.AdminLayout })));
@@ -44,6 +49,11 @@ const UserManagement = lazy(() => import("./pages/admin/UserManagement"));
 const TestimonialsManagement = lazy(() => import("./pages/admin/TestimonialsManagement"));
 const StoriesManagement = lazy(() => import("./pages/admin/StoriesManagement"));
 const NewsletterManagement = lazy(() => import("./pages/admin/NewsletterManagement"));
+const AllRequestsManagement = lazy(() => import("./pages/admin/AllRequestsManagement"));
+const SurpriseRequestsManagement = lazy(() => import("./pages/admin/SurpriseRequestsManagement"));
+const CustomRequestsManagement = lazy(() => import("./pages/admin/CustomRequestsManagement"));
+const ReservationsManagement = lazy(() => import("./pages/admin/ReservationsManagement"));
+const LocalBuddiesManagement = lazy(() => import("./pages/admin/LocalBuddiesManagement"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -69,6 +79,9 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/destinations/thailand" element={<Thailand />} />
               <Route path="/surprise-trip" element={<SurpriseTrip />} />
+              <Route path="/custom-trip" element={<CustomTrip />} />
+              <Route path="/become-a-buddy" element={<BecomeABuddy />} />
+              <Route path="/onboarding" element={<Onboarding />} />
 
               {/* Trip Signup Flow */}
               <Route path="/get-started" element={<GetStarted />} />
@@ -123,6 +136,20 @@ const App = () => (
                   </DashboardLayout>
                 </ProtectedRoute>
               } />
+              <Route path="/dashboard/requests" element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <MyRequests />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/dashboard/surprise-suggestions" element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <SurpriseTripSuggestions />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              } />
 
               {/* Admin Routes */}
               <Route path="/admin" element={
@@ -171,6 +198,41 @@ const App = () => (
                 <ProtectedRoute requiredRole="admin">
                   <AdminLayout>
                     <NewsletterManagement />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/all-requests" element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminLayout>
+                    <AllRequestsManagement />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/surprise-requests" element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminLayout>
+                    <SurpriseRequestsManagement />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/custom-requests" element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminLayout>
+                    <CustomRequestsManagement />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/reservations" element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminLayout>
+                    <ReservationsManagement />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/local-buddies" element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminLayout>
+                    <LocalBuddiesManagement />
                   </AdminLayout>
                 </ProtectedRoute>
               } />
