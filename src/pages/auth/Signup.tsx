@@ -20,41 +20,98 @@ const Signup = () => {
   const { signUp } = useAuth();
   const navigate = useNavigate();
 
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password: string): { valid: boolean; message?: string } => {
+    if (password.length < 6) {
+      return { valid: false, message: 'Password must be at least 6 characters' };
+    }
+    if (password.length < 8) {
+      return { valid: false, message: 'Password should be at least 8 characters for better security' };
+    }
+    // Check for at least one number or special character
+    if (!/[0-9!@#$%^&*]/.test(password)) {
+      return { valid: false, message: 'Password should contain at least one number or special character' };
+    }
+    return { valid: true };
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
+    // Validate full name
+    if (!fullName.trim()) {
+      setError('Please enter your full name');
+      return;
+    }
+
+    if (fullName.trim().length < 2) {
+      setError('Full name must be at least 2 characters');
+      return;
+    }
+
+    // Validate email format
+    if (!validateEmail(email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    // Validate password match
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
 
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters');
+    // Validate password strength
+    const passwordValidation = validatePassword(password);
+    if (!passwordValidation.valid) {
+      setError(passwordValidation.message || 'Invalid password');
       return;
     }
 
     setLoading(true);
 
-    const result = await signUp(email, password, fullName);
+    try {
+      const result = await signUp(email, password, fullName);
 
-    if (result.error) {
-      setError(result.error.message);
-      setLoading(false);
-    } else {
-      // Check if user needs email confirmation or is auto-logged in
-      const needsConfirmation = (result as any).needsEmailConfirmation;
+      if (result.error) {
+        // Improve error messages
+        let errorMessage = result.error.message;
 
-      if (needsConfirmation) {
-        // Email verification is enabled - show confirmation message
-        setSuccess(true);
+        if (errorMessage.includes('already registered') || errorMessage.includes('already exists')) {
+          errorMessage = 'An account with this email already exists. Please try logging in instead.';
+        } else if (errorMessage.includes('network') || errorMessage.includes('fetch')) {
+          errorMessage = 'Network error. Please check your internet connection and try again.';
+        } else if (errorMessage.includes('Invalid')) {
+          errorMessage = 'Invalid email or password format. Please check and try again.';
+        }
+
+        setError(errorMessage);
         setLoading(false);
       } else {
-        // Email verification is disabled - user is auto-logged in
-        // Redirect to dashboard
-        console.log('[Signup] User auto-confirmed, redirecting to dashboard...');
-        navigate('/dashboard');
+        // Check if user needs email confirmation or is auto-logged in
+        const needsConfirmation = (result as any).needsEmailConfirmation;
+
+        if (needsConfirmation) {
+          // Email verification is enabled - show confirmation message
+          setSuccess(true);
+          setLoading(false);
+        } else {
+          // Email verification is disabled - user is auto-logged in
+          // Clear loading state before navigation
+          setLoading(false);
+          console.log('[Signup] User auto-confirmed, redirecting to dashboard...');
+          navigate('/dashboard');
+        }
       }
+    } catch (err) {
+      console.error('[Signup] Unexpected error:', err);
+      setError('An unexpected error occurred. Please try again.');
+      setLoading(false);
     }
   };
 

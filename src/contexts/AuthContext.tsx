@@ -111,7 +111,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (error) {
         console.error('[AuthContext] ❌ Signup error:', error);
-        return { error: error as Error };
+
+        // Provide user-friendly error messages
+        let userMessage = error.message;
+        if (error.message.includes('already registered') || error.message.includes('already been registered')) {
+          userMessage = 'This email is already registered. Please try logging in instead.';
+        } else if (error.message.includes('network') || error.message.includes('fetch failed')) {
+          userMessage = 'Network error. Please check your internet connection and try again.';
+        }
+
+        return { error: { ...error, message: userMessage } as Error };
       }
 
       console.log('[AuthContext] 📊 Signup response:', {
@@ -125,18 +134,71 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       // If we got a session directly, email verification is DISABLED
       // User is auto-confirmed and logged in immediately
-      if (data?.session) {
+      if (data?.session && data?.user) {
         console.log('[AuthContext] ✅ Email verification DISABLED - User auto-logged in');
-        console.log('[AuthContext] 🎉 User session created, fetching roles...');
 
         // Set user and session immediately
         setUser(data.user);
         setSession(data.session);
 
-        // Fetch roles for the new user
-        if (data.user) {
-          const userRoles = await fetchRoles(data.user.id);
-          console.log('[AuthContext] 👤 User roles:', userRoles);
+        // Wait a moment for database trigger to create profile
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // Verify profile was created
+        console.log('[AuthContext] 🔍 Verifying profile creation...');
+        const { data: profileData, error: profileError } = await supabase
+          .from('profiles')
+          .select('id, email, full_name')
+          .eq('id', data.user.id)
+          .single();
+
+        if (profileError || !profileData) {
+          console.warn('[AuthContext] ⚠️ Profile not found, creating manually...');
+
+          // Create profile manually if trigger failed
+          const { error: insertError } = await supabase
+            .from('profiles')
+            .insert({
+              id: data.user.id,
+              email: data.user.email,
+              full_name: fullName,
+            });
+
+          if (insertError) {
+            console.error('[AuthContext] ❌ Failed to create profile:', insertError);
+            // Don't fail signup, but log the error
+          } else {
+            console.log('[AuthContext] ✅ Profile created manually');
+          }
+        } else {
+          console.log('[AuthContext] ✅ Profile verified:', profileData);
+        }
+
+        // Fetch and verify roles
+        console.log('[AuthContext] 🎉 Fetching user roles...');
+        const userRoles = await fetchRoles(data.user.id);
+        console.log('[AuthContext] 👤 User roles:', userRoles);
+
+        // If no roles assigned, assign default 'user' role
+        if (userRoles.length === 0) {
+          console.log('[AuthContext] ⚠️ No roles found, assigning default "user" role...');
+
+          const { error: roleError } = await supabase
+            .from('user_roles')
+            .insert({
+              user_id: data.user.id,
+              role: 'user',
+            });
+
+          if (roleError) {
+            console.error('[AuthContext] ❌ Failed to assign default role:', roleError);
+            // Set default role in state anyway
+            setRoles(['user']);
+          } else {
+            console.log('[AuthContext] ✅ Default role assigned');
+            setRoles(['user']);
+          }
+        } else {
           setRoles(userRoles);
         }
 
@@ -158,6 +220,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     } catch (err) {
       console.error('[AuthContext] 💥 Signup exception:', err);
+
+      // Check if it's a network error
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      if (errorMessage.includes('fetch') || errorMessage.includes('network')) {
+        return {
+          error: {
+            message: 'Network error. Please check your internet connection and try again.'
+          } as Error
+        };
+      }
+
       return { error: err as Error };
     }
   };
