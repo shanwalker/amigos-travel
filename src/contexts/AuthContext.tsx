@@ -96,13 +96,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signUp = async (email: string, password: string, fullName: string) => {
     try {
-      console.log('[AuthContext] Starting signup process...');
+      console.log('[AuthContext] 🚀 Starting signup process...', { email, fullName });
 
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo: window.location.origin,
+          emailRedirectTo: `${window.location.origin}/dashboard`,
           data: {
             full_name: fullName,
           },
@@ -110,27 +110,37 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (error) {
-        console.error('[AuthContext] Signup error:', error);
+        console.error('[AuthContext] ❌ Signup error:', error);
         return { error: error as Error };
       }
 
-      console.log('[AuthContext] Signup response:', {
+      console.log('[AuthContext] 📊 Signup response:', {
+        userId: data?.user?.id,
+        userEmail: data?.user?.email,
         hasUser: !!data?.user,
         hasSession: !!data?.session,
-        userConfirmed: data?.user?.confirmed_at ? true : false
+        userConfirmed: data?.user?.confirmed_at ? true : false,
+        emailConfirmedAt: data?.user?.confirmed_at
       });
 
       // If we got a session directly, email verification is DISABLED
       // User is auto-confirmed and logged in immediately
       if (data?.session) {
         console.log('[AuthContext] ✅ Email verification DISABLED - User auto-logged in');
+        console.log('[AuthContext] 🎉 User session created, fetching roles...');
+
+        // Set user and session immediately
+        setUser(data.user);
+        setSession(data.session);
 
         // Fetch roles for the new user
         if (data.user) {
           const userRoles = await fetchRoles(data.user.id);
+          console.log('[AuthContext] 👤 User roles:', userRoles);
           setRoles(userRoles);
         }
 
+        console.log('[AuthContext] ✨ Signup complete - user ready to use app');
         return { error: null };
       }
 
@@ -138,15 +148,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // User needs to confirm their email before they can log in
       if (data?.user && !data?.session) {
         console.log('[AuthContext] ⏳ Email verification ENABLED - User needs to confirm email');
+        console.log('[AuthContext] 📧 Confirmation email sent to:', data.user.email);
         return { error: null, needsEmailConfirmation: true } as any;
       }
 
       // Fallback - shouldn't normally reach here
-      console.log('[AuthContext] Unexpected signup state');
+      console.warn('[AuthContext] ⚠️ Unexpected signup state - no user or session');
       return { error: null };
 
     } catch (err) {
-      console.error('[AuthContext] Signup exception:', err);
+      console.error('[AuthContext] 💥 Signup exception:', err);
       return { error: err as Error };
     }
   };
