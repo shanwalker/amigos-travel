@@ -8,69 +8,69 @@ export type TripTypeSelection = TripType;
 
 export interface SignupSessionData {
     tripType: TripType;
-    email?: string;
-    fullName?: string;
-    questionnaireData?: Record<string, any>;
-    questionnaireAnswers?: Record<string, any>;
-    sourcePage?: string;
+    email: string;
+    fullName: string;
+    questionnaireData: Record<string, any>;
+    questionnaireAnswers: Record<string, any>;
+    sourcePage: string;
     selectedTripId?: string;
     timestamp: number;
 }
 
 const SESSION_KEY = 'travelamigo_signup_session';
-const TRIP_ID_KEY = 'travelamigo_selected_trip_id';
+const TRIP_ID_KEY = 'travelamigo_selected_trip';
 
 /**
- * Create a new signup session with trip type
+ * Get trip type label for display
  */
-export const createSignupSession = (tripType: TripType, sourcePage: string = '/'): void => {
-    try {
-        const sessionData: SignupSessionData = {
-            tripType,
-            sourcePage,
-            questionnaireAnswers: {},
-            timestamp: Date.now(),
-        };
-        sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
-        console.log('[SignupSession] Created:', sessionData);
-    } catch (error) {
-        console.error('[SignupSession] Error creating session:', error);
-    }
+export const getTripTypeLabel = (type: TripType): string => {
+    const labels: Record<TripType, string> = {
+        surprise: 'Surprise Trip',
+        group: 'Group Trip',
+        standard: 'Standard Package',
+        custom: 'Custom Trip',
+    };
+    return labels[type] || type;
 };
 
 /**
- * Update questionnaire answers in the session
+ * Get trip type description
  */
-export const updateQuestionnaireAnswers = (answers: Record<string, any>): void => {
-    try {
-        const session = getSignupSession();
-        if (session) {
-            session.questionnaireAnswers = {
-                ...session.questionnaireAnswers,
-                ...answers,
-            };
-            session.timestamp = Date.now();
-            sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
-            console.log('[SignupSession] Updated answers:', session);
-        }
-    } catch (error) {
-        console.error('[SignupSession] Error updating answers:', error);
-    }
+export const getTripTypeDescription = (type: TripType): string => {
+    const descriptions: Record<TripType, string> = {
+        surprise: 'Let us surprise you with a mystery destination',
+        group: 'Join other travelers on a curated group adventure',
+        standard: 'Choose from our ready-to-book travel packages',
+        custom: 'Design your perfect trip with our experts',
+    };
+    return descriptions[type] || '';
 };
 
 /**
- * Prepare session data for database insert
+ * Create a new signup session
  */
-export const prepareForDatabaseInsert = (): SignupSessionData | null => {
-    return getSignupSession();
+export const createSignupSession = (tripType: TripType, sourcePage: string): void => {
+    const sessionData: SignupSessionData = {
+        tripType,
+        email: '',
+        fullName: '',
+        questionnaireData: {},
+        questionnaireAnswers: {},
+        sourcePage,
+        timestamp: Date.now(),
+    };
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
+    console.log('[SignupSession] Created:', sessionData);
 };
 
 /**
  * Save signup session data to sessionStorage
  */
-export const saveSignupSession = (data: SignupSessionData): void => {
+export const saveSignupSession = (data: Partial<SignupSessionData>): void => {
     try {
+        const existing = getSignupSession();
         const sessionData = {
+            ...existing,
             ...data,
             timestamp: Date.now(),
         };
@@ -111,6 +111,48 @@ export const getSignupSession = (): SignupSessionData | null => {
 };
 
 /**
+ * Update questionnaire answers in the session
+ */
+export const updateQuestionnaireAnswers = (answers: Record<string, any>): void => {
+    const session = getSignupSession();
+    if (session) {
+        saveSignupSession({
+            questionnaireAnswers: {
+                ...session.questionnaireAnswers,
+                ...answers,
+            },
+        });
+    }
+};
+
+/**
+ * Prepare session data for database insert
+ */
+export const prepareForDatabaseInsert = (): SignupSessionData | null => {
+    const session = getSignupSession();
+    if (!session) return null;
+    return session;
+};
+
+/**
+ * Set selected trip ID
+ */
+export const setSelectedTripId = (tripId: string): void => {
+    sessionStorage.setItem(TRIP_ID_KEY, tripId);
+    const session = getSignupSession();
+    if (session) {
+        saveSignupSession({ selectedTripId: tripId });
+    }
+};
+
+/**
+ * Get selected trip ID
+ */
+export const getSelectedTripId = (): string | null => {
+    return sessionStorage.getItem(TRIP_ID_KEY);
+};
+
+/**
  * Clear signup session from sessionStorage
  */
 export const clearSignupSession = (): void => {
@@ -128,59 +170,4 @@ export const clearSignupSession = (): void => {
  */
 export const hasPendingSession = (): boolean => {
     return getSignupSession() !== null;
-};
-
-/**
- * Set selected trip ID
- */
-export const setSelectedTripId = (tripId: string): void => {
-    try {
-        sessionStorage.setItem(TRIP_ID_KEY, tripId);
-        const session = getSignupSession();
-        if (session) {
-            session.selectedTripId = tripId;
-            sessionStorage.setItem(SESSION_KEY, JSON.stringify(session));
-        }
-        console.log('[SignupSession] Set trip ID:', tripId);
-    } catch (error) {
-        console.error('[SignupSession] Error setting trip ID:', error);
-    }
-};
-
-/**
- * Get selected trip ID
- */
-export const getSelectedTripId = (): string | null => {
-    try {
-        return sessionStorage.getItem(TRIP_ID_KEY);
-    } catch (error) {
-        console.error('[SignupSession] Error getting trip ID:', error);
-        return null;
-    }
-};
-
-/**
- * Get trip type label
- */
-export const getTripTypeLabel = (type: TripType): string => {
-    const labels: Record<TripType, string> = {
-        surprise: 'Surprise Me',
-        group: 'Group Trip',
-        standard: 'Standard Package',
-        custom: 'Custom Trip',
-    };
-    return labels[type] || type;
-};
-
-/**
- * Get trip type description
- */
-export const getTripTypeDescription = (type: TripType): string => {
-    const descriptions: Record<TripType, string> = {
-        surprise: 'Let us plan a mystery adventure tailored just for you',
-        group: 'Join a curated group of travelers on fixed dates',
-        standard: 'Choose from our ready-made travel packages',
-        custom: 'Design your perfect trip with full flexibility',
-    };
-    return descriptions[type] || '';
 };
