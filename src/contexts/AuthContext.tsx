@@ -38,12 +38,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .from('user_roles')
         .select('role')
         .eq('user_id', userId);
-      
+
       if (error) {
         console.error('Error fetching roles:', error);
         return [];
       }
-      
+
       return (data || []).map(r => r.role as AppRole);
     } catch (err) {
       console.error('Error fetching roles:', err);
@@ -64,7 +64,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       async (event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
-        
+
         if (session?.user) {
           // Defer role fetching to avoid blocking auth state
           setTimeout(async () => {
@@ -74,7 +74,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         } else {
           setRoles([]);
         }
-        
+
         setLoading(false);
       }
     );
@@ -83,11 +83,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
-      
+
       if (session?.user) {
         fetchRoles(session.user.id).then(setRoles);
       }
-      
+
       setLoading(false);
     });
 
@@ -96,6 +96,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signUp = async (email: string, password: string, fullName: string) => {
     try {
+      console.log('[AuthContext] Starting signup process...');
+
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -106,72 +108,45 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           },
         },
       });
-      
+
       if (error) {
+        console.error('[AuthContext] Signup error:', error);
         return { error: error as Error };
       }
 
-      // If we got a session directly, user is auto-confirmed - great!
+      console.log('[AuthContext] Signup response:', {
+        hasUser: !!data?.user,
+        hasSession: !!data?.session,
+        userConfirmed: data?.user?.confirmed_at ? true : false
+      });
+
+      // If we got a session directly, email verification is DISABLED
+      // User is auto-confirmed and logged in immediately
       if (data?.session) {
+        console.log('[AuthContext] ✅ Email verification DISABLED - User auto-logged in');
+
+        // Fetch roles for the new user
+        if (data.user) {
+          const userRoles = await fetchRoles(data.user.id);
+          setRoles(userRoles);
+        }
+
         return { error: null };
       }
 
-      // User was created but needs confirmation
-      // Try calling our edge function to auto-confirm the user
-      if (data?.user) {
-        const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoZGJ0a2tnZXNmZ3F0a2ZlZG5lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1NTYwODgsImV4cCI6MjA4NDEzMjA4OH0.GeQsaI7LW29-FL1AIm-lMPqduKaWUyRkH_JNEWTBKms';
-        
-        try {
-          console.log('Attempting auto-confirm via edge function after signup...');
-          const response = await fetch(
-            `https://whdbtkkgesfgqtkfedne.supabase.co/functions/v1/confirm-user`,
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'apikey': ANON_KEY,
-                'Authorization': `Bearer ${ANON_KEY}`,
-              },
-              body: JSON.stringify({ email, password }),
-            }
-          );
-          
-          console.log('Edge function response status:', response.status);
-
-          if (response.ok) {
-            const confirmData = await response.json();
-            
-            if (confirmData?.session) {
-              // Set the session from the edge function response
-              await supabase.auth.setSession({
-                access_token: confirmData.session.access_token,
-                refresh_token: confirmData.session.refresh_token,
-              });
-              return { error: null };
-            }
-
-            if (confirmData?.confirmed) {
-              // User is confirmed, try to sign in
-              const { error: signInError } = await supabase.auth.signInWithPassword({
-                email,
-                password,
-              });
-              
-              if (!signInError) {
-                return { error: null };
-              }
-            }
-          }
-        } catch (fnError) {
-          console.log('Edge function not available, falling back to email confirmation');
-        }
-
-        // Fall back to email confirmation flow
+      // If we have a user but NO session, email verification is ENABLED
+      // User needs to confirm their email before they can log in
+      if (data?.user && !data?.session) {
+        console.log('[AuthContext] ⏳ Email verification ENABLED - User needs to confirm email');
         return { error: null, needsEmailConfirmation: true } as any;
       }
-      
+
+      // Fallback - shouldn't normally reach here
+      console.log('[AuthContext] Unexpected signup state');
       return { error: null };
+
     } catch (err) {
+      console.error('[AuthContext] Signup exception:', err);
       return { error: err as Error };
     }
   };

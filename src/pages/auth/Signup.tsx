@@ -36,13 +36,25 @@ const Signup = () => {
 
     setLoading(true);
 
-    const { error } = await signUp(email, password, fullName);
+    const result = await signUp(email, password, fullName);
 
-    if (error) {
-      setError(error.message);
+    if (result.error) {
+      setError(result.error.message);
       setLoading(false);
     } else {
-      setSuccess(true);
+      // Check if user needs email confirmation or is auto-logged in
+      const needsConfirmation = (result as any).needsEmailConfirmation;
+
+      if (needsConfirmation) {
+        // Email verification is enabled - show confirmation message
+        setSuccess(true);
+        setLoading(false);
+      } else {
+        // Email verification is disabled - user is auto-logged in
+        // Redirect to dashboard
+        console.log('[Signup] User auto-confirmed, redirecting to dashboard...');
+        navigate('/dashboard');
+      }
     }
   };
 
@@ -62,11 +74,11 @@ const Signup = () => {
               </div>
               <h2 className="text-xl font-display text-foreground">Check your email!</h2>
               <p className="text-muted-foreground">
-                We've sent a confirmation link to <strong>{email}</strong>. 
+                We've sent a confirmation link to <strong>{email}</strong>.
                 Please verify your email to complete registration.
               </p>
               <div className="flex gap-3 justify-center">
-                <Button 
+                <Button
                   variant="outline"
                   onClick={() => navigate('/login')}
                   className="border-border"
@@ -75,7 +87,7 @@ const Signup = () => {
                 </Button>
               </div>
               <p className="text-xs text-muted-foreground mt-2">
-                After verifying your email, you'll complete a quick quiz to personalize your experience.
+                After verifying your email, you can sign in to access your dashboard.
               </p>
             </CardContent>
           </Card>
@@ -171,8 +183,8 @@ const Signup = () => {
               </div>
             </CardContent>
             <CardFooter className="flex flex-col space-y-4">
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
                 disabled={loading}
               >
