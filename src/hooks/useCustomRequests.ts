@@ -1,86 +1,47 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
-import type { CustomTripRequest } from '@/integrations/supabase/database.types';
+import {
+  getUserCustomRequests,
+  getCustomRequest,
+  createCustomRequest,
+  updateCustomRequestStatus,
+  type CustomRequest,
+} from '@/lib/supabase/custom-requests';
+import { useToast } from './use-toast';
 
-export type { CustomTripRequest };
-
-export const useCustomRequests = () => useQuery({
-  queryKey: ['custom-requests'],
-  queryFn: async () => {
-    const { data, error } = await supabase
-      .from('custom_trip_requests')
-      .select(`
-        *,
-        profiles:user_id (
-          id,
-          full_name,
-          email,
-          phone
-        )
-      `)
-      .order('created_at', { ascending: false });
-    if (error) throw error;
-    return data as (CustomTripRequest & { profiles: { id: string; full_name: string | null; email: string | null; phone: string | null } | null })[];
-  }
-});
-
-export const useCustomRequest = (id: string) => useQuery({
-  queryKey: ['custom-request', id],
-  queryFn: async () => {
-    const { data, error } = await supabase
-      .from('custom_trip_requests')
-      .select('*')
-      .eq('id', id)
-      .single();
-    if (error) throw error;
-    return data as CustomTripRequest;
-  },
-  enabled: !!id
-});
-
-export const useUserCustomRequests = (userId: string) => useQuery({
-  queryKey: ['user-custom-requests', userId],
-  queryFn: async () => {
-    const { data, error } = await supabase
-      .from('custom_trip_requests')
-      .select('*')
-      .eq('user_id', userId)
-      .order('created_at', { ascending: false });
-    if (error) throw error;
-    return data as CustomTripRequest[];
-  },
-  enabled: !!userId
-});
-
-export const useCreateCustomRequest = () => {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: async (request: Omit<CustomTripRequest, 'id' | 'created_at' | 'updated_at'>) => {
-      const { data, error } = await (supabase as any)
-        .from('custom_trip_requests')
-        .insert(request)
-        .select()
-        .single();
-      if (error) throw error;
-      return data as CustomTripRequest;
-    },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['custom-requests'] })
+export function useUserCustomRequests() {
+  return useQuery({
+    queryKey: ['custom-requests', 'user'],
+    queryFn: getUserCustomRequests,
   });
-};
+}
 
-export const useUpdateCustomRequest = () => {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: async ({ id, ...updates }: Partial<CustomTripRequest> & { id: string }) => {
-      const { data, error } = await (supabase as any)
-        .from('custom_trip_requests')
-        .update(updates)
-        .eq('id', id)
-        .select()
-        .single();
-      if (error) throw error;
-      return data as CustomTripRequest;
-    },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['custom-requests'] })
+export function useCustomRequest(id: string) {
+  return useQuery({
+    queryKey: ['custom-requests', id],
+    queryFn: () => getCustomRequest(id),
+    enabled: !!id,
   });
-};
+}
+
+export function useCreateCustomRequest() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: createCustomRequest,
+    onSuccess: (result) => {
+      queryClient.invalidateQueries({ queryKey: ['custom-requests'] });
+      toast({
+        title: 'Request Submitted!',
+        description: `Your request reference is ${result.request?.request_reference}`,
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: 'Request Failed',
+        description: error.message || 'Failed to submit request',
+        variant: 'destructive',
+      });
+    },
+  });
+}

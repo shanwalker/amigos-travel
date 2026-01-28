@@ -1,75 +1,112 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
-import { useAuth } from '@/contexts/AuthContext';
+import {
+  getUserBookings,
+  getBooking,
+  createBooking,
+  updateBookingStatus,
+  updatePaymentStatus,
+  cancelBooking,
+  confirmBooking,
+  completeBooking,
+  type Booking,
+} from '@/lib/supabase/bookings';
+import { useToast } from './use-toast';
 
-export interface Booking {
-  id: string;
-  user_id: string;
-  trip_id: string;
-  status: 'pending' | 'confirmed' | 'cancelled' | 'completed';
-  num_travelers: number;
-  total_amount: number | null;
-  payment_status: string;
-  notes: string | null;
-  created_at: string;
-  updated_at: string;
-  trip?: any;
-  profile?: any;
+export function useUserBookings() {
+  return useQuery({
+    queryKey: ['bookings', 'user'],
+    queryFn: getUserBookings,
+  });
 }
 
-export const useBookings = () => {
-  const { user } = useAuth();
+export function useBooking(id: string) {
   return useQuery({
-    queryKey: ['bookings', user?.id],
-    queryFn: async (): Promise<Booking[]> => {
-      if (!user) return [];
-      const { data, error } = await (supabase as any).from('bookings').select('*, trip:trips(*)').eq('user_id', user.id).order('created_at', { ascending: false });
-      if (error) throw error;
-      return data;
-    },
-    enabled: !!user,
+    queryKey: ['bookings', id],
+    queryFn: () => getBooking(id),
+    enabled: !!id,
   });
-};
+}
 
-export const useAllBookings = () => {
-  return useQuery({
-    queryKey: ['all-bookings'],
-    queryFn: async (): Promise<Booking[]> => {
-      const { data, error } = await (supabase as any).from('bookings').select('*, trip:trips(*), profile:profiles(*)').order('created_at', { ascending: false });
-      if (error) throw error;
-      return data;
-    },
-  });
-};
-
-export const useCreateBooking = () => {
+export function useCreateBooking() {
   const queryClient = useQueryClient();
-  const { user } = useAuth();
+  const { toast } = useToast();
+
   return useMutation({
-    mutationFn: async (booking: { trip_id: string; num_travelers: number; total_amount: number; notes?: string }) => {
-      if (!user) throw new Error('User not authenticated');
-      const { data, error } = await (supabase as any).from('bookings').insert({ ...booking, user_id: user.id, status: 'pending', payment_status: 'unpaid' }).select().single();
-      if (error) throw error;
-      return data;
+    mutationFn: createBooking,
+    onSuccess: (result) => {
+      queryClient.invalidateQueries({ queryKey: ['bookings'] });
+      toast({
+        title: 'Booking Created!',
+        description: `Your booking reference is ${result.booking?.booking_reference}`,
+      });
     },
+    onError: (error: any) => {
+      toast({
+        title: 'Booking Failed',
+        description: error.message || 'Failed to create booking',
+        variant: 'destructive',
+      });
+    },
+  });
+}
+
+export function useUpdateBookingStatus() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: ({ id, status, reason }: { id: string; status: Booking['status']; reason?: string }) =>
+      updateBookingStatus(id, status, reason),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bookings'] });
-      queryClient.invalidateQueries({ queryKey: ['all-bookings'] });
+      toast({
+        title: 'Booking Updated',
+        description: 'Booking status has been updated',
+      });
     },
   });
-};
+}
 
-export const useUpdateBookingStatus = () => {
+export function useCancelBooking() {
   const queryClient = useQueryClient();
+  const { toast } = useToast();
+
   return useMutation({
-    mutationFn: async ({ id, status }: { id: string; status: string }) => {
-      const { data, error } = await (supabase as any).from('bookings').update({ status, updated_at: new Date().toISOString() }).eq('id', id).select().single();
-      if (error) throw error;
-      return data;
-    },
+    mutationFn: ({ id, reason }: { id: string; reason: string }) => cancelBooking(id, reason),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['bookings'] });
-      queryClient.invalidateQueries({ queryKey: ['all-bookings'] });
+      toast({
+        title: 'Booking Cancelled',
+        description: 'Your booking has been cancelled',
+      });
     },
   });
-};
+}
+
+export function useConfirmBooking() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: confirmBooking,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['bookings'] });
+    },
+  });
+}
+
+export function useUpdatePaymentStatus() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, status, amount, paymentId, method }: {
+      id: string;
+      status: Booking['payment_status'];
+      amount?: number;
+      paymentId?: string;
+      method?: string;
+    }) => updatePaymentStatus(id, status, amount, paymentId, method),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['bookings'] });
+    },
+  });
+}

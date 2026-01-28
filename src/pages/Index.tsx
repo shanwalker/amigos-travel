@@ -1,6 +1,8 @@
 import { useState, lazy, Suspense, memo } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { HeroSection } from '@/components/HeroSection';
+import { HeroSectionRedesign } from '@/components/HeroSectionRedesign';
+import { HowItWorksSection } from '@/components/HowItWorksSection';
 import { Footer } from '@/components/Footer';
 import { ChatFab } from '@/components/ChatFab';
 import { LazySection } from '@/components/LazySection';
@@ -41,19 +43,25 @@ const SectionLoader = memo(() => (
 SectionLoader.displayName = 'SectionLoader';
 
 const Index = () => {
-  const [currentVersion, setCurrentVersion] = useState<'v1' | 'v2'>('v1');
+  const [currentVersion, setCurrentVersion] = useState<'v1' | 'v2' | 'redesign'>('redesign');
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar 
-        currentVersion={currentVersion} 
-        onVersionChange={setCurrentVersion} 
+      <Navbar
+        currentVersion={currentVersion}
+        onVersionChange={setCurrentVersion}
       />
-      {currentVersion === 'v1' ? (
+      {currentVersion === 'redesign' ? (
         <>
-          {/* Critical above-the-fold content - loaded immediately */}
-          <HeroSection />
-          
+          {/* Redesigned Profile-First Experience */}
+          <HeroSectionRedesign />
+
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <HowItWorksSection />
+            </Suspense>
+          </LazySection>
+
           {/* Below-the-fold sections - lazy loaded when scrolled into view */}
           <LazySection>
             <Suspense fallback={<SectionLoader />}>
@@ -81,13 +89,13 @@ const Index = () => {
               <ReservableTripsGrid />
             </Suspense>
           </LazySection>
-          
+
           <LazySection>
             <Suspense fallback={<SectionLoader />}>
               <CountdownBannerSection />
             </Suspense>
           </LazySection>
-          
+
           <LazySection>
             <Suspense fallback={<SectionLoader />}>
               <MeetYourTribeSection />
@@ -100,25 +108,25 @@ const Index = () => {
               <StandardPackagesGrid />
             </Suspense>
           </LazySection>
-          
+
           <LazySection>
             <Suspense fallback={<SectionLoader />}>
               <AmigoWaySection />
             </Suspense>
           </LazySection>
-          
+
           <LazySection>
             <Suspense fallback={<SectionLoader />}>
               <MemoryReelSection />
             </Suspense>
           </LazySection>
-          
+
           <LazySection>
             <Suspense fallback={<SectionLoader />}>
               <TrustShieldSection />
             </Suspense>
           </LazySection>
-          
+
           <LazySection>
             <Suspense fallback={<SectionLoader />}>
               <TestimonialsSection />
@@ -138,13 +146,13 @@ const Index = () => {
               <CustomTripCTA />
             </Suspense>
           </LazySection>
-          
+
           <LazySection>
             <Suspense fallback={<SectionLoader />}>
               <TravelQuizSection />
             </Suspense>
           </LazySection>
-          
+
           <LazySection>
             <Suspense fallback={<SectionLoader />}>
               <TravelStoriesSection />

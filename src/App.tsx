@@ -23,6 +23,12 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const GetStarted = lazy(() => import("./pages/GetStarted"));
 const TripSignup = lazy(() => import("./pages/TripSignup"));
 
+// Travel Profile Quiz - lazy loaded (COMPLETE VERSION with all 10 steps)
+const TravelProfileQuiz = lazy(() => import("./pages/TravelProfileQuizComplete"));
+const MatchedTripResult = lazy(() => import("./pages/quiz/MatchedTripResult"));
+const SurpriseTripResult = lazy(() => import("./pages/quiz/SurpriseTripResult"));
+const CustomTripResult = lazy(() => import("./pages/quiz/CustomTripResult"));
+
 // Auth Pages - lazy loaded
 const Login = lazy(() => import("./pages/auth/Login"));
 const Signup = lazy(() => import("./pages/auth/Signup"));
@@ -86,6 +92,12 @@ const App = () => (
               {/* Trip Signup Flow */}
               <Route path="/get-started" element={<GetStarted />} />
               <Route path="/signup/:tripType" element={<TripSignup />} />
+
+              {/* Travel Profile Quiz */}
+              <Route path="/quiz" element={<TravelProfileQuiz />} />
+              <Route path="/quiz/result/matched" element={<MatchedTripResult />} />
+              <Route path="/quiz/result/surprise" element={<SurpriseTripResult />} />
+              <Route path="/quiz/result/custom" element={<CustomTripResult />} />
 
               {/* Auth Routes */}
               <Route path="/login" element={<Login />} />

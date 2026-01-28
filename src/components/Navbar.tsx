@@ -5,8 +5,8 @@ import logo from '@/assets/logo.png';
 import { MagneticButton } from './ui/animations';
 
 interface NavbarProps {
-  currentVersion: 'v1' | 'v2';
-  onVersionChange: (version: 'v1' | 'v2') => void;
+  currentVersion: 'v1' | 'v2' | 'redesign';
+  onVersionChange: (version: 'v1' | 'v2' | 'redesign') => void;
 }
 
 export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
@@ -39,12 +39,14 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
       <div className="container mx-auto px-6 flex items-center justify-between">
         {/* Logo with version-specific styling */}
         <a href="#" className="flex items-center relative group">
-          {currentVersion === 'v1' ? (
+          {currentVersion === 'v2' ? (
             <>
-              {/* V1: Solid white background for logo visibility */}
-              <div className="absolute -inset-x-4 -inset-y-2.5 bg-white rounded-xl shadow-lg" />
+              {/* V2: White background with glow */}
+              <div className="absolute -inset-x-4 -inset-y-2.5 bg-white rounded-xl shadow-lg shadow-white/20" />
+              {/* Ambient glow */}
+              <div className="absolute -inset-4 bg-white/40 rounded-2xl blur-xl opacity-80" />
               {/* Hover glow effect */}
-              <div className="absolute -inset-4 bg-primary/30 rounded-2xl blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
+              <div className="absolute -inset-5 bg-primary/30 rounded-2xl blur-2xl opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
               <img
                 src={logo}
                 alt="Travel Amigo"
@@ -55,12 +57,10 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
             </>
           ) : (
             <>
-              {/* V2: White background with glow */}
-              <div className="absolute -inset-x-4 -inset-y-2.5 bg-white rounded-xl shadow-lg shadow-white/20" />
-              {/* Ambient glow */}
-              <div className="absolute -inset-4 bg-white/40 rounded-2xl blur-xl opacity-80" />
+              {/* V1 & Redesign: Solid white background for logo visibility */}
+              <div className="absolute -inset-x-4 -inset-y-2.5 bg-white rounded-xl shadow-lg" />
               {/* Hover glow effect */}
-              <div className="absolute -inset-5 bg-primary/30 rounded-2xl blur-2xl opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
+              <div className="absolute -inset-4 bg-primary/30 rounded-2xl blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
               <img
                 src={logo}
                 alt="Travel Amigo"
@@ -91,6 +91,15 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
               }`}
           >
             V2
+          </button>
+          <button
+            onClick={() => onVersionChange('redesign')}
+            className={`px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${currentVersion === 'redesign'
+              ? 'bg-gradient-to-r from-primary to-purple-500 text-white'
+              : 'text-muted-foreground hover:text-foreground'
+              }`}
+          >
+            ✨ Redesign
           </button>
         </div>
 
@@ -153,6 +162,15 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
                   }`}
               >
                 V2
+              </button>
+              <button
+                onClick={() => onVersionChange('redesign')}
+                className={`px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${currentVersion === 'redesign'
+                  ? 'bg-gradient-to-r from-primary to-purple-500 text-white'
+                  : 'text-muted-foreground hover:text-foreground bg-navy-medium/50'
+                  }`}
+              >
+                ✨
               </button>
             </div>
 
