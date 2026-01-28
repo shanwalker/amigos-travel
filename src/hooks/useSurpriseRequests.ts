@@ -3,6 +3,8 @@ import {
   getUserSurpriseRequests,
   getSurpriseRequest,
   createSurpriseRequest,
+  getAllSurpriseRequests,
+  updateSurpriseRequestStatus,
   type SurpriseRequest,
 } from '@/lib/supabase/surprise-requests';
 import { useToast } from './use-toast';
@@ -13,6 +15,14 @@ export function useUserSurpriseRequests() {
     queryFn: getUserSurpriseRequests,
   });
 }
+
+// Alias for backward compatibility
+export const useSurpriseRequests = () => {
+  return useQuery({
+    queryKey: ['surprise-requests', 'all'],
+    queryFn: () => getAllSurpriseRequests(),
+  });
+};
 
 export function useSurpriseRequest(id: string) {
   return useQuery({
@@ -40,6 +50,23 @@ export function useCreateSurpriseRequest() {
         title: 'Request Failed',
         description: error.message || 'Failed to submit surprise request',
         variant: 'destructive',
+      });
+    },
+  });
+}
+
+export function useUpdateSurpriseRequest() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: ({ id, status }: { id: string; status: SurpriseRequest['status'] }) =>
+      updateSurpriseRequestStatus(id, status),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['surprise-requests'] });
+      toast({
+        title: 'Request Updated',
+        description: 'Surprise request status has been updated',
       });
     },
   });

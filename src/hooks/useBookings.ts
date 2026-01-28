@@ -8,9 +8,13 @@ import {
   cancelBooking,
   confirmBooking,
   completeBooking,
+  getAllBookings,
   type Booking,
+  type BookingWithTrip,
 } from '@/lib/supabase/bookings';
 import { useToast } from './use-toast';
+
+export type { Booking, BookingWithTrip };
 
 export function useUserBookings() {
   return useQuery({
@@ -19,11 +23,27 @@ export function useUserBookings() {
   });
 }
 
+// Alias for backward compatibility
+export const useBookings = useUserBookings;
+
 export function useBooking(id: string) {
   return useQuery({
     queryKey: ['bookings', id],
     queryFn: () => getBooking(id),
     enabled: !!id,
+  });
+}
+
+export function useAllBookings(filters?: {
+  status?: Booking['status'];
+  paymentStatus?: Booking['payment_status'];
+  startDate?: string;
+  endDate?: string;
+  limit?: number;
+}) {
+  return useQuery({
+    queryKey: ['bookings', 'all', filters],
+    queryFn: () => getAllBookings(filters),
   });
 }
 

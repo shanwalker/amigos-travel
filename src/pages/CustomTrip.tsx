@@ -122,23 +122,17 @@ const CustomTrip = () => {
         : formData.destinations;
 
       await createRequest.mutateAsync({
-        user_id: user.id,
-        requirements: {
-          destination_ideas: destinations,
-          activities: formData.activities,
-          accommodation_type: formData.stayType,
-          special_requirements: formData.specialRequests || null,
-        },
+        destination: destinations.join(', '),
+        interests: formData.activities,
+        accommodation_preference: formData.stayType,
+        special_requirements: formData.specialRequests || undefined,
         budget_min: formData.budgetRange[0],
         budget_max: formData.budgetRange[1],
-        num_travelers: formData.travelers,
-        preferred_dates: formData.dateRange 
-          ? `${format(formData.dateRange.from, 'yyyy-MM-dd')} to ${format(formData.dateRange.to || formData.dateRange.from, 'yyyy-MM-dd')}`
-          : formData.flexibleDates ? 'Flexible' : null,
-        flexible_dates: formData.flexibleDates,
-        status: 'pending',
-        assigned_trip_id: null,
-        admin_notes: `Contact: ${formData.name}, ${formData.email || ''}, ${formData.phone || ''}`,
+        number_of_travelers: formData.travelers,
+        travel_dates: formData.dateRange 
+          ? { start: format(formData.dateRange.from, 'yyyy-MM-dd'), end: format(formData.dateRange.to || formData.dateRange.from, 'yyyy-MM-dd') }
+          : undefined,
+        additional_notes: `Contact: ${formData.name}, ${formData.email || ''}, ${formData.phone || ''}`,
       });
 
       toast.success('Request submitted! We\'ll get back to you within 24 hours.');

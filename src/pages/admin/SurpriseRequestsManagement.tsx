@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import type { SurpriseRequest } from '@/integrations/supabase/database.types';
+import type { SurpriseRequestWithUser } from '@/lib/supabase/surprise-requests';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { 
@@ -27,24 +27,24 @@ const SurpriseRequestsManagement = () => {
   
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('pending');
-  const [selectedRequest, setSelectedRequest] = useState<SurpriseRequest | null>(null);
+  const [selectedRequest, setSelectedRequest] = useState<SurpriseRequestWithUser | null>(null);
   const [assignedBuddy, setAssignedBuddy] = useState('');
   const [assignedTrip, setAssignedTrip] = useState('');
   const [adminNotes, setAdminNotes] = useState('');
 
-  const pendingRequests = requests.filter(r => r.status === 'pending');
-  const matchedRequests = requests.filter(r => r.status === 'matched');
-  const planningRequests = requests.filter(r => r.status === 'planning');
-  const completedRequests = requests.filter(r => ['confirmed', 'completed'].includes(r.status));
+  const pendingRequests = requests.filter((r: any) => r.status === 'pending');
+  const matchedRequests = requests.filter((r: any) => r.status === 'planning');
+  const planningRequests = requests.filter((r: any) => r.status === 'clues_sent');
+  const completedRequests = requests.filter((r: any) => ['revealed', 'completed'].includes(r.status));
 
   const verifiedBuddies = buddies.filter(b => b.is_verified && b.is_active);
   const activeTrips = trips.filter(t => t.status === 'active');
 
-  const filteredRequests = (list: SurpriseRequest[]) =>
-    list.filter(req => 
-      req.interests_data?.interests?.some(i => 
+  const filteredRequests = (list: SurpriseRequestWithUser[]) =>
+    list.filter((req: any) => 
+      req.interests?.some((i: string) => 
         i.toLowerCase().includes(searchQuery.toLowerCase())
-      ) || req.id.includes(searchQuery)
+      ) || req.id?.includes(searchQuery)
     );
 
   const handleMatch = async () => {
@@ -52,11 +52,8 @@ const SurpriseRequestsManagement = () => {
     
     try {
       await updateRequest.mutateAsync({
-        id: selectedRequest.id,
-        matched_buddy_id: assignedBuddy || null,
-        assigned_trip_id: assignedTrip || null,
-        admin_notes: adminNotes,
-        status: 'matched',
+        id: selectedRequest.id!,
+        status: 'planning',
       });
       toast.success('Request matched successfully!');
       setSelectedRequest(null);
@@ -68,7 +65,7 @@ const SurpriseRequestsManagement = () => {
     }
   };
 
-  const handleStatusChange = async (request: SurpriseRequest, newStatus: string) => {
+  const handleStatusChange = async (request: any, newStatus: string) => {
     try {
       await updateRequest.mutateAsync({
         id: request.id,
