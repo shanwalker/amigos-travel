@@ -168,21 +168,14 @@ const SurpriseTrip = () => {
     setSubmitting(true);
     try {
       await createSurpriseRequest.mutateAsync({
-        user_id: user.id,
-        interests_data: {
-          interests,
-          activities,
-          travel_style: travelStyle,
-          special_requests: specialRequests || null,
-        },
+        interests: interests,
+        personality: travelStyle,
         budget_min: budgetRange[0],
         budget_max: budgetRange[1],
-        preferred_dates: selectedDate ? format(selectedDate, 'yyyy-MM-dd') : null,
-        flexible_dates: flexibleDates,
-        status: 'pending',
-        matched_buddy_id: null,
-        assigned_trip_id: null,
-        admin_notes: null,
+        travel_date_type: flexibleDates ? 'flexible' : 'specific',
+        travel_dates: selectedDate ? { start: format(selectedDate, 'yyyy-MM-dd'), end: format(selectedDate, 'yyyy-MM-dd') } : undefined,
+        number_of_travelers: 1,
+        admin_notes: specialRequests || undefined,
       });
 
       setSubmitted(true);

@@ -51,8 +51,8 @@ export async function createBooking(bookingData: Partial<Booking>): Promise<{ su
             booking_date: new Date().toISOString(),
         };
 
-        const { data, error } = await supabase
-            .from('bookings')
+        const { data, error } = await (supabase
+            .from('bookings') as any)
             .insert([booking])
             .select()
             .single();
@@ -147,8 +147,8 @@ export async function updateBookingStatus(
             }
         }
 
-        const { error } = await supabase
-            .from('bookings')
+        const { error } = await (supabase
+            .from('bookings') as any)
             .update(updateData)
             .eq('id', id);
 
@@ -192,8 +192,8 @@ export async function updatePaymentStatus(
             updateData.payment_method = paymentMethod;
         }
 
-        const { error } = await supabase
-            .from('bookings')
+        const { error } = await (supabase
+            .from('bookings') as any)
             .update(updateData)
             .eq('id', id);
 
@@ -276,8 +276,8 @@ export async function getBookingStats(): Promise<{
     pendingPayments: number;
 }> {
     try {
-        const { data: bookings, error } = await supabase
-            .from('bookings')
+        const { data: bookings, error } = await (supabase
+            .from('bookings') as any)
             .select('*');
 
         if (error || !bookings) {

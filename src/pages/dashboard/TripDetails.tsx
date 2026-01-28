@@ -48,9 +48,9 @@ const TripDetails = () => {
     try {
       await createBooking.mutateAsync({
         trip_id: trip.id,
-        num_travelers: numTravelers,
+        number_of_travelers: numTravelers,
         total_amount: totalAmount,
-        notes: notes || undefined,
+        special_requests: notes || undefined,
       });
       toast({
         title: 'Booking Successful!',

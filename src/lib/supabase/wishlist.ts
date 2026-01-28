@@ -43,8 +43,8 @@ export async function addToWishlist(tripId: string, notes?: string, priority?: '
             priority: priority || 'medium',
         };
 
-        const { data, error } = await supabase
-            .from('wishlists')
+        const { data, error } = await (supabase
+            .from('wishlists') as any)
             .insert([wishlistItem])
             .select()
             .single();
@@ -146,8 +146,8 @@ export async function updateWishlistNotes(tripId: string, notes: string): Promis
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) return false;
 
-        const { error } = await supabase
-            .from('wishlists')
+        const { error } = await (supabase
+            .from('wishlists') as any)
             .update({
                 notes,
                 updated_at: new Date().toISOString(),
@@ -175,8 +175,8 @@ export async function updateWishlistPriority(tripId: string, priority: 'low' | '
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) return false;
 
-        const { error } = await supabase
-            .from('wishlists')
+        const { error } = await (supabase
+            .from('wishlists') as any)
             .update({
                 priority,
                 updated_at: new Date().toISOString(),
@@ -278,11 +278,11 @@ export async function getWishlistStats(): Promise<{
     totalWishlists: number;
     totalUsers: number;
     averageWishlistSize: number;
-    mostWishlistedTrips: Array<{ tripId: string; tripName: string; count: number }>;
+    mostWishlistedTrips: Array<{ tripId: string; tripName: string; wishlistCount: number }>;
 }> {
     try {
-        const { data: wishlists, error } = await supabase
-            .from('wishlists')
+        const { data: wishlists, error } = await (supabase
+            .from('wishlists') as any)
             .select('*');
 
         if (error || !wishlists) {

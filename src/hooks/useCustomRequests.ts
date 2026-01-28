@@ -3,6 +3,7 @@ import {
   getUserCustomRequests,
   getCustomRequest,
   createCustomRequest,
+  getAllCustomRequests,
   updateCustomRequestStatus,
   type CustomRequest,
 } from '@/lib/supabase/custom-requests';
@@ -14,6 +15,14 @@ export function useUserCustomRequests() {
     queryFn: getUserCustomRequests,
   });
 }
+
+// Alias for backward compatibility
+export const useCustomRequests = () => {
+  return useQuery({
+    queryKey: ['custom-requests', 'all'],
+    queryFn: () => getAllCustomRequests(),
+  });
+};
 
 export function useCustomRequest(id: string) {
   return useQuery({
@@ -41,6 +50,27 @@ export function useCreateCustomRequest() {
         title: 'Request Failed',
         description: error.message || 'Failed to submit request',
         variant: 'destructive',
+      });
+    },
+  });
+}
+
+export function useUpdateCustomRequest() {
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  return useMutation({
+    mutationFn: ({ id, status, adminResponse, estimatedCost }: { 
+      id: string; 
+      status: CustomRequest['status'];
+      adminResponse?: string;
+      estimatedCost?: number;
+    }) => updateCustomRequestStatus(id, status, adminResponse, estimatedCost),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['custom-requests'] });
+      toast({
+        title: 'Request Updated',
+        description: 'Custom request status has been updated',
       });
     },
   });

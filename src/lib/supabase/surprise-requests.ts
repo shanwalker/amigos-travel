@@ -62,8 +62,8 @@ export async function createSurpriseRequest(requestData: Partial<SurpriseRequest
             clue_schedule: clueSchedule,
         };
 
-        const { data, error } = await supabase
-            .from('surprise_requests')
+        const { data, error } = await (supabase
+            .from('surprise_requests') as any)
             .insert([request])
             .select()
             .single();
@@ -152,8 +152,8 @@ export async function updateSurpriseRequestStatus(
             updateData.revealed_at = new Date().toISOString();
         }
 
-        const { error } = await supabase
-            .from('surprise_requests')
+        const { error } = await (supabase
+            .from('surprise_requests') as any)
             .update(updateData)
             .eq('id', id);
 
@@ -178,8 +178,8 @@ export async function assignSurpriseDestination(
     revealDate: string
 ): Promise<boolean> {
     try {
-        const { error } = await supabase
-            .from('surprise_requests')
+        const { error } = await (supabase
+            .from('surprise_requests') as any)
             .update({
                 assigned_destination: destination,
                 reveal_date: revealDate,
@@ -225,8 +225,8 @@ export async function updateSurpriseClue(
             return clue;
         });
 
-        const { error } = await supabase
-            .from('surprise_requests')
+        const { error } = await (supabase
+            .from('surprise_requests') as any)
             .update({
                 clue_schedule: updatedSchedule,
                 updated_at: new Date().toISOString(),
@@ -263,8 +263,8 @@ export async function markClueAsSent(id: string, week: number): Promise<boolean>
             return clue;
         });
 
-        const { error } = await supabase
-            .from('surprise_requests')
+        const { error } = await (supabase
+            .from('surprise_requests') as any)
             .update({
                 clue_schedule: updatedSchedule,
                 status: week >= 5 ? 'revealed' : 'clues_sent',
@@ -346,8 +346,8 @@ export async function getSurpriseRequestStats(): Promise<{
     averageRevealTime: number;
 }> {
     try {
-        const { data: requests, error } = await supabase
-            .from('surprise_requests')
+        const { data: requests, error } = await (supabase
+            .from('surprise_requests') as any)
             .select('*');
 
         if (error || !requests) {

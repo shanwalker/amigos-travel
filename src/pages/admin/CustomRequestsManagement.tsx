@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import type { CustomTripRequest } from '@/integrations/supabase/database.types';
+import type { CustomRequestWithUser } from '@/lib/supabase/custom-requests';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { 
@@ -25,14 +25,14 @@ const CustomRequestsManagement = () => {
   
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('pending');
-  const [selectedRequest, setSelectedRequest] = useState<CustomTripRequest | null>(null);
+  const [selectedRequest, setSelectedRequest] = useState<CustomRequestWithUser | null>(null);
   const [assignedTrip, setAssignedTrip] = useState('');
   const [adminNotes, setAdminNotes] = useState('');
 
-  const pendingRequests = requests.filter(r => r.status === 'pending');
-  const planningRequests = requests.filter(r => r.status === 'planning');
-  const confirmedRequests = requests.filter(r => r.status === 'confirmed');
-  const completedRequests = requests.filter(r => ['completed', 'cancelled'].includes(r.status));
+  const pendingRequests = requests.filter((r: any) => r.status === 'pending');
+  const planningRequests = requests.filter((r: any) => r.status === 'reviewing');
+  const confirmedRequests = requests.filter((r: any) => r.status === 'approved');
+  const completedRequests = requests.filter((r: any) => ['completed', 'rejected'].includes(r.status));
 
   const handleAssign = async () => {
     if (!selectedRequest) return;
@@ -40,9 +40,8 @@ const CustomRequestsManagement = () => {
     try {
       await updateRequest.mutateAsync({
         id: selectedRequest.id,
-        assigned_trip_id: assignedTrip || null,
-        admin_notes: adminNotes,
-        status: 'planning',
+        status: 'reviewing',
+        adminResponse: adminNotes,
       });
       toast.success('Request assigned successfully!');
       setSelectedRequest(null);
@@ -53,10 +52,10 @@ const CustomRequestsManagement = () => {
     }
   };
 
-  const handleStatusChange = async (request: CustomTripRequest, newStatus: string) => {
+  const handleStatusChange = async (request: any, newStatus: string) => {
     try {
       await updateRequest.mutateAsync({
-        id: request.id,
+        id: request.id!,
         status: newStatus as any,
       });
       toast.success(`Status updated to ${newStatus}`);
@@ -76,7 +75,7 @@ const CustomRequestsManagement = () => {
     }
   };
 
-  const RequestCard = ({ request }: { request: CustomTripRequest }) => (
+  const RequestCard = ({ request }: { request: any }) => (
     <Card className="bg-card/50 border-border/50 hover:border-primary/50 transition-all">
       <CardContent className="p-5">
         <div className="flex items-start justify-between mb-4">
@@ -229,7 +228,7 @@ const CustomRequestsManagement = () => {
             </DialogContent>
           </Dialog>
 
-          {request.status !== 'completed' && request.status !== 'cancelled' && (
+          {request.status !== 'completed' && request.status !== 'rejected' && (
             <Select onValueChange={(v) => handleStatusChange(request, v)}>
               <SelectTrigger className="w-32">
                 <SelectValue placeholder="Status" />

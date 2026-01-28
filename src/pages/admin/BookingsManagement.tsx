@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAllBookings, useUpdateBookingStatus } from '@/hooks/useBookings';
+import { useAllBookings, useUpdateBookingStatus, type Booking } from '@/hooks/useBookings';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -42,7 +42,7 @@ const BookingsManagement = () => {
     return matchesSearch && matchesStatus;
   });
 
-  const handleStatusChange = async (bookingId: string, newStatus: string) => {
+  const handleStatusChange = async (bookingId: string, newStatus: 'pending' | 'confirmed' | 'cancelled' | 'completed') => {
     try {
       await updateStatus.mutateAsync({ id: bookingId, status: newStatus });
       toast({ title: 'Success', description: 'Booking status updated!' });
@@ -169,7 +169,7 @@ const BookingsManagement = () => {
                     <TableCell>
                       <Select 
                         value={booking.status} 
-                        onValueChange={(value) => handleStatusChange(booking.id, value)}
+                        onValueChange={(value) => handleStatusChange(booking.id, value as 'pending' | 'confirmed' | 'cancelled' | 'completed')}
                       >
                         <SelectTrigger className="w-[130px] h-8">
                           <SelectValue />

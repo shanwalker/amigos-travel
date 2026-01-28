@@ -38,8 +38,8 @@ export async function createNotification(
             metadata,
         };
 
-        const { data, error } = await supabase
-            .from('notifications')
+        const { data, error } = await (supabase
+            .from('notifications') as any)
             .insert([notification])
             .select()
             .single();
@@ -119,8 +119,8 @@ export async function getUnreadCount(): Promise<number> {
  */
 export async function markAsRead(id: string): Promise<boolean> {
     try {
-        const { error } = await supabase
-            .from('notifications')
+        const { error } = await (supabase
+            .from('notifications') as any)
             .update({
                 read: true,
                 read_at: new Date().toISOString(),
@@ -147,8 +147,8 @@ export async function markAllAsRead(): Promise<boolean> {
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) return false;
 
-        const { error } = await supabase
-            .from('notifications')
+        const { error } = await (supabase
+            .from('notifications') as any)
             .update({
                 read: true,
                 read_at: new Date().toISOString(),

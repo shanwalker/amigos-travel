@@ -1,5 +1,22 @@
 import { supabase } from '@/integrations/supabase/client';
-import type { QuizProfile } from '@/pages/TravelProfileQuizComplete';
+
+// Define QuizProfile locally to avoid import issues
+export interface QuizProfile {
+    email?: string;
+    name?: string;
+    phone?: string;
+    personality?: string;
+    interests?: string[];
+    duration?: string;
+    travelDateType?: 'specific' | 'flexible' | 'month';
+    preferredMonth?: string;
+    specificDates?: { start: string; end: string };
+    budget?: { min: number; max: number };
+    travelStyle?: string;
+    destinationRegions?: string[];
+    placesToAvoid?: string[];
+    resultType?: 'matched' | 'surprise' | 'custom';
+}
 
 export interface QuizResponse {
     id?: string;
@@ -62,8 +79,8 @@ export async function saveQuizResponse(profile: Partial<QuizProfile>): Promise<{
             result_type: profile.resultType!,
         };
 
-        const { data, error } = await supabase
-            .from('quiz_responses')
+        const { data, error } = await (supabase
+            .from('quiz_responses') as any)
             .insert([quizResponse])
             .select()
             .single();
@@ -93,8 +110,8 @@ export async function updateProfileFromQuiz(profile: Partial<QuizProfile>): Prom
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) return;
 
-        await supabase
-            .from('profiles')
+        await (supabase
+            .from('profiles') as any)
             .update({
                 full_name: profile.name,
                 phone: profile.phone,
@@ -168,8 +185,8 @@ export async function getUserQuizResponses(): Promise<QuizResponse[]> {
  */
 export async function getQuizAnalytics(): Promise<QuizAnalytics | null> {
     try {
-        const { data: responses, error } = await supabase
-            .from('quiz_responses')
+        const { data: responses, error } = await (supabase
+            .from('quiz_responses') as any)
             .select('*');
 
         if (error) {
@@ -326,8 +343,8 @@ export async function deleteQuizResponse(id: string): Promise<boolean> {
  */
 export async function exportQuizResponsesToCSV(): Promise<string> {
     try {
-        const { data: responses, error } = await supabase
-            .from('quiz_responses')
+        const { data: responses, error } = await (supabase
+            .from('quiz_responses') as any)
             .select('*')
             .order('created_at', { ascending: false });
 
