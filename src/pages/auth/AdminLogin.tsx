@@ -47,14 +47,26 @@ const AdminLogin = () => {
     }
 
     // Check if user has admin role
-    const { data: roleData } = await supabase
+    console.log('[AdminLogin] Checking admin role for user:', currentUser.id);
+    const { data: roleData, error: roleError } = await supabase
       .from('user_roles')
       .select('role')
       .eq('user_id', currentUser.id)
       .eq('role', 'admin')
-      .single();
+      .maybeSingle();
+
+    console.log('[AdminLogin] Role check result:', { roleData, roleError });
+
+    if (roleError) {
+      console.error('[AdminLogin] Role query error:', roleError);
+      setError(`Database error: ${roleError.message}`);
+      await supabase.auth.signOut();
+      setLoading(false);
+      return;
+    }
 
     if (!roleData) {
+      console.log('[AdminLogin] No admin role found for user');
       setError('Access denied. Admin privileges required.');
       await supabase.auth.signOut();
       setLoading(false);
