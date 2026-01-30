@@ -393,8 +393,8 @@ export const HeroSection = memo(() => {
               transition={{ duration: 0.6, delay: 1.5 }}
               className="text-lg text-muted-foreground font-sans max-w-md mb-8"
             >
-              Join curated group adventures with like-minded travelers. Fixed departures,
-              flexible plans, and lifetime memories.
+              Solo, couple, family, friends, or group — tell us how you like to travel. 
+              Take our quick quiz and let Travel Amigo guide you to the perfect trip, planned the best way for you.
             </motion.p>
 
             <motion.div
