@@ -43,7 +43,7 @@ const SectionLoader = memo(() => (
 SectionLoader.displayName = 'SectionLoader';
 
 const Index = () => {
-  const [currentVersion, setCurrentVersion] = useState<'v1' | 'v2' | 'redesign'>('redesign');
+  const [currentVersion, setCurrentVersion] = useState<'v1' | 'v2' | 'redesign'>('v1');
 
   return (
     <div className="min-h-screen bg-background">
@@ -51,7 +51,108 @@ const Index = () => {
         currentVersion={currentVersion}
         onVersionChange={setCurrentVersion}
       />
-      {currentVersion === 'redesign' ? (
+      {currentVersion === 'v1' ? (
+        <>
+          {/* Original V1 Hero with scrolling trip cards */}
+          <HeroSection />
+
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <HowItWorksSection />
+            </Suspense>
+          </LazySection>
+
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <TripSearchBar />
+            </Suspense>
+          </LazySection>
+
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <SurpriseTripSection />
+            </Suspense>
+          </LazySection>
+
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <FeaturedTripsCarousel />
+            </Suspense>
+          </LazySection>
+
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <ReservableTripsGrid />
+            </Suspense>
+          </LazySection>
+
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <CountdownBannerSection />
+            </Suspense>
+          </LazySection>
+
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <MeetYourTribeSection />
+            </Suspense>
+          </LazySection>
+
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <StandardPackagesGrid />
+            </Suspense>
+          </LazySection>
+
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <AmigoWaySection />
+            </Suspense>
+          </LazySection>
+
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <MemoryReelSection />
+            </Suspense>
+          </LazySection>
+
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <TrustShieldSection />
+            </Suspense>
+          </LazySection>
+
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <TestimonialsSection />
+            </Suspense>
+          </LazySection>
+
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <LocalBuddiesSection />
+            </Suspense>
+          </LazySection>
+
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <CustomTripCTA />
+            </Suspense>
+          </LazySection>
+
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <TravelQuizSection />
+            </Suspense>
+          </LazySection>
+
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <TravelStoriesSection />
+            </Suspense>
+          </LazySection>
+        </>
+      ) : currentVersion === 'redesign' ? (
         <>
           {/* Redesigned Profile-First Experience */}
           <HeroSectionRedesign />
