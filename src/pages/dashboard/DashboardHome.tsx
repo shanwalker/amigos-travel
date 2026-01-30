@@ -257,7 +257,7 @@ const DashboardHome = () => {
                         <p className="font-medium text-foreground">{booking.trip?.title}</p>
                         <p className="text-sm text-muted-foreground flex items-center gap-1">
                           <Clock className="h-3 w-3" />
-                          {booking.trip?.start_date && format(new Date(booking.trip.start_date), 'MMM dd, yyyy')}
+                          {(booking as any).trip?.start_date && format(new Date((booking as any).trip.start_date), 'MMM dd, yyyy')}
                         </p>
                       </div>
                       <Badge variant="secondary" className="bg-green-500/10 text-green-500 border-0">
