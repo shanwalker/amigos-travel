@@ -341,7 +341,7 @@ export const HeroSection = memo(() => {
                 transition={{ duration: 0.5, delay: 0.6 }}
                 className="inline-block"
               >
-                Travel with
+                Your Trip.
               </motion.span>
               {' '}
               <motion.span
@@ -350,7 +350,7 @@ export const HeroSection = memo(() => {
                 transition={{ duration: 0.6, delay: 0.8, type: "spring", stiffness: 200 }}
                 className="text-gradient inline-block relative"
               >
-                Friends
+                Your Style.
                 {/* Underline effect */}
                 <motion.div
                   initial={{ scaleX: 0 }}
@@ -366,7 +366,7 @@ export const HeroSection = memo(() => {
                 transition={{ duration: 0.5, delay: 1.0 }}
                 className="inline-block"
               >
-                You Haven't
+                Travel Amigo
               </motion.span>
               {' '}
               <motion.span
@@ -375,7 +375,7 @@ export const HeroSection = memo(() => {
                 transition={{ duration: 0.6, delay: 1.2, type: "spring" }}
                 className="inline-block"
               >
-                Met
+                Makes It Easy
               </motion.span>
               <motion.span
                 initial={{ opacity: 0, scale: 0 }}
@@ -393,8 +393,8 @@ export const HeroSection = memo(() => {
               transition={{ duration: 0.6, delay: 1.5 }}
               className="text-lg text-muted-foreground font-sans max-w-md mb-8"
             >
-              Join curated group adventures with like-minded travelers. Fixed departures,
-              flexible plans, and lifetime memories.
+              Solo, couple, family, friends, or group — tell us how you like to travel. 
+              Take our quick quiz and let Travel Amigo guide you to the perfect trip, planned the best way for you.
             </motion.p>
 
             <motion.div

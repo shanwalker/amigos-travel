@@ -164,8 +164,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           console.warn('[AuthContext] ⚠️ Profile not found, creating manually...');
 
           // Create profile manually if trigger failed
-          const { error: insertError } = await supabase
-            .from('profiles')
+          const { error: insertError } = await (supabase
+            .from('profiles') as any)
             .insert({
               id: data.user.id,
               email: data.user.email,
@@ -191,8 +191,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (userRoles.length === 0) {
           console.log('[AuthContext] ⚠️ No roles found, assigning default "user" role...');
 
-          const { error: roleError } = await supabase
-            .from('user_roles')
+          const { error: roleError } = await (supabase
+            .from('user_roles') as any)
             .insert({
               user_id: data.user.id,
               role: 'user',

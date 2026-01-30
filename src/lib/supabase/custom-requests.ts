@@ -52,8 +52,8 @@ export async function createCustomRequest(requestData: Partial<CustomRequest>): 
             priority: 'medium',
         };
 
-        const { data, error } = await supabase
-            .from('custom_requests')
+        const { data, error } = await (supabase
+            .from('custom_requests') as any)
             .insert([request])
             .select()
             .single();
@@ -158,8 +158,8 @@ export async function updateCustomRequestStatus(
             updateData.estimated_cost = estimatedCost;
         }
 
-        const { error } = await supabase
-            .from('custom_requests')
+        const { error } = await (supabase
+            .from('custom_requests') as any)
             .update(updateData)
             .eq('id', id);
 
@@ -180,8 +180,8 @@ export async function updateCustomRequestStatus(
  */
 export async function assignCustomRequest(id: string, adminId: string): Promise<boolean> {
     try {
-        const { error } = await supabase
-            .from('custom_requests')
+        const { error } = await (supabase
+            .from('custom_requests') as any)
             .update({
                 assigned_to: adminId,
                 updated_at: new Date().toISOString(),
@@ -205,8 +205,8 @@ export async function assignCustomRequest(id: string, adminId: string): Promise<
  */
 export async function addAdminNotes(id: string, notes: string): Promise<boolean> {
     try {
-        const { error } = await supabase
-            .from('custom_requests')
+        const { error } = await (supabase
+            .from('custom_requests') as any)
             .update({
                 admin_notes: notes,
                 updated_at: new Date().toISOString(),
@@ -298,8 +298,8 @@ export async function getCustomRequestStats(): Promise<{
     conversionRate: number;
 }> {
     try {
-        const { data: requests, error } = await supabase
-            .from('custom_requests')
+        const { data: requests, error } = await (supabase
+            .from('custom_requests') as any)
             .select('*');
 
         if (error || !requests) {

@@ -114,7 +114,7 @@ export default function AdminBookings() {
                         <DollarSign className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">₹{stats?.total_revenue.toLocaleString() || 0}</div>
+                        <div className="text-2xl font-bold">₹{stats?.totalRevenue.toLocaleString() || 0}</div>
                         <p className="text-xs text-muted-foreground">Total earnings</p>
                     </CardContent>
                 </Card>
@@ -125,7 +125,7 @@ export default function AdminBookings() {
                         <TrendingUp className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">₹{stats?.pending_payments.toLocaleString() || 0}</div>
+                        <div className="text-2xl font-bold">₹{stats?.pendingPayments.toLocaleString() || 0}</div>
                         <p className="text-xs text-muted-foreground">Awaiting payment</p>
                     </CardContent>
                 </Card>

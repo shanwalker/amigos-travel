@@ -54,16 +54,15 @@ const SurpriseTripSuggestions = () => {
       // Create booking
       await createBooking.mutateAsync({
         trip_id: selectedTrip.id,
-        num_travelers: 1,
+        number_of_travelers: 1,
         total_amount: selectedTrip.price || 0,
-        notes: `Surprise trip selection based on questionnaire preferences`,
+        special_requests: `Surprise trip selection based on questionnaire preferences`,
       });
 
-      // Update surprise request with assigned trip
+      // Update surprise request status
       await updateRequest.mutateAsync({
         id: request.id,
-        assigned_trip_id: selectedTrip.id,
-        status: 'confirmed',
+        status: 'revealed',
       });
 
       toast.success('Trip booked successfully! 🎉', {

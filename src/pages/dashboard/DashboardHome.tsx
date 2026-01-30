@@ -158,7 +158,7 @@ const DashboardHome = () => {
                   <div className="flex-1">
                     <p className="font-medium text-sm">Custom Trip Request</p>
                     <p className="text-xs text-muted-foreground">
-                      {req.num_travelers} traveler(s)
+                      {req.number_of_travelers || 1} traveler(s)
                     </p>
                   </div>
                   <Badge variant="outline" className={getStatusColor(req.status)}>
