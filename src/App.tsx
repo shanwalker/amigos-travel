@@ -24,7 +24,7 @@ const GetStarted = lazy(() => import("./pages/GetStarted"));
 const TripSignup = lazy(() => import("./pages/TripSignup"));
 
 // Travel Profile Quiz - lazy loaded (COMPLETE VERSION with all 10 steps)
-const TravelProfileQuiz = lazy(() => import("./pages/TravelProfileQuizComplete"));
+const TravelProfileQuiz = lazy(() => import("./pages/TravelProfileQuizRedesign"));
 const MatchedTripResult = lazy(() => import("./pages/quiz/MatchedTripResult"));
 const SurpriseTripResult = lazy(() => import("./pages/quiz/SurpriseTripResult"));
 const CustomTripResult = lazy(() => import("./pages/quiz/CustomTripResult"));
