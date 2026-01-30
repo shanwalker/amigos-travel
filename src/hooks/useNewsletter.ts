@@ -69,7 +69,7 @@ export const useCreateCampaign = () => {
     const queryClient = useQueryClient();
     return useMutation({
         mutationFn: async (campaign: Partial<Campaign>) => {
-            const { error } = await supabase
+            const { error } = await (supabase as any)
                 .from('newsletter_campaigns')
                 .insert([campaign]);
             if (error) throw error;
@@ -83,7 +83,7 @@ export const useSendCampaign = () => {
     // In a real app, this would trigger an Edge Function
     return useMutation({
         mutationFn: async (id: string) => {
-            const { error } = await supabase
+            const { error } = await (supabase as any)
                 .from('newsletter_campaigns')
                 .update({ status: 'sent', sent_at: new Date().toISOString() })
                 .eq('id', id);

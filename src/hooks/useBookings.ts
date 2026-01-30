@@ -49,18 +49,47 @@ export const useBookings = () => {
       const { data, error } = await supabase
         .from('bookings')
         .select(`
-                    *,
-                    trip:trips(title, destination),
-                    trip_date:trip_dates(start_date, end_date)
-                `)
+          *,
+          trip:trips(title, destination),
+          trip_date:trip_dates(start_date, end_date)
+        `)
         .order('created_at', { ascending: false });
 
       if (error) {
-        // Graceful handling if table doesn't exist yet
         if (error.code === '42P01') {
           console.warn('Bookings table not found. Please run the migration.');
           return [];
         }
+        throw error;
+      }
+      return data as Booking[];
+    },
+  });
+};
+
+// Alias for admin usage
+export const useAllBookings = useBookings;
+
+// Get bookings for current user
+export const useUserBookings = () => {
+  return useQuery({
+    queryKey: ['user-bookings'],
+    queryFn: async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return [];
+      
+      const { data, error } = await supabase
+        .from('bookings')
+        .select(`
+          *,
+          trip:trips(title, destination, image_url, start_date),
+          trip_date:trip_dates(start_date, end_date)
+        `)
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        if (error.code === '42P01') return [];
         throw error;
       }
       return data as Booking[];
@@ -93,7 +122,7 @@ export const useUpdateBooking = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, updates }: { id: string; updates: Partial<Booking> }) => {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from('bookings')
         .update(updates)
         .eq('id', id);
@@ -131,6 +160,76 @@ export const useDeleteBooking = () => {
   });
 };
 
+export const useCreateBooking = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async (booking: {
+      trip_id: string;
+      number_of_travelers: number;
+      total_amount: number;
+      special_requests?: string;
+    }) => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      const { data, error } = await (supabase as any)
+        .from('bookings')
+        .insert({
+          trip_id: booking.trip_id,
+          user_id: user.id,
+          guest_count: booking.number_of_travelers,
+          total_amount: booking.total_amount,
+          special_requests: booking.special_requests,
+          status: 'pending',
+          payment_status: 'pending',
+          amount_paid: 0,
+          currency: 'INR',
+          customer_name: user.email?.split('@')[0] || 'Guest',
+          customer_email: user.email || '',
+          customer_phone: '',
+        })
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['bookings'] });
+      queryClient.invalidateQueries({ queryKey: ['user-bookings'] });
+      toast({ title: 'Success', description: 'Booking created successfully' });
+    },
+    onError: (error: any) => {
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+    },
+  });
+};
+
+export const useCancelBooking = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, reason }: { id: string; reason?: string }) => {
+      const { error } = await (supabase as any)
+        .from('bookings')
+        .update({ 
+          status: 'cancelled',
+          internal_notes: reason || 'User cancelled'
+        })
+        .eq('id', id);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['bookings'] });
+      queryClient.invalidateQueries({ queryKey: ['user-bookings'] });
+      toast({ title: 'Booking Cancelled', description: 'Your booking has been cancelled' });
+    },
+    onError: (error: any) => {
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+    },
+  });
+};
+
 // --- Payments ---
 
 export const useBookingPayments = (bookingId: string) => {
@@ -157,7 +256,7 @@ export const useAddPayment = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (payment: Partial<PaymentTransaction>) => {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from('payment_transactions')
         .insert([payment]);
 

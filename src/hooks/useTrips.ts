@@ -60,6 +60,23 @@ export const useTrips = () => useQuery({
     }
 });
 
+// Get the next upcoming trip (closest future start_date)
+export const useUpcomingTrip = () => useQuery({
+    queryKey: ['upcoming-trip'],
+    queryFn: async () => {
+        const today = new Date().toISOString().split('T')[0];
+        const { data, error } = await supabase
+            .from('trips')
+            .select('*')
+            .gte('start_date', today)
+            .order('start_date', { ascending: true })
+            .limit(1)
+            .single();
+        if (error && error.code !== 'PGRST116') throw error; // PGRST116 = no rows
+        return data as Trip | null;
+    }
+});
+
 export const useTrip = (id: string) => useQuery({
     queryKey: ['trip', id],
     queryFn: async () => {
@@ -70,6 +87,31 @@ export const useTrip = (id: string) => useQuery({
             .single();
         if (error) throw error;
         return data as Trip;
+    },
+    enabled: !!id
+});
+
+// Get trip with itinerary for trip details page
+export const useTripWithItinerary = (id: string) => useQuery({
+    queryKey: ['trip-with-itinerary', id],
+    queryFn: async () => {
+        const { data: trip, error: tripError } = await supabase
+            .from('trips')
+            .select('*')
+            .eq('id', id)
+            .single();
+        if (tripError) throw tripError;
+
+        const { data: itinerary, error: itinError } = await supabase
+            .from('itinerary_items')
+            .select('*')
+            .eq('trip_id', id)
+            .order('day_number');
+        
+        return {
+            trip: trip as Trip,
+            itinerary: (itinError?.code === '42P01' ? [] : itinerary || []) as ItineraryItem[]
+        };
     },
     enabled: !!id
 });
@@ -155,7 +197,7 @@ export const useUpdateItinerary = () => {
                     gradient: item.gradient
                 }));
 
-                const { error } = await supabase.from('itinerary_items').insert(itemsToInsert);
+                const { error } = await (supabase as any).from('itinerary_items').insert(itemsToInsert);
                 if (error) throw error;
             }
         },
@@ -192,7 +234,7 @@ export const useUpdateTripImages = () => {
                     display_order: idx
                 }));
 
-                const { error } = await supabase.from('trip_images').insert(items);
+                const { error } = await (supabase as any).from('trip_images').insert(items);
                 if (error) throw error;
             }
         },
@@ -238,7 +280,7 @@ export const useUpdateTripDates = () => {
                     status: d.status
                 }));
 
-                const { error } = await supabase.from('trip_dates').insert(items);
+                const { error } = await (supabase as any).from('trip_dates').insert(items);
                 if (error) throw error;
             }
         },
@@ -277,7 +319,7 @@ export const useUpdateTripPricing = () => {
                     is_active: v.is_active
                 }));
 
-                const { error } = await supabase.from('trip_pricing').insert(items);
+                const { error } = await (supabase as any).from('trip_pricing').insert(items);
                 if (error) throw error;
             }
         },

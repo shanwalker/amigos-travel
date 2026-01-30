@@ -4,10 +4,38 @@ import { Button } from '@/components/ui/button';
 import { Calendar, MapPin, Users, CreditCard, Clock, Download, XCircle } from 'lucide-react';
 import { format, formatDistanceToNow, differenceInDays } from 'date-fns';
 import { cn } from '@/lib/utils';
-import type { BookingWithTrip } from '@/lib/supabase/bookings';
+
+// Flexible booking type that works with both hook and lib versions
+interface BookingCardBooking {
+    id?: string;
+    status: string;
+    payment_status: string;
+    total_amount?: number;
+    amount_paid?: number;
+    paid_amount?: number;
+    currency?: string;
+    guest_count?: number;
+    number_of_travelers?: number;
+    booking_date?: string;
+    created_at?: string;
+    travel_start_date?: string;
+    travel_end_date?: string;
+    booking_reference?: string;
+    trip?: {
+        title?: string;
+        name?: string;
+        destination?: string;
+        image_url?: string;
+        start_date?: string;
+    };
+    trip_date?: {
+        start_date?: string;
+        end_date?: string;
+    };
+}
 
 interface BookingCardProps {
-    booking: BookingWithTrip;
+    booking: BookingCardBooking;
     onCancel?: (id: string) => void;
     onViewDetails?: (id: string) => void;
 }
@@ -43,11 +71,16 @@ export function BookingCard({ booking, onCancel, onViewDetails }: BookingCardPro
         }
     };
 
-    const daysUntilTrip = booking.travel_start_date
-        ? differenceInDays(new Date(booking.travel_start_date), new Date())
+    const travelStartDate = booking.travel_start_date || booking.trip_date?.start_date || booking.trip?.start_date;
+    const travelEndDate = booking.travel_end_date || booking.trip_date?.end_date;
+    const daysUntilTrip = travelStartDate
+        ? differenceInDays(new Date(travelStartDate), new Date())
         : null;
 
     const showCountdown = daysUntilTrip !== null && daysUntilTrip > 0 && booking.status === 'confirmed';
+    const travelers = booking.number_of_travelers || booking.guest_count || 1;
+    const paidAmount = booking.paid_amount || booking.amount_paid || 0;
+    const bookingDate = booking.booking_date || booking.created_at;
 
     return (
         <Card className="overflow-hidden hover:shadow-lg transition-shadow">
@@ -66,11 +99,13 @@ export function BookingCard({ booking, onCancel, onViewDetails }: BookingCardPro
                         <div className="flex items-start justify-between mb-4">
                             <div>
                                 <h3 className="text-xl font-semibold mb-1">
-                                    {booking.trip?.name || 'Trip Booking'}
+                                    {booking.trip?.title || booking.trip?.name || 'Trip Booking'}
                                 </h3>
-                                <p className="text-sm text-muted-foreground">
-                                    Ref: {booking.booking_reference}
-                                </p>
+                                {booking.booking_reference && (
+                                    <p className="text-sm text-muted-foreground">
+                                        Ref: {booking.booking_reference}
+                                    </p>
+                                )}
                             </div>
                             <div className="flex gap-2">
                                 <Badge variant="outline" className={getStatusColor(booking.status)}>
@@ -101,8 +136,8 @@ export function BookingCard({ booking, onCancel, onViewDetails }: BookingCardPro
                                 <div>
                                     <p className="text-muted-foreground">Travel Dates</p>
                                     <p className="font-medium">
-                                        {booking.travel_start_date && format(new Date(booking.travel_start_date), 'MMM dd')} -
-                                        {booking.travel_end_date && format(new Date(booking.travel_end_date), 'MMM dd, yyyy')}
+                                        {travelStartDate && format(new Date(travelStartDate), 'MMM dd')}
+                                        {travelEndDate && ` - ${format(new Date(travelEndDate), 'MMM dd, yyyy')}`}
                                     </p>
                                 </div>
                             </div>
@@ -111,7 +146,7 @@ export function BookingCard({ booking, onCancel, onViewDetails }: BookingCardPro
                                 <Users className="h-4 w-4 text-muted-foreground" />
                                 <div>
                                     <p className="text-muted-foreground">Travelers</p>
-                                    <p className="font-medium">{booking.number_of_travelers} {booking.number_of_travelers === 1 ? 'person' : 'people'}</p>
+                                    <p className="font-medium">{travelers} {travelers === 1 ? 'person' : 'people'}</p>
                                 </div>
                             </div>
 
@@ -119,7 +154,7 @@ export function BookingCard({ booking, onCancel, onViewDetails }: BookingCardPro
                                 <CreditCard className="h-4 w-4 text-muted-foreground" />
                                 <div>
                                     <p className="text-muted-foreground">Total Amount</p>
-                                    <p className="font-medium">{booking.currency} {booking.total_amount?.toLocaleString()}</p>
+                                    <p className="font-medium">{booking.currency || 'INR'} {booking.total_amount?.toLocaleString()}</p>
                                 </div>
                             </div>
 
@@ -127,15 +162,17 @@ export function BookingCard({ booking, onCancel, onViewDetails }: BookingCardPro
                                 <CreditCard className="h-4 w-4 text-muted-foreground" />
                                 <div>
                                     <p className="text-muted-foreground">Paid Amount</p>
-                                    <p className="font-medium">{booking.currency} {booking.paid_amount?.toLocaleString()}</p>
+                                    <p className="font-medium">{booking.currency || 'INR'} {paidAmount.toLocaleString()}</p>
                                 </div>
                             </div>
                         </div>
 
                         {/* Booking Date */}
-                        <p className="text-xs text-muted-foreground mb-4">
-                            Booked {booking.booking_date && formatDistanceToNow(new Date(booking.booking_date), { addSuffix: true })}
-                        </p>
+                        {bookingDate && (
+                            <p className="text-xs text-muted-foreground mb-4">
+                                Booked {formatDistanceToNow(new Date(bookingDate), { addSuffix: true })}
+                            </p>
+                        )}
 
                         {/* Actions */}
                         <div className="flex gap-2">

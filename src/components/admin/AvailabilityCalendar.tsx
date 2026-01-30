@@ -56,11 +56,16 @@ export const AvailabilityCalendar = ({
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [editingId, setEditingId] = useState<string | null>(null);
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<{
+        spots_total: string;
+        spots_booked: string;
+        price_modifier: string;
+        status: 'active' | 'cancelled' | 'sold_out';
+    }>({
         spots_total: '20',
         spots_booked: '0',
         price_modifier: '0',
-        status: 'active' as const,
+        status: 'active',
     });
 
     // Sync fetched data
@@ -93,7 +98,7 @@ export const AvailabilityCalendar = ({
                     spots_total: existingDate.spots_total.toString(),
                     spots_booked: existingDate.spots_booked.toString(),
                     price_modifier: existingDate.price_modifier.toString(),
-                    status: existingDate.status,
+                    status: existingDate.status as 'active' | 'cancelled' | 'sold_out',
                 });
             } else {
                 setEditingId(null);
