@@ -32,19 +32,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
   const [roles, setRoles] = useState<AppRole[]>([]);
 
-  const fetchRoles = async (userId: string) => {
+  const fetchRoles = async (user: User) => {
     try {
+      // 1. Try fetching from database first
       const { data, error } = await supabase
         .from('user_roles')
         .select('role')
-        .eq('user_id', userId);
+        .eq('user_id', user.id);
 
-      if (error) {
-        console.error('Error fetching roles:', error);
-        return [];
+      if (!error && data && data.length > 0) {
+        return data.map(r => r.role as AppRole);
       }
 
-      return (data || []).map(r => r.role as AppRole);
+      // 2. Fallback: Check user_metadata (Auth object)
+      // This is crucial if database sync is slow or RLS fails
+      const metaRole = user.user_metadata?.role;
+      if (metaRole && ['admin', 'moderator', 'user'].includes(metaRole)) {
+        console.log('[AuthContext] ⚠️ Using metadata role fallback:', metaRole);
+        return [metaRole as AppRole];
+      }
+
+      return [];
     } catch (err) {
       console.error('Error fetching roles:', err);
       return [];
@@ -53,7 +61,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const refreshRoles = async () => {
     if (user) {
-      const userRoles = await fetchRoles(user.id);
+      const userRoles = await fetchRoles(user);
       setRoles(userRoles);
     }
   };
@@ -68,7 +76,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (session?.user) {
           // Defer role fetching to avoid blocking auth state
           setTimeout(async () => {
-            const userRoles = await fetchRoles(session.user.id);
+            const userRoles = await fetchRoles(session.user);
             setRoles(userRoles);
           }, 0);
         } else {
@@ -85,7 +93,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(session?.user ?? null);
 
       if (session?.user) {
-        fetchRoles(session.user.id).then(setRoles);
+        fetchRoles(session.user).then(setRoles);
       }
 
       setLoading(false);
@@ -162,7 +170,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               id: data.user.id,
               email: data.user.email,
               full_name: fullName,
-            });
+            } as any);
 
           if (insertError) {
             console.error('[AuthContext] ❌ Failed to create profile:', insertError);
@@ -176,7 +184,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         // Fetch and verify roles
         console.log('[AuthContext] 🎉 Fetching user roles...');
-        const userRoles = await fetchRoles(data.user.id);
+        const userRoles = await fetchRoles(data.user);
         console.log('[AuthContext] 👤 User roles:', userRoles);
 
         // If no roles assigned, assign default 'user' role
@@ -188,7 +196,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             .insert({
               user_id: data.user.id,
               role: 'user',
-            });
+            } as any);
 
           if (roleError) {
             console.error('[AuthContext] ❌ Failed to assign default role:', roleError);

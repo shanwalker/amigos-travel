@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -18,11 +18,12 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { Plus, Trash2, GripVertical, Edit, Save, X } from 'lucide-react';
+import { Plus, Trash2, GripVertical, Edit, Save, Loader2 } from 'lucide-react';
 import { motion, Reorder } from 'framer-motion';
 import { toast } from '@/hooks/use-toast';
+import { useTripItinerary, useUpdateItinerary } from '@/hooks/useTrips';
 
-interface ItineraryDay {
+export interface ItineraryDay {
     id: string;
     day_number: number;
     title: string;
@@ -60,6 +61,10 @@ const gradientOptions = [
 ];
 
 export const ItineraryBuilder = ({ tripId, initialItinerary = [], onSave }: ItineraryBuilderProps) => {
+    // If tripId is provided, fetch data
+    const { data: fetchedItinerary, isLoading } = useTripItinerary(tripId || '');
+    const updateItineraryMutation = useUpdateItinerary();
+
     const [itinerary, setItinerary] = useState<ItineraryDay[]>(initialItinerary);
     const [isAddingDay, setIsAddingDay] = useState(false);
     const [editingDay, setEditingDay] = useState<ItineraryDay | null>(null);
@@ -70,6 +75,13 @@ export const ItineraryBuilder = ({ tripId, initialItinerary = [], onSave }: Itin
         gradient: 'blue',
         image_url: '',
     });
+
+    // Update local state when data is fetched
+    useEffect(() => {
+        if (fetchedItinerary && fetchedItinerary.length > 0) {
+            setItinerary(fetchedItinerary as ItineraryDay[]);
+        }
+    }, [fetchedItinerary]);
 
     const resetForm = () => {
         setFormData({
@@ -137,11 +149,19 @@ export const ItineraryBuilder = ({ tripId, initialItinerary = [], onSave }: Itin
         setItinerary(reorderedItinerary);
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
+        if (tripId) {
+            try {
+                await updateItineraryMutation.mutateAsync({ tripId, items: itinerary });
+                toast({ title: 'Success', description: 'Itinerary saved to database!' });
+            } catch (error) {
+                toast({ title: 'Error', description: 'Failed to save itinerary', variant: 'destructive' });
+            }
+        }
+
         if (onSave) {
             onSave(itinerary);
         }
-        toast({ title: 'Success', description: 'Itinerary saved successfully!' });
     };
 
     const openEditDialog = (day: ItineraryDay) => {
@@ -154,6 +174,14 @@ export const ItineraryBuilder = ({ tripId, initialItinerary = [], onSave }: Itin
             image_url: day.image_url || '',
         });
     };
+
+    if (tripId && isLoading) {
+        return (
+            <div className="flex items-center justify-center p-8">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+        );
+    }
 
     const DayForm = ({ onSubmit, submitLabel }: { onSubmit: () => void; submitLabel: string }) => (
         <div className="grid gap-4 py-4">
@@ -240,9 +268,18 @@ export const ItineraryBuilder = ({ tripId, initialItinerary = [], onSave }: Itin
                             <Plus className="mr-2 h-4 w-4" />
                             Add Day
                         </Button>
-                        {itinerary.length > 0 && (
-                            <Button onClick={handleSave} size="sm" variant="outline">
-                                <Save className="mr-2 h-4 w-4" />
+                        {(itinerary.length > 0 || tripId) && (
+                            <Button
+                                onClick={handleSave}
+                                size="sm"
+                                variant="default"
+                                disabled={updateItineraryMutation.isPending}
+                            >
+                                {updateItineraryMutation.isPending ? (
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                ) : (
+                                    <Save className="mr-2 h-4 w-4" />
+                                )}
                                 Save Itinerary
                             </Button>
                         )}

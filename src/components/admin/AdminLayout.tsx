@@ -57,6 +57,7 @@ const sidebarItems = [
   { icon: MessageSquare, label: 'Testimonials', path: '/admin/testimonials' },
   { icon: BookOpen, label: 'Stories', path: '/admin/stories' },
   { icon: Mail, label: 'Newsletter', path: '/admin/newsletter' },
+  { icon: Settings, label: 'Settings', path: '/admin/settings' },
 ];
 
 export const AdminLayout = ({ children }: AdminLayoutProps) => {
@@ -81,9 +82,9 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
     <div className="min-h-screen bg-[hsl(220,20%,8%)] flex">
       {/* Mobile Header */}
       <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-[hsl(220,20%,10%)]/95 backdrop-blur-xl border-b border-white/5 z-50 flex items-center justify-between px-4">
-        <Button 
-          variant="ghost" 
-          size="icon" 
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={() => setMobileOpen(true)}
           className="text-gray-400 hover:text-white hover:bg-white/5"
         >
@@ -144,9 +145,9 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
                   </div>
                   <span className="font-bold text-white">Admin Panel</span>
                 </div>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
+                <Button
+                  variant="ghost"
+                  size="icon"
                   onClick={() => setMobileOpen(false)}
                   className="text-gray-400 hover:text-white hover:bg-white/5"
                 >
@@ -299,15 +300,15 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
             <DropdownMenuContent align="end" className="w-56 bg-[hsl(220,20%,12%)] border-white/10">
               <DropdownMenuLabel className="text-gray-300">Admin Account</DropdownMenuLabel>
               <DropdownMenuSeparator className="bg-white/10" />
-              <DropdownMenuItem 
-                onClick={() => navigate('/')} 
+              <DropdownMenuItem
+                onClick={() => navigate('/')}
                 className="text-gray-300 focus:bg-white/5 focus:text-white"
               >
                 <ExternalLink className="mr-2 h-4 w-4" />
                 View Site
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-white/10" />
-              <DropdownMenuItem 
+              <DropdownMenuItem
                 onClick={handleSignOut}
                 className="text-red-400 focus:bg-red-500/10 focus:text-red-300"
               >
@@ -332,8 +333,8 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
           <div className="flex items-center gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
-              <Input 
-                placeholder="Search..." 
+              <Input
+                placeholder="Search..."
                 className="w-64 pl-10 h-9 bg-white/5 border-white/10 text-white placeholder:text-gray-500 focus:border-red-500/50"
               />
             </div>

@@ -38,12 +38,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Plus, Pencil, Trash2, Loader2, Search, Map, Star, Users, Sparkles } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 import type { Trip, TripType, TripStatus } from '@/integrations/supabase/database.types';
+
+// Advanced Components
+import { ItineraryBuilder } from '@/components/admin/ItineraryBuilder';
+import { ImageGallery } from '@/components/admin/ImageGallery';
+import { AvailabilityCalendar } from '@/components/admin/AvailabilityCalendar';
+import { PricingManager } from '@/components/admin/PricingManager';
 
 const TRIP_TYPE_LABELS: Record<TripType, string> = {
   surprise: 'Surprise Trip',
@@ -88,7 +100,6 @@ const TripManagement = () => {
     start_date: '',
     spots_left: '',
     total_spots: '',
-    // New fields
     trip_type: 'standard' as TripType,
     category: '',
     min_budget: '',
@@ -234,7 +245,7 @@ const TripManagement = () => {
     }
   };
 
-  const TripForm = ({ onSubmit, submitLabel }: { onSubmit: () => void; submitLabel: string }) => (
+  const TripForm = ({ onSubmit, submitLabel, hideButtons = false }: { onSubmit: () => void; submitLabel: string; hideButtons?: boolean }) => (
     <div className="grid gap-4 py-4 max-h-[60vh] overflow-y-auto pr-2">
       {/* Trip Type & Status Row */}
       <div className="grid grid-cols-3 gap-4">
@@ -479,11 +490,13 @@ const TripManagement = () => {
         </div>
       )}
 
-      <DialogFooter className="pt-4">
-        <Button onClick={onSubmit} disabled={!formData.title || !formData.destination || !formData.country}>
-          {submitLabel}
-        </Button>
-      </DialogFooter>
+      {!hideButtons && (
+        <DialogFooter className="pt-4">
+          <Button onClick={onSubmit} disabled={!formData.title || !formData.destination || !formData.country}>
+            {submitLabel}
+          </Button>
+        </DialogFooter>
+      )}
     </div>
   );
 
@@ -594,7 +607,7 @@ const TripManagement = () => {
                     <TableCell>{trip.destination}, {trip.country}</TableCell>
                     <TableCell>₹{trip.price?.toLocaleString() || 'N/A'}</TableCell>
                     <TableCell>
-                      <Badge 
+                      <Badge
                         variant={trip.status === 'active' ? 'default' : trip.status === 'confirmed' ? 'secondary' : 'outline'}
                         className="text-xs"
                       >
@@ -633,13 +646,72 @@ const TripManagement = () => {
         </Card>
       </motion.div>
 
-      {/* Edit Dialog */}
+      {/* Edit Dialog - Enhanced with Tabs */}
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle>Edit Trip</DialogTitle>
+        <DialogContent className="max-w-6xl h-[90vh] flex flex-col p-0 gap-0">
+          <DialogHeader className="p-6 pb-2 border-b border-border/50 bg-background/95 backdrop-blur z-10">
+            <DialogTitle>Edit Trip - {editingTrip?.title}</DialogTitle>
           </DialogHeader>
-          <TripForm onSubmit={handleUpdate} submitLabel="Update Trip" />
+
+          <div className="flex-1 overflow-hidden">
+            <Tabs defaultValue="details" className="h-full flex flex-col">
+              <div className="px-6 pt-2 border-b border-border/50 bg-background/50">
+                <TabsList className="bg-transparent border-b-0 h-auto p-0 gap-4">
+                  <TabsTrigger value="details" className="data-[state=active]:bg-primary/10 rounded-t-lg rounded-b-none border-b-2 border-transparent data-[state=active]:border-primary px-4 py-2">Details</TabsTrigger>
+                  <TabsTrigger value="itinerary" className="data-[state=active]:bg-primary/10 rounded-t-lg rounded-b-none border-b-2 border-transparent data-[state=active]:border-primary px-4 py-2">Itinerary</TabsTrigger>
+                  <TabsTrigger value="gallery" className="data-[state=active]:bg-primary/10 rounded-t-lg rounded-b-none border-b-2 border-transparent data-[state=active]:border-primary px-4 py-2">Gallery</TabsTrigger>
+                  <TabsTrigger value="availability" className="data-[state=active]:bg-primary/10 rounded-t-lg rounded-b-none border-b-2 border-transparent data-[state=active]:border-primary px-4 py-2">Availability</TabsTrigger>
+                  <TabsTrigger value="pricing" className="data-[state=active]:bg-primary/10 rounded-t-lg rounded-b-none border-b-2 border-transparent data-[state=active]:border-primary px-4 py-2">Pricing</TabsTrigger>
+                </TabsList>
+              </div>
+
+              <div className="flex-1 overflow-y-auto p-6 bg-muted/20">
+                <TabsContent value="details" className="m-0 h-full">
+                  <div className="bg-card p-6 rounded-lg border border-border/50">
+                    <TripForm onSubmit={handleUpdate} submitLabel="Update Details" hideButtons={false} />
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="itinerary" className="m-0 h-full">
+                  {editingTrip && (
+                    <div className="h-full">
+                      <ItineraryBuilder tripId={editingTrip.id} />
+                    </div>
+                  )}
+                </TabsContent>
+
+                <TabsContent value="gallery" className="m-0 h-full">
+                  {editingTrip && (
+                    <div className="h-full">
+                      <ImageGallery tripId={editingTrip.id} />
+                    </div>
+                  )}
+                </TabsContent>
+
+                <TabsContent value="availability" className="m-0 h-full">
+                  {editingTrip && (
+                    <div className="h-full">
+                      <AvailabilityCalendar
+                        tripId={editingTrip.id}
+                        basePrice={editingTrip.price || 0}
+                      />
+                    </div>
+                  )}
+                </TabsContent>
+
+                <TabsContent value="pricing" className="m-0 h-full">
+                  {editingTrip && (
+                    <div className="h-full">
+                      <PricingManager
+                        tripId={editingTrip.id}
+                        basePrice={editingTrip.price || 0}
+                      />
+                    </div>
+                  )}
+                </TabsContent>
+              </div>
+            </Tabs>
+          </div>
         </DialogContent>
       </Dialog>
 

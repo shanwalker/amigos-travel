@@ -60,6 +60,7 @@ const SurpriseRequestsManagement = lazy(() => import("./pages/admin/SurpriseRequ
 const CustomRequestsManagement = lazy(() => import("./pages/admin/CustomRequestsManagement"));
 const ReservationsManagement = lazy(() => import("./pages/admin/ReservationsManagement"));
 const LocalBuddiesManagement = lazy(() => import("./pages/admin/LocalBuddiesManagement"));
+const SettingsManagement = lazy(() => import("./pages/admin/SettingsManagement"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -245,6 +246,13 @@ const App = () => (
                 <ProtectedRoute requiredRole="admin">
                   <AdminLayout>
                     <LocalBuddiesManagement />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/settings" element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminLayout>
+                    <SettingsManagement />
                   </AdminLayout>
                 </ProtectedRoute>
               } />

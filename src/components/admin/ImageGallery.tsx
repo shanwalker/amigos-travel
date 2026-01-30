@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,10 +20,11 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { Plus, Trash2, Star, Image as ImageIcon, Upload } from 'lucide-react';
+import { Plus, Trash2, Star, Image as ImageIcon, Upload, Loader2, Save } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from '@/hooks/use-toast';
 import { Badge } from '@/components/ui/badge';
+import { useTripImages, useUpdateTripImages, TripImage as DbTripImage } from '@/hooks/useTrips';
 
 interface TripImage {
     id: string;
@@ -40,11 +41,28 @@ interface ImageGalleryProps {
 }
 
 export const ImageGallery = ({ tripId, initialImages = [], onSave }: ImageGalleryProps) => {
+    // Data fetching
+    const { data: fetchedImages, isLoading } = useTripImages(tripId || '');
+    const updateImagesMutation = useUpdateTripImages();
+
     const [images, setImages] = useState<TripImage[]>(initialImages);
     const [isAddingImage, setIsAddingImage] = useState(false);
     const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
     const [imageUrl, setImageUrl] = useState('');
     const [imageCaption, setImageCaption] = useState('');
+
+    // Sync fetched data
+    useEffect(() => {
+        if (fetchedImages && fetchedImages.length > 0) {
+            setImages(fetchedImages.map(img => ({
+                id: img.id,
+                url: img.url,
+                is_featured: img.is_featured,
+                order: img.order,
+                caption: undefined // DB doesn't have caption yet, strictly speaking
+            })));
+        }
+    }, [fetchedImages]);
 
     const handleAddImage = () => {
         if (!imageUrl) {
@@ -93,12 +111,28 @@ export const ImageGallery = ({ tripId, initialImages = [], onSave }: ImageGaller
         toast({ title: 'Success', description: 'Featured image updated!' });
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
+        if (tripId) {
+            try {
+                await updateImagesMutation.mutateAsync({ tripId, images });
+                toast({ title: 'Success', description: 'Gallery saved to database!' });
+            } catch (error) {
+                toast({ title: 'Error', description: 'Failed to save gallery', variant: 'destructive' });
+            }
+        }
+
         if (onSave) {
             onSave(images);
         }
-        toast({ title: 'Success', description: 'Gallery saved successfully!' });
     };
+
+    if (tripId && isLoading) {
+        return (
+            <div className="flex items-center justify-center p-8">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+        );
+    }
 
     return (
         <Card className="bg-card/50 border-border/50">
@@ -115,8 +149,18 @@ export const ImageGallery = ({ tripId, initialImages = [], onSave }: ImageGaller
                             <Plus className="mr-2 h-4 w-4" />
                             Add Image
                         </Button>
-                        {images.length > 0 && (
-                            <Button onClick={handleSave} size="sm" variant="outline">
+                        {(images.length > 0 || tripId) && (
+                            <Button
+                                onClick={handleSave}
+                                size="sm"
+                                variant="default"
+                                disabled={updateImagesMutation.isPending}
+                            >
+                                {updateImagesMutation.isPending ? (
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                ) : (
+                                    <Save className="mr-2 h-4 w-4" />
+                                )}
                                 Save Gallery
                             </Button>
                         )}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,12 +11,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { DollarSign, Percent, Calendar, Users, Plus, Trash2 } from 'lucide-react';
+import { DollarSign, Percent, Calendar, Users, Plus, Trash2, Loader2, Save } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from '@/hooks/use-toast';
 import { Badge } from '@/components/ui/badge';
+import { useTripPricing, useUpdateTripPricing } from '@/hooks/useTrips';
 
-interface PricingVariation {
+export interface PricingVariation {
     id: string;
     type: 'early_bird' | 'group' | 'seasonal' | 'addon';
     name: string;
@@ -24,9 +25,11 @@ interface PricingVariation {
     is_percentage: boolean;
     conditions?: string;
     is_active: boolean;
+    trip_id?: string;
 }
 
 interface PricingManagerProps {
+    tripId?: string;
     basePrice: number;
     onBasePriceChange?: (price: number) => void;
     initialVariations?: PricingVariation[];
@@ -34,11 +37,16 @@ interface PricingManagerProps {
 }
 
 export const PricingManager = ({
+    tripId,
     basePrice: initialBasePrice = 0,
     onBasePriceChange,
     initialVariations = [],
     onSave,
 }: PricingManagerProps) => {
+    // Data Fetching
+    const { data: fetchedVariations, isLoading } = useTripPricing(tripId || '');
+    const updatePricingMutation = useUpdateTripPricing();
+
     const [basePrice, setBasePrice] = useState(initialBasePrice);
     const [variations, setVariations] = useState<PricingVariation[]>(initialVariations);
     const [isAdding, setIsAdding] = useState(false);
@@ -49,6 +57,17 @@ export const PricingManager = ({
         is_percentage: true,
         conditions: '',
     });
+
+    // Sync fetched data
+    useEffect(() => {
+        if (fetchedVariations && fetchedVariations.length > 0) {
+            setVariations(fetchedVariations.map(v => ({
+                ...v,
+                // Ensure types match what UI expects
+                type: v.type as any
+            })));
+        }
+    }, [fetchedVariations]);
 
     const variationTypes = [
         { value: 'early_bird', label: 'Early Bird Discount', icon: Calendar },
@@ -75,6 +94,7 @@ export const PricingManager = ({
             id: `var-${Date.now()}`,
             ...newVariation,
             is_active: true,
+            trip_id: tripId
         };
 
         setVariations([...variations, variation]);
@@ -100,11 +120,19 @@ export const PricingManager = ({
         toast({ title: 'Success', description: 'Pricing variation removed!' });
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
+        if (tripId) {
+            try {
+                await updatePricingMutation.mutateAsync({ tripId, variations });
+                toast({ title: 'Success', description: 'Pricing configuration saved to database!' });
+            } catch (error) {
+                toast({ title: 'Error', description: 'Failed to save pricing', variant: 'destructive' });
+            }
+        }
+
         if (onSave) {
             onSave(variations);
         }
-        toast({ title: 'Success', description: 'Pricing saved successfully!' });
     };
 
     const calculateFinalPrice = () => {
@@ -152,6 +180,14 @@ export const PricingManager = ({
                 return 'from-gray-500 to-gray-600';
         }
     };
+
+    if (tripId && isLoading) {
+        return (
+            <div className="flex items-center justify-center p-8">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-6">
@@ -306,8 +342,8 @@ export const PricingManager = ({
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ duration: 0.2, delay: index * 0.05 }}
                                         className={`flex items-center gap-3 p-4 rounded-lg border transition-colors ${variation.is_active
-                                                ? 'bg-background/50 border-border/50'
-                                                : 'bg-background/20 border-border/20 opacity-60'
+                                            ? 'bg-background/50 border-border/50'
+                                            : 'bg-background/20 border-border/20 opacity-60'
                                             }`}
                                     >
                                         <div className={`p-2 rounded-lg bg-gradient-to-br ${getVariationColor(variation.type)}`}>
@@ -348,8 +384,17 @@ export const PricingManager = ({
                         </div>
                     )}
 
-                    {variations.length > 0 && (
-                        <Button onClick={handleSave} className="w-full">
+                    {(variations.length > 0 || tripId) && (
+                        <Button
+                            onClick={handleSave}
+                            className="w-full"
+                            disabled={updatePricingMutation.isPending}
+                        >
+                            {updatePricingMutation.isPending ? (
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            ) : (
+                                <Save className="mr-2 h-4 w-4" />
+                            )}
                             Save Pricing
                         </Button>
                     )}

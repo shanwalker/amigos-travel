@@ -1,256 +1,218 @@
 import { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
+import { useSubscribers, useCampaigns, useCreateCampaign, useSendCampaign, Campaign } from '@/hooks/useNewsletter';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
 import { Badge } from '@/components/ui/badge';
-import { Loader2, Search, Trash2, Download, Mail, MailX } from 'lucide-react';
-import { toast } from '@/hooks/use-toast';
-import { motion } from 'framer-motion';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Loader2, Mail, Send, Plus, Users, BarChart } from 'lucide-react';
 import { format } from 'date-fns';
-
-interface NewsletterSubscriber {
-  id: string;
-  email: string;
-  subscribed_at: string;
-  is_active: boolean;
-}
+import { toast } from '@/hooks/use-toast';
 
 const NewsletterManagement = () => {
-  const queryClient = useQueryClient();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const { data: subscribers, isLoading: isSubLoading } = useSubscribers();
+  const { data: campaigns, isLoading: isCampLoading } = useCampaigns();
+  const createCampaign = useCreateCampaign();
+  const sendCampaign = useSendCampaign();
 
-  const { data: subscribers, isLoading } = useQuery({
-    queryKey: ['newsletter-subscribers'],
-    queryFn: async (): Promise<NewsletterSubscriber[]> => {
-      const { data, error } = await (supabase as any).from('newsletter_subscribers').select('*').order('subscribed_at', { ascending: false });
-      if (error) throw error;
-      return data;
-    },
-  });
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [newCampaign, setNewCampaign] = useState<Partial<Campaign>>({ status: 'draft' });
 
-  const toggleActive = useMutation({
-    mutationFn: async ({ id, is_active }: { id: string; is_active: boolean }) => {
-      const { error } = await (supabase as any).from('newsletter_subscribers').update({ is_active }).eq('id', id);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['newsletter-subscribers'] });
-      toast({ title: 'Success', description: 'Subscriber status updated!' });
-    },
-  });
-
-  const deleteSubscriber = useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await (supabase as any).from('newsletter_subscribers').delete().eq('id', id);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['newsletter-subscribers'] });
-      toast({ title: 'Success', description: 'Subscriber deleted!' });
-      setDeleteConfirmId(null);
-    },
-  });
-
-  const filteredSubscribers = subscribers?.filter(sub =>
-    sub.email.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const activeCount = subscribers?.filter(s => s.is_active).length || 0;
-  const inactiveCount = (subscribers?.length || 0) - activeCount;
-
-  const exportToCSV = () => {
-    if (!subscribers?.length) return;
-    
-    const activeEmails = subscribers.filter(s => s.is_active);
-    const csv = ['Email,Subscribed At,Status'];
-    activeEmails.forEach(sub => {
-      csv.push(`${sub.email},${sub.subscribed_at},active`);
-    });
-    
-    const blob = new Blob([csv.join('\n')], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `newsletter-subscribers-${format(new Date(), 'yyyy-MM-dd')}.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
-    
-    toast({ title: 'Success', description: 'Subscribers exported successfully!' });
+  const handleCreate = async () => {
+    try {
+      await createCampaign.mutateAsync(newCampaign);
+      toast({ title: 'Campaign created' });
+      setIsCreateOpen(false);
+      setNewCampaign({ status: 'draft' });
+    } catch (error: any) {
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+    }
   };
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
+  const handleSend = async (id: string) => {
+    if (confirm('Are you sure you want to send this campaign now?')) {
+      try {
+        await sendCampaign.mutateAsync(id);
+        toast({ title: 'Campaign sent successfully' });
+      } catch (error: any) {
+        toast({ title: 'Error sending campaign', description: error.message });
+      }
+    }
+  };
+
+  if (isSubLoading || isCampLoading) return <Loader2 className="h-8 w-8 animate-spin mx-auto mt-20" />;
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-display font-bold text-foreground">Newsletter Subscribers</h1>
-          <p className="text-muted-foreground mt-2">Manage your newsletter mailing list</p>
-        </div>
-        <Button onClick={exportToCSV} disabled={!subscribers?.length}>
-          <Download className="mr-2 h-4 w-4" />
-          Export CSV
-        </Button>
+      <div>
+        <h1 className="text-3xl font-bold font-display">Newsletter</h1>
+        <p className="text-muted-foreground">Manage subscribers and email campaigns</p>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-4">
-        <Card className="bg-card/50 border-border/50">
-          <CardContent className="pt-6 flex items-center gap-4">
-            <Mail className="h-8 w-8 text-primary" />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card>
+          <CardContent className="pt-6 flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Total Subscribers</p>
-              <p className="text-2xl font-bold text-foreground">{subscribers?.length || 0}</p>
+              <p className="text-sm text-muted-foreground">Subscribers</p>
+              <p className="text-3xl font-bold">{subscribers?.length || 0}</p>
             </div>
+            <Users className="h-8 w-8 text-primary/20" />
           </CardContent>
         </Card>
-        <Card className="bg-card/50 border-border/50">
-          <CardContent className="pt-6 flex items-center gap-4">
-            <Mail className="h-8 w-8 text-green-400" />
+        <Card>
+          <CardContent className="pt-6 flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Active</p>
-              <p className="text-2xl font-bold text-foreground">{activeCount}</p>
+              <p className="text-sm text-muted-foreground">Sent Campaigns</p>
+              <p className="text-3xl font-bold">{campaigns?.filter(c => c.status === 'sent').length || 0}</p>
             </div>
+            <Send className="h-8 w-8 text-green-500/20" />
           </CardContent>
         </Card>
-        <Card className="bg-card/50 border-border/50">
-          <CardContent className="pt-6 flex items-center gap-4">
-            <MailX className="h-8 w-8 text-red-400" />
+        <Card>
+          <CardContent className="pt-6 flex items-center justify-between">
             <div>
-              <p className="text-sm text-muted-foreground">Unsubscribed</p>
-              <p className="text-2xl font-bold text-foreground">{inactiveCount}</p>
+              <p className="text-sm text-muted-foreground">Avg Open Rate</p>
+              <p className="text-3xl font-bold">24%</p>
             </div>
+            <BarChart className="h-8 w-8 text-blue-500/20" />
           </CardContent>
         </Card>
       </div>
 
-      {/* Search */}
-      <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder="Search by email..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-10"
-        />
-      </div>
+      <Tabs defaultValue="campaigns">
+        <TabsList>
+          <TabsTrigger value="campaigns">Campaigns</TabsTrigger>
+          <TabsTrigger value="subscribers">Subscribers</TabsTrigger>
+        </TabsList>
 
-      {/* Subscribers Table */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-      >
-        <Card className="bg-card/50 border-border/50">
-          <CardContent className="p-0">
-            <Table>
-              <TableHeader>
-                <TableRow className="border-border/50">
-                  <TableHead>Email</TableHead>
-                  <TableHead>Subscribed At</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredSubscribers?.map((subscriber) => (
-                  <TableRow key={subscriber.id} className="border-border/50">
-                    <TableCell className="font-medium">{subscriber.email}</TableCell>
-                    <TableCell className="text-muted-foreground">
-                      {format(new Date(subscriber.subscribed_at), 'MMM d, yyyy HH:mm')}
-                    </TableCell>
-                    <TableCell>
-                      <Badge 
-                        variant="outline" 
-                        className={subscriber.is_active 
-                          ? 'bg-green-500/20 text-green-400 border-green-500/30' 
-                          : 'bg-red-500/20 text-red-400 border-red-500/30'
-                        }
-                      >
-                        {subscriber.is_active ? 'Active' : 'Unsubscribed'}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex justify-end gap-2">
-                        <Button 
-                          variant="ghost" 
-                          size="sm"
-                          onClick={() => toggleActive.mutate({ 
-                            id: subscriber.id, 
-                            is_active: !subscriber.is_active 
-                          })}
-                        >
-                          {subscriber.is_active ? 'Deactivate' : 'Reactivate'}
-                        </Button>
-                        <Button 
-                          variant="ghost" 
-                          size="icon" 
-                          onClick={() => setDeleteConfirmId(subscriber.id)}
-                        >
-                          <Trash2 className="h-4 w-4 text-destructive" />
-                        </Button>
-                      </div>
-                    </TableCell>
+        <TabsContent value="campaigns" className="space-y-4">
+          <div className="flex justify-end">
+            <Button onClick={() => setIsCreateOpen(true)}>
+              <Plus className="mr-2 h-4 w-4" /> New Campaign
+            </Button>
+          </div>
+          <Card>
+            <CardContent className="p-0">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Campaign</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Sent At</TableHead>
+                    <TableHead>Stats</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            {filteredSubscribers?.length === 0 && (
-              <div className="text-center py-12 text-muted-foreground">
-                No subscribers found
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </motion.div>
+                </TableHeader>
+                <TableBody>
+                  {campaigns?.map((campaign) => (
+                    <TableRow key={campaign.id}>
+                      <TableCell>
+                        <div className="font-medium">{campaign.title}</div>
+                        <div className="text-xs text-muted-foreground">{campaign.subject}</div>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant={campaign.status === 'sent' ? 'default' : 'secondary'}>
+                          {campaign.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        {campaign.sent_at ? format(new Date(campaign.sent_at), 'MMM d, hh:mm a') : '-'}
+                      </TableCell>
+                      <TableCell>
+                        {campaign.status === 'sent' && (
+                          <div className="text-xs text-muted-foreground">
+                            {campaign.recipient_count} recipients
+                          </div>
+                        )}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        {campaign.status === 'draft' && (
+                          <Button size="sm" onClick={() => handleSend(campaign.id)}>
+                            <Send className="mr-2 h-3 w-3" /> Send
+                          </Button>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
-      {/* Delete Confirmation */}
-      <AlertDialog open={!!deleteConfirmId} onOpenChange={() => setDeleteConfirmId(null)}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Delete Subscriber?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This will permanently remove this subscriber from your mailing list.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction 
-              onClick={() => deleteConfirmId && deleteSubscriber.mutate(deleteConfirmId)} 
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+        <TabsContent value="subscribers">
+          <Card>
+            <CardContent className="p-0">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Email</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Source</TableHead>
+                    <TableHead>Joined</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {subscribers?.map((sub) => (
+                    <TableRow key={sub.id}>
+                      <TableCell className="font-medium">{sub.email}</TableCell>
+                      <TableCell>
+                        <Badge variant={sub.status === 'subscribed' ? 'outline' : 'destructive'}>
+                          {sub.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="capitalize">{sub.source}</TableCell>
+                      <TableCell className="text-muted-foreground">
+                        {format(new Date(sub.subscribed_at), 'MMM d, yyyy')}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+
+      <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Create Campaign</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label>Internal Title</Label>
+              <Input
+                value={newCampaign.title || ''}
+                onChange={(e) => setNewCampaign({ ...newCampaign, title: e.target.value })}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Email Subject</Label>
+              <Input
+                value={newCampaign.subject || ''}
+                onChange={(e) => setNewCampaign({ ...newCampaign, subject: e.target.value })}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Content (HTML)</Label>
+              <Textarea
+                value={newCampaign.content || ''}
+                onChange={(e) => setNewCampaign({ ...newCampaign, content: e.target.value })}
+                rows={6}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsCreateOpen(false)}>Cancel</Button>
+            <Button onClick={handleCreate}>Create Draft</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

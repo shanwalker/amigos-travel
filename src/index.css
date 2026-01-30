@@ -459,3 +459,17 @@
 .animate-focus-ring {
   animation: focus-ring 2s infinite;
 }
+
+/* Custom Utilities for Quiz */
+.drop-shadow-glow {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
