@@ -146,7 +146,7 @@ export const ChatFab = () => {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-40 w-16 h-16 rounded-full bg-gradient-to-br from-primary via-orange-500 to-red-500 text-white flex items-center justify-center shadow-2xl"
+        className="fixed bottom-6 right-6 z-40 w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-primary via-orange-500 to-red-500 text-white flex items-center justify-center shadow-2xl"
         style={{ boxShadow: '0 0 40px rgba(255, 180, 0, 0.6), 0 0 80px rgba(255, 180, 0, 0.3)' }}
       >
         <motion.div
@@ -159,7 +159,7 @@ export const ChatFab = () => {
             repeatDelay: 3,
           }}
         >
-          <Sparkles className="w-7 h-7" />
+          <Sparkles className="w-5 h-5 md:w-7 md:h-7" />
         </motion.div>
       </motion.button>
 
@@ -244,8 +244,8 @@ export const ChatFab = () => {
                     )}
                     <div
                       className={`px-4 py-3 rounded-2xl max-w-[80%] ${msg.isUser
-                          ? 'bg-gradient-to-r from-primary to-orange-500 text-white rounded-tr-md'
-                          : 'bg-white/10 backdrop-blur-sm text-white rounded-tl-md border border-white/10'
+                        ? 'bg-gradient-to-r from-primary to-orange-500 text-white rounded-tr-md'
+                        : 'bg-white/10 backdrop-blur-sm text-white rounded-tl-md border border-white/10'
                         }`}
                     >
                       <p className="text-sm leading-relaxed">{msg.text}</p>

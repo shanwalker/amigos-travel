@@ -85,7 +85,7 @@ export const TripSearchBar = () => {
   };
 
   return (
-    <section className="relative -mt-12 z-20 px-6">
+    <section id="destinations" className="relative -mt-12 z-20 px-6 scroll-mt-24">
       <div className="container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -95,11 +95,11 @@ export const TripSearchBar = () => {
         >
           {/* Ambient glow effect */}
           <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 rounded-3xl blur-xl opacity-60" />
-          
+
           {/* Main search bar container */}
           <div className="relative glass-card rounded-2xl p-2 md:p-3 border border-white/10 shadow-2xl shadow-navy-deep/50">
             <div className="flex flex-col lg:flex-row items-stretch gap-2 lg:gap-0">
-              
+
               {/* Destination Field */}
               <div className="flex-1 relative">
                 <button
@@ -127,7 +127,7 @@ export const TripSearchBar = () => {
                     </div>
                   </div>
                 </button>
-                
+
                 <Dropdown isOpen={openDropdown === 'destination'} onClose={() => setOpenDropdown(null)}>
                   <div className="p-2 max-h-[280px] overflow-y-auto">
                     {destinations.map((dest) => (
@@ -150,11 +150,11 @@ export const TripSearchBar = () => {
                     ))}
                   </div>
                 </Dropdown>
-                
+
                 {/* Vertical divider */}
                 <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-12 bg-gradient-to-b from-transparent via-white/20 to-transparent" />
               </div>
-              
+
               {/* Experience Field */}
               <div className="flex-1 relative">
                 <button
@@ -182,7 +182,7 @@ export const TripSearchBar = () => {
                     </div>
                   </div>
                 </button>
-                
+
                 <Dropdown isOpen={openDropdown === 'experience'} onClose={() => setOpenDropdown(null)}>
                   <div className="p-2 max-h-[280px] overflow-y-auto">
                     {experiences.map((exp) => (
@@ -205,11 +205,11 @@ export const TripSearchBar = () => {
                     ))}
                   </div>
                 </Dropdown>
-                
+
                 {/* Vertical divider */}
                 <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-12 bg-gradient-to-b from-transparent via-white/20 to-transparent" />
               </div>
-              
+
               {/* Date Field */}
               <div className="flex-1 relative">
                 <Popover>
@@ -234,8 +234,8 @@ export const TripSearchBar = () => {
                       </div>
                     </button>
                   </PopoverTrigger>
-                  <PopoverContent 
-                    className="w-auto p-0 bg-navy-deep/95 backdrop-blur-xl border-white/10" 
+                  <PopoverContent
+                    className="w-auto p-0 bg-navy-deep/95 backdrop-blur-xl border-white/10"
                     align="start"
                   >
                     <Calendar
@@ -249,7 +249,7 @@ export const TripSearchBar = () => {
                   </PopoverContent>
                 </Popover>
               </div>
-              
+
               {/* Search button */}
               <div className="flex-shrink-0 p-2 lg:pl-4">
                 <MagneticButton className="w-full lg:w-auto h-full min-h-[56px] px-8 rounded-xl font-semibold flex items-center justify-center gap-3 text-base">
@@ -259,11 +259,11 @@ export const TripSearchBar = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Decorative elements */}
           <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-1/2 h-6 bg-primary/10 blur-2xl rounded-full" />
         </motion.div>
-        
+
         {/* Quick suggestions */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}

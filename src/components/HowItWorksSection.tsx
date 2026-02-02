@@ -28,7 +28,7 @@ const steps = [
 
 export const HowItWorksSection = memo(() => {
     return (
-        <section className="relative py-20 md:py-32 bg-gradient-to-b from-background to-muted/30 overflow-hidden">
+        <section className="relative py-10 md:py-16 bg-gradient-to-b from-background to-muted/30 overflow-hidden">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-5">
                 <div className="absolute inset-0" style={{

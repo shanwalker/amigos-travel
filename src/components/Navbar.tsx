@@ -5,8 +5,8 @@ import logo from '@/assets/logo.png';
 import { MagneticButton } from './ui/animations';
 
 interface NavbarProps {
-  currentVersion: 'v1' | 'v2' | 'redesign';
-  onVersionChange: (version: 'v1' | 'v2' | 'redesign') => void;
+  currentVersion: 'v1' | 'v2' | 'redesign' | 'main';
+  onVersionChange: (version: 'v1' | 'v2' | 'redesign' | 'main') => void;
 }
 
 export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
@@ -74,6 +74,15 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
 
         {/* Version Switcher - Simple Buttons */}
         <div className="hidden md:flex items-center gap-1 bg-navy-medium/50 rounded-lg p-1">
+          <button
+            onClick={() => onVersionChange('main')}
+            className={`px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${currentVersion === 'main'
+              ? 'bg-primary text-primary-foreground'
+              : 'text-muted-foreground hover:text-foreground'
+              }`}
+          >
+            Main
+          </button>
           <button
             onClick={() => onVersionChange('v1')}
             className={`px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${currentVersion === 'v1'
@@ -145,6 +154,15 @@ export const Navbar = ({ currentVersion, onVersionChange }: NavbarProps) => {
             {/* Mobile Version Switcher */}
             <div className="flex items-center gap-2 pb-4 border-b border-foreground/10">
               <span className="text-sm text-muted-foreground font-sans">Version:</span>
+              <button
+                onClick={() => onVersionChange('main')}
+                className={`px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${currentVersion === 'main'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'text-muted-foreground hover:text-foreground bg-navy-medium/50'
+                  }`}
+              >
+                Main
+              </button>
               <button
                 onClick={() => onVersionChange('v1')}
                 className={`px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${currentVersion === 'v1'

@@ -7,6 +7,10 @@ import { Footer } from '@/components/Footer';
 import { ChatFab } from '@/components/ChatFab';
 import { LazySection } from '@/components/LazySection';
 
+// NEW Main Components
+import { HeroMain } from '@/components/home/HeroMain';
+import { BlogSection } from '@/components/home/BlogSection';
+
 // Lazy load below-the-fold sections
 const TripSearchBar = lazy(() => import('@/components/TripSearchBar').then(m => ({ default: m.TripSearchBar })));
 const CountdownBannerSection = lazy(() => import('@/components/CountdownBannerSection').then(m => ({ default: m.CountdownBannerSection })));
@@ -43,7 +47,7 @@ const SectionLoader = memo(() => (
 SectionLoader.displayName = 'SectionLoader';
 
 const Index = () => {
-  const [currentVersion, setCurrentVersion] = useState<'v1' | 'v2' | 'redesign'>('v1');
+  const [currentVersion, setCurrentVersion] = useState<'v1' | 'v2' | 'redesign' | 'main'>('main');
 
   return (
     <div className="min-h-screen bg-background">
@@ -51,7 +55,71 @@ const Index = () => {
         currentVersion={currentVersion}
         onVersionChange={setCurrentVersion}
       />
-      {currentVersion === 'v1' ? (
+      {currentVersion === 'main' ? (
+        <>
+          {/* 1. Hero Section (Hybrid) */}
+          <HeroMain />
+
+          {/* 2. FOMO / Live Updates (V1) */}
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <CountdownBannerSection />
+            </Suspense>
+          </LazySection>
+
+          {/* 3. Search & Trust (V1 + Cleaned Text) */}
+          <section className="relative z-20 mt-4 mb-8 px-4">
+            <div className="container mx-auto">
+              <Suspense fallback={<SectionLoader />}>
+                <TripSearchBar />
+              </Suspense>
+              <div className="text-center mt-6">
+                <p className="text-lg font-semibold text-foreground mb-2">
+                  Join over <span className="text-primary">10,000 Amigos</span> who have explored the world with us
+                </p>
+                <p className="text-sm text-muted-foreground font-sans">
+                  🔒 We respect your privacy—your info is safe with us
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* 4. How It Works (V1) */}
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <HowItWorksSection />
+            </Suspense>
+          </LazySection>
+
+          {/* 5. The Amigo Way (V1) */}
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <AmigoWaySection />
+            </Suspense>
+          </LazySection>
+
+          {/* 6. Memory Reel (V1) */}
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <MemoryReelSection />
+            </Suspense>
+          </LazySection>
+
+          {/* 7. Travel With Confidence (V1) - TrustShieldSection */}
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <TrustShieldSection />
+            </Suspense>
+          </LazySection>
+
+          {/* 8. Blogs (NEW) */}
+          <LazySection>
+            <Suspense fallback={<SectionLoader />}>
+              <BlogSection />
+            </Suspense>
+          </LazySection>
+        </>
+      ) : currentVersion === 'v1' ? (
         <>
           {/* Original V1 Hero with scrolling trip cards */}
           <HeroSection />
