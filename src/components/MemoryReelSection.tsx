@@ -22,7 +22,7 @@ export const MemoryReelSection = () => {
 
   const ReelItem = ({ image, index }: { image: typeof reelImages[0]; index: number }) => (
     <motion.div
-      whileHover={{ scale: 1.05, y: -10, zLink: 50 }}
+      whileHover={{ scale: 1.05, y: -10, zIndex: 50 }}
       onClick={() => setSelectedImage(image)}
       className="relative flex-shrink-0 w-56 md:w-72 h-80 md:h-[450px] rounded-3xl overflow-hidden cursor-pointer group mx-3 border border-white/10 bg-navy-light/20"
       style={{

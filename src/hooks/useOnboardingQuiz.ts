@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 import { OnboardingQuizRecord } from '@/types/onboarding-quiz';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -93,7 +93,8 @@ export function useLinkedSurpriseRequest() {
                 .limit(1)
                 .single();
 
-            if (quizError || !quiz?.linked_surprise_request_id) {
+            const linkedId = (quiz as any)?.linked_surprise_request_id;
+            if (quizError || !linkedId) {
                 return null;
             }
 
@@ -101,7 +102,7 @@ export function useLinkedSurpriseRequest() {
             const { data: request, error: requestError } = await supabase
                 .from('surprise_requests')
                 .select('id, status, suggested_destination, admin_notes, created_at, updated_at')
-                .eq('id', quiz.linked_surprise_request_id)
+                .eq('id', linkedId)
                 .single();
 
             if (requestError) {
