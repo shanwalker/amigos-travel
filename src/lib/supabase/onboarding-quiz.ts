@@ -249,7 +249,7 @@ export async function getOnboardingQuizWithUser(id: string): Promise<{
 
         return {
             quiz: data as OnboardingQuizRecord,
-            user: data.user,
+            user: data ? (data as any).user : null,
         };
     } catch (error) {
         console.error('[getOnboardingQuizWithUser] ❌ Exception:', error);

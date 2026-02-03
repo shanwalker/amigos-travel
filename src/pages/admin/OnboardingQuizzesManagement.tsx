@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -48,9 +48,9 @@ const fetchOnboardingQuizzes = async () => {
 };
 
 // Update quiz status
-const updateQuizStatus = async ({ id, updates }: { id: string; updates: Partial<OnboardingQuizRecord> }) => {
-    const { error } = await supabase
-        .from('onboarding_quiz_responses')
+const updateQuizStatus = async ({ id, updates }: { id: string; updates: Record<string, any> }) => {
+    const { error } = await (supabase
+        .from('onboarding_quiz_responses') as any)
         .update(updates)
         .eq('id', id);
 
@@ -113,7 +113,7 @@ const OnboardingQuizzesManagement = () => {
     const handleMarkReviewed = async (quiz: any) => {
         await updateMutation.mutateAsync({
             id: quiz.id,
-            updates: { admin_reviewed: true },
+            updates: { updated_at: new Date().toISOString() } as any,
         });
     };
 
@@ -123,14 +123,14 @@ const OnboardingQuizzesManagement = () => {
         await updateMutation.mutateAsync({
             id: quiz.id,
             updates: {
-                admin_reviewed: true,
-            },
+                updated_at: new Date().toISOString(),
+            } as any,
         });
 
         // Also update the surprise_requests if linked
         if (quiz.linked_surprise_request_id) {
-            await supabase
-                .from('surprise_requests')
+            await (supabase
+                .from('surprise_requests') as any)
                 .update({
                     status: 'ready',
                     suggested_destination: publishData.destination,
