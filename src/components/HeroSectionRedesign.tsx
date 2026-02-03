@@ -16,7 +16,7 @@ export const HeroSectionRedesign = memo(() => {
     const { user } = useAuth();
 
     const handleQuizClick = () => {
-        navigate('/quiz');
+        navigate('/start-quiz');
     };
 
     return (

@@ -301,7 +301,7 @@ export const HeroMain = memo(() => {
                             className="flex flex-wrap gap-4"
                         >
                             <MagneticButton
-                                onClick={() => navigate('/quiz')}
+                                onClick={() => navigate('/start-quiz')}
                                 className="group relative px-8 py-5 text-lg font-semibold bg-gradient-to-r from-primary to-purple-500 hover:from-primary/90 hover:to-purple-600 text-white rounded-2xl shadow-2xl shadow-primary/50 transition-all duration-300 hover:scale-105 animate-glow-pulse"
                             >
                                 <span className="flex items-center gap-3">

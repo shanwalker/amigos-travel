@@ -61,11 +61,11 @@ const MatchedTripResult = () => {
                 setProfile(JSON.parse(saved));
             } catch (e) {
                 console.error('Failed to load quiz profile', e);
-                navigate('/quiz');
+                navigate('/start-quiz');
             }
         } else {
             // No quiz data, redirect to quiz
-            navigate('/quiz');
+            navigate('/start-quiz');
         }
     }, [navigate]);
 
@@ -79,7 +79,7 @@ const MatchedTripResult = () => {
     };
 
     const handleTryAnother = () => {
-        navigate('/quiz');
+        navigate('/start-quiz');
     };
 
     if (!profile) {

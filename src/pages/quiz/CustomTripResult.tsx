@@ -28,10 +28,10 @@ const CustomTripResult = () => {
                 setProfile(JSON.parse(saved));
             } catch (e) {
                 console.error('Failed to load quiz profile', e);
-                navigate('/quiz');
+                navigate('/start-quiz');
             }
         } else {
-            navigate('/quiz');
+            navigate('/start-quiz');
         }
     }, [navigate]);
 
