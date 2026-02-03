@@ -7,6 +7,7 @@ import { useReservations } from '@/hooks/useReservations';
 import { useProfile } from '@/hooks/useProfile';
 import { useRealtimeUserRequests } from '@/hooks/useRealtimeRequests';
 import { StatsCard } from '@/components/dashboard/StatsCard';
+import { QuizStatusWidget } from '@/components/dashboard/QuizStatusWidget';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -18,13 +19,13 @@ import { getTripTypeLabel } from '@/lib/signupSession';
 
 const DashboardHome = () => {
   const { user } = useAuth();
-  
+
   // Enable real-time updates for user requests
   useRealtimeUserRequests(user?.id);
   const { data: bookings = [] } = useBookings();
   const { data: trips = [] } = useTrips();
   const { data: profile, isLoading: loadingProfile } = useProfile(user?.id || '');
-  
+
   // Fetch user's requests
   const { data: allSurpriseRequests = [] } = useSurpriseRequests();
   const { data: allCustomRequests = [] } = useCustomRequests();
@@ -81,6 +82,9 @@ const DashboardHome = () => {
           Ready for your next adventure? Here's your travel overview.
         </p>
       </motion.div>
+
+      {/* Quiz Status / Surprise Trip Widget */}
+      <QuizStatusWidget />
 
       {/* Your Journey Started Card */}
       {signupTripType && (
@@ -246,8 +250,8 @@ const DashboardHome = () => {
               {upcomingBookings.length > 0 ? (
                 <div className="space-y-4">
                   {upcomingBookings.slice(0, 3).map((booking) => (
-                    <div 
-                      key={booking.id} 
+                    <div
+                      key={booking.id}
                       className="flex items-center gap-4 p-4 rounded-lg bg-background/50 border border-border/30"
                     >
                       <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -302,11 +306,11 @@ const DashboardHome = () => {
             <CardContent>
               <div className="space-y-4">
                 {trips.slice(0, 3).map((trip) => (
-                  <div 
-                    key={trip.id} 
+                  <div
+                    key={trip.id}
                     className="flex items-center gap-4 p-4 rounded-lg bg-background/50 border border-border/30 hover:border-primary/30 transition-colors cursor-pointer"
                   >
-                    <div 
+                    <div
                       className="h-12 w-12 rounded-lg bg-cover bg-center"
                       style={{ backgroundImage: `url(${trip.image_url || '/placeholder.svg'})` }}
                     />

@@ -36,6 +36,7 @@ import {
   Wand2,
   UserCheck,
   ClipboardList,
+  ClipboardCheck,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
@@ -53,6 +54,7 @@ const sidebarItems = [
   { icon: Sparkles, label: 'Surprise Requests', path: '/admin/surprise-requests' },
   { icon: Ticket, label: 'Reservations', path: '/admin/reservations' },
   { icon: Wand2, label: 'Custom Requests', path: '/admin/custom-requests' },
+  { icon: ClipboardCheck, label: 'Onboarding Quizzes', path: '/admin/onboarding-quizzes' },
   { icon: UserCheck, label: 'Local Buddies', path: '/admin/local-buddies' },
   { icon: MessageSquare, label: 'Testimonials', path: '/admin/testimonials' },
   { icon: BookOpen, label: 'Stories', path: '/admin/stories' },

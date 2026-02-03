@@ -1,0 +1,103 @@
+import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
+import { DestinationPreference, DESTINATION_PREF_OPTIONS } from '@/types/onboarding-quiz';
+import { StepHeader, StaggeredContainer, StaggeredItem } from '../StepTransition';
+
+interface Step04Props {
+    value: DestinationPreference | null;
+    onChange: (value: DestinationPreference) => void;
+}
+
+export function Step04DestinationChoice({ value, onChange }: Step04Props) {
+    return (
+        <div className="w-full max-w-lg mx-auto">
+            <StepHeader
+                title="Where would you like to go next?"
+                subtitle="Tell us your preference"
+                emoji="🗺️"
+            />
+
+            <StaggeredContainer className="space-y-4">
+                {DESTINATION_PREF_OPTIONS.map((option) => (
+                    <StaggeredItem key={option.value}>
+                        <motion.button
+                            onClick={() => onChange(option.value)}
+                            className={cn(
+                                "w-full p-6 rounded-2xl border-2 transition-all duration-300 group",
+                                value === option.value
+                                    ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
+                                    : "border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10"
+                            )}
+                            whileHover={{ scale: 1.02, y: -2 }}
+                            whileTap={{ scale: 0.98 }}
+                        >
+                            <div className="flex items-center gap-5">
+                                <div className={cn(
+                                    "w-16 h-16 rounded-2xl flex items-center justify-center text-3xl transition-all",
+                                    value === option.value
+                                        ? "bg-primary/20"
+                                        : "bg-white/5 group-hover:bg-white/10"
+                                )}>
+                                    {option.emoji}
+                                </div>
+
+                                <div className="flex-1 text-left">
+                                    <h3 className={cn(
+                                        "font-bold text-xl mb-1 transition-colors",
+                                        value === option.value ? "text-primary" : "text-white"
+                                    )}>
+                                        {option.label}
+                                    </h3>
+                                    <p className="text-white/50 text-sm">{option.description}</p>
+                                </div>
+
+                                {/* Selection Indicator */}
+                                <div className={cn(
+                                    "w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all",
+                                    value === option.value
+                                        ? "border-primary bg-primary"
+                                        : "border-white/30"
+                                )}>
+                                    {value === option.value && (
+                                        <motion.svg
+                                            initial={{ scale: 0 }}
+                                            animate={{ scale: 1 }}
+                                            className="w-4 h-4 text-navy-deep"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                        >
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                        </motion.svg>
+                                    )}
+                                </div>
+                            </div>
+                        </motion.button>
+                    </StaggeredItem>
+                ))}
+            </StaggeredContainer>
+
+            {value === 'in_mind' && (
+                <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center text-primary text-sm mt-6"
+                >
+                    Great! You'll be able to select your dream destinations next.
+                </motion.p>
+            )}
+
+            {value === 'open' && (
+                <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center text-primary text-sm mt-6"
+                >
+                    ✨ We love the adventure spirit! We'll suggest the best options for you.
+                </motion.p>
+            )}
+        </div>
+    );
+}
+
+export default Step04DestinationChoice;

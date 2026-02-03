@@ -29,6 +29,9 @@ const MatchedTripResult = lazy(() => import("./pages/quiz/MatchedTripResult"));
 const SurpriseTripResult = lazy(() => import("./pages/quiz/SurpriseTripResult"));
 const CustomTripResult = lazy(() => import("./pages/quiz/CustomTripResult"));
 
+// New Onboarding Quiz (17-step version)
+const OnboardingQuiz = lazy(() => import("./pages/OnboardingQuiz"));
+
 // Auth Pages - lazy loaded
 const Login = lazy(() => import("./pages/auth/Login"));
 const Signup = lazy(() => import("./pages/auth/Signup"));
@@ -61,6 +64,7 @@ const CustomRequestsManagement = lazy(() => import("./pages/admin/CustomRequests
 const ReservationsManagement = lazy(() => import("./pages/admin/ReservationsManagement"));
 const LocalBuddiesManagement = lazy(() => import("./pages/admin/LocalBuddiesManagement"));
 const SettingsManagement = lazy(() => import("./pages/admin/SettingsManagement"));
+const OnboardingQuizzesManagement = lazy(() => import("./pages/admin/OnboardingQuizzesManagement"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -99,6 +103,9 @@ const App = () => (
               <Route path="/quiz/result/matched" element={<MatchedTripResult />} />
               <Route path="/quiz/result/surprise" element={<SurpriseTripResult />} />
               <Route path="/quiz/result/custom" element={<CustomTripResult />} />
+
+              {/* New 17-Step Onboarding Quiz */}
+              <Route path="/start-quiz" element={<OnboardingQuiz />} />
 
               {/* Auth Routes */}
               <Route path="/login" element={<Login />} />
@@ -253,6 +260,13 @@ const App = () => (
                 <ProtectedRoute requiredRole="admin">
                   <AdminLayout>
                     <SettingsManagement />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/onboarding-quizzes" element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminLayout>
+                    <OnboardingQuizzesManagement />
                   </AdminLayout>
                 </ProtectedRoute>
               } />
