@@ -33,7 +33,7 @@ export function Step13BudgetRange({ value, onChange }: Step13Props) {
                             <motion.button
                                 onClick={() => onChange(option.value)}
                                 className={cn(
-                                    "w-full p-3 sm:p-5 rounded-xl sm:rounded-2xl border-2 transition-all duration-300 text-center relative overflow-hidden group h-full flex flex-col justify-between",
+                                    "w-full p-2 sm:p-5 rounded-xl sm:rounded-2xl border-2 transition-all duration-300 text-center relative overflow-hidden group h-full flex flex-col justify-center",
                                     isSelected
                                         ? "border-primary shadow-lg shadow-primary/20"
                                         : "border-white/10 hover:border-white/30"
@@ -50,9 +50,9 @@ export function Step13BudgetRange({ value, onChange }: Step13Props) {
                                 </div>
 
                                 <div className="relative z-10 flex flex-col items-center">
-                                    <span className="text-2xl sm:text-4xl mb-1 sm:mb-3 block">{option.emoji}</span>
+                                    <span className="text-xl sm:text-4xl mb-0.5 sm:mb-3 block">{option.emoji}</span>
                                     <h3 className={cn(
-                                        "font-bold text-sm sm:text-lg mb-0.5 sm:mb-1 transition-colors",
+                                        "font-bold text-xs sm:text-lg mb-0 sm:mb-1 transition-colors",
                                         isSelected ? "text-primary" : "text-white"
                                     )}>
                                         {option.label}

@@ -26,7 +26,7 @@ export function Step17TravelVibe({ value, onChange }: Step17Props) {
                             <motion.button
                                 onClick={() => onChange(option.value)}
                                 className={cn(
-                                    "w-full aspect-[4/5] sm:aspect-square rounded-xl sm:rounded-2xl border-2 transition-all duration-300 relative overflow-hidden group flex flex-col items-center justify-center p-2 sm:p-4 text-center",
+                                    "w-full h-24 sm:h-auto sm:aspect-square rounded-xl sm:rounded-2xl border-2 transition-all duration-300 relative overflow-hidden group flex flex-col items-center justify-center p-1 sm:p-4 text-center",
                                     isSelected
                                         ? "border-primary shadow-xl"
                                         : "border-white/10 hover:border-white/30"
@@ -44,7 +44,7 @@ export function Step17TravelVibe({ value, onChange }: Step17Props) {
                                 {/* Content */}
                                 <div className="relative z-10 flex flex-col items-center justify-center">
                                     <motion.span
-                                        className="text-3xl sm:text-5xl mb-1 sm:mb-3"
+                                        className="text-2xl sm:text-5xl mb-1 sm:mb-3"
                                         animate={isSelected ? {
                                             rotate: [0, -10, 10, -10, 0],
                                             scale: [1, 1.2, 1],
@@ -54,7 +54,7 @@ export function Step17TravelVibe({ value, onChange }: Step17Props) {
                                         {option.emoji}
                                     </motion.span>
                                     <h3 className={cn(
-                                        "font-bold text-sm sm:text-lg mb-0.5 sm:mb-1 transition-colors leading-tight",
+                                        "font-bold text-xs sm:text-lg mb-0 transition-colors leading-tight",
                                         isSelected ? "text-primary" : "text-white"
                                     )}>
                                         {option.label}

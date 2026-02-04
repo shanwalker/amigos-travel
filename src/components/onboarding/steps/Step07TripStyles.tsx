@@ -42,7 +42,7 @@ export function Step07TripStyles({
                                 onClick={() => !isDisabled && toggleStyle(option.value)}
                                 disabled={isDisabled}
                                 className={cn(
-                                    "w-full p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border-2 transition-all flex flex-col items-center gap-1.5 sm:gap-2 relative h-full justify-center",
+                                    "w-full p-2 sm:p-4 rounded-xl sm:rounded-2xl border-2 transition-all flex flex-col items-center gap-0.5 sm:gap-2 relative h-full justify-center min-h-[80px] sm:min-h-0",
                                     isSelected
                                         ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
                                         : isDisabled
@@ -52,7 +52,7 @@ export function Step07TripStyles({
                                 whileHover={!isDisabled ? { scale: 1.05, y: -3 } : {}}
                                 whileTap={!isDisabled ? { scale: 0.95 } : {}}
                             >
-                                <span className="text-2xl sm:text-3xl">{option.emoji}</span>
+                                <span className="text-xl sm:text-3xl">{option.emoji}</span>
                                 <span className={cn(
                                     "font-medium text-[10px] sm:text-sm transition-colors text-center leading-tight",
                                     isSelected ? "text-primary" : "text-white/80"
