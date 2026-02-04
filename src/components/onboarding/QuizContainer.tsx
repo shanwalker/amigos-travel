@@ -318,7 +318,7 @@ export function QuizContainer({ onClose, className }: QuizContainerProps) {
             </main>
 
             {/* Navigation */}
-            <footer className="relative z-10 px-3 sm:px-6 py-4 sm:py-6 bg-gradient-to-t from-navy-deep to-transparent mt-auto sm:mt-0">
+            <footer className="relative z-10 px-3 sm:px-6 py-4 sm:py-6 bg-gradient-to-t from-navy-deep to-transparent mt-4 sm:mt-0">
                 <div className="max-w-4xl mx-auto">
                     <QuizNavigation
                         currentStep={currentStep}
