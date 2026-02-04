@@ -304,10 +304,16 @@ export function useQuizMigration() {
     const [isMigrating, setIsMigrating] = useState(false);
     const [migrationError, setMigrationError] = useState<string | null>(null);
     const [migrationComplete, setMigrationComplete] = useState(false);
+    const [pendingMigrationState, setPendingMigrationState] = useState<OnboardingQuizState | null>(null);
 
     const migrateQuizData = useCallback(async (manualState?: OnboardingQuizState): Promise<boolean> => {
         if (!user) {
-            console.log('[useQuizMigration] ⚠️ No user, cannot migrate');
+            if (manualState) {
+                console.log('[useQuizMigration] ⏳ No user yet, queuing migration for when user loads...');
+                setPendingMigrationState(manualState);
+            } else {
+                console.log('[useQuizMigration] ⚠️ No user and no manual state, cannot migrate');
+            }
             return false;
         }
 
@@ -323,6 +329,8 @@ export function useQuizMigration() {
                 // Get stored quiz data
                 const stored = localStorage.getItem(STORAGE_KEY);
                 if (!stored) {
+                    // Check if we have a pending state that was cleared but we want to use
+                    // (Actually we handled pending state by passing it as manualState in the effect below)
                     console.log('[useQuizMigration] ℹ️ No quiz data to migrate');
                     setMigrationComplete(true);
                     return true;
@@ -344,6 +352,7 @@ export function useQuizMigration() {
             if (result.success) {
                 // Clear localStorage after successful migration
                 localStorage.removeItem(STORAGE_KEY);
+                setPendingMigrationState(null); // Clear pending if any
                 console.log('[useQuizMigration] ✅ Quiz data migrated successfully');
                 setMigrationComplete(true);
                 return true;
@@ -359,15 +368,26 @@ export function useQuizMigration() {
         }
     }, [user]);
 
-    // Check for pending migration when user logs in
+    // specific effect to handle pending migration once user loads
     useEffect(() => {
-        if (user && !migrationComplete) {
+        if (user && pendingMigrationState && !isMigrating && !migrationComplete) {
+            const doMigrate = async () => {
+                console.log('[useQuizMigration] 🔄 User loaded, executing pending migration...');
+                await migrateQuizData(pendingMigrationState);
+            };
+            doMigrate();
+        }
+    }, [user, pendingMigrationState, isMigrating, migrationComplete, migrateQuizData]);
+
+    // Check for pending migration from localStorage when user logs in (fallback)
+    useEffect(() => {
+        if (user && !migrationComplete && !pendingMigrationState) {
             const stored = localStorage.getItem(STORAGE_KEY);
             if (stored) {
                 try {
                     const quizState = JSON.parse(stored);
                     if (quizState.completionStatus === 'completed') {
-                        console.log('[useQuizMigration] 🔄 Found completed quiz, initiating migration...');
+                        console.log('[useQuizMigration] 🔄 Found completed quiz in storage, initiating migration...');
                         migrateQuizData();
                     }
                 } catch (e) {
@@ -375,7 +395,7 @@ export function useQuizMigration() {
                 }
             }
         }
-    }, [user, migrationComplete, migrateQuizData]);
+    }, [user, migrationComplete, pendingMigrationState, migrateQuizData]);
 
     return {
         migrateQuizData,
