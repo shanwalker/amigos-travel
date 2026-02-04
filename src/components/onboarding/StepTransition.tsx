@@ -125,11 +125,11 @@ export function StepHeader({ title, subtitle, emoji }: StepHeaderProps) {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-center mb-8"
+            className="text-center mb-2 sm:mb-8"
         >
             {emoji && (
                 <motion.span
-                    className="text-4xl mb-4 block"
+                    className="text-2xl sm:text-4xl mb-1 sm:mb-4 block"
                     animate={{
                         rotate: [0, -10, 10, -10, 0],
                         scale: [1, 1.1, 1],
@@ -139,16 +139,16 @@ export function StepHeader({ title, subtitle, emoji }: StepHeaderProps) {
                     {emoji}
                 </motion.span>
             )}
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 font-jakarta">
+            <h2 className="text-xl sm:text-3xl font-bold text-white mb-1 sm:mb-3 font-jakarta">
                 {title}
             </h2>
             {subtitle && (
-                <p className="text-white/60 text-base md:text-lg max-w-md mx-auto">
+                <p className="text-white/60 text-xs sm:text-lg max-w-md mx-auto leading-tight">
                     {subtitle}
                 </p>
             )}
             <motion.div
-                className="w-16 h-1 mx-auto mt-4 bg-gradient-to-r from-primary to-orange-500 rounded-full"
+                className="w-16 h-1 mx-auto mt-2 sm:mt-4 bg-gradient-to-r from-primary to-orange-500 rounded-full hidden sm:block"
                 initial={{ width: 0 }}
                 animate={{ width: 64 }}
                 transition={{ duration: 0.5, delay: 0.2 }}

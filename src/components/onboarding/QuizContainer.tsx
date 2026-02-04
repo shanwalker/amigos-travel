@@ -272,31 +272,31 @@ export function QuizContainer({ onClose, className }: QuizContainerProps) {
             />
 
             {/* Header */}
-            <header className="relative z-10 px-4 sm:px-6 py-4">
+            <header className="relative z-10 px-4 sm:px-6 py-2 sm:py-4">
                 <div className="max-w-4xl mx-auto flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-r from-primary to-orange-500 flex items-center justify-center">
-                            <Sparkles className="w-5 h-5 text-navy-deep" />
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-r from-primary to-orange-500 flex items-center justify-center">
+                            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-navy-deep" />
                         </div>
                         <div>
-                            <h1 className="font-bold text-white text-lg font-jakarta">Travel Amigo</h1>
-                            <p className="text-white/50 text-xs">Tell us about your dream trip</p>
+                            <h1 className="font-bold text-white text-base sm:text-lg font-jakarta">Travel Amigo</h1>
+                            <p className="text-white/50 text-[10px] sm:text-xs">Tell us about your dream trip</p>
                         </div>
                     </div>
 
                     <motion.button
                         onClick={handleClose}
-                        className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors"
+                        className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                     >
-                        <X className="w-5 h-5 text-white/60" />
+                        <X className="w-4 h-4 text-white/60" />
                     </motion.button>
                 </div>
             </header>
 
             {/* Progress */}
-            <div className="px-4 sm:px-6 py-4">
+            <div className="px-4 sm:px-6 py-2 sm:py-4">
                 <div className="max-w-4xl mx-auto">
                     <QuizProgress
                         currentStep={currentStep}
@@ -306,10 +306,10 @@ export function QuizContainer({ onClose, className }: QuizContainerProps) {
             </div>
 
             {/* Main Content */}
-            <main className="flex-1 flex flex-col px-4 sm:px-6 py-6 relative z-10 overflow-hidden">
+            <main className="flex-1 flex flex-col px-4 sm:px-6 py-2 sm:py-6 relative z-10 overflow-hidden">
                 <div className="max-w-4xl mx-auto w-full flex-1 flex flex-col">
                     {/* Step Content */}
-                    <div className="flex-1 flex items-center justify-center py-4">
+                    <div className="flex-1 flex items-center justify-center py-0 sm:py-4">
                         <StepTransition stepKey={currentStep} direction={direction}>
                             {renderStep()}
                         </StepTransition>
@@ -318,7 +318,7 @@ export function QuizContainer({ onClose, className }: QuizContainerProps) {
             </main>
 
             {/* Navigation */}
-            <footer className="relative z-10 px-4 sm:px-6 py-6 bg-gradient-to-t from-navy-deep to-transparent">
+            <footer className="relative z-10 px-4 sm:px-6 py-3 sm:py-6 bg-gradient-to-t from-navy-deep to-transparent">
                 <div className="max-w-4xl mx-auto">
                     <QuizNavigation
                         currentStep={currentStep}
