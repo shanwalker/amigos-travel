@@ -17,7 +17,7 @@ export function Step17TravelVibe({ value, onChange }: Step17Props) {
                 emoji="✨"
             />
 
-            <StaggeredContainer className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <StaggeredContainer className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4">
                 {VIBE_OPTIONS.map((option) => {
                     const isSelected = value === option.value;
 
@@ -26,7 +26,7 @@ export function Step17TravelVibe({ value, onChange }: Step17Props) {
                             <motion.button
                                 onClick={() => onChange(option.value)}
                                 className={cn(
-                                    "w-full aspect-square rounded-2xl border-2 transition-all duration-300 relative overflow-hidden group",
+                                    "w-full aspect-[4/5] sm:aspect-square rounded-xl sm:rounded-2xl border-2 transition-all duration-300 relative overflow-hidden group flex flex-col items-center justify-center p-2 sm:p-4 text-center",
                                     isSelected
                                         ? "border-primary shadow-xl"
                                         : "border-white/10 hover:border-white/30"
@@ -42,9 +42,9 @@ export function Step17TravelVibe({ value, onChange }: Step17Props) {
                                 )} />
 
                                 {/* Content */}
-                                <div className="relative z-10 h-full flex flex-col items-center justify-center p-4 text-center">
+                                <div className="relative z-10 flex flex-col items-center justify-center">
                                     <motion.span
-                                        className="text-5xl mb-3"
+                                        className="text-3xl sm:text-5xl mb-1 sm:mb-3"
                                         animate={isSelected ? {
                                             rotate: [0, -10, 10, -10, 0],
                                             scale: [1, 1.2, 1],
@@ -54,12 +54,12 @@ export function Step17TravelVibe({ value, onChange }: Step17Props) {
                                         {option.emoji}
                                     </motion.span>
                                     <h3 className={cn(
-                                        "font-bold text-lg mb-1 transition-colors",
+                                        "font-bold text-sm sm:text-lg mb-0.5 sm:mb-1 transition-colors leading-tight",
                                         isSelected ? "text-primary" : "text-white"
                                     )}>
                                         {option.label}
                                     </h3>
-                                    <p className="text-white/50 text-xs leading-tight">
+                                    <p className="text-white/50 text-[10px] sm:text-xs leading-tight hidden sm:block">
                                         {option.description}
                                     </p>
                                 </div>
@@ -81,10 +81,10 @@ export function Step17TravelVibe({ value, onChange }: Step17Props) {
                                     <motion.div
                                         initial={{ scale: 0 }}
                                         animate={{ scale: 1 }}
-                                        className="absolute top-3 right-3 w-8 h-8 bg-primary rounded-full flex items-center justify-center shadow-lg"
+                                        className="absolute top-1.5 right-1.5 sm:top-3 sm:right-3 w-5 h-5 sm:w-8 sm:h-8 bg-primary rounded-full flex items-center justify-center shadow-lg p-0.5 sm:p-0"
                                     >
                                         <svg
-                                            className="w-5 h-5 text-navy-deep"
+                                            className="w-full h-full text-navy-deep"
                                             fill="none"
                                             viewBox="0 0 24 24"
                                             stroke="currentColor"

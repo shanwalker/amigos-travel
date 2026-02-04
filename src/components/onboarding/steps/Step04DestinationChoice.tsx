@@ -17,13 +17,13 @@ export function Step04DestinationChoice({ value, onChange }: Step04Props) {
                 emoji="🗺️"
             />
 
-            <StaggeredContainer className="space-y-4">
+            <StaggeredContainer className="space-y-3">
                 {DESTINATION_PREF_OPTIONS.map((option) => (
                     <StaggeredItem key={option.value}>
                         <motion.button
                             onClick={() => onChange(option.value)}
                             className={cn(
-                                "w-full p-6 rounded-2xl border-2 transition-all duration-300 group",
+                                "w-full p-3 sm:p-5 rounded-xl sm:rounded-2xl border-2 transition-all duration-300 group",
                                 value === option.value
                                     ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
                                     : "border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10"
@@ -31,9 +31,9 @@ export function Step04DestinationChoice({ value, onChange }: Step04Props) {
                             whileHover={{ scale: 1.02, y: -2 }}
                             whileTap={{ scale: 0.98 }}
                         >
-                            <div className="flex items-center gap-5">
+                            <div className="flex items-center gap-3 sm:gap-5">
                                 <div className={cn(
-                                    "w-16 h-16 rounded-2xl flex items-center justify-center text-3xl transition-all",
+                                    "w-10 h-10 sm:w-14 sm:h-14 rounded-lg sm:rounded-xl flex items-center justify-center text-xl sm:text-3xl transition-all flex-shrink-0",
                                     value === option.value
                                         ? "bg-primary/20"
                                         : "bg-white/5 group-hover:bg-white/10"
@@ -43,17 +43,17 @@ export function Step04DestinationChoice({ value, onChange }: Step04Props) {
 
                                 <div className="flex-1 text-left">
                                     <h3 className={cn(
-                                        "font-bold text-xl mb-1 transition-colors",
+                                        "font-bold text-base sm:text-xl mb-0.5 sm:mb-1 transition-colors",
                                         value === option.value ? "text-primary" : "text-white"
                                     )}>
                                         {option.label}
                                     </h3>
-                                    <p className="text-white/50 text-sm">{option.description}</p>
+                                    <p className="text-white/50 text-xs sm:text-sm leading-tight">{option.description}</p>
                                 </div>
 
                                 {/* Selection Indicator */}
                                 <div className={cn(
-                                    "w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all",
+                                    "w-5 h-5 sm:w-7 sm:h-7 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0",
                                     value === option.value
                                         ? "border-primary bg-primary"
                                         : "border-white/30"
@@ -62,7 +62,7 @@ export function Step04DestinationChoice({ value, onChange }: Step04Props) {
                                         <motion.svg
                                             initial={{ scale: 0 }}
                                             animate={{ scale: 1 }}
-                                            className="w-4 h-4 text-navy-deep"
+                                            className="w-3 h-3 sm:w-4 sm:h-4 text-navy-deep"
                                             fill="none"
                                             viewBox="0 0 24 24"
                                             stroke="currentColor"

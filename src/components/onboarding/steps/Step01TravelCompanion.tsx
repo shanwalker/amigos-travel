@@ -17,13 +17,13 @@ export function Step01TravelCompanion({ value, onChange }: Step01Props) {
                 emoji="🌍"
             />
 
-            <StaggeredContainer className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <StaggeredContainer className="grid grid-cols-2 gap-2 sm:gap-4">
                 {COMPANION_OPTIONS.map((option) => (
                     <StaggeredItem key={option.value}>
                         <motion.button
                             onClick={() => onChange(option.value)}
                             className={cn(
-                                "w-full p-5 rounded-2xl border-2 transition-all duration-300 text-left group",
+                                "w-full p-3 sm:p-5 rounded-xl sm:rounded-2xl border-2 transition-all duration-300 text-left group h-full flex flex-col justify-between",
                                 value === option.value
                                     ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
                                     : "border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10"
@@ -31,21 +31,21 @@ export function Step01TravelCompanion({ value, onChange }: Step01Props) {
                             whileHover={{ scale: 1.02, y: -2 }}
                             whileTap={{ scale: 0.98 }}
                         >
-                            <div className="flex items-start gap-4">
-                                <span className="text-3xl">{option.emoji}</span>
+                            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-4 text-center sm:text-left">
+                                <span className="text-2xl sm:text-3xl">{option.emoji}</span>
                                 <div className="flex-1">
                                     <h3 className={cn(
-                                        "font-bold text-lg mb-1 transition-colors",
+                                        "font-bold text-sm sm:text-lg mb-0.5 sm:mb-1 transition-colors leading-tight",
                                         value === option.value ? "text-primary" : "text-white"
                                     )}>
                                         {option.label}
                                     </h3>
-                                    <p className="text-white/50 text-sm">{option.description}</p>
+                                    <p className="text-white/50 text-[10px] sm:text-sm leading-tight hidden sm:block">{option.description}</p>
                                 </div>
 
-                                {/* Selection Indicator */}
+                                {/* Selection Indicator - Hidden on mobile to save space, visible on selection or desktop */}
                                 <div className={cn(
-                                    "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all",
+                                    "hidden sm:flex w-6 h-6 rounded-full border-2 items-center justify-center transition-all",
                                     value === option.value
                                         ? "border-primary bg-primary"
                                         : "border-white/30"

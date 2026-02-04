@@ -17,13 +17,13 @@ export function Step03Passport({ value, onChange }: Step03Props) {
                 emoji="🛂"
             />
 
-            <StaggeredContainer className="space-y-4">
+            <StaggeredContainer className="space-y-2 sm:space-y-4">
                 {PASSPORT_OPTIONS.map((option) => (
                     <StaggeredItem key={option.value}>
                         <motion.button
                             onClick={() => onChange(option.value)}
                             className={cn(
-                                "w-full p-6 rounded-2xl border-2 transition-all duration-300 flex items-center gap-5 group",
+                                "w-full p-3 sm:p-5 rounded-xl sm:rounded-2xl border-2 transition-all duration-300 flex items-center gap-3 sm:gap-5 group",
                                 value === option.value
                                     ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
                                     : "border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10"
@@ -31,10 +31,10 @@ export function Step03Passport({ value, onChange }: Step03Props) {
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                         >
-                            <span className="text-5xl">{option.emoji}</span>
+                            <span className="text-3xl sm:text-5xl">{option.emoji}</span>
                             <div className="flex-1 text-left">
                                 <h3 className={cn(
-                                    "font-bold text-xl transition-colors",
+                                    "font-bold text-base sm:text-xl transition-colors mb-0.5",
                                     value === option.value ? "text-primary" : "text-white"
                                 )}>
                                     {option.label}
@@ -43,7 +43,7 @@ export function Step03Passport({ value, onChange }: Step03Props) {
 
                             {/* Selection Indicator */}
                             <div className={cn(
-                                "w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all",
+                                "w-5 h-5 sm:w-7 sm:h-7 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0",
                                 value === option.value
                                     ? "border-primary bg-primary"
                                     : "border-white/30"
@@ -52,7 +52,7 @@ export function Step03Passport({ value, onChange }: Step03Props) {
                                     <motion.svg
                                         initial={{ scale: 0 }}
                                         animate={{ scale: 1 }}
-                                        className="w-4 h-4 text-navy-deep"
+                                        className="w-3 h-3 sm:w-4 sm:h-4 text-navy-deep"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"

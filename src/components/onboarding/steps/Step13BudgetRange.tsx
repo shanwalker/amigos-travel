@@ -24,7 +24,7 @@ export function Step13BudgetRange({ value, onChange }: Step13Props) {
                 emoji="💰"
             />
 
-            <StaggeredContainer className="grid grid-cols-2 gap-4">
+            <StaggeredContainer className="grid grid-cols-2 gap-2 sm:gap-4">
                 {BUDGET_OPTIONS.map((option) => {
                     const isSelected = value === option.value;
 
@@ -33,7 +33,7 @@ export function Step13BudgetRange({ value, onChange }: Step13Props) {
                             <motion.button
                                 onClick={() => onChange(option.value)}
                                 className={cn(
-                                    "w-full p-5 rounded-2xl border-2 transition-all duration-300 text-center relative overflow-hidden group",
+                                    "w-full p-3 sm:p-5 rounded-xl sm:rounded-2xl border-2 transition-all duration-300 text-center relative overflow-hidden group h-full flex flex-col justify-between",
                                     isSelected
                                         ? "border-primary shadow-lg shadow-primary/20"
                                         : "border-white/10 hover:border-white/30"
@@ -49,15 +49,15 @@ export function Step13BudgetRange({ value, onChange }: Step13Props) {
                                     <div className={cn("w-full h-full bg-gradient-to-br", budgetColors[option.value])} />
                                 </div>
 
-                                <div className="relative z-10">
-                                    <span className="text-4xl mb-3 block">{option.emoji}</span>
+                                <div className="relative z-10 flex flex-col items-center">
+                                    <span className="text-2xl sm:text-4xl mb-1 sm:mb-3 block">{option.emoji}</span>
                                     <h3 className={cn(
-                                        "font-bold text-lg mb-1 transition-colors",
+                                        "font-bold text-sm sm:text-lg mb-0.5 sm:mb-1 transition-colors",
                                         isSelected ? "text-primary" : "text-white"
                                     )}>
                                         {option.label}
                                     </h3>
-                                    <p className="text-white/50 text-sm">{option.description}</p>
+                                    <p className="text-white/50 text-[10px] sm:text-sm leading-tight">{option.description}</p>
                                 </div>
 
                                 {/* Selection Indicator */}
@@ -65,10 +65,10 @@ export function Step13BudgetRange({ value, onChange }: Step13Props) {
                                     <motion.div
                                         initial={{ scale: 0 }}
                                         animate={{ scale: 1 }}
-                                        className="absolute top-3 right-3 w-6 h-6 bg-primary rounded-full flex items-center justify-center"
+                                        className="absolute top-1.5 right-1.5 sm:top-3 sm:right-3 w-4 h-4 sm:w-6 sm:h-6 bg-primary rounded-full flex items-center justify-center p-0.5 sm:p-1"
                                     >
                                         <motion.svg
-                                            className="w-4 h-4 text-navy-deep"
+                                            className="w-full h-full text-navy-deep"
                                             fill="none"
                                             viewBox="0 0 24 24"
                                             stroke="currentColor"

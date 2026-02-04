@@ -38,7 +38,7 @@ export function Step11HealthConditions({ value, onChange }: Step11Props) {
                 </p>
             </motion.div>
 
-            <StaggeredContainer className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <StaggeredContainer className="grid grid-cols-2 gap-2 sm:gap-3">
                 {HEALTH_OPTIONS.map((option) => {
                     const isSelected = value.includes(option.value);
 
@@ -47,7 +47,7 @@ export function Step11HealthConditions({ value, onChange }: Step11Props) {
                             <motion.button
                                 onClick={() => toggleCondition(option.value)}
                                 className={cn(
-                                    "w-full p-4 rounded-2xl border-2 transition-all flex items-center gap-3",
+                                    "w-full p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border-2 transition-all flex items-center gap-2 sm:gap-3",
                                     isSelected
                                         ? "border-amber-500 bg-amber-500/10"
                                         : "border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10"
@@ -55,9 +55,9 @@ export function Step11HealthConditions({ value, onChange }: Step11Props) {
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                             >
-                                <span className="text-2xl">{option.emoji}</span>
+                                <span className="text-xl sm:text-2xl">{option.emoji}</span>
                                 <span className={cn(
-                                    "font-medium text-sm transition-colors flex-1 text-left",
+                                    "font-medium text-xs sm:text-sm transition-colors flex-1 text-left leading-tight",
                                     isSelected ? "text-amber-400" : "text-white/80"
                                 )}>
                                     {option.label}
@@ -65,13 +65,13 @@ export function Step11HealthConditions({ value, onChange }: Step11Props) {
 
                                 {/* Checkbox */}
                                 <div className={cn(
-                                    "w-5 h-5 rounded-md border-2 flex items-center justify-center transition-all",
+                                    "w-4 h-4 sm:w-5 sm:h-5 rounded-md border-2 flex items-center justify-center transition-all flex-shrink-0",
                                     isSelected
                                         ? "border-amber-500 bg-amber-500"
                                         : "border-white/30"
                                 )}>
                                     {isSelected && (
-                                        <Check className="w-3 h-3 text-navy-deep" />
+                                        <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-navy-deep" />
                                     )}
                                 </div>
                             </motion.button>

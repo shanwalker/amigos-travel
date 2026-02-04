@@ -323,7 +323,7 @@ export function QuizContainer({ onClose, className }: QuizContainerProps) {
                     <QuizNavigation
                         currentStep={currentStep}
                         totalSteps={totalSteps}
-                        canGoNext={canGoNext || !isStepValid(currentStep) && currentStep > 7} // Allow skip on optional steps
+                        canGoNext={isStepValid(currentStep)}
                         canGoPrev={canGoPrev}
                         isLoading={isMigrating}
                         onNext={handleNext}

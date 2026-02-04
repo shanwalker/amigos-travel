@@ -26,7 +26,7 @@ export function Step14PlanningDates({
                 emoji="🗓️"
             />
 
-            <StaggeredContainer className="space-y-4">
+            <StaggeredContainer className="space-y-2 sm:space-y-4">
                 {DATES_TYPE_OPTIONS.map((option) => {
                     const isSelected = dateType === option.value;
 
@@ -35,7 +35,7 @@ export function Step14PlanningDates({
                             <motion.button
                                 onClick={() => onDateTypeChange(option.value)}
                                 className={cn(
-                                    "w-full p-5 rounded-2xl border-2 transition-all duration-300 text-left",
+                                    "w-full p-3 sm:p-5 rounded-xl sm:rounded-2xl border-2 transition-all duration-300 text-left",
                                     isSelected
                                         ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
                                         : "border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10"
@@ -43,30 +43,30 @@ export function Step14PlanningDates({
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                             >
-                                <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-3 sm:gap-4">
                                     <div className={cn(
-                                        "w-12 h-12 rounded-xl flex items-center justify-center transition-all",
+                                        "w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center transition-all flex-shrink-0",
                                         isSelected ? "bg-primary/20" : "bg-white/5"
                                     )}>
                                         {option.value === 'fixed'
-                                            ? <CalendarDays className={cn("w-6 h-6", isSelected ? "text-primary" : "text-white/60")} />
-                                            : <Calendar className={cn("w-6 h-6", isSelected ? "text-primary" : "text-white/60")} />
+                                            ? <CalendarDays className={cn("w-5 h-5 sm:w-6 sm:h-6", isSelected ? "text-primary" : "text-white/60")} />
+                                            : <Calendar className={cn("w-5 h-5 sm:w-6 sm:h-6", isSelected ? "text-primary" : "text-white/60")} />
                                         }
                                     </div>
 
                                     <div className="flex-1">
                                         <h3 className={cn(
-                                            "font-bold text-lg mb-0.5 transition-colors",
+                                            "font-bold text-base sm:text-lg mb-0.5 transition-colors",
                                             isSelected ? "text-primary" : "text-white"
                                         )}>
                                             {option.label}
                                         </h3>
-                                        <p className="text-white/50 text-sm">{option.description}</p>
+                                        <p className="text-white/50 text-xs sm:text-sm">{option.description}</p>
                                     </div>
 
                                     {/* Selection Indicator */}
                                     <div className={cn(
-                                        "w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all",
+                                        "w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 flex items-center justify-center transition-all flex-shrink-0",
                                         isSelected
                                             ? "border-primary bg-primary"
                                             : "border-white/30"
@@ -75,7 +75,7 @@ export function Step14PlanningDates({
                                             <motion.svg
                                                 initial={{ scale: 0 }}
                                                 animate={{ scale: 1 }}
-                                                className="w-4 h-4 text-navy-deep"
+                                                className="w-3 h-3 sm:w-4 sm:h-4 text-navy-deep"
                                                 fill="none"
                                                 viewBox="0 0 24 24"
                                                 stroke="currentColor"

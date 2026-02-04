@@ -31,7 +31,7 @@ export function Step07TripStyles({
                 emoji="🎯"
             />
 
-            <StaggeredContainer className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <StaggeredContainer className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
                 {TRIP_STYLE_OPTIONS.map((option) => {
                     const isSelected = value.includes(option.value);
                     const isDisabled = !isSelected && value.length >= maxSelections;
@@ -42,7 +42,7 @@ export function Step07TripStyles({
                                 onClick={() => !isDisabled && toggleStyle(option.value)}
                                 disabled={isDisabled}
                                 className={cn(
-                                    "w-full p-4 rounded-2xl border-2 transition-all flex flex-col items-center gap-2 relative",
+                                    "w-full p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border-2 transition-all flex flex-col items-center gap-1.5 sm:gap-2 relative h-full justify-center",
                                     isSelected
                                         ? "border-primary bg-primary/10 shadow-lg shadow-primary/20"
                                         : isDisabled
@@ -52,9 +52,9 @@ export function Step07TripStyles({
                                 whileHover={!isDisabled ? { scale: 1.05, y: -3 } : {}}
                                 whileTap={!isDisabled ? { scale: 0.95 } : {}}
                             >
-                                <span className="text-3xl">{option.emoji}</span>
+                                <span className="text-2xl sm:text-3xl">{option.emoji}</span>
                                 <span className={cn(
-                                    "font-medium text-sm transition-colors",
+                                    "font-medium text-[10px] sm:text-sm transition-colors text-center leading-tight",
                                     isSelected ? "text-primary" : "text-white/80"
                                 )}>
                                     {option.label}
@@ -65,9 +65,9 @@ export function Step07TripStyles({
                                     <motion.div
                                         initial={{ scale: 0 }}
                                         animate={{ scale: 1 }}
-                                        className="absolute -top-2 -right-2 w-6 h-6 bg-primary rounded-full flex items-center justify-center"
+                                        className="absolute -top-1.5 -right-1.5 sm:-top-2 sm:-right-2 w-4 h-4 sm:w-6 sm:h-6 bg-primary rounded-full flex items-center justify-center p-0.5 sm:p-1"
                                     >
-                                        <Check className="w-4 h-4 text-navy-deep" />
+                                        <Check className="w-full h-full text-navy-deep" />
                                     </motion.div>
                                 )}
                             </motion.button>

@@ -1,0 +1,107 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - img [ref=e8]
+          - generic [ref=e10]:
+            - heading "Travel Amigo" [level=1] [ref=e11]
+            - paragraph [ref=e12]: Tell us about your dream trip
+        - button [ref=e13] [cursor=pointer]:
+          - img [ref=e14]
+    - generic [ref=e19]:
+      - generic [ref=e20]:
+        - generic [ref=e22]:
+          - generic [ref=e23]: ✓
+          - generic [ref=e24]: About You
+        - generic [ref=e28]:
+          - generic [ref=e29]: ✓
+          - generic [ref=e30]: Your Style
+        - generic [ref=e34]:
+          - generic [ref=e35]: C
+          - generic [ref=e36]: Your Trip
+      - generic [ref=e40]:
+        - generic [ref=e41]: Step 17 of 17
+        - generic [ref=e42]: 100% Complete
+    - main [ref=e43]:
+      - generic [ref=e47]:
+        - generic [ref=e48]:
+          - generic [ref=e49]: ✨
+          - heading "What's your travel vibe?" [level=2] [ref=e50]
+          - paragraph [ref=e51]: Pick the one that speaks to your soul
+        - generic [ref=e53]:
+          - button "🏖️ The Relaxer Beach vibes, spa days, slow mornings" [ref=e55] [cursor=pointer]:
+            - generic [ref=e57]:
+              - generic [ref=e58]: 🏖️
+              - heading "The Relaxer" [level=3] [ref=e59]
+              - paragraph [ref=e60]: Beach vibes, spa days, slow mornings
+            - img [ref=e63]
+          - button "🧭 The Explorer Hidden gems, off-beat paths" [ref=e66] [cursor=pointer]:
+            - generic [ref=e68]:
+              - generic [ref=e69]: 🧭
+              - heading "The Explorer" [level=3] [ref=e70]
+              - paragraph [ref=e71]: Hidden gems, off-beat paths
+          - button "🏛️ The Culture Seeker Museums, history, local traditions" [ref=e73] [cursor=pointer]:
+            - generic [ref=e75]:
+              - generic [ref=e76]: 🏛️
+              - heading "The Culture Seeker" [level=3] [ref=e77]
+              - paragraph [ref=e78]: Museums, history, local traditions
+          - button "🦉 The Night Owl Nightlife, parties, late adventures" [ref=e80] [cursor=pointer]:
+            - generic [ref=e82]:
+              - generic [ref=e83]: 🦉
+              - heading "The Night Owl" [level=3] [ref=e84]
+              - paragraph [ref=e85]: Nightlife, parties, late adventures
+          - button "🌲 The Nature Lover Mountains, forests, wildlife" [ref=e87] [cursor=pointer]:
+            - generic [ref=e89]:
+              - generic [ref=e90]: 🌲
+              - heading "The Nature Lover" [level=3] [ref=e91]
+              - paragraph [ref=e92]: Mountains, forests, wildlife
+          - button "🌈 A Bit of Everything Why choose? I want it all!" [ref=e94] [cursor=pointer]:
+            - generic [ref=e96]:
+              - generic [ref=e97]: 🌈
+              - heading "A Bit of Everything" [level=3] [ref=e98]
+              - paragraph [ref=e99]: Why choose? I want it all!
+        - paragraph [ref=e101]: Perfect! You're a The Relaxer. We'll tailor your experience accordingly!
+    - contentinfo [ref=e102]:
+      - generic [ref=e104]:
+        - button "Back" [ref=e105] [cursor=pointer]:
+          - img [ref=e106]
+          - generic [ref=e108]: Back
+        - button "Continue to Sign Up" [active] [ref=e109] [cursor=pointer]:
+          - generic [ref=e110]: Continue to Sign Up
+          - img [ref=e111]
+    - generic [ref=e114]:
+      - generic [ref=e115]:
+        - button [ref=e116] [cursor=pointer]:
+          - img [ref=e117]
+        - generic [ref=e121]: 🎒
+        - heading "Save Your Trip Preferences" [level=2] [ref=e122]
+        - paragraph [ref=e123]: Create an account to save your quiz and get personalized recommendations.
+      - generic [ref=e124]:
+        - generic [ref=e125]:
+          - generic [ref=e126]: Full Name
+          - generic [ref=e127]:
+            - img [ref=e128]
+            - textbox "Your name" [ref=e131]
+        - generic [ref=e132]:
+          - generic [ref=e133]: Email
+          - generic [ref=e134]:
+            - img [ref=e135]
+            - textbox "your@email.com" [ref=e138]
+        - generic [ref=e139]:
+          - generic [ref=e140]: Password
+          - generic [ref=e141]:
+            - img [ref=e142]
+            - textbox "••••••••" [ref=e145]
+            - button [ref=e146] [cursor=pointer]:
+              - img [ref=e147]
+        - button "Create Account & Save" [ref=e150] [cursor=pointer]:
+          - generic [ref=e151]: Create Account & Save
+        - button "Already have an account? Sign in" [ref=e153] [cursor=pointer]
+```

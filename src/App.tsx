@@ -98,13 +98,13 @@ const App = () => (
               <Route path="/get-started" element={<GetStarted />} />
               <Route path="/signup/:tripType" element={<TripSignup />} />
 
-              {/* Travel Profile Quiz */}
-              <Route path="/quiz" element={<TravelProfileQuiz />} />
+              {/* Travel Profile Quiz - Now using the new 17-step Onboarding Quiz */}
+              <Route path="/quiz" element={<OnboardingQuiz />} />
               <Route path="/quiz/result/matched" element={<MatchedTripResult />} />
               <Route path="/quiz/result/surprise" element={<SurpriseTripResult />} />
               <Route path="/quiz/result/custom" element={<CustomTripResult />} />
 
-              {/* New 17-Step Onboarding Quiz */}
+              {/* Legacy Start Quiz Route (redirects to /quiz basically, or keep alias) */}
               <Route path="/start-quiz" element={<OnboardingQuiz />} />
 
               {/* Auth Routes */}

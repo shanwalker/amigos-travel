@@ -26,7 +26,7 @@ export function Step09HardNoActivities({ value, onChange }: Step09Props) {
                 emoji="⛔"
             />
 
-            <StaggeredContainer className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <StaggeredContainer className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
                 {HARD_NO_OPTIONS.map((option) => {
                     const isSelected = value.includes(option.value);
 
@@ -35,7 +35,7 @@ export function Step09HardNoActivities({ value, onChange }: Step09Props) {
                             <motion.button
                                 onClick={() => toggleActivity(option.value)}
                                 className={cn(
-                                    "w-full p-4 rounded-2xl border-2 transition-all flex flex-col items-center gap-2 relative",
+                                    "w-full p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border-2 transition-all flex flex-col items-center gap-1.5 sm:gap-2 relative h-full justify-center",
                                     isSelected
                                         ? "border-red-500 bg-red-500/10"
                                         : "border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10"
@@ -43,9 +43,9 @@ export function Step09HardNoActivities({ value, onChange }: Step09Props) {
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                             >
-                                <span className="text-3xl">{option.emoji}</span>
+                                <span className="text-2xl sm:text-3xl">{option.emoji}</span>
                                 <span className={cn(
-                                    "font-medium text-sm text-center transition-colors",
+                                    "font-medium text-[10px] sm:text-sm text-center transition-colors leading-tight",
                                     isSelected ? "text-red-400" : "text-white/80"
                                 )}>
                                     {option.label}
@@ -56,9 +56,9 @@ export function Step09HardNoActivities({ value, onChange }: Step09Props) {
                                     <motion.div
                                         initial={{ scale: 0 }}
                                         animate={{ scale: 1 }}
-                                        className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center"
+                                        className="absolute -top-1.5 -right-1.5 sm:-top-2 sm:-right-2 w-4 h-4 sm:w-6 sm:h-6 bg-red-500 rounded-full flex items-center justify-center"
                                     >
-                                        <span className="text-white text-xs font-bold">✕</span>
+                                        <span className="text-white text-[8px] sm:text-xs font-bold">✕</span>
                                     </motion.div>
                                 )}
                             </motion.button>
