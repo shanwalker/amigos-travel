@@ -17,7 +17,7 @@ export function Step17TravelVibe({ value, onChange }: Step17Props) {
                 emoji="✨"
             />
 
-            <StaggeredContainer className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4">
+            <StaggeredContainer className="grid grid-cols-3 gap-2 sm:gap-4">
                 {VIBE_OPTIONS.map((option) => {
                     const isSelected = value === option.value;
 
@@ -26,7 +26,7 @@ export function Step17TravelVibe({ value, onChange }: Step17Props) {
                             <motion.button
                                 onClick={() => onChange(option.value)}
                                 className={cn(
-                                    "w-full h-24 sm:h-auto sm:aspect-square rounded-xl sm:rounded-2xl border-2 transition-all duration-300 relative overflow-hidden group flex flex-col items-center justify-center p-1 sm:p-4 text-center",
+                                    "w-full h-auto aspect-[3/4] sm:aspect-square rounded-xl sm:rounded-2xl border-2 transition-all duration-300 relative overflow-hidden group flex flex-col items-center justify-center p-1 sm:p-4 text-center",
                                     isSelected
                                         ? "border-primary shadow-xl"
                                         : "border-white/10 hover:border-white/30"

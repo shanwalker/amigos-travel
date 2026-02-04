@@ -272,15 +272,15 @@ export function QuizContainer({ onClose, className }: QuizContainerProps) {
             />
 
             {/* Header */}
-            <header className="relative z-10 px-4 sm:px-6 py-2 sm:py-4">
+            <header className="relative z-10 px-3 sm:px-6 py-1 sm:py-4">
                 <div className="max-w-4xl mx-auto flex items-center justify-between">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2 sm:gap-3">
                         <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-r from-primary to-orange-500 flex items-center justify-center">
                             <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-navy-deep" />
                         </div>
                         <div>
-                            <h1 className="font-bold text-white text-base sm:text-lg font-jakarta">Travel Amigo</h1>
-                            <p className="text-white/50 text-[10px] sm:text-xs">Tell us about your dream trip</p>
+                            <h1 className="font-bold text-white text-sm sm:text-lg font-jakarta">Travel Amigo</h1>
+                            <p className="text-white/50 text-[10px] sm:text-xs leading-none">Dream trip planner</p>
                         </div>
                     </div>
 
@@ -296,7 +296,7 @@ export function QuizContainer({ onClose, className }: QuizContainerProps) {
             </header>
 
             {/* Progress */}
-            <div className="px-4 sm:px-6 py-2 sm:py-4">
+            <div className="px-3 sm:px-6 py-1 sm:py-4">
                 <div className="max-w-4xl mx-auto">
                     <QuizProgress
                         currentStep={currentStep}
@@ -306,7 +306,7 @@ export function QuizContainer({ onClose, className }: QuizContainerProps) {
             </div>
 
             {/* Main Content */}
-            <main className="flex-1 flex flex-col px-4 sm:px-6 py-2 sm:py-6 relative z-10 overflow-hidden">
+            <main className="flex-1 flex flex-col px-3 sm:px-6 py-1 sm:py-6 relative z-10 overflow-hidden">
                 <div className="max-w-4xl mx-auto w-full flex-1 flex flex-col">
                     {/* Step Content */}
                     <div className="flex-1 flex items-center justify-center py-0 sm:py-4">
@@ -318,7 +318,7 @@ export function QuizContainer({ onClose, className }: QuizContainerProps) {
             </main>
 
             {/* Navigation */}
-            <footer className="relative z-10 px-4 sm:px-6 py-3 sm:py-6 bg-gradient-to-t from-navy-deep to-transparent">
+            <footer className="relative z-10 px-3 sm:px-6 py-2 sm:py-6 bg-gradient-to-t from-navy-deep to-transparent">
                 <div className="max-w-4xl mx-auto">
                     <QuizNavigation
                         currentStep={currentStep}
