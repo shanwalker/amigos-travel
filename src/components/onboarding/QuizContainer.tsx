@@ -296,7 +296,7 @@ export function QuizContainer({ onClose, className }: QuizContainerProps) {
             </header>
 
             {/* Progress */}
-            <div className="px-3 sm:px-6 py-1 sm:py-4">
+            <div className="px-3 sm:px-6 py-0 sm:py-4">
                 <div className="max-w-4xl mx-auto">
                     <QuizProgress
                         currentStep={currentStep}
@@ -306,7 +306,7 @@ export function QuizContainer({ onClose, className }: QuizContainerProps) {
             </div>
 
             {/* Main Content */}
-            <main className="flex-1 flex flex-col px-3 sm:px-6 py-1 sm:py-6 relative z-10 overflow-hidden">
+            <main className="flex-1 flex flex-col px-3 sm:px-6 py-0 sm:py-6 relative z-10 overflow-hidden">
                 <div className="max-w-4xl mx-auto w-full flex-1 flex flex-col">
                     {/* Step Content */}
                     <div className="flex-1 flex items-center justify-center py-0 sm:py-4">

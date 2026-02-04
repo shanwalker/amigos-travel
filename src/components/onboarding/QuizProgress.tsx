@@ -22,7 +22,7 @@ export function QuizProgress({ currentStep, totalSteps, className }: QuizProgres
     return (
         <div className={cn("w-full", className)}>
             {/* Phase Indicator */}
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-1 sm:mb-4">
                 {phases.map((phase, index) => {
                     const isActive = phase.id === currentPhase.id;
                     const isCompleted = phases.indexOf(currentPhase) > index;
@@ -92,7 +92,7 @@ export function QuizProgress({ currentStep, totalSteps, className }: QuizProgres
             </div>
 
             {/* Step Counter */}
-            <div className="flex justify-between items-center mt-3">
+            <div className="flex justify-between items-center mt-1 sm:mt-3">
                 <span className="text-xs text-white/50">
                     Step {currentStep} of {totalSteps}
                 </span>
