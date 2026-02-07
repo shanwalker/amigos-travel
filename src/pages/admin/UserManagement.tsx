@@ -80,8 +80,7 @@ const UserManagement = () => {
         title: 'Success',
         description: `Role ${action === 'add' ? 'added' : 'removed'} successfully!`
       });
-    });
-  } catch (error) {
+    } catch (error) {
     toast({ title: 'Error', description: error instanceof Error ? error.message : 'Unknown error', variant: 'destructive' });
   }
 };
