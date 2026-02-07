@@ -79,7 +79,7 @@ export const useCreateProposal = () => {
                     ...input,
                     created_by: user?.id,
                     deposit_amount: input.total_price * ((input.deposit_percentage || 25) / 100),
-                })
+                } as any)
                 .select()
                 .single();
 
@@ -99,8 +99,8 @@ export const useUpdateProposal = () => {
 
     return useMutation({
         mutationFn: async ({ id, ...updates }: UpdateProposalInput) => {
-            const { data, error } = await supabase
-                .from('trip_proposals')
+            const { data, error } = await (supabase
+                .from('trip_proposals') as any)
                 .update(updates)
                 .eq('id', id)
                 .select()
