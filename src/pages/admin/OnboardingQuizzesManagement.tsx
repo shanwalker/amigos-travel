@@ -57,11 +57,24 @@ const updateQuizStatus = async ({ id, updates }: { id: string; updates: Record<s
     if (error) throw error;
 };
 
+// Define extended type for quiz with profile
+interface QuizWithProfile extends OnboardingQuizRecord {
+    profiles: {
+        id: string;
+        email: string | null;
+        full_name: string | null;
+        phone: string | null;
+    } | null;
+}
+
 const OnboardingQuizzesManagement = () => {
     const queryClient = useQueryClient();
     const { data: quizzes = [], isLoading, refetch } = useQuery({
         queryKey: ['admin-onboarding-quizzes'],
-        queryFn: fetchOnboardingQuizzes,
+        queryFn: async () => {
+            const data = await fetchOnboardingQuizzes();
+            return (data || []) as QuizWithProfile[];
+        },
     });
 
     const updateMutation = useMutation({
@@ -77,7 +90,7 @@ const OnboardingQuizzesManagement = () => {
 
     const [searchQuery, setSearchQuery] = useState('');
     const [activeTab, setActiveTab] = useState('pending');
-    const [selectedQuiz, setSelectedQuiz] = useState<any | null>(null);
+    const [selectedQuiz, setSelectedQuiz] = useState<QuizWithProfile | null>(null);
     const [showDetailModal, setShowDetailModal] = useState(false);
     const [showPublishModal, setShowPublishModal] = useState(false);
     const [publishData, setPublishData] = useState({
@@ -88,49 +101,49 @@ const OnboardingQuizzesManagement = () => {
     });
 
     // Filter quizzes by status
-    const pendingQuizzes = quizzes.filter((q: any) => !q.admin_reviewed);
-    const wantsSurprise = quizzes.filter((q: any) => q.destination_knowledge === 'surprise');
-    const reviewedQuizzes = quizzes.filter((q: any) => q.admin_reviewed);
-    const hasDestination = quizzes.filter((q: any) => q.destination_preference === 'in_mind');
+    const pendingQuizzes = quizzes.filter(q => !q.admin_reviewed);
+    const wantsSurprise = quizzes.filter(q => q.destination_knowledge === 'surprise');
+    const reviewedQuizzes = quizzes.filter(q => q.admin_reviewed);
+    const hasDestination = quizzes.filter(q => q.destination_preference === 'in_mind');
 
     // Search filter
-    const filterQuizzes = (list: any[]) => {
+    const filterQuizzes = (list: QuizWithProfile[]) => {
         if (!searchQuery) return list;
-        return list.filter((q: any) =>
+        return list.filter(q =>
             q.profiles?.full_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
             q.profiles?.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
             q.travel_vibe?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            q.desired_destinations?.some((d: string) => d.toLowerCase().includes(searchQuery.toLowerCase()))
+            q.desired_destinations?.some(d => d.toLowerCase().includes(searchQuery.toLowerCase()))
         );
     };
 
     // Get vibe details
-    const getVibeDetails = (vibe: TravelVibe) => {
+    const getVibeDetails = (vibe: string) => {
         return VIBE_OPTIONS.find(v => v.value === vibe);
     };
 
     // Handle marking as reviewed
-    const handleMarkReviewed = async (quiz: any) => {
+    const handleMarkReviewed = async (quiz: QuizWithProfile) => {
         await updateMutation.mutateAsync({
             id: quiz.id,
-            updates: { updated_at: new Date().toISOString() } as any,
+            updates: { updated_at: new Date().toISOString() },
         });
     };
 
     // Handle publishing trip (for surprise mode)
-    const handlePublishTrip = async (quiz: any) => {
+    const handlePublishTrip = async (quiz: QuizWithProfile) => {
         // This would update the surprise_requests table to mark the trip as ready
         await updateMutation.mutateAsync({
             id: quiz.id,
             updates: {
                 updated_at: new Date().toISOString(),
-            } as any,
+            },
         });
 
         // Also update the surprise_requests if linked
         if (quiz.linked_surprise_request_id) {
             await (supabase
-                .from('surprise_requests') as any)
+                .from('surprise_requests') as any) // Keeping for now if table types aren't fully updated
                 .update({
                     status: 'ready',
                     suggested_destination: publishData.destination,
@@ -151,7 +164,7 @@ const OnboardingQuizzesManagement = () => {
             'Trip Styles', 'Destinations', 'Submitted At'
         ];
 
-        const rows = quizzes.map((q: any) => [
+        const rows = quizzes.map((q: QuizWithProfile) => [
             q.profiles?.full_name || 'N/A',
             q.profiles?.email || 'N/A',
             q.travel_vibe || 'N/A',
@@ -175,7 +188,7 @@ const OnboardingQuizzesManagement = () => {
     };
 
     // Quiz Detail Card
-    const QuizCard = ({ quiz }: { quiz: any }) => {
+    const QuizCard = ({ quiz }: { quiz: QuizWithProfile }) => {
         const vibeDetails = quiz.travel_vibe ? getVibeDetails(quiz.travel_vibe) : null;
         const companionDetails = COMPANION_OPTIONS.find(c => c.value === quiz.travel_companion);
         const budgetDetails = BUDGET_OPTIONS.find(b => b.value === quiz.budget_range);
@@ -326,15 +339,27 @@ const OnboardingQuizzesManagement = () => {
                             View Details
                         </Button>
 
+                        <Button
+                            size="sm"
+                            variant="default"
+                            className="flex-1 bg-primary"
+                            onClick={() => {
+                                window.location.href = `/admin/proposals/create?userId=${quiz.user_id}&quizId=${quiz.id}`;
+                            }}
+                        >
+                            <Send className="w-4 h-4 mr-1" />
+                            Create Proposal
+                        </Button>
+
                         {!quiz.admin_reviewed && (
                             <Button
                                 size="sm"
-                                className="flex-1"
+                                variant="secondary"
                                 onClick={() => handleMarkReviewed(quiz)}
                                 disabled={updateMutation.isPending}
                             >
                                 {updateMutation.isPending ? (
-                                    <Loader2 className="w-4 h-4 mr-1 animate-spin" />
+                                    <Loader2 className="w-4 h-4 mr-1" />
                                 ) : (
                                     <CheckCircle className="w-4 h-4 mr-1" />
                                 )}

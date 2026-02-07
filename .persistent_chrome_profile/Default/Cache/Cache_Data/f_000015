@@ -1,0 +1,316 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/HowItWorksSection.tsx");import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope;
+
+let prevRefreshReg;
+let prevRefreshSig;
+
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react-swc can't detect preamble. Something is wrong."
+    );
+  }
+
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+
+import __vite__cjsImport2_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=c3ff4a43"; const _jsxDEV = __vite__cjsImport2_react_jsxDevRuntime["jsxDEV"];
+import { motion } from "/node_modules/.vite/deps/framer-motion.js?v=16c1ddc0";
+import { ClipboardList, Sparkles, Plane } from "/node_modules/.vite/deps/lucide-react.js?v=31177f67";
+import __vite__cjsImport5_react from "/node_modules/.vite/deps/react.js?v=8e948b43"; const memo = __vite__cjsImport5_react["memo"];
+const steps = [
+    {
+        number: '01',
+        icon: ClipboardList,
+        title: 'Tell Us About You',
+        description: 'Take a 2-minute quiz to define your travel personality, pace, and comfort.',
+        color: 'from-blue-500 to-cyan-500'
+    },
+    {
+        number: '02',
+        icon: Sparkles,
+        title: 'We Find the Best Fit',
+        description: 'Our logic matches you to a Group Trip, a Custom Itinerary, or a Surprise Journey.',
+        color: 'from-purple-500 to-pink-500'
+    },
+    {
+        number: '03',
+        icon: Plane,
+        title: 'Travel Your Way',
+        description: 'Decide whether to join like-minded travelers or embark on a bespoke solo adventure.',
+        color: 'from-primary to-orange-500'
+    }
+];
+export const HowItWorksSection = /*#__PURE__*/ memo(_c = ()=>{
+    return /*#__PURE__*/ _jsxDEV("section", {
+        className: "relative py-10 md:py-16 bg-gradient-to-b from-background to-muted/30 overflow-hidden",
+        children: [
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "absolute inset-0 opacity-5",
+                children: /*#__PURE__*/ _jsxDEV("div", {
+                    className: "absolute inset-0",
+                    style: {
+                        backgroundImage: `radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)`,
+                        backgroundSize: '40px 40px'
+                    }
+                }, void 0, false, {
+                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                    lineNumber: 34,
+                    columnNumber: 17
+                }, this)
+            }, void 0, false, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                lineNumber: 33,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "relative z-10 container mx-auto px-6",
+                children: [
+                    /*#__PURE__*/ _jsxDEV(motion.div, {
+                        initial: {
+                            opacity: 0,
+                            y: 30
+                        },
+                        whileInView: {
+                            opacity: 1,
+                            y: 0
+                        },
+                        viewport: {
+                            once: true
+                        },
+                        transition: {
+                            duration: 0.8
+                        },
+                        className: "text-center mb-16",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV(motion.span, {
+                                initial: {
+                                    opacity: 0,
+                                    scale: 0.9
+                                },
+                                whileInView: {
+                                    opacity: 1,
+                                    scale: 1
+                                },
+                                viewport: {
+                                    once: true
+                                },
+                                transition: {
+                                    duration: 0.6
+                                },
+                                className: "inline-block px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-4",
+                                children: "Simple Process"
+                            }, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                                lineNumber: 49,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV("h2", {
+                                className: "font-serif text-4xl md:text-5xl font-bold text-foreground mb-4",
+                                children: "How It Works"
+                            }, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                                lineNumber: 58,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV("p", {
+                                className: "text-lg text-muted-foreground font-sans max-w-2xl mx-auto",
+                                children: "Three simple steps to discover your perfect travel experience"
+                            }, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                                lineNumber: 61,
+                                columnNumber: 21
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                        lineNumber: 42,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        className: "grid md:grid-cols-3 gap-8 max-w-6xl mx-auto",
+                        children: steps.map((step, index)=>{
+                            const Icon = step.icon;
+                            return /*#__PURE__*/ _jsxDEV(motion.div, {
+                                initial: {
+                                    opacity: 0,
+                                    y: 40
+                                },
+                                whileInView: {
+                                    opacity: 1,
+                                    y: 0
+                                },
+                                viewport: {
+                                    once: true
+                                },
+                                transition: {
+                                    duration: 0.6,
+                                    delay: index * 0.2
+                                },
+                                className: "relative group",
+                                children: [
+                                    index < steps.length - 1 && /*#__PURE__*/ _jsxDEV("div", {
+                                        className: "hidden md:block absolute top-20 left-full w-full h-0.5 bg-gradient-to-r from-primary/50 to-transparent -translate-x-1/2 z-0"
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                                        lineNumber: 81,
+                                        columnNumber: 37
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV("div", {
+                                        className: "relative bg-card border border-border rounded-2xl p-8 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 hover:-translate-y-2 h-full",
+                                        children: [
+                                            /*#__PURE__*/ _jsxDEV("div", {
+                                                className: "absolute -top-4 -right-4 w-12 h-12 rounded-full bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center text-white font-bold text-lg shadow-lg",
+                                                children: step.number
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                                                lineNumber: 87,
+                                                columnNumber: 37
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDEV("div", {
+                                                className: `w-16 h-16 rounded-2xl bg-gradient-to-br ${step.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`,
+                                                children: /*#__PURE__*/ _jsxDEV(Icon, {
+                                                    className: "w-8 h-8 text-white"
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                                                    lineNumber: 93,
+                                                    columnNumber: 41
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                                                lineNumber: 92,
+                                                columnNumber: 37
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDEV("h3", {
+                                                className: "font-serif text-2xl font-bold text-foreground mb-3",
+                                                children: step.title
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                                                lineNumber: 97,
+                                                columnNumber: 37
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDEV("p", {
+                                                className: "text-muted-foreground font-sans leading-relaxed",
+                                                children: step.description
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                                                lineNumber: 100,
+                                                columnNumber: 37
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDEV("div", {
+                                                className: "absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                                                lineNumber: 105,
+                                                columnNumber: 37
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                                        lineNumber: 85,
+                                        columnNumber: 33
+                                    }, this)
+                                ]
+                            }, step.number, true, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                                lineNumber: 71,
+                                columnNumber: 29
+                            }, this);
+                        })
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                        lineNumber: 67,
+                        columnNumber: 17
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(motion.div, {
+                        initial: {
+                            opacity: 0,
+                            y: 20
+                        },
+                        whileInView: {
+                            opacity: 1,
+                            y: 0
+                        },
+                        viewport: {
+                            once: true
+                        },
+                        transition: {
+                            duration: 0.8,
+                            delay: 0.6
+                        },
+                        className: "text-center mt-16",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV("p", {
+                                className: "text-lg font-semibold text-foreground mb-2",
+                                children: [
+                                    "Join over ",
+                                    /*#__PURE__*/ _jsxDEV("span", {
+                                        className: "text-primary",
+                                        children: "10,000 Amigos"
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                                        lineNumber: 121,
+                                        columnNumber: 35
+                                    }, this),
+                                    " who have explored the world with us"
+                                ]
+                            }, void 0, true, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                                lineNumber: 120,
+                                columnNumber: 21
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV("p", {
+                                className: "text-sm text-muted-foreground font-sans",
+                                children: "🔒 We respect your privacy—your info is safe with us"
+                            }, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                                lineNumber: 123,
+                                columnNumber: 21
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                        lineNumber: 113,
+                        columnNumber: 17
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+                lineNumber: 40,
+                columnNumber: 13
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx",
+        lineNumber: 31,
+        columnNumber: 9
+    }, this);
+});
+_c1 = HowItWorksSection;
+HowItWorksSection.displayName = 'HowItWorksSection';
+var _c, _c1;
+$RefreshReg$(_c, "HowItWorksSection$memo");
+$RefreshReg$(_c1, "HowItWorksSection");
+
+
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+
+
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HowItWorksSection.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkhvd0l0V29ya3NTZWN0aW9uLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBtb3Rpb24gfSBmcm9tICdmcmFtZXItbW90aW9uJztcclxuaW1wb3J0IHsgQ2xpcGJvYXJkTGlzdCwgU3BhcmtsZXMsIFBsYW5lIH0gZnJvbSAnbHVjaWRlLXJlYWN0JztcclxuaW1wb3J0IHsgbWVtbyB9IGZyb20gJ3JlYWN0JztcclxuXHJcbmNvbnN0IHN0ZXBzID0gW1xyXG4gICAge1xyXG4gICAgICAgIG51bWJlcjogJzAxJyxcclxuICAgICAgICBpY29uOiBDbGlwYm9hcmRMaXN0LFxyXG4gICAgICAgIHRpdGxlOiAnVGVsbCBVcyBBYm91dCBZb3UnLFxyXG4gICAgICAgIGRlc2NyaXB0aW9uOiAnVGFrZSBhIDItbWludXRlIHF1aXogdG8gZGVmaW5lIHlvdXIgdHJhdmVsIHBlcnNvbmFsaXR5LCBwYWNlLCBhbmQgY29tZm9ydC4nLFxyXG4gICAgICAgIGNvbG9yOiAnZnJvbS1ibHVlLTUwMCB0by1jeWFuLTUwMCcsXHJcbiAgICB9LFxyXG4gICAge1xyXG4gICAgICAgIG51bWJlcjogJzAyJyxcclxuICAgICAgICBpY29uOiBTcGFya2xlcyxcclxuICAgICAgICB0aXRsZTogJ1dlIEZpbmQgdGhlIEJlc3QgRml0JyxcclxuICAgICAgICBkZXNjcmlwdGlvbjogJ091ciBsb2dpYyBtYXRjaGVzIHlvdSB0byBhIEdyb3VwIFRyaXAsIGEgQ3VzdG9tIEl0aW5lcmFyeSwgb3IgYSBTdXJwcmlzZSBKb3VybmV5LicsXHJcbiAgICAgICAgY29sb3I6ICdmcm9tLXB1cnBsZS01MDAgdG8tcGluay01MDAnLFxyXG4gICAgfSxcclxuICAgIHtcclxuICAgICAgICBudW1iZXI6ICcwMycsXHJcbiAgICAgICAgaWNvbjogUGxhbmUsXHJcbiAgICAgICAgdGl0bGU6ICdUcmF2ZWwgWW91ciBXYXknLFxyXG4gICAgICAgIGRlc2NyaXB0aW9uOiAnRGVjaWRlIHdoZXRoZXIgdG8gam9pbiBsaWtlLW1pbmRlZCB0cmF2ZWxlcnMgb3IgZW1iYXJrIG9uIGEgYmVzcG9rZSBzb2xvIGFkdmVudHVyZS4nLFxyXG4gICAgICAgIGNvbG9yOiAnZnJvbS1wcmltYXJ5IHRvLW9yYW5nZS01MDAnLFxyXG4gICAgfSxcclxuXTtcclxuXHJcbmV4cG9ydCBjb25zdCBIb3dJdFdvcmtzU2VjdGlvbiA9IG1lbW8oKCkgPT4ge1xyXG4gICAgcmV0dXJuIChcclxuICAgICAgICA8c2VjdGlvbiBjbGFzc05hbWU9XCJyZWxhdGl2ZSBweS0xMCBtZDpweS0xNiBiZy1ncmFkaWVudC10by1iIGZyb20tYmFja2dyb3VuZCB0by1tdXRlZC8zMCBvdmVyZmxvdy1oaWRkZW5cIj5cclxuICAgICAgICAgICAgey8qIEJhY2tncm91bmQgUGF0dGVybiAqL31cclxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJhYnNvbHV0ZSBpbnNldC0wIG9wYWNpdHktNVwiPlxyXG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJhYnNvbHV0ZSBpbnNldC0wXCIgc3R5bGU9e3tcclxuICAgICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kSW1hZ2U6IGByYWRpYWwtZ3JhZGllbnQoY2lyY2xlIGF0IDFweCAxcHgsIGN1cnJlbnRDb2xvciAxcHgsIHRyYW5zcGFyZW50IDApYCxcclxuICAgICAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kU2l6ZTogJzQwcHggNDBweCcsXHJcbiAgICAgICAgICAgICAgICB9fSAvPlxyXG4gICAgICAgICAgICA8L2Rpdj5cclxuXHJcbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwicmVsYXRpdmUgei0xMCBjb250YWluZXIgbXgtYXV0byBweC02XCI+XHJcbiAgICAgICAgICAgICAgICB7LyogU2VjdGlvbiBIZWFkZXIgKi99XHJcbiAgICAgICAgICAgICAgICA8bW90aW9uLmRpdlxyXG4gICAgICAgICAgICAgICAgICAgIGluaXRpYWw9e3sgb3BhY2l0eTogMCwgeTogMzAgfX1cclxuICAgICAgICAgICAgICAgICAgICB3aGlsZUluVmlldz17eyBvcGFjaXR5OiAxLCB5OiAwIH19XHJcbiAgICAgICAgICAgICAgICAgICAgdmlld3BvcnQ9e3sgb25jZTogdHJ1ZSB9fVxyXG4gICAgICAgICAgICAgICAgICAgIHRyYW5zaXRpb249e3sgZHVyYXRpb246IDAuOCB9fVxyXG4gICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cInRleHQtY2VudGVyIG1iLTE2XCJcclxuICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICA8bW90aW9uLnNwYW5cclxuICAgICAgICAgICAgICAgICAgICAgICAgaW5pdGlhbD17eyBvcGFjaXR5OiAwLCBzY2FsZTogMC45IH19XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHdoaWxlSW5WaWV3PXt7IG9wYWNpdHk6IDEsIHNjYWxlOiAxIH19XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHZpZXdwb3J0PXt7IG9uY2U6IHRydWUgfX1cclxuICAgICAgICAgICAgICAgICAgICAgICAgdHJhbnNpdGlvbj17eyBkdXJhdGlvbjogMC42IH19XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImlubGluZS1ibG9jayBweC00IHB5LTIgcm91bmRlZC1mdWxsIGJnLXByaW1hcnkvMTAgdGV4dC1wcmltYXJ5IHRleHQtc20gZm9udC1zZW1pYm9sZCBtYi00XCJcclxuICAgICAgICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIFNpbXBsZSBQcm9jZXNzXHJcbiAgICAgICAgICAgICAgICAgICAgPC9tb3Rpb24uc3Bhbj5cclxuICAgICAgICAgICAgICAgICAgICA8aDIgY2xhc3NOYW1lPVwiZm9udC1zZXJpZiB0ZXh0LTR4bCBtZDp0ZXh0LTV4bCBmb250LWJvbGQgdGV4dC1mb3JlZ3JvdW5kIG1iLTRcIj5cclxuICAgICAgICAgICAgICAgICAgICAgICAgSG93IEl0IFdvcmtzXHJcbiAgICAgICAgICAgICAgICAgICAgPC9oMj5cclxuICAgICAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9XCJ0ZXh0LWxnIHRleHQtbXV0ZWQtZm9yZWdyb3VuZCBmb250LXNhbnMgbWF4LXctMnhsIG14LWF1dG9cIj5cclxuICAgICAgICAgICAgICAgICAgICAgICAgVGhyZWUgc2ltcGxlIHN0ZXBzIHRvIGRpc2NvdmVyIHlvdXIgcGVyZmVjdCB0cmF2ZWwgZXhwZXJpZW5jZVxyXG4gICAgICAgICAgICAgICAgICAgIDwvcD5cclxuICAgICAgICAgICAgICAgIDwvbW90aW9uLmRpdj5cclxuXHJcbiAgICAgICAgICAgICAgICB7LyogU3RlcHMgR3JpZCAqL31cclxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZ3JpZCBtZDpncmlkLWNvbHMtMyBnYXAtOCBtYXgtdy02eGwgbXgtYXV0b1wiPlxyXG4gICAgICAgICAgICAgICAgICAgIHtzdGVwcy5tYXAoKHN0ZXAsIGluZGV4KSA9PiB7XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIGNvbnN0IEljb24gPSBzdGVwLmljb247XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybiAoXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8bW90aW9uLmRpdlxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGtleT17c3RlcC5udW1iZXJ9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaW5pdGlhbD17eyBvcGFjaXR5OiAwLCB5OiA0MCB9fVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHdoaWxlSW5WaWV3PXt7IG9wYWNpdHk6IDEsIHk6IDAgfX1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2aWV3cG9ydD17eyBvbmNlOiB0cnVlIH19XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdHJhbnNpdGlvbj17eyBkdXJhdGlvbjogMC42LCBkZWxheTogaW5kZXggKiAwLjIgfX1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJyZWxhdGl2ZSBncm91cFwiXHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgey8qIENvbm5lY3RpbmcgTGluZSAoaGlkZGVuIG9uIG1vYmlsZSwgc2hvd24gb24gZGVza3RvcCBiZXR3ZWVuIGNhcmRzKSAqL31cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB7aW5kZXggPCBzdGVwcy5sZW5ndGggLSAxICYmIChcclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJoaWRkZW4gbWQ6YmxvY2sgYWJzb2x1dGUgdG9wLTIwIGxlZnQtZnVsbCB3LWZ1bGwgaC0wLjUgYmctZ3JhZGllbnQtdG8tciBmcm9tLXByaW1hcnkvNTAgdG8tdHJhbnNwYXJlbnQgLXRyYW5zbGF0ZS14LTEvMiB6LTBcIiAvPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICl9XHJcblxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHsvKiBDYXJkICovfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwicmVsYXRpdmUgYmctY2FyZCBib3JkZXIgYm9yZGVyLWJvcmRlciByb3VuZGVkLTJ4bCBwLTggaG92ZXI6c2hhZG93LTJ4bCBob3ZlcjpzaGFkb3ctcHJpbWFyeS8xMCB0cmFuc2l0aW9uLWFsbCBkdXJhdGlvbi01MDAgaG92ZXI6LXRyYW5zbGF0ZS15LTIgaC1mdWxsXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHsvKiBOdW1iZXIgQmFkZ2UgKi99XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiYWJzb2x1dGUgLXRvcC00IC1yaWdodC00IHctMTIgaC0xMiByb3VuZGVkLWZ1bGwgYmctZ3JhZGllbnQtdG8tYnIgZnJvbS1wcmltYXJ5IHRvLXB1cnBsZS01MDAgZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgdGV4dC13aGl0ZSBmb250LWJvbGQgdGV4dC1sZyBzaGFkb3ctbGdcIj5cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHtzdGVwLm51bWJlcn1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9kaXY+XHJcblxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB7LyogSWNvbiAqL31cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9e2B3LTE2IGgtMTYgcm91bmRlZC0yeGwgYmctZ3JhZGllbnQtdG8tYnIgJHtzdGVwLmNvbG9yfSBmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciBtYi02IGdyb3VwLWhvdmVyOnNjYWxlLTExMCB0cmFuc2l0aW9uLXRyYW5zZm9ybSBkdXJhdGlvbi0zMDBgfT5cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxJY29uIGNsYXNzTmFtZT1cInctOCBoLTggdGV4dC13aGl0ZVwiIC8+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZGl2PlxyXG5cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgey8qIENvbnRlbnQgKi99XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxoMyBjbGFzc05hbWU9XCJmb250LXNlcmlmIHRleHQtMnhsIGZvbnQtYm9sZCB0ZXh0LWZvcmVncm91bmQgbWItM1wiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAge3N0ZXAudGl0bGV9XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvaDM+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT1cInRleHQtbXV0ZWQtZm9yZWdyb3VuZCBmb250LXNhbnMgbGVhZGluZy1yZWxheGVkXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB7c3RlcC5kZXNjcmlwdGlvbn1cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9wPlxyXG5cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgey8qIEhvdmVyIEVmZmVjdCAqL31cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJhYnNvbHV0ZSBpbnNldC0wIHJvdW5kZWQtMnhsIGJnLWdyYWRpZW50LXRvLWJyIGZyb20tcHJpbWFyeS81IHRvLXB1cnBsZS01MDAvNSBvcGFjaXR5LTAgZ3JvdXAtaG92ZXI6b3BhY2l0eS0xMDAgdHJhbnNpdGlvbi1vcGFjaXR5IGR1cmF0aW9uLTUwMCBwb2ludGVyLWV2ZW50cy1ub25lXCIgLz5cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvbW90aW9uLmRpdj5cclxuICAgICAgICAgICAgICAgICAgICAgICAgKTtcclxuICAgICAgICAgICAgICAgICAgICB9KX1cclxuICAgICAgICAgICAgICAgIDwvZGl2PlxyXG5cclxuICAgICAgICAgICAgICAgIHsvKiBUcnVzdCBNZXNzYWdlICovfVxyXG4gICAgICAgICAgICAgICAgPG1vdGlvbi5kaXZcclxuICAgICAgICAgICAgICAgICAgICBpbml0aWFsPXt7IG9wYWNpdHk6IDAsIHk6IDIwIH19XHJcbiAgICAgICAgICAgICAgICAgICAgd2hpbGVJblZpZXc9e3sgb3BhY2l0eTogMSwgeTogMCB9fVxyXG4gICAgICAgICAgICAgICAgICAgIHZpZXdwb3J0PXt7IG9uY2U6IHRydWUgfX1cclxuICAgICAgICAgICAgICAgICAgICB0cmFuc2l0aW9uPXt7IGR1cmF0aW9uOiAwLjgsIGRlbGF5OiAwLjYgfX1cclxuICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJ0ZXh0LWNlbnRlciBtdC0xNlwiXHJcbiAgICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPVwidGV4dC1sZyBmb250LXNlbWlib2xkIHRleHQtZm9yZWdyb3VuZCBtYi0yXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICAgIEpvaW4gb3ZlciA8c3BhbiBjbGFzc05hbWU9XCJ0ZXh0LXByaW1hcnlcIj4xMCwwMDAgQW1pZ29zPC9zcGFuPiB3aG8gaGF2ZSBleHBsb3JlZCB0aGUgd29ybGQgd2l0aCB1c1xyXG4gICAgICAgICAgICAgICAgICAgIDwvcD5cclxuICAgICAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9XCJ0ZXh0LXNtIHRleHQtbXV0ZWQtZm9yZWdyb3VuZCBmb250LXNhbnNcIj5cclxuICAgICAgICAgICAgICAgICAgICAgICAg8J+UkiBXZSByZXNwZWN0IHlvdXIgcHJpdmFjeeKAlHlvdXIgaW5mbyBpcyBzYWZlIHdpdGggdXNcclxuICAgICAgICAgICAgICAgICAgICA8L3A+XHJcbiAgICAgICAgICAgICAgICA8L21vdGlvbi5kaXY+XHJcbiAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgIDwvc2VjdGlvbj5cclxuICAgICk7XHJcbn0pO1xyXG5cclxuSG93SXRXb3Jrc1NlY3Rpb24uZGlzcGxheU5hbWUgPSAnSG93SXRXb3Jrc1NlY3Rpb24nO1xyXG4iXSwibmFtZXMiOlsibW90aW9uIiwiQ2xpcGJvYXJkTGlzdCIsIlNwYXJrbGVzIiwiUGxhbmUiLCJtZW1vIiwic3RlcHMiLCJudW1iZXIiLCJpY29uIiwidGl0bGUiLCJkZXNjcmlwdGlvbiIsImNvbG9yIiwiSG93SXRXb3Jrc1NlY3Rpb24iLCJzZWN0aW9uIiwiY2xhc3NOYW1lIiwiZGl2Iiwic3R5bGUiLCJiYWNrZ3JvdW5kSW1hZ2UiLCJiYWNrZ3JvdW5kU2l6ZSIsImluaXRpYWwiLCJvcGFjaXR5IiwieSIsIndoaWxlSW5WaWV3Iiwidmlld3BvcnQiLCJvbmNlIiwidHJhbnNpdGlvbiIsImR1cmF0aW9uIiwic3BhbiIsInNjYWxlIiwiaDIiLCJwIiwibWFwIiwic3RlcCIsImluZGV4IiwiSWNvbiIsImRlbGF5IiwibGVuZ3RoIiwiaDMiLCJkaXNwbGF5TmFtZSJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSxTQUFTQSxNQUFNLFFBQVEsZ0JBQWdCO0FBQ3ZDLFNBQVNDLGFBQWEsRUFBRUMsUUFBUSxFQUFFQyxLQUFLLFFBQVEsZUFBZTtBQUM5RCxTQUFTQyxJQUFJLFFBQVEsUUFBUTtBQUU3QixNQUFNQyxRQUFRO0lBQ1Y7UUFDSUMsUUFBUTtRQUNSQyxNQUFNTjtRQUNOTyxPQUFPO1FBQ1BDLGFBQWE7UUFDYkMsT0FBTztJQUNYO0lBQ0E7UUFDSUosUUFBUTtRQUNSQyxNQUFNTDtRQUNOTSxPQUFPO1FBQ1BDLGFBQWE7UUFDYkMsT0FBTztJQUNYO0lBQ0E7UUFDSUosUUFBUTtRQUNSQyxNQUFNSjtRQUNOSyxPQUFPO1FBQ1BDLGFBQWE7UUFDYkMsT0FBTztJQUNYO0NBQ0g7QUFFRCxPQUFPLE1BQU1DLGtDQUFvQlAsVUFBSztJQUNsQyxxQkFDSSxRQUFDUTtRQUFRQyxXQUFVOzswQkFFZixRQUFDQztnQkFBSUQsV0FBVTswQkFDWCxjQUFBLFFBQUNDO29CQUFJRCxXQUFVO29CQUFtQkUsT0FBTzt3QkFDckNDLGlCQUFpQixDQUFDLG1FQUFtRSxDQUFDO3dCQUN0RkMsZ0JBQWdCO29CQUNwQjs7Ozs7Ozs7Ozs7MEJBR0osUUFBQ0g7Z0JBQUlELFdBQVU7O2tDQUVYLFFBQUNiLE9BQU9jLEdBQUc7d0JBQ1BJLFNBQVM7NEJBQUVDLFNBQVM7NEJBQUdDLEdBQUc7d0JBQUc7d0JBQzdCQyxhQUFhOzRCQUFFRixTQUFTOzRCQUFHQyxHQUFHO3dCQUFFO3dCQUNoQ0UsVUFBVTs0QkFBRUMsTUFBTTt3QkFBSzt3QkFDdkJDLFlBQVk7NEJBQUVDLFVBQVU7d0JBQUk7d0JBQzVCWixXQUFVOzswQ0FFVixRQUFDYixPQUFPMEIsSUFBSTtnQ0FDUlIsU0FBUztvQ0FBRUMsU0FBUztvQ0FBR1EsT0FBTztnQ0FBSTtnQ0FDbENOLGFBQWE7b0NBQUVGLFNBQVM7b0NBQUdRLE9BQU87Z0NBQUU7Z0NBQ3BDTCxVQUFVO29DQUFFQyxNQUFNO2dDQUFLO2dDQUN2QkMsWUFBWTtvQ0FBRUMsVUFBVTtnQ0FBSTtnQ0FDNUJaLFdBQVU7MENBQ2I7Ozs7OzswQ0FHRCxRQUFDZTtnQ0FBR2YsV0FBVTswQ0FBaUU7Ozs7OzswQ0FHL0UsUUFBQ2dCO2dDQUFFaEIsV0FBVTswQ0FBNEQ7Ozs7Ozs7Ozs7OztrQ0FNN0UsUUFBQ0M7d0JBQUlELFdBQVU7a0NBQ1ZSLE1BQU15QixHQUFHLENBQUMsQ0FBQ0MsTUFBTUM7NEJBQ2QsTUFBTUMsT0FBT0YsS0FBS3hCLElBQUk7NEJBQ3RCLHFCQUNJLFFBQUNQLE9BQU9jLEdBQUc7Z0NBRVBJLFNBQVM7b0NBQUVDLFNBQVM7b0NBQUdDLEdBQUc7Z0NBQUc7Z0NBQzdCQyxhQUFhO29DQUFFRixTQUFTO29DQUFHQyxHQUFHO2dDQUFFO2dDQUNoQ0UsVUFBVTtvQ0FBRUMsTUFBTTtnQ0FBSztnQ0FDdkJDLFlBQVk7b0NBQUVDLFVBQVU7b0NBQUtTLE9BQU9GLFFBQVE7Z0NBQUk7Z0NBQ2hEbkIsV0FBVTs7b0NBR1RtQixRQUFRM0IsTUFBTThCLE1BQU0sR0FBRyxtQkFDcEIsUUFBQ3JCO3dDQUFJRCxXQUFVOzs7Ozs7a0RBSW5CLFFBQUNDO3dDQUFJRCxXQUFVOzswREFFWCxRQUFDQztnREFBSUQsV0FBVTswREFDVmtCLEtBQUt6QixNQUFNOzs7Ozs7MERBSWhCLFFBQUNRO2dEQUFJRCxXQUFXLENBQUMsd0NBQXdDLEVBQUVrQixLQUFLckIsS0FBSyxDQUFDLDhGQUE4RixDQUFDOzBEQUNqSyxjQUFBLFFBQUN1QjtvREFBS3BCLFdBQVU7Ozs7Ozs7Ozs7OzBEQUlwQixRQUFDdUI7Z0RBQUd2QixXQUFVOzBEQUNUa0IsS0FBS3ZCLEtBQUs7Ozs7OzswREFFZixRQUFDcUI7Z0RBQUVoQixXQUFVOzBEQUNSa0IsS0FBS3RCLFdBQVc7Ozs7OzswREFJckIsUUFBQ0s7Z0RBQUlELFdBQVU7Ozs7Ozs7Ozs7Ozs7K0JBakNka0IsS0FBS3pCLE1BQU07Ozs7O3dCQXFDNUI7Ozs7OztrQ0FJSixRQUFDTixPQUFPYyxHQUFHO3dCQUNQSSxTQUFTOzRCQUFFQyxTQUFTOzRCQUFHQyxHQUFHO3dCQUFHO3dCQUM3QkMsYUFBYTs0QkFBRUYsU0FBUzs0QkFBR0MsR0FBRzt3QkFBRTt3QkFDaENFLFVBQVU7NEJBQUVDLE1BQU07d0JBQUs7d0JBQ3ZCQyxZQUFZOzRCQUFFQyxVQUFVOzRCQUFLUyxPQUFPO3dCQUFJO3dCQUN4Q3JCLFdBQVU7OzBDQUVWLFFBQUNnQjtnQ0FBRWhCLFdBQVU7O29DQUE2QztrREFDNUMsUUFBQ2E7d0NBQUtiLFdBQVU7a0RBQWU7Ozs7OztvQ0FBb0I7Ozs7Ozs7MENBRWpFLFFBQUNnQjtnQ0FBRWhCLFdBQVU7MENBQTBDOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFPM0UsR0FBRzs7QUFFSEYsa0JBQWtCMEIsV0FBVyxHQUFHIn0=

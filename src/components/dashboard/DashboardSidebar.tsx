@@ -1,15 +1,16 @@
-import { 
-  Home, 
-  Plane, 
-  Calendar, 
-  User, 
-  Heart, 
+import {
+  Home,
+  Plane,
+  Calendar,
+  User,
+  Heart,
   Settings,
   LogOut,
   ChevronLeft,
   ChevronRight,
   ClipboardList,
-  Sparkles
+  Sparkles,
+  FileText
 } from 'lucide-react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -32,6 +33,7 @@ import { Button } from '@/components/ui/button';
 const menuItems = [
   { title: 'Dashboard', url: '/dashboard', icon: Home },
   { title: 'Browse Trips', url: '/dashboard/trips', icon: Plane },
+  { title: 'My Proposals', url: '/dashboard/proposals', icon: FileText },
   { title: 'Surprise Trip', url: '/dashboard/surprise-suggestions', icon: Sparkles },
   { title: 'My Requests', url: '/dashboard/requests', icon: ClipboardList },
   { title: 'My Bookings', url: '/dashboard/bookings', icon: Calendar },

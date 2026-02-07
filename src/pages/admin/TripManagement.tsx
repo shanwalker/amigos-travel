@@ -169,8 +169,9 @@ const TripManagement = () => {
       toast({ title: 'Success', description: 'Trip created successfully!' });
       setIsCreateOpen(false);
       resetForm();
-    } catch (error: any) {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      resetForm();
+    } catch (error) {
+      toast({ title: 'Error', description: error instanceof Error ? error.message : 'Unknown error', variant: 'destructive' });
     }
   };
 
@@ -229,8 +230,10 @@ const TripManagement = () => {
       setIsEditOpen(false);
       setEditingTrip(null);
       resetForm();
-    } catch (error: any) {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      setEditingTrip(null);
+      resetForm();
+    } catch (error) {
+      toast({ title: 'Error', description: error instanceof Error ? error.message : 'Unknown error', variant: 'destructive' });
     }
   };
 
@@ -240,8 +243,9 @@ const TripManagement = () => {
       await deleteTrip.mutateAsync(deleteConfirmId);
       toast({ title: 'Success', description: 'Trip deleted successfully!' });
       setDeleteConfirmId(null);
-    } catch (error: any) {
-      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+      setDeleteConfirmId(null);
+    } catch (error) {
+      toast({ title: 'Error', description: error instanceof Error ? error.message : 'Unknown error', variant: 'destructive' });
     }
   };
 

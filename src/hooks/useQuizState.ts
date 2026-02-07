@@ -205,6 +205,11 @@ export function useQuizState(): UseQuizStateReturn {
             return false;
         }
 
+        if (key === 'planningDatesType' && value === 'fixed') {
+            const dates = state.specificDates;
+            if (!dates.start || !dates.end) return false;
+        }
+
         return true;
     }, [state]);
 

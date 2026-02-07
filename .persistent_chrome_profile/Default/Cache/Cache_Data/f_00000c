@@ -1,0 +1,1242 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/pages/Index.tsx");import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope;
+
+let prevRefreshReg;
+let prevRefreshSig;
+
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react-swc can't detect preamble. Something is wrong."
+    );
+  }
+
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+
+import __vite__cjsImport2_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=c3ff4a43"; const _jsxDEV = __vite__cjsImport2_react_jsxDevRuntime["jsxDEV"]; const _Fragment = __vite__cjsImport2_react_jsxDevRuntime["Fragment"];
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=8e948b43"; const useState = __vite__cjsImport3_react["useState"]; const lazy = __vite__cjsImport3_react["lazy"]; const Suspense = __vite__cjsImport3_react["Suspense"]; const memo = __vite__cjsImport3_react["memo"];
+import { Navbar } from "/src/components/Navbar.tsx";
+import { HeroSection } from "/src/components/HeroSection.tsx?t=1770313026870";
+import { HeroSectionRedesign } from "/src/components/HeroSectionRedesign.tsx?t=1770313026870";
+import { HowItWorksSection } from "/src/components/HowItWorksSection.tsx";
+import { Footer } from "/src/components/Footer.tsx";
+import { ChatFab } from "/src/components/ChatFab.tsx";
+import { LazySection } from "/src/components/LazySection.tsx";
+// NEW Main Components
+import { HeroMain } from "/src/components/home/HeroMain.tsx?t=1770313026870";
+import { BlogSection } from "/src/components/home/BlogSection.tsx";
+// Lazy load below-the-fold sections
+const TripSearchBar = /*#__PURE__*/ lazy(()=>import("/src/components/TripSearchBar.tsx").then((m)=>({
+            default: m.TripSearchBar
+        })));
+_c = TripSearchBar;
+const CountdownBannerSection = /*#__PURE__*/ lazy(()=>import("/src/components/CountdownBannerSection.tsx?t=1770313026870").then((m)=>({
+            default: m.CountdownBannerSection
+        })));
+_c1 = CountdownBannerSection;
+const MeetYourTribeSection = /*#__PURE__*/ lazy(()=>import("/src/components/MeetYourTribeSection.tsx").then((m)=>({
+            default: m.MeetYourTribeSection
+        })));
+_c2 = MeetYourTribeSection;
+const AmigoWaySection = /*#__PURE__*/ lazy(()=>import("/src/components/AmigoWaySection.tsx").then((m)=>({
+            default: m.AmigoWaySection
+        })));
+_c3 = AmigoWaySection;
+const MemoryReelSection = /*#__PURE__*/ lazy(()=>import("/src/components/MemoryReelSection.tsx").then((m)=>({
+            default: m.MemoryReelSection
+        })));
+_c4 = MemoryReelSection;
+const TrustShieldSection = /*#__PURE__*/ lazy(()=>import("/src/components/TrustShieldSection.tsx").then((m)=>({
+            default: m.TrustShieldSection
+        })));
+_c5 = TrustShieldSection;
+const TestimonialsSection = /*#__PURE__*/ lazy(()=>import("/src/components/TestimonialsSection.tsx").then((m)=>({
+            default: m.TestimonialsSection
+        })));
+_c6 = TestimonialsSection;
+const TravelQuizSection = /*#__PURE__*/ lazy(()=>import("/src/components/TravelQuizSection.tsx").then((m)=>({
+            default: m.TravelQuizSection
+        })));
+_c7 = TravelQuizSection;
+const TravelStoriesSection = /*#__PURE__*/ lazy(()=>import("/src/components/TravelStoriesSection.tsx").then((m)=>({
+            default: m.TravelStoriesSection
+        })));
+_c8 = TravelStoriesSection;
+// Trip type sections - lazy loaded
+const SurpriseTripSection = /*#__PURE__*/ lazy(()=>import("/src/components/trips/SurpriseTripSection.tsx"));
+_c9 = SurpriseTripSection;
+const FeaturedTripsCarousel = /*#__PURE__*/ lazy(()=>import("/src/components/trips/FeaturedTripsCarousel.tsx"));
+_c10 = FeaturedTripsCarousel;
+const ReservableTripsGrid = /*#__PURE__*/ lazy(()=>import("/src/components/trips/ReservableTripsGrid.tsx"));
+_c11 = ReservableTripsGrid;
+const StandardPackagesGrid = /*#__PURE__*/ lazy(()=>import("/src/components/trips/StandardPackagesGrid.tsx"));
+_c12 = StandardPackagesGrid;
+const CustomTripCTA = /*#__PURE__*/ lazy(()=>import("/src/components/trips/CustomTripCTA.tsx"));
+_c13 = CustomTripCTA;
+const LocalBuddiesSection = /*#__PURE__*/ lazy(()=>import("/src/components/buddies/LocalBuddiesSection.tsx"));
+_c14 = LocalBuddiesSection;
+// V2 Components - lazy loaded
+const CursorSpotlight = /*#__PURE__*/ lazy(()=>import("/src/components/v2/CursorSpotlight.tsx").then((m)=>({
+            default: m.CursorSpotlight
+        })));
+_c15 = CursorSpotlight;
+const HeroSectionV2 = /*#__PURE__*/ lazy(()=>import("/src/components/HeroSectionV2.tsx").then((m)=>({
+            default: m.HeroSectionV2
+        })));
+_c16 = HeroSectionV2;
+const AppSyncSection = /*#__PURE__*/ lazy(()=>import("/src/components/HeroSectionV2.tsx").then((m)=>({
+            default: m.AppSyncSection
+        })));
+_c17 = AppSyncSection;
+const FlashPackBentoGrid = /*#__PURE__*/ lazy(()=>import("/src/components/HeroSectionV2.tsx").then((m)=>({
+            default: m.FlashPackBentoGrid
+        })));
+_c18 = FlashPackBentoGrid;
+const InfiniteMemoryReel = /*#__PURE__*/ lazy(()=>import("/src/components/HeroSectionV2.tsx").then((m)=>({
+            default: m.InfiniteMemoryReel
+        })));
+_c19 = InfiniteMemoryReel;
+const MarkerPenTestimonials = /*#__PURE__*/ lazy(()=>import("/src/components/HeroSectionV2.tsx").then((m)=>({
+            default: m.MarkerPenTestimonials
+        })));
+_c20 = MarkerPenTestimonials;
+// Minimal loading placeholder
+const SectionLoader = /*#__PURE__*/ memo(_c21 = ()=>/*#__PURE__*/ _jsxDEV("div", {
+        className: "min-h-[100px] flex items-center justify-center",
+        children: /*#__PURE__*/ _jsxDEV("div", {
+            className: "w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin"
+        }, void 0, false, {
+            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+            lineNumber: 44,
+            columnNumber: 5
+        }, this)
+    }, void 0, false, {
+        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+        lineNumber: 43,
+        columnNumber: 3
+    }, this));
+_c22 = SectionLoader;
+SectionLoader.displayName = 'SectionLoader';
+const Index = ()=>{
+    _s();
+    const [currentVersion, setCurrentVersion] = useState('main');
+    return /*#__PURE__*/ _jsxDEV("div", {
+        className: "min-h-screen bg-background",
+        children: [
+            /*#__PURE__*/ _jsxDEV(Navbar, {
+                currentVersion: currentVersion,
+                onVersionChange: setCurrentVersion
+            }, void 0, false, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                lineNumber: 54,
+                columnNumber: 7
+            }, this),
+            currentVersion === 'main' ? /*#__PURE__*/ _jsxDEV(_Fragment, {
+                children: [
+                    /*#__PURE__*/ _jsxDEV(HeroMain, {}, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 61,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 65,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(CountdownBannerSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 66,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 65,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 64,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("section", {
+                        className: "relative z-20 mt-4 mb-8 px-4",
+                        children: /*#__PURE__*/ _jsxDEV("div", {
+                            className: "container mx-auto",
+                            children: [
+                                /*#__PURE__*/ _jsxDEV(Suspense, {
+                                    fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                        lineNumber: 73,
+                                        columnNumber: 35
+                                    }, void 0),
+                                    children: /*#__PURE__*/ _jsxDEV(TripSearchBar, {}, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                        lineNumber: 74,
+                                        columnNumber: 17
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                    lineNumber: 73,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    className: "text-center mt-6",
+                                    children: [
+                                        /*#__PURE__*/ _jsxDEV("p", {
+                                            className: "text-lg font-semibold text-foreground mb-2",
+                                            children: [
+                                                "Join over ",
+                                                /*#__PURE__*/ _jsxDEV("span", {
+                                                    className: "text-primary",
+                                                    children: "10,000 Amigos"
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                                    lineNumber: 78,
+                                                    columnNumber: 29
+                                                }, this),
+                                                " who have explored the world with us"
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                            lineNumber: 77,
+                                            columnNumber: 17
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDEV("p", {
+                                            className: "text-sm text-muted-foreground font-sans",
+                                            children: "🔒 We respect your privacy—your info is safe with us"
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                            lineNumber: 80,
+                                            columnNumber: 17
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                    lineNumber: 76,
+                                    columnNumber: 15
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 72,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 71,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 89,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(HowItWorksSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 90,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 89,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 88,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 96,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(AmigoWaySection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 97,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 96,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 95,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 103,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(MemoryReelSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 104,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 103,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 102,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 110,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(TrustShieldSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 111,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 110,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 109,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 117,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(BlogSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 118,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 117,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 116,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true) : currentVersion === 'v1' ? /*#__PURE__*/ _jsxDEV(_Fragment, {
+                children: [
+                    /*#__PURE__*/ _jsxDEV(HeroSection, {}, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 125,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 128,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(HowItWorksSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 129,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 128,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 127,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 134,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(TripSearchBar, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 135,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 134,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 133,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 140,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(SurpriseTripSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 141,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 140,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 139,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 146,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(FeaturedTripsCarousel, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 147,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 146,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 145,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 152,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(ReservableTripsGrid, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 153,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 152,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 151,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 158,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(CountdownBannerSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 159,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 158,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 157,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 164,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(MeetYourTribeSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 165,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 164,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 163,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 170,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(StandardPackagesGrid, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 171,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 170,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 169,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 176,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(AmigoWaySection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 177,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 176,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 175,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 182,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(MemoryReelSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 183,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 182,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 181,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 188,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(TrustShieldSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 189,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 188,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 187,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 194,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(TestimonialsSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 195,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 194,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 193,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 200,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(LocalBuddiesSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 201,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 200,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 199,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 206,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(CustomTripCTA, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 207,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 206,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 205,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 212,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(TravelQuizSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 213,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 212,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 211,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 218,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(TravelStoriesSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 219,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 218,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 217,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true) : currentVersion === 'redesign' ? /*#__PURE__*/ _jsxDEV(_Fragment, {
+                children: [
+                    /*#__PURE__*/ _jsxDEV(HeroSectionRedesign, {}, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 226,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 229,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(HowItWorksSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 230,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 229,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 228,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 236,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(TripSearchBar, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 237,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 236,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 235,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 243,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(SurpriseTripSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 244,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 243,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 242,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 250,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(FeaturedTripsCarousel, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 251,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 250,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 249,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 257,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(ReservableTripsGrid, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 258,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 257,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 256,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 263,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(CountdownBannerSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 264,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 263,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 262,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 269,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(MeetYourTribeSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 270,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 269,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 268,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 276,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(StandardPackagesGrid, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 277,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 276,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 275,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 282,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(AmigoWaySection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 283,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 282,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 281,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 288,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(MemoryReelSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 289,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 288,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 287,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 294,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(TrustShieldSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 295,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 294,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 293,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 300,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(TestimonialsSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 301,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 300,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 299,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 307,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(LocalBuddiesSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 308,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 307,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 306,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 314,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(CustomTripCTA, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 315,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 314,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 313,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 320,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(TravelQuizSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 321,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 320,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 319,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 326,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(TravelStoriesSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 327,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 326,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 325,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true) : /*#__PURE__*/ _jsxDEV(Suspense, {
+                fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                    lineNumber: 332,
+                    columnNumber: 29
+                }, void 0),
+                children: [
+                    /*#__PURE__*/ _jsxDEV(CursorSpotlight, {}, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 333,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(HeroSectionV2, {}, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 334,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 336,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(AppSyncSection, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 337,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 336,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 335,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 341,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(FlashPackBentoGrid, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 342,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 341,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 340,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 346,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(InfiniteMemoryReel, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 347,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 346,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 345,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(LazySection, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(SectionLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 351,
+                                columnNumber: 33
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(MarkerPenTestimonials, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                                lineNumber: 352,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                            lineNumber: 351,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                        lineNumber: 350,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                lineNumber: 332,
+                columnNumber: 9
+            }, this),
+            /*#__PURE__*/ _jsxDEV(Footer, {}, void 0, false, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                lineNumber: 357,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV(ChatFab, {}, void 0, false, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+                lineNumber: 358,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx",
+        lineNumber: 53,
+        columnNumber: 5
+    }, this);
+};
+_s(Index, "uDEeJkd6XTkI0J/YhIcFFCF3pJI=");
+_c23 = Index;
+export default Index;
+var _c, _c1, _c2, _c3, _c4, _c5, _c6, _c7, _c8, _c9, _c10, _c11, _c12, _c13, _c14, _c15, _c16, _c17, _c18, _c19, _c20, _c21, _c22, _c23;
+$RefreshReg$(_c, "TripSearchBar");
+$RefreshReg$(_c1, "CountdownBannerSection");
+$RefreshReg$(_c2, "MeetYourTribeSection");
+$RefreshReg$(_c3, "AmigoWaySection");
+$RefreshReg$(_c4, "MemoryReelSection");
+$RefreshReg$(_c5, "TrustShieldSection");
+$RefreshReg$(_c6, "TestimonialsSection");
+$RefreshReg$(_c7, "TravelQuizSection");
+$RefreshReg$(_c8, "TravelStoriesSection");
+$RefreshReg$(_c9, "SurpriseTripSection");
+$RefreshReg$(_c10, "FeaturedTripsCarousel");
+$RefreshReg$(_c11, "ReservableTripsGrid");
+$RefreshReg$(_c12, "StandardPackagesGrid");
+$RefreshReg$(_c13, "CustomTripCTA");
+$RefreshReg$(_c14, "LocalBuddiesSection");
+$RefreshReg$(_c15, "CursorSpotlight");
+$RefreshReg$(_c16, "HeroSectionV2");
+$RefreshReg$(_c17, "AppSyncSection");
+$RefreshReg$(_c18, "FlashPackBentoGrid");
+$RefreshReg$(_c19, "InfiniteMemoryReel");
+$RefreshReg$(_c20, "MarkerPenTestimonials");
+$RefreshReg$(_c21, "SectionLoader$memo");
+$RefreshReg$(_c22, "SectionLoader");
+$RefreshReg$(_c23, "Index");
+
+
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+
+
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/Index.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkluZGV4LnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyB1c2VTdGF0ZSwgbGF6eSwgU3VzcGVuc2UsIG1lbW8gfSBmcm9tICdyZWFjdCc7XHJcbmltcG9ydCB7IE5hdmJhciB9IGZyb20gJ0AvY29tcG9uZW50cy9OYXZiYXInO1xyXG5pbXBvcnQgeyBIZXJvU2VjdGlvbiB9IGZyb20gJ0AvY29tcG9uZW50cy9IZXJvU2VjdGlvbic7XHJcbmltcG9ydCB7IEhlcm9TZWN0aW9uUmVkZXNpZ24gfSBmcm9tICdAL2NvbXBvbmVudHMvSGVyb1NlY3Rpb25SZWRlc2lnbic7XHJcbmltcG9ydCB7IEhvd0l0V29ya3NTZWN0aW9uIH0gZnJvbSAnQC9jb21wb25lbnRzL0hvd0l0V29ya3NTZWN0aW9uJztcclxuaW1wb3J0IHsgRm9vdGVyIH0gZnJvbSAnQC9jb21wb25lbnRzL0Zvb3Rlcic7XHJcbmltcG9ydCB7IENoYXRGYWIgfSBmcm9tICdAL2NvbXBvbmVudHMvQ2hhdEZhYic7XHJcbmltcG9ydCB7IExhenlTZWN0aW9uIH0gZnJvbSAnQC9jb21wb25lbnRzL0xhenlTZWN0aW9uJztcclxuXHJcbi8vIE5FVyBNYWluIENvbXBvbmVudHNcclxuaW1wb3J0IHsgSGVyb01haW4gfSBmcm9tICdAL2NvbXBvbmVudHMvaG9tZS9IZXJvTWFpbic7XHJcbmltcG9ydCB7IEJsb2dTZWN0aW9uIH0gZnJvbSAnQC9jb21wb25lbnRzL2hvbWUvQmxvZ1NlY3Rpb24nO1xyXG5cclxuLy8gTGF6eSBsb2FkIGJlbG93LXRoZS1mb2xkIHNlY3Rpb25zXHJcbmNvbnN0IFRyaXBTZWFyY2hCYXIgPSBsYXp5KCgpID0+IGltcG9ydCgnQC9jb21wb25lbnRzL1RyaXBTZWFyY2hCYXInKS50aGVuKG0gPT4gKHsgZGVmYXVsdDogbS5UcmlwU2VhcmNoQmFyIH0pKSk7XHJcbmNvbnN0IENvdW50ZG93bkJhbm5lclNlY3Rpb24gPSBsYXp5KCgpID0+IGltcG9ydCgnQC9jb21wb25lbnRzL0NvdW50ZG93bkJhbm5lclNlY3Rpb24nKS50aGVuKG0gPT4gKHsgZGVmYXVsdDogbS5Db3VudGRvd25CYW5uZXJTZWN0aW9uIH0pKSk7XHJcbmNvbnN0IE1lZXRZb3VyVHJpYmVTZWN0aW9uID0gbGF6eSgoKSA9PiBpbXBvcnQoJ0AvY29tcG9uZW50cy9NZWV0WW91clRyaWJlU2VjdGlvbicpLnRoZW4obSA9PiAoeyBkZWZhdWx0OiBtLk1lZXRZb3VyVHJpYmVTZWN0aW9uIH0pKSk7XHJcbmNvbnN0IEFtaWdvV2F5U2VjdGlvbiA9IGxhenkoKCkgPT4gaW1wb3J0KCdAL2NvbXBvbmVudHMvQW1pZ29XYXlTZWN0aW9uJykudGhlbihtID0+ICh7IGRlZmF1bHQ6IG0uQW1pZ29XYXlTZWN0aW9uIH0pKSk7XHJcbmNvbnN0IE1lbW9yeVJlZWxTZWN0aW9uID0gbGF6eSgoKSA9PiBpbXBvcnQoJ0AvY29tcG9uZW50cy9NZW1vcnlSZWVsU2VjdGlvbicpLnRoZW4obSA9PiAoeyBkZWZhdWx0OiBtLk1lbW9yeVJlZWxTZWN0aW9uIH0pKSk7XHJcbmNvbnN0IFRydXN0U2hpZWxkU2VjdGlvbiA9IGxhenkoKCkgPT4gaW1wb3J0KCdAL2NvbXBvbmVudHMvVHJ1c3RTaGllbGRTZWN0aW9uJykudGhlbihtID0+ICh7IGRlZmF1bHQ6IG0uVHJ1c3RTaGllbGRTZWN0aW9uIH0pKSk7XHJcbmNvbnN0IFRlc3RpbW9uaWFsc1NlY3Rpb24gPSBsYXp5KCgpID0+IGltcG9ydCgnQC9jb21wb25lbnRzL1Rlc3RpbW9uaWFsc1NlY3Rpb24nKS50aGVuKG0gPT4gKHsgZGVmYXVsdDogbS5UZXN0aW1vbmlhbHNTZWN0aW9uIH0pKSk7XHJcbmNvbnN0IFRyYXZlbFF1aXpTZWN0aW9uID0gbGF6eSgoKSA9PiBpbXBvcnQoJ0AvY29tcG9uZW50cy9UcmF2ZWxRdWl6U2VjdGlvbicpLnRoZW4obSA9PiAoeyBkZWZhdWx0OiBtLlRyYXZlbFF1aXpTZWN0aW9uIH0pKSk7XHJcbmNvbnN0IFRyYXZlbFN0b3JpZXNTZWN0aW9uID0gbGF6eSgoKSA9PiBpbXBvcnQoJ0AvY29tcG9uZW50cy9UcmF2ZWxTdG9yaWVzU2VjdGlvbicpLnRoZW4obSA9PiAoeyBkZWZhdWx0OiBtLlRyYXZlbFN0b3JpZXNTZWN0aW9uIH0pKSk7XHJcblxyXG4vLyBUcmlwIHR5cGUgc2VjdGlvbnMgLSBsYXp5IGxvYWRlZFxyXG5jb25zdCBTdXJwcmlzZVRyaXBTZWN0aW9uID0gbGF6eSgoKSA9PiBpbXBvcnQoJ0AvY29tcG9uZW50cy90cmlwcy9TdXJwcmlzZVRyaXBTZWN0aW9uJykpO1xyXG5jb25zdCBGZWF0dXJlZFRyaXBzQ2Fyb3VzZWwgPSBsYXp5KCgpID0+IGltcG9ydCgnQC9jb21wb25lbnRzL3RyaXBzL0ZlYXR1cmVkVHJpcHNDYXJvdXNlbCcpKTtcclxuY29uc3QgUmVzZXJ2YWJsZVRyaXBzR3JpZCA9IGxhenkoKCkgPT4gaW1wb3J0KCdAL2NvbXBvbmVudHMvdHJpcHMvUmVzZXJ2YWJsZVRyaXBzR3JpZCcpKTtcclxuY29uc3QgU3RhbmRhcmRQYWNrYWdlc0dyaWQgPSBsYXp5KCgpID0+IGltcG9ydCgnQC9jb21wb25lbnRzL3RyaXBzL1N0YW5kYXJkUGFja2FnZXNHcmlkJykpO1xyXG5jb25zdCBDdXN0b21UcmlwQ1RBID0gbGF6eSgoKSA9PiBpbXBvcnQoJ0AvY29tcG9uZW50cy90cmlwcy9DdXN0b21UcmlwQ1RBJykpO1xyXG5jb25zdCBMb2NhbEJ1ZGRpZXNTZWN0aW9uID0gbGF6eSgoKSA9PiBpbXBvcnQoJ0AvY29tcG9uZW50cy9idWRkaWVzL0xvY2FsQnVkZGllc1NlY3Rpb24nKSk7XHJcblxyXG4vLyBWMiBDb21wb25lbnRzIC0gbGF6eSBsb2FkZWRcclxuY29uc3QgQ3Vyc29yU3BvdGxpZ2h0ID0gbGF6eSgoKSA9PiBpbXBvcnQoJ0AvY29tcG9uZW50cy92Mi9DdXJzb3JTcG90bGlnaHQnKS50aGVuKG0gPT4gKHsgZGVmYXVsdDogbS5DdXJzb3JTcG90bGlnaHQgfSkpKTtcclxuY29uc3QgSGVyb1NlY3Rpb25WMiA9IGxhenkoKCkgPT4gaW1wb3J0KCdAL2NvbXBvbmVudHMvSGVyb1NlY3Rpb25WMicpLnRoZW4obSA9PiAoeyBkZWZhdWx0OiBtLkhlcm9TZWN0aW9uVjIgfSkpKTtcclxuY29uc3QgQXBwU3luY1NlY3Rpb24gPSBsYXp5KCgpID0+IGltcG9ydCgnQC9jb21wb25lbnRzL0hlcm9TZWN0aW9uVjInKS50aGVuKG0gPT4gKHsgZGVmYXVsdDogbS5BcHBTeW5jU2VjdGlvbiB9KSkpO1xyXG5jb25zdCBGbGFzaFBhY2tCZW50b0dyaWQgPSBsYXp5KCgpID0+IGltcG9ydCgnQC9jb21wb25lbnRzL0hlcm9TZWN0aW9uVjInKS50aGVuKG0gPT4gKHsgZGVmYXVsdDogbS5GbGFzaFBhY2tCZW50b0dyaWQgfSkpKTtcclxuY29uc3QgSW5maW5pdGVNZW1vcnlSZWVsID0gbGF6eSgoKSA9PiBpbXBvcnQoJ0AvY29tcG9uZW50cy9IZXJvU2VjdGlvblYyJykudGhlbihtID0+ICh7IGRlZmF1bHQ6IG0uSW5maW5pdGVNZW1vcnlSZWVsIH0pKSk7XHJcbmNvbnN0IE1hcmtlclBlblRlc3RpbW9uaWFscyA9IGxhenkoKCkgPT4gaW1wb3J0KCdAL2NvbXBvbmVudHMvSGVyb1NlY3Rpb25WMicpLnRoZW4obSA9PiAoeyBkZWZhdWx0OiBtLk1hcmtlclBlblRlc3RpbW9uaWFscyB9KSkpO1xyXG5cclxuLy8gTWluaW1hbCBsb2FkaW5nIHBsYWNlaG9sZGVyXHJcbmNvbnN0IFNlY3Rpb25Mb2FkZXIgPSBtZW1vKCgpID0+IChcclxuICA8ZGl2IGNsYXNzTmFtZT1cIm1pbi1oLVsxMDBweF0gZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXJcIj5cclxuICAgIDxkaXYgY2xhc3NOYW1lPVwidy02IGgtNiBib3JkZXItMiBib3JkZXItcHJpbWFyeSBib3JkZXItdC10cmFuc3BhcmVudCByb3VuZGVkLWZ1bGwgYW5pbWF0ZS1zcGluXCIgLz5cclxuICA8L2Rpdj5cclxuKSk7XHJcblNlY3Rpb25Mb2FkZXIuZGlzcGxheU5hbWUgPSAnU2VjdGlvbkxvYWRlcic7XHJcblxyXG5jb25zdCBJbmRleCA9ICgpID0+IHtcclxuICBjb25zdCBbY3VycmVudFZlcnNpb24sIHNldEN1cnJlbnRWZXJzaW9uXSA9IHVzZVN0YXRlPCd2MScgfCAndjInIHwgJ3JlZGVzaWduJyB8ICdtYWluJz4oJ21haW4nKTtcclxuXHJcbiAgcmV0dXJuIChcclxuICAgIDxkaXYgY2xhc3NOYW1lPVwibWluLWgtc2NyZWVuIGJnLWJhY2tncm91bmRcIj5cclxuICAgICAgPE5hdmJhclxyXG4gICAgICAgIGN1cnJlbnRWZXJzaW9uPXtjdXJyZW50VmVyc2lvbn1cclxuICAgICAgICBvblZlcnNpb25DaGFuZ2U9e3NldEN1cnJlbnRWZXJzaW9ufVxyXG4gICAgICAvPlxyXG4gICAgICB7Y3VycmVudFZlcnNpb24gPT09ICdtYWluJyA/IChcclxuICAgICAgICA8PlxyXG4gICAgICAgICAgey8qIDEuIEhlcm8gU2VjdGlvbiAoSHlicmlkKSAqL31cclxuICAgICAgICAgIDxIZXJvTWFpbiAvPlxyXG5cclxuICAgICAgICAgIHsvKiAyLiBGT01PIC8gTGl2ZSBVcGRhdGVzIChWMSkgKi99XHJcbiAgICAgICAgICA8TGF6eVNlY3Rpb24+XHJcbiAgICAgICAgICAgIDxTdXNwZW5zZSBmYWxsYmFjaz17PFNlY3Rpb25Mb2FkZXIgLz59PlxyXG4gICAgICAgICAgICAgIDxDb3VudGRvd25CYW5uZXJTZWN0aW9uIC8+XHJcbiAgICAgICAgICAgIDwvU3VzcGVuc2U+XHJcbiAgICAgICAgICA8L0xhenlTZWN0aW9uPlxyXG5cclxuICAgICAgICAgIHsvKiAzLiBTZWFyY2ggJiBUcnVzdCAoVjEgKyBDbGVhbmVkIFRleHQpICovfVxyXG4gICAgICAgICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwicmVsYXRpdmUgei0yMCBtdC00IG1iLTggcHgtNFwiPlxyXG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImNvbnRhaW5lciBteC1hdXRvXCI+XHJcbiAgICAgICAgICAgICAgPFN1c3BlbnNlIGZhbGxiYWNrPXs8U2VjdGlvbkxvYWRlciAvPn0+XHJcbiAgICAgICAgICAgICAgICA8VHJpcFNlYXJjaEJhciAvPlxyXG4gICAgICAgICAgICAgIDwvU3VzcGVuc2U+XHJcbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJ0ZXh0LWNlbnRlciBtdC02XCI+XHJcbiAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9XCJ0ZXh0LWxnIGZvbnQtc2VtaWJvbGQgdGV4dC1mb3JlZ3JvdW5kIG1iLTJcIj5cclxuICAgICAgICAgICAgICAgICAgSm9pbiBvdmVyIDxzcGFuIGNsYXNzTmFtZT1cInRleHQtcHJpbWFyeVwiPjEwLDAwMCBBbWlnb3M8L3NwYW4+IHdobyBoYXZlIGV4cGxvcmVkIHRoZSB3b3JsZCB3aXRoIHVzXHJcbiAgICAgICAgICAgICAgICA8L3A+XHJcbiAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9XCJ0ZXh0LXNtIHRleHQtbXV0ZWQtZm9yZWdyb3VuZCBmb250LXNhbnNcIj5cclxuICAgICAgICAgICAgICAgICAg8J+UkiBXZSByZXNwZWN0IHlvdXIgcHJpdmFjeeKAlHlvdXIgaW5mbyBpcyBzYWZlIHdpdGggdXNcclxuICAgICAgICAgICAgICAgIDwvcD5cclxuICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICA8L3NlY3Rpb24+XHJcblxyXG4gICAgICAgICAgey8qIDQuIEhvdyBJdCBXb3JrcyAoVjEpICovfVxyXG4gICAgICAgICAgPExhenlTZWN0aW9uPlxyXG4gICAgICAgICAgICA8U3VzcGVuc2UgZmFsbGJhY2s9ezxTZWN0aW9uTG9hZGVyIC8+fT5cclxuICAgICAgICAgICAgICA8SG93SXRXb3Jrc1NlY3Rpb24gLz5cclxuICAgICAgICAgICAgPC9TdXNwZW5zZT5cclxuICAgICAgICAgIDwvTGF6eVNlY3Rpb24+XHJcblxyXG4gICAgICAgICAgey8qIDUuIFRoZSBBbWlnbyBXYXkgKFYxKSAqL31cclxuICAgICAgICAgIDxMYXp5U2VjdGlvbj5cclxuICAgICAgICAgICAgPFN1c3BlbnNlIGZhbGxiYWNrPXs8U2VjdGlvbkxvYWRlciAvPn0+XHJcbiAgICAgICAgICAgICAgPEFtaWdvV2F5U2VjdGlvbiAvPlxyXG4gICAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICAgPC9MYXp5U2VjdGlvbj5cclxuXHJcbiAgICAgICAgICB7LyogNi4gTWVtb3J5IFJlZWwgKFYxKSAqL31cclxuICAgICAgICAgIDxMYXp5U2VjdGlvbj5cclxuICAgICAgICAgICAgPFN1c3BlbnNlIGZhbGxiYWNrPXs8U2VjdGlvbkxvYWRlciAvPn0+XHJcbiAgICAgICAgICAgICAgPE1lbW9yeVJlZWxTZWN0aW9uIC8+XHJcbiAgICAgICAgICAgIDwvU3VzcGVuc2U+XHJcbiAgICAgICAgICA8L0xhenlTZWN0aW9uPlxyXG5cclxuICAgICAgICAgIHsvKiA3LiBUcmF2ZWwgV2l0aCBDb25maWRlbmNlIChWMSkgLSBUcnVzdFNoaWVsZFNlY3Rpb24gKi99XHJcbiAgICAgICAgICA8TGF6eVNlY3Rpb24+XHJcbiAgICAgICAgICAgIDxTdXNwZW5zZSBmYWxsYmFjaz17PFNlY3Rpb25Mb2FkZXIgLz59PlxyXG4gICAgICAgICAgICAgIDxUcnVzdFNoaWVsZFNlY3Rpb24gLz5cclxuICAgICAgICAgICAgPC9TdXNwZW5zZT5cclxuICAgICAgICAgIDwvTGF6eVNlY3Rpb24+XHJcblxyXG4gICAgICAgICAgey8qIDguIEJsb2dzIChORVcpICovfVxyXG4gICAgICAgICAgPExhenlTZWN0aW9uPlxyXG4gICAgICAgICAgICA8U3VzcGVuc2UgZmFsbGJhY2s9ezxTZWN0aW9uTG9hZGVyIC8+fT5cclxuICAgICAgICAgICAgICA8QmxvZ1NlY3Rpb24gLz5cclxuICAgICAgICAgICAgPC9TdXNwZW5zZT5cclxuICAgICAgICAgIDwvTGF6eVNlY3Rpb24+XHJcbiAgICAgICAgPC8+XHJcbiAgICAgICkgOiBjdXJyZW50VmVyc2lvbiA9PT0gJ3YxJyA/IChcclxuICAgICAgICA8PlxyXG4gICAgICAgICAgey8qIE9yaWdpbmFsIFYxIEhlcm8gd2l0aCBzY3JvbGxpbmcgdHJpcCBjYXJkcyAqL31cclxuICAgICAgICAgIDxIZXJvU2VjdGlvbiAvPlxyXG5cclxuICAgICAgICAgIDxMYXp5U2VjdGlvbj5cclxuICAgICAgICAgICAgPFN1c3BlbnNlIGZhbGxiYWNrPXs8U2VjdGlvbkxvYWRlciAvPn0+XHJcbiAgICAgICAgICAgICAgPEhvd0l0V29ya3NTZWN0aW9uIC8+XHJcbiAgICAgICAgICAgIDwvU3VzcGVuc2U+XHJcbiAgICAgICAgICA8L0xhenlTZWN0aW9uPlxyXG5cclxuICAgICAgICAgIDxMYXp5U2VjdGlvbj5cclxuICAgICAgICAgICAgPFN1c3BlbnNlIGZhbGxiYWNrPXs8U2VjdGlvbkxvYWRlciAvPn0+XHJcbiAgICAgICAgICAgICAgPFRyaXBTZWFyY2hCYXIgLz5cclxuICAgICAgICAgICAgPC9TdXNwZW5zZT5cclxuICAgICAgICAgIDwvTGF6eVNlY3Rpb24+XHJcblxyXG4gICAgICAgICAgPExhenlTZWN0aW9uPlxyXG4gICAgICAgICAgICA8U3VzcGVuc2UgZmFsbGJhY2s9ezxTZWN0aW9uTG9hZGVyIC8+fT5cclxuICAgICAgICAgICAgICA8U3VycHJpc2VUcmlwU2VjdGlvbiAvPlxyXG4gICAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICAgPC9MYXp5U2VjdGlvbj5cclxuXHJcbiAgICAgICAgICA8TGF6eVNlY3Rpb24+XHJcbiAgICAgICAgICAgIDxTdXNwZW5zZSBmYWxsYmFjaz17PFNlY3Rpb25Mb2FkZXIgLz59PlxyXG4gICAgICAgICAgICAgIDxGZWF0dXJlZFRyaXBzQ2Fyb3VzZWwgLz5cclxuICAgICAgICAgICAgPC9TdXNwZW5zZT5cclxuICAgICAgICAgIDwvTGF6eVNlY3Rpb24+XHJcblxyXG4gICAgICAgICAgPExhenlTZWN0aW9uPlxyXG4gICAgICAgICAgICA8U3VzcGVuc2UgZmFsbGJhY2s9ezxTZWN0aW9uTG9hZGVyIC8+fT5cclxuICAgICAgICAgICAgICA8UmVzZXJ2YWJsZVRyaXBzR3JpZCAvPlxyXG4gICAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICAgPC9MYXp5U2VjdGlvbj5cclxuXHJcbiAgICAgICAgICA8TGF6eVNlY3Rpb24+XHJcbiAgICAgICAgICAgIDxTdXNwZW5zZSBmYWxsYmFjaz17PFNlY3Rpb25Mb2FkZXIgLz59PlxyXG4gICAgICAgICAgICAgIDxDb3VudGRvd25CYW5uZXJTZWN0aW9uIC8+XHJcbiAgICAgICAgICAgIDwvU3VzcGVuc2U+XHJcbiAgICAgICAgICA8L0xhenlTZWN0aW9uPlxyXG5cclxuICAgICAgICAgIDxMYXp5U2VjdGlvbj5cclxuICAgICAgICAgICAgPFN1c3BlbnNlIGZhbGxiYWNrPXs8U2VjdGlvbkxvYWRlciAvPn0+XHJcbiAgICAgICAgICAgICAgPE1lZXRZb3VyVHJpYmVTZWN0aW9uIC8+XHJcbiAgICAgICAgICAgIDwvU3VzcGVuc2U+XHJcbiAgICAgICAgICA8L0xhenlTZWN0aW9uPlxyXG5cclxuICAgICAgICAgIDxMYXp5U2VjdGlvbj5cclxuICAgICAgICAgICAgPFN1c3BlbnNlIGZhbGxiYWNrPXs8U2VjdGlvbkxvYWRlciAvPn0+XHJcbiAgICAgICAgICAgICAgPFN0YW5kYXJkUGFja2FnZXNHcmlkIC8+XHJcbiAgICAgICAgICAgIDwvU3VzcGVuc2U+XHJcbiAgICAgICAgICA8L0xhenlTZWN0aW9uPlxyXG5cclxuICAgICAgICAgIDxMYXp5U2VjdGlvbj5cclxuICAgICAgICAgICAgPFN1c3BlbnNlIGZhbGxiYWNrPXs8U2VjdGlvbkxvYWRlciAvPn0+XHJcbiAgICAgICAgICAgICAgPEFtaWdvV2F5U2VjdGlvbiAvPlxyXG4gICAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICAgPC9MYXp5U2VjdGlvbj5cclxuXHJcbiAgICAgICAgICA8TGF6eVNlY3Rpb24+XHJcbiAgICAgICAgICAgIDxTdXNwZW5zZSBmYWxsYmFjaz17PFNlY3Rpb25Mb2FkZXIgLz59PlxyXG4gICAgICAgICAgICAgIDxNZW1vcnlSZWVsU2VjdGlvbiAvPlxyXG4gICAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICAgPC9MYXp5U2VjdGlvbj5cclxuXHJcbiAgICAgICAgICA8TGF6eVNlY3Rpb24+XHJcbiAgICAgICAgICAgIDxTdXNwZW5zZSBmYWxsYmFjaz17PFNlY3Rpb25Mb2FkZXIgLz59PlxyXG4gICAgICAgICAgICAgIDxUcnVzdFNoaWVsZFNlY3Rpb24gLz5cclxuICAgICAgICAgICAgPC9TdXNwZW5zZT5cclxuICAgICAgICAgIDwvTGF6eVNlY3Rpb24+XHJcblxyXG4gICAgICAgICAgPExhenlTZWN0aW9uPlxyXG4gICAgICAgICAgICA8U3VzcGVuc2UgZmFsbGJhY2s9ezxTZWN0aW9uTG9hZGVyIC8+fT5cclxuICAgICAgICAgICAgICA8VGVzdGltb25pYWxzU2VjdGlvbiAvPlxyXG4gICAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICAgPC9MYXp5U2VjdGlvbj5cclxuXHJcbiAgICAgICAgICA8TGF6eVNlY3Rpb24+XHJcbiAgICAgICAgICAgIDxTdXNwZW5zZSBmYWxsYmFjaz17PFNlY3Rpb25Mb2FkZXIgLz59PlxyXG4gICAgICAgICAgICAgIDxMb2NhbEJ1ZGRpZXNTZWN0aW9uIC8+XHJcbiAgICAgICAgICAgIDwvU3VzcGVuc2U+XHJcbiAgICAgICAgICA8L0xhenlTZWN0aW9uPlxyXG5cclxuICAgICAgICAgIDxMYXp5U2VjdGlvbj5cclxuICAgICAgICAgICAgPFN1c3BlbnNlIGZhbGxiYWNrPXs8U2VjdGlvbkxvYWRlciAvPn0+XHJcbiAgICAgICAgICAgICAgPEN1c3RvbVRyaXBDVEEgLz5cclxuICAgICAgICAgICAgPC9TdXNwZW5zZT5cclxuICAgICAgICAgIDwvTGF6eVNlY3Rpb24+XHJcblxyXG4gICAgICAgICAgPExhenlTZWN0aW9uPlxyXG4gICAgICAgICAgICA8U3VzcGVuc2UgZmFsbGJhY2s9ezxTZWN0aW9uTG9hZGVyIC8+fT5cclxuICAgICAgICAgICAgICA8VHJhdmVsUXVpelNlY3Rpb24gLz5cclxuICAgICAgICAgICAgPC9TdXNwZW5zZT5cclxuICAgICAgICAgIDwvTGF6eVNlY3Rpb24+XHJcblxyXG4gICAgICAgICAgPExhenlTZWN0aW9uPlxyXG4gICAgICAgICAgICA8U3VzcGVuc2UgZmFsbGJhY2s9ezxTZWN0aW9uTG9hZGVyIC8+fT5cclxuICAgICAgICAgICAgICA8VHJhdmVsU3Rvcmllc1NlY3Rpb24gLz5cclxuICAgICAgICAgICAgPC9TdXNwZW5zZT5cclxuICAgICAgICAgIDwvTGF6eVNlY3Rpb24+XHJcbiAgICAgICAgPC8+XHJcbiAgICAgICkgOiBjdXJyZW50VmVyc2lvbiA9PT0gJ3JlZGVzaWduJyA/IChcclxuICAgICAgICA8PlxyXG4gICAgICAgICAgey8qIFJlZGVzaWduZWQgUHJvZmlsZS1GaXJzdCBFeHBlcmllbmNlICovfVxyXG4gICAgICAgICAgPEhlcm9TZWN0aW9uUmVkZXNpZ24gLz5cclxuXHJcbiAgICAgICAgICA8TGF6eVNlY3Rpb24+XHJcbiAgICAgICAgICAgIDxTdXNwZW5zZSBmYWxsYmFjaz17PFNlY3Rpb25Mb2FkZXIgLz59PlxyXG4gICAgICAgICAgICAgIDxIb3dJdFdvcmtzU2VjdGlvbiAvPlxyXG4gICAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICAgPC9MYXp5U2VjdGlvbj5cclxuXHJcbiAgICAgICAgICB7LyogQmVsb3ctdGhlLWZvbGQgc2VjdGlvbnMgLSBsYXp5IGxvYWRlZCB3aGVuIHNjcm9sbGVkIGludG8gdmlldyAqL31cclxuICAgICAgICAgIDxMYXp5U2VjdGlvbj5cclxuICAgICAgICAgICAgPFN1c3BlbnNlIGZhbGxiYWNrPXs8U2VjdGlvbkxvYWRlciAvPn0+XHJcbiAgICAgICAgICAgICAgPFRyaXBTZWFyY2hCYXIgLz5cclxuICAgICAgICAgICAgPC9TdXNwZW5zZT5cclxuICAgICAgICAgIDwvTGF6eVNlY3Rpb24+XHJcblxyXG4gICAgICAgICAgey8qIE5FVzogU3VycHJpc2UgVHJpcCBIZXJvIFNlY3Rpb24gKi99XHJcbiAgICAgICAgICA8TGF6eVNlY3Rpb24+XHJcbiAgICAgICAgICAgIDxTdXNwZW5zZSBmYWxsYmFjaz17PFNlY3Rpb25Mb2FkZXIgLz59PlxyXG4gICAgICAgICAgICAgIDxTdXJwcmlzZVRyaXBTZWN0aW9uIC8+XHJcbiAgICAgICAgICAgIDwvU3VzcGVuc2U+XHJcbiAgICAgICAgICA8L0xhenlTZWN0aW9uPlxyXG5cclxuICAgICAgICAgIHsvKiBORVc6IEZlYXR1cmVkIEdyb3VwIFRyaXBzIENhcm91c2VsICovfVxyXG4gICAgICAgICAgPExhenlTZWN0aW9uPlxyXG4gICAgICAgICAgICA8U3VzcGVuc2UgZmFsbGJhY2s9ezxTZWN0aW9uTG9hZGVyIC8+fT5cclxuICAgICAgICAgICAgICA8RmVhdHVyZWRUcmlwc0Nhcm91c2VsIC8+XHJcbiAgICAgICAgICAgIDwvU3VzcGVuc2U+XHJcbiAgICAgICAgICA8L0xhenlTZWN0aW9uPlxyXG5cclxuICAgICAgICAgIHsvKiBORVc6IFJlc2VydmFibGUgVHJpcHMgR3JpZCAqL31cclxuICAgICAgICAgIDxMYXp5U2VjdGlvbj5cclxuICAgICAgICAgICAgPFN1c3BlbnNlIGZhbGxiYWNrPXs8U2VjdGlvbkxvYWRlciAvPn0+XHJcbiAgICAgICAgICAgICAgPFJlc2VydmFibGVUcmlwc0dyaWQgLz5cclxuICAgICAgICAgICAgPC9TdXNwZW5zZT5cclxuICAgICAgICAgIDwvTGF6eVNlY3Rpb24+XHJcblxyXG4gICAgICAgICAgPExhenlTZWN0aW9uPlxyXG4gICAgICAgICAgICA8U3VzcGVuc2UgZmFsbGJhY2s9ezxTZWN0aW9uTG9hZGVyIC8+fT5cclxuICAgICAgICAgICAgICA8Q291bnRkb3duQmFubmVyU2VjdGlvbiAvPlxyXG4gICAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICAgPC9MYXp5U2VjdGlvbj5cclxuXHJcbiAgICAgICAgICA8TGF6eVNlY3Rpb24+XHJcbiAgICAgICAgICAgIDxTdXNwZW5zZSBmYWxsYmFjaz17PFNlY3Rpb25Mb2FkZXIgLz59PlxyXG4gICAgICAgICAgICAgIDxNZWV0WW91clRyaWJlU2VjdGlvbiAvPlxyXG4gICAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICAgPC9MYXp5U2VjdGlvbj5cclxuXHJcbiAgICAgICAgICB7LyogTkVXOiBTdGFuZGFyZCBQYWNrYWdlcyBHcmlkICovfVxyXG4gICAgICAgICAgPExhenlTZWN0aW9uPlxyXG4gICAgICAgICAgICA8U3VzcGVuc2UgZmFsbGJhY2s9ezxTZWN0aW9uTG9hZGVyIC8+fT5cclxuICAgICAgICAgICAgICA8U3RhbmRhcmRQYWNrYWdlc0dyaWQgLz5cclxuICAgICAgICAgICAgPC9TdXNwZW5zZT5cclxuICAgICAgICAgIDwvTGF6eVNlY3Rpb24+XHJcblxyXG4gICAgICAgICAgPExhenlTZWN0aW9uPlxyXG4gICAgICAgICAgICA8U3VzcGVuc2UgZmFsbGJhY2s9ezxTZWN0aW9uTG9hZGVyIC8+fT5cclxuICAgICAgICAgICAgICA8QW1pZ29XYXlTZWN0aW9uIC8+XHJcbiAgICAgICAgICAgIDwvU3VzcGVuc2U+XHJcbiAgICAgICAgICA8L0xhenlTZWN0aW9uPlxyXG5cclxuICAgICAgICAgIDxMYXp5U2VjdGlvbj5cclxuICAgICAgICAgICAgPFN1c3BlbnNlIGZhbGxiYWNrPXs8U2VjdGlvbkxvYWRlciAvPn0+XHJcbiAgICAgICAgICAgICAgPE1lbW9yeVJlZWxTZWN0aW9uIC8+XHJcbiAgICAgICAgICAgIDwvU3VzcGVuc2U+XHJcbiAgICAgICAgICA8L0xhenlTZWN0aW9uPlxyXG5cclxuICAgICAgICAgIDxMYXp5U2VjdGlvbj5cclxuICAgICAgICAgICAgPFN1c3BlbnNlIGZhbGxiYWNrPXs8U2VjdGlvbkxvYWRlciAvPn0+XHJcbiAgICAgICAgICAgICAgPFRydXN0U2hpZWxkU2VjdGlvbiAvPlxyXG4gICAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICAgPC9MYXp5U2VjdGlvbj5cclxuXHJcbiAgICAgICAgICA8TGF6eVNlY3Rpb24+XHJcbiAgICAgICAgICAgIDxTdXNwZW5zZSBmYWxsYmFjaz17PFNlY3Rpb25Mb2FkZXIgLz59PlxyXG4gICAgICAgICAgICAgIDxUZXN0aW1vbmlhbHNTZWN0aW9uIC8+XHJcbiAgICAgICAgICAgIDwvU3VzcGVuc2U+XHJcbiAgICAgICAgICA8L0xhenlTZWN0aW9uPlxyXG5cclxuICAgICAgICAgIHsvKiBORVc6IExvY2FsIEJ1ZGRpZXMgU2VjdGlvbiAqL31cclxuICAgICAgICAgIDxMYXp5U2VjdGlvbj5cclxuICAgICAgICAgICAgPFN1c3BlbnNlIGZhbGxiYWNrPXs8U2VjdGlvbkxvYWRlciAvPn0+XHJcbiAgICAgICAgICAgICAgPExvY2FsQnVkZGllc1NlY3Rpb24gLz5cclxuICAgICAgICAgICAgPC9TdXNwZW5zZT5cclxuICAgICAgICAgIDwvTGF6eVNlY3Rpb24+XHJcblxyXG4gICAgICAgICAgey8qIE5FVzogQ3VzdG9tIFRyaXAgQ1RBICovfVxyXG4gICAgICAgICAgPExhenlTZWN0aW9uPlxyXG4gICAgICAgICAgICA8U3VzcGVuc2UgZmFsbGJhY2s9ezxTZWN0aW9uTG9hZGVyIC8+fT5cclxuICAgICAgICAgICAgICA8Q3VzdG9tVHJpcENUQSAvPlxyXG4gICAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICAgPC9MYXp5U2VjdGlvbj5cclxuXHJcbiAgICAgICAgICA8TGF6eVNlY3Rpb24+XHJcbiAgICAgICAgICAgIDxTdXNwZW5zZSBmYWxsYmFjaz17PFNlY3Rpb25Mb2FkZXIgLz59PlxyXG4gICAgICAgICAgICAgIDxUcmF2ZWxRdWl6U2VjdGlvbiAvPlxyXG4gICAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICAgPC9MYXp5U2VjdGlvbj5cclxuXHJcbiAgICAgICAgICA8TGF6eVNlY3Rpb24+XHJcbiAgICAgICAgICAgIDxTdXNwZW5zZSBmYWxsYmFjaz17PFNlY3Rpb25Mb2FkZXIgLz59PlxyXG4gICAgICAgICAgICAgIDxUcmF2ZWxTdG9yaWVzU2VjdGlvbiAvPlxyXG4gICAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICAgPC9MYXp5U2VjdGlvbj5cclxuICAgICAgICA8Lz5cclxuICAgICAgKSA6IChcclxuICAgICAgICA8U3VzcGVuc2UgZmFsbGJhY2s9ezxTZWN0aW9uTG9hZGVyIC8+fT5cclxuICAgICAgICAgIDxDdXJzb3JTcG90bGlnaHQgLz5cclxuICAgICAgICAgIDxIZXJvU2VjdGlvblYyIC8+XHJcbiAgICAgICAgICA8TGF6eVNlY3Rpb24+XHJcbiAgICAgICAgICAgIDxTdXNwZW5zZSBmYWxsYmFjaz17PFNlY3Rpb25Mb2FkZXIgLz59PlxyXG4gICAgICAgICAgICAgIDxBcHBTeW5jU2VjdGlvbiAvPlxyXG4gICAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICAgPC9MYXp5U2VjdGlvbj5cclxuICAgICAgICAgIDxMYXp5U2VjdGlvbj5cclxuICAgICAgICAgICAgPFN1c3BlbnNlIGZhbGxiYWNrPXs8U2VjdGlvbkxvYWRlciAvPn0+XHJcbiAgICAgICAgICAgICAgPEZsYXNoUGFja0JlbnRvR3JpZCAvPlxyXG4gICAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICAgPC9MYXp5U2VjdGlvbj5cclxuICAgICAgICAgIDxMYXp5U2VjdGlvbj5cclxuICAgICAgICAgICAgPFN1c3BlbnNlIGZhbGxiYWNrPXs8U2VjdGlvbkxvYWRlciAvPn0+XHJcbiAgICAgICAgICAgICAgPEluZmluaXRlTWVtb3J5UmVlbCAvPlxyXG4gICAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICAgPC9MYXp5U2VjdGlvbj5cclxuICAgICAgICAgIDxMYXp5U2VjdGlvbj5cclxuICAgICAgICAgICAgPFN1c3BlbnNlIGZhbGxiYWNrPXs8U2VjdGlvbkxvYWRlciAvPn0+XHJcbiAgICAgICAgICAgICAgPE1hcmtlclBlblRlc3RpbW9uaWFscyAvPlxyXG4gICAgICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICAgICAgPC9MYXp5U2VjdGlvbj5cclxuICAgICAgICA8L1N1c3BlbnNlPlxyXG4gICAgICApfVxyXG4gICAgICA8Rm9vdGVyIC8+XHJcbiAgICAgIDxDaGF0RmFiIC8+XHJcbiAgICA8L2Rpdj5cclxuICApO1xyXG59O1xyXG5cclxuZXhwb3J0IGRlZmF1bHQgSW5kZXg7XHJcbiJdLCJuYW1lcyI6WyJ1c2VTdGF0ZSIsImxhenkiLCJTdXNwZW5zZSIsIm1lbW8iLCJOYXZiYXIiLCJIZXJvU2VjdGlvbiIsIkhlcm9TZWN0aW9uUmVkZXNpZ24iLCJIb3dJdFdvcmtzU2VjdGlvbiIsIkZvb3RlciIsIkNoYXRGYWIiLCJMYXp5U2VjdGlvbiIsIkhlcm9NYWluIiwiQmxvZ1NlY3Rpb24iLCJUcmlwU2VhcmNoQmFyIiwidGhlbiIsIm0iLCJkZWZhdWx0IiwiQ291bnRkb3duQmFubmVyU2VjdGlvbiIsIk1lZXRZb3VyVHJpYmVTZWN0aW9uIiwiQW1pZ29XYXlTZWN0aW9uIiwiTWVtb3J5UmVlbFNlY3Rpb24iLCJUcnVzdFNoaWVsZFNlY3Rpb24iLCJUZXN0aW1vbmlhbHNTZWN0aW9uIiwiVHJhdmVsUXVpelNlY3Rpb24iLCJUcmF2ZWxTdG9yaWVzU2VjdGlvbiIsIlN1cnByaXNlVHJpcFNlY3Rpb24iLCJGZWF0dXJlZFRyaXBzQ2Fyb3VzZWwiLCJSZXNlcnZhYmxlVHJpcHNHcmlkIiwiU3RhbmRhcmRQYWNrYWdlc0dyaWQiLCJDdXN0b21UcmlwQ1RBIiwiTG9jYWxCdWRkaWVzU2VjdGlvbiIsIkN1cnNvclNwb3RsaWdodCIsIkhlcm9TZWN0aW9uVjIiLCJBcHBTeW5jU2VjdGlvbiIsIkZsYXNoUGFja0JlbnRvR3JpZCIsIkluZmluaXRlTWVtb3J5UmVlbCIsIk1hcmtlclBlblRlc3RpbW9uaWFscyIsIlNlY3Rpb25Mb2FkZXIiLCJkaXYiLCJjbGFzc05hbWUiLCJkaXNwbGF5TmFtZSIsIkluZGV4IiwiY3VycmVudFZlcnNpb24iLCJzZXRDdXJyZW50VmVyc2lvbiIsIm9uVmVyc2lvbkNoYW5nZSIsImZhbGxiYWNrIiwic2VjdGlvbiIsInAiLCJzcGFuIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSxTQUFTQSxRQUFRLEVBQUVDLElBQUksRUFBRUMsUUFBUSxFQUFFQyxJQUFJLFFBQVEsUUFBUTtBQUN2RCxTQUFTQyxNQUFNLFFBQVEsc0JBQXNCO0FBQzdDLFNBQVNDLFdBQVcsUUFBUSwyQkFBMkI7QUFDdkQsU0FBU0MsbUJBQW1CLFFBQVEsbUNBQW1DO0FBQ3ZFLFNBQVNDLGlCQUFpQixRQUFRLGlDQUFpQztBQUNuRSxTQUFTQyxNQUFNLFFBQVEsc0JBQXNCO0FBQzdDLFNBQVNDLE9BQU8sUUFBUSx1QkFBdUI7QUFDL0MsU0FBU0MsV0FBVyxRQUFRLDJCQUEyQjtBQUV2RCxzQkFBc0I7QUFDdEIsU0FBU0MsUUFBUSxRQUFRLDZCQUE2QjtBQUN0RCxTQUFTQyxXQUFXLFFBQVEsZ0NBQWdDO0FBRTVELG9DQUFvQztBQUNwQyxNQUFNQyw4QkFBZ0JaLEtBQUssSUFBTSxNQUFNLENBQUMsOEJBQThCYSxJQUFJLENBQUNDLENBQUFBLElBQU0sQ0FBQTtZQUFFQyxTQUFTRCxFQUFFRixhQUFhO1FBQUMsQ0FBQTtLQUF0R0E7QUFDTixNQUFNSSx1Q0FBeUJoQixLQUFLLElBQU0sTUFBTSxDQUFDLHVDQUF1Q2EsSUFBSSxDQUFDQyxDQUFBQSxJQUFNLENBQUE7WUFBRUMsU0FBU0QsRUFBRUUsc0JBQXNCO1FBQUMsQ0FBQTtNQUFqSUE7QUFDTixNQUFNQyxxQ0FBdUJqQixLQUFLLElBQU0sTUFBTSxDQUFDLHFDQUFxQ2EsSUFBSSxDQUFDQyxDQUFBQSxJQUFNLENBQUE7WUFBRUMsU0FBU0QsRUFBRUcsb0JBQW9CO1FBQUMsQ0FBQTtNQUEzSEE7QUFDTixNQUFNQyxnQ0FBa0JsQixLQUFLLElBQU0sTUFBTSxDQUFDLGdDQUFnQ2Es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

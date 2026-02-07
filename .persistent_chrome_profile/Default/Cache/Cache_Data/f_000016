@@ -1,0 +1,451 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/Footer.tsx");import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope;
+
+let prevRefreshReg;
+let prevRefreshSig;
+
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react-swc can't detect preamble. Something is wrong."
+    );
+  }
+
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+
+import __vite__cjsImport2_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=c3ff4a43"; const _jsxDEV = __vite__cjsImport2_react_jsxDevRuntime["jsxDEV"];
+import { motion } from "/node_modules/.vite/deps/framer-motion.js?v=16c1ddc0";
+import { Instagram, Twitter, Youtube, Linkedin, Mail, MapPin, Phone } from "/node_modules/.vite/deps/lucide-react.js?v=31177f67";
+import logo from "/src/assets/logo.png?import";
+const footerLinks = {
+    destinations: [
+        {
+            label: 'Vietnam',
+            href: '#'
+        },
+        {
+            label: 'Thailand',
+            href: '#'
+        },
+        {
+            label: 'Bali',
+            href: '#'
+        },
+        {
+            label: 'Japan',
+            href: '#'
+        },
+        {
+            label: 'Greece',
+            href: '#'
+        }
+    ],
+    community: [
+        {
+            label: 'Join a Trip',
+            href: '#'
+        },
+        {
+            label: 'Host a Trip',
+            href: '#'
+        },
+        {
+            label: 'Travel Stories',
+            href: '#'
+        },
+        {
+            label: 'Amigo Events',
+            href: '#'
+        }
+    ],
+    help: [
+        {
+            label: 'FAQ',
+            href: '#'
+        },
+        {
+            label: 'Contact Us',
+            href: '#'
+        },
+        {
+            label: 'Safety',
+            href: '#'
+        },
+        {
+            label: 'Cancellation Policy',
+            href: '#'
+        }
+    ]
+};
+const socialLinks = [
+    {
+        icon: Instagram,
+        href: '#',
+        label: 'Instagram'
+    },
+    {
+        icon: Twitter,
+        href: '#',
+        label: 'Twitter'
+    },
+    {
+        icon: Youtube,
+        href: '#',
+        label: 'YouTube'
+    },
+    {
+        icon: Linkedin,
+        href: '#',
+        label: 'LinkedIn'
+    }
+];
+export const Footer = ()=>{
+    return /*#__PURE__*/ _jsxDEV("footer", {
+        className: "bg-navy-deep border-t border-foreground/10",
+        children: /*#__PURE__*/ _jsxDEV("div", {
+            className: "container mx-auto px-6 py-16",
+            children: [
+                /*#__PURE__*/ _jsxDEV("div", {
+                    className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12",
+                    children: [
+                        /*#__PURE__*/ _jsxDEV("div", {
+                            className: "lg:col-span-2",
+                            children: [
+                                /*#__PURE__*/ _jsxDEV("img", {
+                                    src: logo,
+                                    alt: "Travel Amigo",
+                                    loading: "lazy",
+                                    decoding: "async",
+                                    width: 122,
+                                    height: 48,
+                                    className: "h-12 w-auto mb-6"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                    lineNumber: 41,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("p", {
+                                    className: "text-muted-foreground font-inter mb-6 max-w-sm",
+                                    children: "Connecting travelers worldwide. Join curated group adventures and make memories that last a lifetime."
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                    lineNumber: 50,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    className: "space-y-3",
+                                    children: [
+                                        /*#__PURE__*/ _jsxDEV("div", {
+                                            className: "flex items-center gap-3 text-muted-foreground font-inter text-sm",
+                                            children: [
+                                                /*#__PURE__*/ _jsxDEV(Mail, {
+                                                    className: "w-4 h-4 text-primary"
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                                    lineNumber: 57,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ _jsxDEV("span", {
+                                                    children: "hello@travelamigo.com"
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                                    lineNumber: 58,
+                                                    columnNumber: 17
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                            lineNumber: 56,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDEV("div", {
+                                            className: "flex items-center gap-3 text-muted-foreground font-inter text-sm",
+                                            children: [
+                                                /*#__PURE__*/ _jsxDEV(Phone, {
+                                                    className: "w-4 h-4 text-primary"
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                                    lineNumber: 61,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ _jsxDEV("span", {
+                                                    children: "+91 98765 43210"
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                                    lineNumber: 62,
+                                                    columnNumber: 17
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                            lineNumber: 60,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDEV("div", {
+                                            className: "flex items-center gap-3 text-muted-foreground font-inter text-sm",
+                                            children: [
+                                                /*#__PURE__*/ _jsxDEV(MapPin, {
+                                                    className: "w-4 h-4 text-primary"
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                                    lineNumber: 65,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ _jsxDEV("span", {
+                                                    children: "Mumbai, India"
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                                    lineNumber: 66,
+                                                    columnNumber: 17
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                            lineNumber: 64,
+                                            columnNumber: 15
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                    lineNumber: 55,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    className: "flex gap-4 mt-6",
+                                    children: socialLinks.map((social)=>/*#__PURE__*/ _jsxDEV(motion.a, {
+                                            href: social.href,
+                                            whileHover: {
+                                                scale: 1.2,
+                                                y: -3
+                                            },
+                                            whileTap: {
+                                                scale: 0.95
+                                            },
+                                            className: "w-10 h-10 rounded-full glass-card flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors",
+                                            "aria-label": social.label,
+                                            children: /*#__PURE__*/ _jsxDEV(social.icon, {
+                                                className: "w-5 h-5"
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                                lineNumber: 81,
+                                                columnNumber: 19
+                                            }, this)
+                                        }, social.label, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                            lineNumber: 73,
+                                            columnNumber: 17
+                                        }, this))
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                    lineNumber: 71,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                            lineNumber: 40,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ _jsxDEV("div", {
+                            children: [
+                                /*#__PURE__*/ _jsxDEV("h4", {
+                                    className: "font-jakarta font-bold text-foreground mb-4",
+                                    children: "Destinations"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                    lineNumber: 89,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("ul", {
+                                    className: "space-y-3",
+                                    children: footerLinks.destinations.map((link)=>/*#__PURE__*/ _jsxDEV("li", {
+                                            children: /*#__PURE__*/ _jsxDEV("a", {
+                                                href: link.href,
+                                                className: "text-muted-foreground font-inter text-sm hover:text-primary transition-colors",
+                                                children: link.label
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                                lineNumber: 93,
+                                                columnNumber: 19
+                                            }, this)
+                                        }, link.label, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                            lineNumber: 92,
+                                            columnNumber: 17
+                                        }, this))
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                    lineNumber: 90,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                            lineNumber: 88,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ _jsxDEV("div", {
+                            children: [
+                                /*#__PURE__*/ _jsxDEV("h4", {
+                                    className: "font-jakarta font-bold text-foreground mb-4",
+                                    children: "Community"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                    lineNumber: 106,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("ul", {
+                                    className: "space-y-3",
+                                    children: footerLinks.community.map((link)=>/*#__PURE__*/ _jsxDEV("li", {
+                                            children: /*#__PURE__*/ _jsxDEV("a", {
+                                                href: link.href,
+                                                className: "text-muted-foreground font-inter text-sm hover:text-primary transition-colors",
+                                                children: link.label
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                                lineNumber: 110,
+                                                columnNumber: 19
+                                            }, this)
+                                        }, link.label, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                            lineNumber: 109,
+                                            columnNumber: 17
+                                        }, this))
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                    lineNumber: 107,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                            lineNumber: 105,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ _jsxDEV("div", {
+                            children: [
+                                /*#__PURE__*/ _jsxDEV("h4", {
+                                    className: "font-jakarta font-bold text-foreground mb-4",
+                                    children: "Help"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                    lineNumber: 123,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("ul", {
+                                    className: "space-y-3",
+                                    children: footerLinks.help.map((link)=>/*#__PURE__*/ _jsxDEV("li", {
+                                            children: /*#__PURE__*/ _jsxDEV("a", {
+                                                href: link.href,
+                                                className: "text-muted-foreground font-inter text-sm hover:text-primary transition-colors",
+                                                children: link.label
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                                lineNumber: 127,
+                                                columnNumber: 19
+                                            }, this)
+                                        }, link.label, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                            lineNumber: 126,
+                                            columnNumber: 17
+                                        }, this))
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                    lineNumber: 124,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                            lineNumber: 122,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                    lineNumber: 38,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ _jsxDEV("div", {
+                    className: "border-t border-foreground/10 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4",
+                    children: [
+                        /*#__PURE__*/ _jsxDEV("p", {
+                            className: "text-muted-foreground font-inter text-sm",
+                            children: "© 2025 Travel Amigo. All rights reserved."
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                            lineNumber: 141,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ _jsxDEV("div", {
+                            className: "flex gap-6",
+                            children: [
+                                /*#__PURE__*/ _jsxDEV("a", {
+                                    href: "#",
+                                    className: "text-muted-foreground font-inter text-sm hover:text-primary transition-colors",
+                                    children: "Privacy Policy"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                    lineNumber: 145,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("a", {
+                                    href: "#",
+                                    className: "text-muted-foreground font-inter text-sm hover:text-primary transition-colors",
+                                    children: "Terms of Service"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                                    lineNumber: 148,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                            lineNumber: 144,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+                    lineNumber: 140,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+            lineNumber: 37,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx",
+        lineNumber: 36,
+        columnNumber: 5
+    }, this);
+};
+_c = Footer;
+var _c;
+$RefreshReg$(_c, "Footer");
+
+
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+
+
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Footer.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkZvb3Rlci50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgbW90aW9uIH0gZnJvbSAnZnJhbWVyLW1vdGlvbic7XHJcbmltcG9ydCB7IEluc3RhZ3JhbSwgVHdpdHRlciwgWW91dHViZSwgTGlua2VkaW4sIE1haWwsIE1hcFBpbiwgUGhvbmUgfSBmcm9tICdsdWNpZGUtcmVhY3QnO1xyXG5pbXBvcnQgbG9nbyBmcm9tICdAL2Fzc2V0cy9sb2dvLnBuZyc7XHJcblxyXG5jb25zdCBmb290ZXJMaW5rcyA9IHtcclxuICBkZXN0aW5hdGlvbnM6IFtcclxuICAgIHsgbGFiZWw6ICdWaWV0bmFtJywgaHJlZjogJyMnIH0sXHJcbiAgICB7IGxhYmVsOiAnVGhhaWxhbmQnLCBocmVmOiAnIycgfSxcclxuICAgIHsgbGFiZWw6ICdCYWxpJywgaHJlZjogJyMnIH0sXHJcbiAgICB7IGxhYmVsOiAnSmFwYW4nLCBocmVmOiAnIycgfSxcclxuICAgIHsgbGFiZWw6ICdHcmVlY2UnLCBocmVmOiAnIycgfSxcclxuICBdLFxyXG4gIGNvbW11bml0eTogW1xyXG4gICAgeyBsYWJlbDogJ0pvaW4gYSBUcmlwJywgaHJlZjogJyMnIH0sXHJcbiAgICB7IGxhYmVsOiAnSG9zdCBhIFRyaXAnLCBocmVmOiAnIycgfSxcclxuICAgIHsgbGFiZWw6ICdUcmF2ZWwgU3RvcmllcycsIGhyZWY6ICcjJyB9LFxyXG4gICAgeyBsYWJlbDogJ0FtaWdvIEV2ZW50cycsIGhyZWY6ICcjJyB9LFxyXG4gIF0sXHJcbiAgaGVscDogW1xyXG4gICAgeyBsYWJlbDogJ0ZBUScsIGhyZWY6ICcjJyB9LFxyXG4gICAgeyBsYWJlbDogJ0NvbnRhY3QgVXMnLCBocmVmOiAnIycgfSxcclxuICAgIHsgbGFiZWw6ICdTYWZldHknLCBocmVmOiAnIycgfSxcclxuICAgIHsgbGFiZWw6ICdDYW5jZWxsYXRpb24gUG9saWN5JywgaHJlZjogJyMnIH0sXHJcbiAgXSxcclxufTtcclxuXHJcbmNvbnN0IHNvY2lhbExpbmtzID0gW1xyXG4gIHsgaWNvbjogSW5zdGFncmFtLCBocmVmOiAnIycsIGxhYmVsOiAnSW5zdGFncmFtJyB9LFxyXG4gIHsgaWNvbjogVHdpdHRlciwgaHJlZjogJyMnLCBsYWJlbDogJ1R3aXR0ZXInIH0sXHJcbiAgeyBpY29uOiBZb3V0dWJlLCBocmVmOiAnIycsIGxhYmVsOiAnWW91VHViZScgfSxcclxuICB7IGljb246IExpbmtlZGluLCBocmVmOiAnIycsIGxhYmVsOiAnTGlua2VkSW4nIH0sXHJcbl07XHJcblxyXG5leHBvcnQgY29uc3QgRm9vdGVyID0gKCkgPT4ge1xyXG4gIHJldHVybiAoXHJcbiAgICA8Zm9vdGVyIGNsYXNzTmFtZT1cImJnLW5hdnktZGVlcCBib3JkZXItdCBib3JkZXItZm9yZWdyb3VuZC8xMFwiPlxyXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImNvbnRhaW5lciBteC1hdXRvIHB4LTYgcHktMTZcIj5cclxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImdyaWQgZ3JpZC1jb2xzLTEgbWQ6Z3JpZC1jb2xzLTIgbGc6Z3JpZC1jb2xzLTUgZ2FwLTEyXCI+XHJcbiAgICAgICAgICB7LyogQnJhbmQgQ29sdW1uICovfVxyXG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJsZzpjb2wtc3Bhbi0yXCI+XHJcbiAgICAgICAgICAgIDxpbWcgXHJcbiAgICAgICAgICAgICAgc3JjPXtsb2dvfSBcclxuICAgICAgICAgICAgICBhbHQ9XCJUcmF2ZWwgQW1pZ29cIiBcclxuICAgICAgICAgICAgICBsb2FkaW5nPVwibGF6eVwiXHJcbiAgICAgICAgICAgICAgZGVjb2Rpbmc9XCJhc3luY1wiXHJcbiAgICAgICAgICAgICAgd2lkdGg9ezEyMn1cclxuICAgICAgICAgICAgICBoZWlnaHQ9ezQ4fVxyXG4gICAgICAgICAgICAgIGNsYXNzTmFtZT1cImgtMTIgdy1hdXRvIG1iLTZcIlxyXG4gICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICA8cCBjbGFzc05hbWU9XCJ0ZXh0LW11dGVkLWZvcmVncm91bmQgZm9udC1pbnRlciBtYi02IG1heC13LXNtXCI+XHJcbiAgICAgICAgICAgICAgQ29ubmVjdGluZyB0cmF2ZWxlcnMgd29ybGR3aWRlLiBKb2luIGN1cmF0ZWQgZ3JvdXAgYWR2ZW50dXJlcyBhbmQgbWFrZSBtZW1vcmllcyB0aGF0IGxhc3QgYSBsaWZldGltZS5cclxuICAgICAgICAgICAgPC9wPlxyXG4gICAgICAgICAgICBcclxuICAgICAgICAgICAgey8qIENvbnRhY3QgSW5mbyAqL31cclxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJzcGFjZS15LTNcIj5cclxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGdhcC0zIHRleHQtbXV0ZWQtZm9yZWdyb3VuZCBmb250LWludGVyIHRleHQtc21cIj5cclxuICAgICAgICAgICAgICAgIDxNYWlsIGNsYXNzTmFtZT1cInctNCBoLTQgdGV4dC1wcmltYXJ5XCIgLz5cclxuICAgICAgICAgICAgICAgIDxzcGFuPmhlbGxvQHRyYXZlbGFtaWdvLmNvbTwvc3Bhbj5cclxuICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGdhcC0zIHRleHQtbXV0ZWQtZm9yZWdyb3VuZCBmb250LWludGVyIHRleHQtc21cIj5cclxuICAgICAgICAgICAgICAgIDxQaG9uZSBjbGFzc05hbWU9XCJ3LTQgaC00IHRleHQtcHJpbWFyeVwiIC8+XHJcbiAgICAgICAgICAgICAgICA8c3Bhbj4rOTEgOTg3NjUgNDMyMTA8L3NwYW4+XHJcbiAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMyB0ZXh0LW11dGVkLWZvcmVncm91bmQgZm9udC1pbnRlciB0ZXh0LXNtXCI+XHJcbiAgICAgICAgICAgICAgICA8TWFwUGluIGNsYXNzTmFtZT1cInctNCBoLTQgdGV4dC1wcmltYXJ5XCIgLz5cclxuICAgICAgICAgICAgICAgIDxzcGFuPk11bWJhaSwgSW5kaWE8L3NwYW4+XHJcbiAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgIDwvZGl2PlxyXG5cclxuICAgICAgICAgICAgey8qIFNvY2lhbCBMaW5rcyAqL31cclxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGdhcC00IG10LTZcIj5cclxuICAgICAgICAgICAgICB7c29jaWFsTGlua3MubWFwKChzb2NpYWwpID0+IChcclxuICAgICAgICAgICAgICAgIDxtb3Rpb24uYVxyXG4gICAgICAgICAgICAgICAgICBrZXk9e3NvY2lhbC5sYWJlbH1cclxuICAgICAgICAgICAgICAgICAgaHJlZj17c29jaWFsLmhyZWZ9XHJcbiAgICAgICAgICAgICAgICAgIHdoaWxlSG92ZXI9e3sgc2NhbGU6IDEuMiwgeTogLTMgfX1cclxuICAgICAgICAgICAgICAgICAgd2hpbGVUYXA9e3sgc2NhbGU6IDAuOTUgfX1cclxuICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwidy0xMCBoLTEwIHJvdW5kZWQtZnVsbCBnbGFzcy1jYXJkIGZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIHRleHQtbXV0ZWQtZm9yZWdyb3VuZCBob3Zlcjp0ZXh0LXByaW1hcnkgaG92ZXI6Ym9yZGVyLXByaW1hcnkvNTAgdHJhbnNpdGlvbi1jb2xvcnNcIlxyXG4gICAgICAgICAgICAgICAgICBhcmlhLWxhYmVsPXtzb2NpYWwubGFiZWx9XHJcbiAgICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICAgIDxzb2NpYWwuaWNvbiBjbGFzc05hbWU9XCJ3LTUgaC01XCIgLz5cclxuICAgICAgICAgICAgICAgIDwvbW90aW9uLmE+XHJcbiAgICAgICAgICAgICAgKSl9XHJcbiAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgPC9kaXY+XHJcblxyXG4gICAgICAgICAgey8qIERlc3RpbmF0aW9ucyAqL31cclxuICAgICAgICAgIDxkaXY+XHJcbiAgICAgICAgICAgIDxoNCBjbGFzc05hbWU9XCJmb250LWpha2FydGEgZm9udC1ib2xkIHRleHQtZm9yZWdyb3VuZCBtYi00XCI+RGVzdGluYXRpb25zPC9oND5cclxuICAgICAgICAgICAgPHVsIGNsYXNzTmFtZT1cInNwYWNlLXktM1wiPlxyXG4gICAgICAgICAgICAgIHtmb290ZXJMaW5rcy5kZXN0aW5hdGlvbnMubWFwKChsaW5rKSA9PiAoXHJcbiAgICAgICAgICAgICAgICA8bGkga2V5PXtsaW5rLmxhYmVsfT5cclxuICAgICAgICAgICAgICAgICAgPGEgXHJcbiAgICAgICAgICAgICAgICAgICAgaHJlZj17bGluay5ocmVmfVxyXG4gICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cInRleHQtbXV0ZWQtZm9yZWdyb3VuZCBmb250LWludGVyIHRleHQtc20gaG92ZXI6dGV4dC1wcmltYXJ5IHRyYW5zaXRpb24tY29sb3JzXCJcclxuICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgIHtsaW5rLmxhYmVsfVxyXG4gICAgICAgICAgICAgICAgICA8L2E+XHJcbiAgICAgICAgICAgICAgICA8L2xpPlxyXG4gICAgICAgICAgICAgICkpfVxyXG4gICAgICAgICAgICA8L3VsPlxyXG4gICAgICAgICAgPC9kaXY+XHJcblxyXG4gICAgICAgICAgey8qIENvbW11bml0eSAqL31cclxuICAgICAgICAgIDxkaXY+XHJcbiAgICAgICAgICAgIDxoNCBjbGFzc05hbWU9XCJmb250LWpha2FydGEgZm9udC1ib2xkIHRleHQtZm9yZWdyb3VuZCBtYi00XCI+Q29tbXVuaXR5PC9oND5cclxuICAgICAgICAgICAgPHVsIGNsYXNzTmFtZT1cInNwYWNlLXktM1wiPlxyXG4gICAgICAgICAgICAgIHtmb290ZXJMaW5rcy5jb21tdW5pdHkubWFwKChsaW5rKSA9PiAoXHJcbiAgICAgICAgICAgICAgICA8bGkga2V5PXtsaW5rLmxhYmVsfT5cclxuICAgICAgICAgICAgICAgICAgPGEgXHJcbiAgICAgICAgICAgICAgICAgICAgaHJlZj17bGluay5ocmVmfVxyXG4gICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cInRleHQtbXV0ZWQtZm9yZWdyb3VuZCBmb250LWludGVyIHRleHQtc20gaG92ZXI6dGV4dC1wcmltYXJ5IHRyYW5zaXRpb24tY29sb3JzXCJcclxuICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgIHtsaW5rLmxhYmVsfVxyXG4gICAgICAgICAgICAgICAgICA8L2E+XHJcbiAgICAgICAgICAgICAgICA8L2xpPlxyXG4gICAgICAgICAgICAgICkpfVxyXG4gICAgICAgICAgICA8L3VsPlxyXG4gICAgICAgICAgPC9kaXY+XHJcblxyXG4gICAgICAgICAgey8qIEhlbHAgKi99XHJcbiAgICAgICAgICA8ZGl2PlxyXG4gICAgICAgICAgICA8aDQgY2xhc3NOYW1lPVwiZm9udC1qYWthcnRhIGZvbnQtYm9sZCB0ZXh0LWZvcmVncm91bmQgbWItNFwiPkhlbHA8L2g0PlxyXG4gICAgICAgICAgICA8dWwgY2xhc3NOYW1lPVwic3BhY2UteS0zXCI+XHJcbiAgICAgICAgICAgICAge2Zvb3RlckxpbmtzLmhlbHAubWFwKChsaW5rKSA9PiAoXHJcbiAgICAgICAgICAgICAgICA8bGkga2V5PXtsaW5rLmxhYmVsfT5cclxuICAgICAgICAgICAgICAgICAgPGEgXHJcbiAgICAgICAgICAgICAgICAgICAgaHJlZj17bGluay5ocmVmfVxyXG4gICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cInRleHQtbXV0ZWQtZm9yZWdyb3VuZCBmb250LWludGVyIHRleHQtc20gaG92ZXI6dGV4dC1wcmltYXJ5IHRyYW5zaXRpb24tY29sb3JzXCJcclxuICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgIHtsaW5rLmxhYmVsfVxyXG4gICAgICAgICAgICAgICAgICA8L2E+XHJcbiAgICAgICAgICAgICAgICA8L2xpPlxyXG4gICAgICAgICAgICAgICkpfVxyXG4gICAgICAgICAgICA8L3VsPlxyXG4gICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgPC9kaXY+XHJcblxyXG4gICAgICAgIHsvKiBCb3R0b20gQmFyICovfVxyXG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiYm9yZGVyLXQgYm9yZGVyLWZvcmVncm91bmQvMTAgbXQtMTIgcHQtOCBmbGV4IGZsZXgtY29sIG1kOmZsZXgtcm93IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWJldHdlZW4gZ2FwLTRcIj5cclxuICAgICAgICAgIDxwIGNsYXNzTmFtZT1cInRleHQtbXV0ZWQtZm9yZWdyb3VuZCBmb250LWludGVyIHRleHQtc21cIj5cclxuICAgICAgICAgICAgwqkgMjAyNSBUcmF2ZWwgQW1pZ28uIEFsbCByaWdodHMgcmVzZXJ2ZWQuXHJcbiAgICAgICAgICA8L3A+XHJcbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggZ2FwLTZcIj5cclxuICAgICAgICAgICAgPGEgaHJlZj1cIiNcIiBjbGFzc05hbWU9XCJ0ZXh0LW11dGVkLWZvcmVncm91bmQgZm9udC1pbnRlciB0ZXh0LXNtIGhvdmVyOnRleHQtcHJpbWFyeSB0cmFuc2l0aW9uLWNvbG9yc1wiPlxyXG4gICAgICAgICAgICAgIFByaXZhY3kgUG9saWN5XHJcbiAgICAgICAgICAgIDwvYT5cclxuICAgICAgICAgICAgPGEgaHJlZj1cIiNcIiBjbGFzc05hbWU9XCJ0ZXh0LW11dGVkLWZvcmVncm91bmQgZm9udC1pbnRlciB0ZXh0LXNtIGhvdmVyOnRleHQtcHJpbWFyeSB0cmFuc2l0aW9uLWNvbG9yc1wiPlxyXG4gICAgICAgICAgICAgIFRlcm1zIG9mIFNlcnZpY2VcclxuICAgICAgICAgICAgPC9hPlxyXG4gICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgPC9kaXY+XHJcbiAgICAgIDwvZGl2PlxyXG4gICAgPC9mb290ZXI+XHJcbiAgKTtcclxufTtcclxuIl0sIm5hbWVzIjpbIm1vdGlvbiIsIkluc3RhZ3JhbSIsIlR3aXR0ZXIiLCJZb3V0dWJlIiwiTGlua2VkaW4iLCJNYWlsIiwiTWFwUGluIiwiUGhvbmUiLCJsb2dvIiwiZm9vdGVyTGlua3MiLCJkZXN0aW5hdGlvbnMiLCJsYWJlbCIsImhyZWYiLCJjb21tdW5pdHkiLCJoZWxwIiwic29jaWFsTGlua3MiLCJpY29uIiwiRm9vdGVyIiwiZm9vdGVyIiwiY2xhc3NOYW1lIiwiZGl2IiwiaW1nIiwic3JjIiwiYWx0IiwibG9hZGluZyIsImRlY29kaW5nIiwid2lkdGgiLCJoZWlnaHQiLCJwIiwic3BhbiIsIm1hcCIsInNvY2lhbCIsImEiLCJ3aGlsZUhvdmVyIiwic2NhbGUiLCJ5Iiwid2hpbGVUYXAiLCJhcmlhLWxhYmVsIiwiaDQiLCJ1bCIsImxpbmsiLCJsaSJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSxTQUFTQSxNQUFNLFFBQVEsZ0JBQWdCO0FBQ3ZDLFNBQVNDLFNBQVMsRUFBRUMsT0FBTyxFQUFFQyxPQUFPLEVBQUVDLFFBQVEsRUFBRUMsSUFBSSxFQUFFQyxNQUFNLEVBQUVDLEtBQUssUUFBUSxlQUFlO0FBQzFGLE9BQU9DLFVBQVUsb0JBQW9CO0FBRXJDLE1BQU1DLGNBQWM7SUFDbEJDLGNBQWM7UUFDWjtZQUFFQyxPQUFPO1lBQVdDLE1BQU07UUFBSTtRQUM5QjtZQUFFRCxPQUFPO1lBQVlDLE1BQU07UUFBSTtRQUMvQjtZQUFFRCxPQUFPO1lBQVFDLE1BQU07UUFBSTtRQUMzQjtZQUFFRCxPQUFPO1lBQVNDLE1BQU07UUFBSTtRQUM1QjtZQUFFRCxPQUFPO1lBQVVDLE1BQU07UUFBSTtLQUM5QjtJQUNEQyxXQUFXO1FBQ1Q7WUFBRUYsT0FBTztZQUFlQyxNQUFNO1FBQUk7UUFDbEM7WUFBRUQsT0FBTztZQUFlQyxNQUFNO1FBQUk7UUFDbEM7WUFBRUQsT0FBTztZQUFrQkMsTUFBTTtRQUFJO1FBQ3JDO1lBQUVELE9BQU87WUFBZ0JDLE1BQU07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

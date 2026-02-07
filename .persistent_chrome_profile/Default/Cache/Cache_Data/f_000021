@@ -1,0 +1,485 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/pages/auth/AdminLogin.tsx");import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope;
+
+let prevRefreshReg;
+let prevRefreshSig;
+
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react-swc can't detect preamble. Something is wrong."
+    );
+  }
+
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+
+import __vite__cjsImport2_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=c3ff4a43"; const _jsxDEV = __vite__cjsImport2_react_jsxDevRuntime["jsxDEV"]; const _Fragment = __vite__cjsImport2_react_jsxDevRuntime["Fragment"];
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=8e948b43"; const useState = __vite__cjsImport3_react["useState"]; const useEffect = __vite__cjsImport3_react["useEffect"];
+import { useNavigate } from "/node_modules/.vite/deps/react-router-dom.js?v=65e862e2";
+import { useAuth } from "/src/contexts/AuthContext.tsx?t=1770313026870";
+import { supabase } from "/src/integrations/supabase/client.ts?t=1770313026870";
+import { Button } from "/src/components/ui/button.tsx";
+import { Input } from "/src/components/ui/input.tsx";
+import { Label } from "/src/components/ui/label.tsx";
+import { Alert, AlertDescription } from "/src/components/ui/alert.tsx";
+import { Loader2, Shield, Mail, Lock, AlertTriangle } from "/node_modules/.vite/deps/lucide-react.js?v=31177f67";
+import { motion } from "/node_modules/.vite/deps/framer-motion.js?v=16c1ddc0";
+const AdminLogin = ()=>{
+    _s();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const { signIn, user, isAdmin } = useAuth();
+    const navigate = useNavigate();
+    // Redirect if already logged in as admin
+    useEffect(()=>{
+        if (user && isAdmin) {
+            navigate('/admin', {
+                replace: true
+            });
+        }
+    }, [
+        user,
+        isAdmin,
+        navigate
+    ]);
+    const handleSubmit = async (e)=>{
+        e.preventDefault();
+        setError('');
+        setLoading(true);
+        const { error: signInError } = await signIn(email, password);
+        if (signInError) {
+            setError(signInError.message);
+            setLoading(false);
+            return;
+        }
+        // Get the current user and check admin role directly from database
+        const { data: { user: currentUser } } = await supabase.auth.getUser();
+        if (!currentUser) {
+            setError('Authentication failed');
+            setLoading(false);
+            return;
+        }
+        // Check if user has admin role
+        console.log('[AdminLogin] Checking admin role for user:', currentUser.id);
+        const { data: roleData, error: roleError } = await supabase.from('user_roles').select('role').eq('user_id', currentUser.id).eq('role', 'admin').maybeSingle();
+        console.log('[AdminLogin] Role check result:', {
+            roleData,
+            roleError
+        });
+        if (roleError) {
+            console.error('[AdminLogin] Role query error:', roleError);
+            setError(`Database error: ${roleError.message}`);
+            await supabase.auth.signOut();
+            setLoading(false);
+            return;
+        }
+        if (!roleData) {
+            console.log('[AdminLogin] No admin role found for user');
+            setError('Access denied. Admin privileges required.');
+            await supabase.auth.signOut();
+            setLoading(false);
+            return;
+        }
+        // User is admin, navigate to admin panel
+        navigate('/admin', {
+            replace: true
+        });
+    };
+    return /*#__PURE__*/ _jsxDEV("div", {
+        className: "min-h-screen flex items-center justify-center bg-[hsl(220,20%,8%)] relative overflow-hidden",
+        children: [
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "absolute inset-0 opacity-[0.03]",
+                children: /*#__PURE__*/ _jsxDEV("div", {
+                    className: "absolute inset-0",
+                    style: {
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+                    }
+                }, void 0, false, {
+                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                    lineNumber: 84,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                lineNumber: 83,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "absolute top-1/4 left-1/4 w-96 h-96 bg-red-500/10 rounded-full blur-[120px]"
+            }, void 0, false, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                lineNumber: 90,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-[120px]"
+            }, void 0, false, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                lineNumber: 91,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV(motion.div, {
+                initial: {
+                    opacity: 0,
+                    y: 20
+                },
+                animate: {
+                    opacity: 1,
+                    y: 0
+                },
+                transition: {
+                    duration: 0.6
+                },
+                className: "w-full max-w-md relative z-10 px-4",
+                children: [
+                    /*#__PURE__*/ _jsxDEV(motion.div, {
+                        initial: {
+                            scale: 0.8,
+                            opacity: 0
+                        },
+                        animate: {
+                            scale: 1,
+                            opacity: 1
+                        },
+                        transition: {
+                            delay: 0.2,
+                            duration: 0.5
+                        },
+                        className: "flex justify-center mb-8",
+                        children: /*#__PURE__*/ _jsxDEV("div", {
+                            className: "w-20 h-20 rounded-2xl bg-gradient-to-br from-red-500 to-orange-600 flex items-center justify-center shadow-2xl shadow-red-500/30",
+                            children: /*#__PURE__*/ _jsxDEV(Shield, {
+                                className: "h-10 w-10 text-white"
+                            }, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                lineNumber: 107,
+                                columnNumber: 13
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                            lineNumber: 106,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                        lineNumber: 100,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(motion.div, {
+                        initial: {
+                            opacity: 0,
+                            y: 10
+                        },
+                        animate: {
+                            opacity: 1,
+                            y: 0
+                        },
+                        transition: {
+                            delay: 0.3,
+                            duration: 0.5
+                        },
+                        className: "text-center mb-8",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV("h1", {
+                                className: "text-3xl font-bold text-white mb-2 tracking-tight",
+                                children: "Admin Portal"
+                            }, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                lineNumber: 118,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV("p", {
+                                className: "text-gray-400 text-sm",
+                                children: "Authorized personnel only"
+                            }, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                lineNumber: 119,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                        lineNumber: 112,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(motion.div, {
+                        initial: {
+                            opacity: 0,
+                            y: 10
+                        },
+                        animate: {
+                            opacity: 1,
+                            y: 0
+                        },
+                        transition: {
+                            delay: 0.4,
+                            duration: 0.5
+                        },
+                        className: "bg-white/[0.03] backdrop-blur-xl rounded-2xl border border-white/10 p-8",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV("form", {
+                                onSubmit: handleSubmit,
+                                className: "space-y-6",
+                                children: [
+                                    error && /*#__PURE__*/ _jsxDEV(Alert, {
+                                        className: "bg-red-500/10 border-red-500/30 text-red-400",
+                                        children: [
+                                            /*#__PURE__*/ _jsxDEV(AlertTriangle, {
+                                                className: "h-4 w-4"
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                                lineNumber: 132,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDEV(AlertDescription, {
+                                                children: error
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                                lineNumber: 133,
+                                                columnNumber: 17
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                        lineNumber: 131,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV("div", {
+                                        className: "space-y-2",
+                                        children: [
+                                            /*#__PURE__*/ _jsxDEV(Label, {
+                                                htmlFor: "email",
+                                                className: "text-gray-300 text-sm font-medium",
+                                                children: "Admin Email"
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                                lineNumber: 138,
+                                                columnNumber: 15
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDEV("div", {
+                                                className: "relative",
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(Mail, {
+                                                        className: "absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500"
+                                                    }, void 0, false, {
+                                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                                        lineNumber: 142,
+                                                        columnNumber: 17
+                                                    }, this),
+                                                    /*#__PURE__*/ _jsxDEV(Input, {
+                                                        id: "email",
+                                                        type: "email",
+                                                        placeholder: "admin@travelamigo.com",
+                                                        value: email,
+                                                        onChange: (e)=>setEmail(e.target.value),
+                                                        className: "pl-11 h-12 bg-white/5 border-white/10 text-white placeholder:text-gray-500 focus:border-red-500/50 focus:ring-red-500/20",
+                                                        required: true
+                                                    }, void 0, false, {
+                                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                                        lineNumber: 143,
+                                                        columnNumber: 17
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                                lineNumber: 141,
+                                                columnNumber: 15
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                        lineNumber: 137,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV("div", {
+                                        className: "space-y-2",
+                                        children: [
+                                            /*#__PURE__*/ _jsxDEV(Label, {
+                                                htmlFor: "password",
+                                                className: "text-gray-300 text-sm font-medium",
+                                                children: "Password"
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                                lineNumber: 156,
+                                                columnNumber: 15
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDEV("div", {
+                                                className: "relative",
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV(Lock, {
+                                                        className: "absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500"
+                                                    }, void 0, false, {
+                                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                                        lineNumber: 160,
+                                                        columnNumber: 17
+                                                    }, this),
+                                                    /*#__PURE__*/ _jsxDEV(Input, {
+                                                        id: "password",
+                                                        type: "password",
+                                                        placeholder: "••••••••••••",
+                                                        value: password,
+                                                        onChange: (e)=>setPassword(e.target.value),
+                                                        className: "pl-11 h-12 bg-white/5 border-white/10 text-white placeholder:text-gray-500 focus:border-red-500/50 focus:ring-red-500/20",
+                                                        required: true
+                                                    }, void 0, false, {
+                                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                                        lineNumber: 161,
+                                                        columnNumber: 17
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                                lineNumber: 159,
+                                                columnNumber: 15
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                        lineNumber: 155,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Button, {
+                                        type: "submit",
+                                        className: "w-full h-12 bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-600 hover:to-orange-700 text-white font-semibold shadow-lg shadow-red-500/25 transition-all duration-300",
+                                        disabled: loading,
+                                        children: loading ? /*#__PURE__*/ _jsxDEV(_Fragment, {
+                                            children: [
+                                                /*#__PURE__*/ _jsxDEV(Loader2, {
+                                                    className: "mr-2 h-4 w-4 animate-spin"
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                                    lineNumber: 180,
+                                                    columnNumber: 19
+                                                }, this),
+                                                "Authenticating..."
+                                            ]
+                                        }, void 0, true) : /*#__PURE__*/ _jsxDEV(_Fragment, {
+                                            children: [
+                                                /*#__PURE__*/ _jsxDEV(Shield, {
+                                                    className: "mr-2 h-4 w-4"
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                                    lineNumber: 185,
+                                                    columnNumber: 19
+                                                }, this),
+                                                "Access Admin Panel"
+                                            ]
+                                        }, void 0, true)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                        lineNumber: 173,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                lineNumber: 129,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV("div", {
+                                className: "mt-6 pt-6 border-t border-white/10",
+                                children: /*#__PURE__*/ _jsxDEV("p", {
+                                    className: "text-xs text-gray-500 text-center flex items-center justify-center gap-2",
+                                    children: [
+                                        /*#__PURE__*/ _jsxDEV(Lock, {
+                                            className: "h-3 w-3"
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                            lineNumber: 195,
+                                            columnNumber: 15
+                                        }, this),
+                                        "Secure connection • Activity monitored"
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                    lineNumber: 194,
+                                    columnNumber: 13
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                                lineNumber: 193,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                        lineNumber: 123,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(motion.div, {
+                        initial: {
+                            opacity: 0
+                        },
+                        animate: {
+                            opacity: 1
+                        },
+                        transition: {
+                            delay: 0.6,
+                            duration: 0.5
+                        },
+                        className: "text-center mt-6",
+                        children: /*#__PURE__*/ _jsxDEV("button", {
+                            onClick: ()=>navigate('/'),
+                            className: "text-sm text-gray-500 hover:text-gray-300 transition-colors",
+                            children: "← Back to website"
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                            lineNumber: 208,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                        lineNumber: 202,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+                lineNumber: 93,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx",
+        lineNumber: 81,
+        columnNumber: 5
+    }, this);
+};
+_s(AdminLogin, "wbEmM35cTFxYwX32vADnk//c7Os=", false, function() {
+    return [
+        useAuth,
+        useNavigate
+    ];
+});
+_c = AdminLogin;
+export default AdminLogin;
+var _c;
+$RefreshReg$(_c, "AdminLogin");
+
+
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+
+
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/pages/auth/AdminLogin.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkFkbWluTG9naW4udHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IHVzZVN0YXRlLCB1c2VFZmZlY3QgfSBmcm9tICdyZWFjdCc7XHJcbmltcG9ydCB7IHVzZU5hdmlnYXRlIH0gZnJvbSAncmVhY3Qtcm91dGVyLWRvbSc7XHJcbmltcG9ydCB7IHVzZUF1dGggfSBmcm9tICdAL2NvbnRleHRzL0F1dGhDb250ZXh0JztcclxuaW1wb3J0IHsgc3VwYWJhc2UgfSBmcm9tICdAL2ludGVncmF0aW9ucy9zdXBhYmFzZS9jbGllbnQnO1xyXG5pbXBvcnQgeyBCdXR0b24gfSBmcm9tICdAL2NvbXBvbmVudHMvdWkvYnV0dG9uJztcclxuaW1wb3J0IHsgSW5wdXQgfSBmcm9tICdAL2NvbXBvbmVudHMvdWkvaW5wdXQnO1xyXG5pbXBvcnQgeyBMYWJlbCB9IGZyb20gJ0AvY29tcG9uZW50cy91aS9sYWJlbCc7XHJcbmltcG9ydCB7IEFsZXJ0LCBBbGVydERlc2NyaXB0aW9uIH0gZnJvbSAnQC9jb21wb25lbnRzL3VpL2FsZXJ0JztcclxuaW1wb3J0IHsgTG9hZGVyMiwgU2hpZWxkLCBNYWlsLCBMb2NrLCBBbGVydFRyaWFuZ2xlIH0gZnJvbSAnbHVjaWRlLXJlYWN0JztcclxuaW1wb3J0IHsgbW90aW9uIH0gZnJvbSAnZnJhbWVyLW1vdGlvbic7XHJcblxyXG5jb25zdCBBZG1pbkxvZ2luID0gKCkgPT4ge1xyXG4gIGNvbnN0IFtlbWFpbCwgc2V0RW1haWxdID0gdXNlU3RhdGUoJycpO1xyXG4gIGNvbnN0IFtwYXNzd29yZCwgc2V0UGFzc3dvcmRdID0gdXNlU3RhdGUoJycpO1xyXG4gIGNvbnN0IFtlcnJvciwgc2V0RXJyb3JdID0gdXNlU3RhdGUoJycpO1xyXG4gIGNvbnN0IFtsb2FkaW5nLCBzZXRMb2FkaW5nXSA9IHVzZVN0YXRlKGZhbHNlKTtcclxuICBjb25zdCB7IHNpZ25JbiwgdXNlciwgaXNBZG1pbiB9ID0gdXNlQXV0aCgpO1xyXG4gIGNvbnN0IG5hdmlnYXRlID0gdXNlTmF2aWdhdGUoKTtcclxuXHJcbiAgLy8gUmVkaXJlY3QgaWYgYWxyZWFkeSBsb2dnZWQgaW4gYXMgYWRtaW5cclxuICB1c2VFZmZlY3QoKCkgPT4ge1xyXG4gICAgaWYgKHVzZXIgJiYgaXNBZG1pbikge1xyXG4gICAgICBuYXZpZ2F0ZSgnL2FkbWluJywgeyByZXBsYWNlOiB0cnVlIH0pO1xyXG4gICAgfVxyXG4gIH0sIFt1c2VyLCBpc0FkbWluLCBuYXZpZ2F0ZV0pO1xyXG5cclxuICBjb25zdCBoYW5kbGVTdWJtaXQgPSBhc3luYyAoZTogUmVhY3QuRm9ybUV2ZW50KSA9PiB7XHJcbiAgICBlLnByZXZlbnREZWZhdWx0KCk7XHJcbiAgICBzZXRFcnJvcignJyk7XHJcbiAgICBzZXRMb2FkaW5nKHRydWUpO1xyXG5cclxuICAgIGNvbnN0IHsgZXJyb3I6IHNpZ25JbkVycm9yIH0gPSBhd2FpdCBzaWduSW4oZW1haWwsIHBhc3N3b3JkKTtcclxuXHJcbiAgICBpZiAoc2lnbkluRXJyb3IpIHtcclxuICAgICAgc2V0RXJyb3Ioc2lnbkluRXJyb3IubWVzc2FnZSk7XHJcbiAgICAgIHNldExvYWRpbmcoZmFsc2UpO1xyXG4gICAgICByZXR1cm47XHJcbiAgICB9XHJcblxyXG4gICAgLy8gR2V0IHRoZSBjdXJyZW50IHVzZXIgYW5kIGNoZWNrIGFkbWluIHJvbGUgZGlyZWN0bHkgZnJvbSBkYXRhYmFzZVxyXG4gICAgY29uc3QgeyBkYXRhOiB7IHVzZXI6IGN1cnJlbnRVc2VyIH0gfSA9IGF3YWl0IHN1cGFiYXNlLmF1dGguZ2V0VXNlcigpO1xyXG4gICAgXHJcbiAgICBpZiAoIWN1cnJlbnRVc2VyKSB7XHJcbiAgICAgIHNldEVycm9yKCdBdXRoZW50aWNhdGlvbiBmYWlsZWQnKTtcclxuICAgICAgc2V0TG9hZGluZyhmYWxzZSk7XHJcbiAgICAgIHJldHVybjtcclxuICAgIH1cclxuXHJcbiAgICAvLyBDaGVjayBpZiB1c2VyIGhhcyBhZG1pbiByb2xlXHJcbiAgICBjb25zb2xlLmxvZygnW0FkbWluTG9naW5dIENoZWNraW5nIGFkbWluIHJvbGUgZm9yIHVzZXI6JywgY3VycmVudFVzZXIuaWQpO1xyXG4gICAgY29uc3QgeyBkYXRhOiByb2xlRGF0YSwgZXJyb3I6IHJvbGVFcnJvciB9ID0gYXdhaXQgc3VwYWJhc2VcclxuICAgICAgLmZyb20oJ3VzZXJfcm9sZXMnKVxyXG4gICAgICAuc2VsZWN0KCdyb2xlJylcclxuICAgICAgLmVxKCd1c2VyX2lkJywgY3VycmVudFVzZXIuaWQpXHJcbiAgICAgIC5lcSgncm9sZScsICdhZG1pbicpXHJcbiAgICAgIC5tYXliZVNpbmdsZSgpO1xyXG5cclxuICAgIGNvbnNvbGUubG9nKCdbQWRtaW5Mb2dpbl0gUm9sZSBjaGVjayByZXN1bHQ6JywgeyByb2xlRGF0YSwgcm9sZUVycm9yIH0pO1xyXG5cclxuICAgIGlmIChyb2xlRXJyb3IpIHtcclxuICAgICAgY29uc29sZS5lcnJvcignW0FkbWluTG9naW5dIFJvbGUgcXVlcnkgZXJyb3I6Jywgcm9sZUVycm9yKTtcclxuICAgICAgc2V0RXJyb3IoYERhdGFiYXNlIGVycm9yOiAke3JvbGVFcnJvci5tZXNzYWdlfWApO1xyXG4gICAgICBhd2FpdCBzdXBhYmFzZS5hdXRoLnNpZ25PdXQoKTtcclxuICAgICAgc2V0TG9hZGluZyhmYWxzZSk7XHJcbiAgICAgIHJldHVybjtcclxuICAgIH1cclxuXHJcbiAgICBpZiAoIXJvbGVEYXRhKSB7XHJcbiAgICAgIGNvbnNvbGUubG9nKCdbQWRtaW5Mb2dpbl0gTm8gYWRtaW4gcm9sZSBmb3VuZCBmb3IgdXNlcicpO1xyXG4gICAgICBzZXRFcnJvcignQWNjZXNzIGRlbmllZC4gQWRtaW4gcHJpdmlsZWdlcyByZXF1aXJlZC4nKTtcclxuICAgICAgYXdhaXQgc3VwYWJhc2UuYXV0aC5zaWduT3V0KCk7XHJcbiAgICAgIHNldExvYWRpbmcoZmFsc2UpO1xyXG4gICAgICByZXR1cm47XHJcbiAgICB9XHJcblxyXG4gICAgLy8gVXNlciBpcyBhZG1pbiwgbmF2aWdhdGUgdG8gYWRtaW4gcGFuZWxcclxuICAgIG5hdmlnYXRlKCcvYWRtaW4nLCB7IHJlcGxhY2U6IHRydWUgfSk7XHJcbiAgfTtcclxuXHJcbiAgcmV0dXJuIChcclxuICAgIDxkaXYgY2xhc3NOYW1lPVwibWluLWgtc2NyZWVuIGZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIGJnLVtoc2woMjIwLDIwJSw4JSldIHJlbGF0aXZlIG92ZXJmbG93LWhpZGRlblwiPlxyXG4gICAgICB7LyogQmFja2dyb3VuZCBQYXR0ZXJuICovfVxyXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImFic29sdXRlIGluc2V0LTAgb3BhY2l0eS1bMC4wM11cIj5cclxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImFic29sdXRlIGluc2V0LTBcIiBzdHlsZT17e1xyXG4gICAgICAgICAgYmFja2dyb3VuZEltYWdlOiBgdXJsKFwiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyB3aWR0aD0nNjAnIGhlaWdodD0nNjAnIHZpZXdCb3g9JzAgMCA2MCA2MCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyUzRSUzQ2cgZmlsbD0nbm9uZScgZmlsbC1ydWxlPSdldmVub2RkJyUzRSUzQ2cgZmlsbD0nJTIzZmZmZmZmJyBmaWxsLW9wYWNpdHk9JzEnJTNFJTNDcGF0aCBkPSdNMzYgMzR2LTRoLTJ2NGgtNHYyaDR2NGgydi00aDR2LTJoLTR6bTAtMzBWMGgtMnY0aC00djJoNHY0aDJWNmg0VjRoLTR6TTYgMzR2LTRINHY0SDB2Mmg0djRoMnYtNGg0di0ySDZ6TTYgNFYwSDR2NEgwdjJoNHY0aDJWNmg0VjRINnonLyUzRSUzQy9nJTNFJTNDL2clM0UlM0Mvc3ZnJTNFXCIpYCxcclxuICAgICAgICB9fSAvPlxyXG4gICAgICA8L2Rpdj5cclxuXHJcbiAgICAgIHsvKiBHcmFkaWVudCBPcmJzICovfVxyXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImFic29sdXRlIHRvcC0xLzQgbGVmdC0xLzQgdy05NiBoLTk2IGJnLXJlZC01MDAvMTAgcm91bmRlZC1mdWxsIGJsdXItWzEyMHB4XVwiIC8+XHJcbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwiYWJzb2x1dGUgYm90dG9tLTEvNCByaWdodC0xLzQgdy05NiBoLTk2IGJnLW9yYW5nZS01MDAvMTAgcm91bmRlZC1mdWxsIGJsdXItWzEyMHB4XVwiIC8+XHJcblxyXG4gICAgICA8bW90aW9uLmRpdlxyXG4gICAgICAgIGluaXRpYWw9e3sgb3BhY2l0eTogMCwgeTogMjAgfX1cclxuICAgICAgICBhbmltYXRlPXt7IG9wYWNpdHk6IDEsIHk6IDAgfX1cclxuICAgICAgICB0cmFuc2l0aW9uPXt7IGR1cmF0aW9uOiAwLjYgfX1cclxuICAgICAgICBjbGFzc05hbWU9XCJ3LWZ1bGwgbWF4LXctbWQgcmVsYXRpdmUgei0xMCBweC00XCJcclxuICAgICAgPlxyXG4gICAgICAgIHsvKiBBZG1pbiBCYWRnZSAqL31cclxuICAgICAgICA8bW90aW9uLmRpdiBcclxuICAgICAgICAgIGluaXRpYWw9e3sgc2NhbGU6IDAuOCwgb3BhY2l0eTogMCB9fVxyXG4gICAgICAgICAgYW5pbWF0ZT17eyBzY2FsZTogMSwgb3BhY2l0eTogMSB9fVxyXG4gICAgICAgICAgdHJhbnNpdGlvbj17eyBkZWxheTogMC4yLCBkdXJhdGlvbjogMC41IH19XHJcbiAgICAgICAgICBjbGFzc05hbWU9XCJmbGV4IGp1c3RpZnktY2VudGVyIG1iLThcIlxyXG4gICAgICAgID5cclxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwidy0yMCBoLTIwIHJvdW5kZWQtMnhsIGJnLWdyYWRpZW50LXRvLWJyIGZyb20tcmVkLTUwMCB0by1vcmFuZ2UtNjAwIGZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIHNoYWRvdy0yeGwgc2hhZG93LXJlZC01MDAvMzBcIj5cclxuICAgICAgICAgICAgPFNoaWVsZCBjbGFzc05hbWU9XCJoLTEwIHctMTAgdGV4dC13aGl0ZVwiIC8+XHJcbiAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICA8L21vdGlvbi5kaXY+XHJcblxyXG4gICAgICAgIHsvKiBUaXRsZSAqL31cclxuICAgICAgICA8bW90aW9uLmRpdiBcclxuICAgICAgICAgIGluaXRpYWw9e3sgb3BhY2l0eTogMCwgeTogMTAgfX1cclxuICAgICAgICAgIGFuaW1hdGU9e3sgb3BhY2l0eTogMSwgeTogMCB9fVxyXG4gICAgICAgICAgdHJhbnNpdGlvbj17eyBkZWxheTogMC4zLCBkdXJhdGlvbjogMC41IH19XHJcbiAgICAgICAgICBjbGFzc05hbWU9XCJ0ZXh0LWNlbnRlciBtYi04XCJcclxuICAgICAgICA+XHJcbiAgICAgICAgICA8aDEgY2xhc3NOYW1lPVwidGV4dC0zeGwgZm9udC1ib2xkIHRleHQtd2hpdGUgbWItMiB0cmFja2luZy10aWdodFwiPkFkbWluIFBvcnRhbDwvaDE+XHJcbiAgICAgICAgICA8cCBjbGFzc05hbWU9XCJ0ZXh0LWdyYXktNDAwIHRleHQtc21cIj5BdXRob3JpemVkIHBlcnNvbm5lbCBvbmx5PC9wPlxyXG4gICAgICAgIDwvbW90aW9uLmRpdj5cclxuXHJcbiAgICAgICAgey8qIExvZ2luIEZvcm0gKi99XHJcbiAgICAgICAgPG1vdGlvbi5kaXZcclxuICAgICAgICAgIGluaXRpYWw9e3sgb3BhY2l0eTogMCwgeTogMTAgfX1cclxuICAgICAgICAgIGFuaW1hdGU9e3sgb3BhY2l0eTogMSwgeTogMCB9fVxyXG4gICAgICAgICAgdHJhbnNpdGlvbj17eyBkZWxheTogMC40LCBkdXJhdGlvbjogMC41IH19XHJcbiAgICAgICAgICBjbGFzc05hbWU9XCJiZy13aGl0ZS9bMC4wM10gYmFja2Ryb3AtYmx1ci14bCByb3VuZGVkLTJ4bCBib3JkZXIgYm9yZGVyLXdoaXRlLzEwIHAtOFwiXHJcbiAgICAgICAgPlxyXG4gICAgICAgICAgPGZvcm0gb25TdWJtaXQ9e2hhbmRsZVN1Ym1pdH0gY2xhc3NOYW1lPVwic3BhY2UteS02XCI+XHJcbiAgICAgICAgICAgIHtlcnJvciAmJiAoXHJcbiAgICAgICAgICAgICAgPEFsZXJ0IGNsYXNzTmFtZT1cImJnLXJlZC01MDAvMTAgYm9yZGVyLXJlZC01MDAvMzAgdGV4dC1yZWQtNDAwXCI+XHJcbiAgICAgICAgICAgICAgICA8QWxlcnRUcmlhbmdsZSBjbGFzc05hbWU9XCJoLTQgdy00XCIgLz5cclxuICAgICAgICAgICAgICAgIDxBbGVydERlc2NyaXB0aW9uPntlcnJvcn08L0FsZXJ0RGVzY3JpcHRpb24+XHJcbiAgICAgICAgICAgICAgPC9BbGVydD5cclxuICAgICAgICAgICAgKX1cclxuXHJcbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwic3BhY2UteS0yXCI+XHJcbiAgICAgICAgICAgICAgPExhYmVsIGh0bWxGb3I9XCJlbWFpbFwiIGNsYXNzTmFtZT1cInRleHQtZ3JheS0zMDAgdGV4dC1zbSBmb250LW1lZGl1bVwiPlxyXG4gICAgICAgICAgICAgICAgQWRtaW4gRW1haWxcclxuICAgICAgICAgICAgICA8L0xhYmVsPlxyXG4gICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwicmVsYXRpdmVcIj5cclxuICAgICAgICAgICAgICAgIDxNYWlsIGNsYXNzTmFtZT1cImFic29sdXRlIGxlZnQtNCB0b3AtMS8yIC10cmFuc2xhdGUteS0xLzIgaC00IHctNCB0ZXh0LWdyYXktNTAwXCIgLz5cclxuICAgICAgICAgICAgICAgIDxJbnB1dFxyXG4gICAgICAgICAgICAgICAgICBpZD1cImVtYWlsXCJcclxuICAgICAgICAgICAgICAgICAgdHlwZT1cImVtYWlsXCJcclxuICAgICAgICAgICAgICAgICAgcGxhY2Vob2xkZXI9XCJhZG1pbkB0cmF2ZWxhbWlnby5jb21cIlxyXG4gICAgICAgICAgICAgICAgICB2YWx1ZT17ZW1haWx9XHJcbiAgICAgICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gc2V0RW1haWwoZS50YXJnZXQudmFsdWUpfVxyXG4gICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJwbC0xMSBoLTEyIGJnLXdoaXRlLzUgYm9yZGVyLXdoaXRlLzEwIHRleHQtd2hpdGUgcGxhY2Vob2xkZXI6dGV4dC1ncmF5LTUwMCBmb2N1czpib3JkZXItcmVkLTUwMC81MCBmb2N1czpyaW5nLXJlZC01MDAvMjBcIlxyXG4gICAgICAgICAgICAgICAgICByZXF1aXJlZFxyXG4gICAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgPC9kaXY+XHJcblxyXG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInNwYWNlLXktMlwiPlxyXG4gICAgICAgICAgICAgIDxMYWJlbCBodG1sRm9yPVwicGFzc3dvcmRcIiBjbGFzc05hbWU9XCJ0ZXh0LWdyYXktMzAwIHRleHQtc20gZm9udC1tZWRpdW1cIj5cclxuICAgICAgICAgICAgICAgIFBhc3N3b3JkXHJcbiAgICAgICAgICAgICAgPC9MYWJlbD5cclxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInJlbGF0aXZlXCI+XHJcbiAgICAgICAgICAgICAgICA8TG9jayBjbGFzc05hbWU9XCJhYnNvbHV0ZSBsZWZ0LTQgdG9wLTEvMiAtdHJhbnNsYXRlLXktMS8yIGgtNCB3LTQgdGV4dC1ncmF5LTUwMFwiIC8+XHJcbiAgICAgICAgICAgICAgICA8SW5wdXRcclxuICAgICAgICAgICAgICAgICAgaWQ9XCJwYXNzd29yZFwiXHJcbiAgICAgICAgICAgICAgICAgIHR5cGU9XCJwYXNzd29yZFwiXHJcbiAgICAgICAgICAgICAgICAgIHBsYWNlaG9sZGVyPVwi4oCi4oCi4oCi4oCi4oCi4oCi4oCi4oCi4oCi4oCi4oCi4oCiXCJcclxuICAgICAgICAgICAgICAgICAgdmFsdWU9e3Bhc3N3b3JkfVxyXG4gICAgICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldFBhc3N3b3JkKGUudGFyZ2V0LnZhbHVlKX1cclxuICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwicGwtMTEgaC0xMiBiZy13aGl0ZS81IGJvcmRlci13aGl0ZS8xMCB0ZXh0LXdoaXRlIHBsYWNlaG9sZGVyOnRleHQtZ3JheS01MDAgZm9jdXM6Ym9yZGVyLXJlZC01MDAvNTAgZm9jdXM6cmluZy1yZWQtNTAwLzIwXCJcclxuICAgICAgICAgICAgICAgICAgcmVxdWlyZWRcclxuICAgICAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgIDwvZGl2PlxyXG5cclxuICAgICAgICAgICAgPEJ1dHRvbiBcclxuICAgICAgICAgICAgICB0eXBlPVwic3VibWl0XCIgXHJcbiAgICAgICAgICAgICAgY2xhc3NOYW1lPVwidy1mdWxsIGgtMTIgYmctZ3JhZGllbnQtdG8tciBmcm9tLXJlZC01MDAgdG8tb3JhbmdlLTYwMCBob3Zlcjpmcm9tLXJlZC02MDAgaG92ZXI6dG8tb3JhbmdlLTcwMCB0ZXh0LXdoaXRlIGZvbnQtc2VtaWJvbGQgc2hhZG93LWxnIHNoYWRvdy1yZWQtNTAwLzI1IHRyYW5zaXRpb24tYWxsIGR1cmF0aW9uLTMwMFwiXHJcbiAgICAgICAgICAgICAgZGlzYWJsZWQ9e2xvYWRpbmd9XHJcbiAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICB7bG9hZGluZyA/IChcclxuICAgICAgICAgICAgICAgIDw+XHJcbiAgICAgICAgICAgICAgICAgIDxMb2FkZXIyIGNsYXNzTmFtZT1cIm1yLTIgaC00IHctNCBhbmltYXRlLXNwaW5cIiAvPlxyXG4gICAgICAgICAgICAgICAgICBBdXRoZW50aWNhdGluZy4uLlxyXG4gICAgICAgICAgICAgICAgPC8+XHJcbiAgICAgICAgICAgICAgKSA6IChcclxuICAgICAgICAgICAgICAgIDw+XHJcbiAgICAgICAgICAgICAgICAgIDxTaGllbGQgY2xhc3NOYW1lPVwibXItMiBoLTQgdy00XCIgLz5cclxuICAgICAgICAgICAgICAgICAgQWNjZXNzIEFkbWluIFBhbmVsXHJcbiAgICAgICAgICAgICAgICA8Lz5cclxuICAgICAgICAgICAgICApfVxyXG4gICAgICAgICAgICA8L0J1dHRvbj5cclxuICAgICAgICAgIDwvZm9ybT5cclxuXHJcbiAgICAgICAgICB7LyogU2VjdXJpdHkgTm90aWNlICovfVxyXG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJtdC02IHB0LTYgYm9yZGVyLXQgYm9yZGVyLXdoaXRlLzEwXCI+XHJcbiAgICAgICAgICAgIDxwIGNsYXNzTmFtZT1cInRleHQteHMgdGV4dC1ncmF5LTUwMCB0ZXh0LWNlbnRlciBmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciBnYXAtMlwiPlxyXG4gICAgICAgICAgICAgIDxMb2NrIGNsYXNzTmFtZT1cImgtMyB3LTNcIiAvPlxyXG4gICAgICAgICAgICAgIFNlY3VyZSBjb25uZWN0aW9uIOKAoiBBY3Rpdml0eSBtb25pdG9yZWRcclxuICAgICAgICAgICAgPC9wPlxyXG4gICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgPC9tb3Rpb24uZGl2PlxyXG5cclxuICAgICAgICB7LyogQmFjayBMaW5rICovfVxyXG4gICAgICAgIDxtb3Rpb24uZGl2XHJcbiAgICAgICAgICBpbml0aWFsPXt7IG9wYWNpdHk6IDAgfX1cclxuICAgICAgICAgIGFuaW1hdGU9e3sgb3BhY2l0eTogMSB9fVxyXG4gICAgICAgICAgdHJhbnNpdGlvbj17eyBkZWxheTogMC42LCBkdXJhdGlvbjogMC41IH19XHJcbiAgICAgICAgICBjbGFzc05hbWU9XCJ0ZXh0LWNlbnRlciBtdC02XCJcclxuICAgICAgICA+XHJcbiAgICAgICAgICA8YnV0dG9uIFxyXG4gICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBuYXZpZ2F0ZSgnLycpfVxyXG4gICAgICAgICAgICBjbGFzc05hbWU9XCJ0ZXh0LXNtIHRleHQtZ3JheS01MDAgaG92ZXI6dGV4dC1ncmF5LTMwMCB0cmFuc2l0aW9uLWNvbG9yc1wiXHJcbiAgICAgICAgICA+XHJcbiAgICAgICAgICAgIOKGkCBCYWNrIHRvIHdlYnNpdGVcclxuICAgICAgICAgIDwvYnV0dG9uPlxyXG4gICAgICAgIDwvbW90aW9uLmRpdj5cclxuICAgICAgPC9tb3Rpb24uZGl2PlxyXG4gICAgPC9kaXY+XHJcbiAgKTtcclxufTtcclxuXHJcbmV4cG9ydCBkZWZhdWx0IEFkbWluTG9naW47Il0sIm5hbWVzIjpbInVzZVN0YXRlIiwidXNlRWZmZWN0IiwidXNlTmF2aWdhdGUiLCJ1c2VBdXRoIiwic3VwYWJhc2UiLCJCdXR0b24iLCJJbnB1dCIsIkxhYmVsIiwiQWxlcnQiLCJBbGVydERlc2NyaXB0aW9uIiwiTG9hZGVyMiIsIlNoaWVsZCIsIk1haWwiLCJMb2NrIiwiQWxlcnRUcmlhbmdsZSIsIm1vdGlvbiIsIkFkbWluTG9naW4iLCJlbWFpbCIsInNldEVtYWlsIiwicGFzc3dvcmQiLCJzZXRQYXNzd29yZCIsImVycm9yIiwic2V0RXJyb3IiLCJsb2FkaW5nIiwic2V0TG9hZGluZyIsInNpZ25JbiIsInVzZXIiLCJpc0FkbWluIiwibmF2aWdhdGUiLCJyZXBsYWNlIiwiaGFuZGxlU3VibWl0IiwiZSIsInByZXZlbnREZWZhdWx0Iiwic2lnbkluRXJyb3IiLCJtZXNzYWdlIiwiZGF0YSIsImN1cnJlbnRVc2VyIiwiYXV0aCIsImdldFVzZXIiLCJjb25zb2xlIiwibG9nIiwiaWQiLCJyb2xlRGF0YSIsInJvbGVFcnJvciIsImZyb20iLCJzZWxlY3QiLCJlcSIsIm1heWJlU2luZ2xlIiwic2lnbk91dCIsImRpdiIsImNsYXNzTmFtZSIsInN0eWxlIiwiYmFja2dyb3VuZEltYWdlIiwiaW5pdGlhbCIsIm9wYWNpdHkiLCJ5IiwiYW5pbWF0ZSIsInRyYW5zaXRpb24iLCJkdXJhdGlvbiIsInNjYWxlIiwiZGVsYXkiLCJoMSIsInAiLCJmb3JtIiwib25TdWJtaXQiLCJodG1sRm9yIiwidHlwZSIsInBsYWNlaG9sZGVyIiwidmFsdWUiLCJvbkNoYW5nZSIsInRhcmdldCIsInJlcXVpcmVkIiwiZGlzYWJsZWQiLCJidXR0b24iLCJvbkNsaWNrIl0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSxTQUFT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

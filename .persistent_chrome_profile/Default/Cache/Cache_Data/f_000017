@@ -1,0 +1,818 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/ChatFab.tsx");import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope;
+
+let prevRefreshReg;
+let prevRefreshSig;
+
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react-swc can't detect preamble. Something is wrong."
+    );
+  }
+
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+
+import __vite__cjsImport2_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=c3ff4a43"; const _jsxDEV = __vite__cjsImport2_react_jsxDevRuntime["jsxDEV"]; const _Fragment = __vite__cjsImport2_react_jsxDevRuntime["Fragment"];
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=8e948b43"; const useState = __vite__cjsImport3_react["useState"]; const useRef = __vite__cjsImport3_react["useRef"]; const useEffect = __vite__cjsImport3_react["useEffect"];
+import { motion, AnimatePresence } from "/node_modules/.vite/deps/framer-motion.js?v=16c1ddc0";
+import { X, Send, Sparkles, MapPin, Calendar, Users, Heart } from "/node_modules/.vite/deps/lucide-react.js?v=31177f67";
+import { z } from "/node_modules/.vite/deps/zod.js?v=ed4958dc";
+const MAX_MESSAGE_LENGTH = 500;
+const messageSchema = z.string().trim().min(1, "Message cannot be empty").max(MAX_MESSAGE_LENGTH);
+// AI Knowledge Base about Travel Amigo
+const travelKnowledge = {
+    greetings: [
+        "Hey there, fellow traveler! 👋 I'm Amigo AI, your personal travel companion. How can I help you discover your next adventure?",
+        "Welcome to Travel Amigo! ✨ I'm here to help you find the perfect group travel experience. What are you curious about?"
+    ],
+    destinations: {
+        keywords: [
+            'destination',
+            'where',
+            'place',
+            'country',
+            'city',
+            'thailand',
+            'bali',
+            'vietnam'
+        ],
+        response: "We offer amazing group trips to incredible destinations! 🌏 Our popular spots include Thailand (Bangkok, Phuket, Chiang Mai), Bali, Vietnam, and many more. Each trip is carefully curated for the perfect mix of adventure, culture, and relaxation. Which destination interests you?"
+    },
+    groupTravel: {
+        keywords: [
+            'group',
+            'people',
+            'solo',
+            'alone',
+            'friends',
+            'tribe'
+        ],
+        response: "Travel Amigo is all about group travel with a twist! 🎉 You'll join a fixed group of like-minded travelers (usually 15-20 people) for the entire trip. It's perfect for solo travelers who want to make friends, or groups looking for new experiences. You'll vote democratically on activities and create memories together!"
+    },
+    pricing: {
+        keywords: [
+            'price',
+            'cost',
+            'expensive',
+            'cheap',
+            'budget',
+            'pay',
+            'money'
+        ],
+        response: "Our trips are designed to be affordable without compromising on quality! 💰 Prices typically range from ₹35,000 to ₹65,000 depending on the destination and duration. This includes accommodation, most meals, activities, and local transport. We also offer early bird discounts and group deals!"
+    },
+    booking: {
+        keywords: [
+            'book',
+            'reserve',
+            'join',
+            'sign up',
+            'register'
+        ],
+        response: "Booking is super easy! 🎫 Just browse our trips, pick your favorite, and click 'Book Now'. You can pay in installments, and we'll handle all the planning. Once booked, you'll get access to your trip's WhatsApp group to meet your travel tribe before departure!"
+    },
+    concept: {
+        keywords: [
+            'concept',
+            'amigo way',
+            'philosophy',
+            'different',
+            'unique',
+            'special'
+        ],
+        response: "The Amigo Way is what makes us special! ✨ We believe in: 1) Fixed Groups - travel with the same awesome people throughout, 2) Democratic Voting - the group decides on activities together, 3) Open Tribe - welcoming, inclusive community, 4) Authentic Experiences - real connections, not just tourist traps!"
+    },
+    safety: {
+        keywords: [
+            'safe',
+            'safety',
+            'secure',
+            'trust',
+            'reliable'
+        ],
+        response: "Your safety is our top priority! 🛡️ All trips include experienced trip leaders, 24/7 support, comprehensive travel insurance options, and carefully vetted accommodations. We also have emergency protocols and maintain constant communication with all travelers."
+    },
+    duration: {
+        keywords: [
+            'long',
+            'days',
+            'duration',
+            'week',
+            'time'
+        ],
+        response: "Our trips typically range from 5 to 14 days! ⏰ Most popular are our 7-day adventures - perfect for a week-long escape. We design itineraries to give you the best mix of exploration and relaxation, so you return refreshed, not exhausted!"
+    },
+    activities: {
+        keywords: [
+            'activity',
+            'activities',
+            'do',
+            'adventure',
+            'experience',
+            'fun'
+        ],
+        response: "Every trip is packed with amazing experiences! 🎨 From temple visits and street food tours to beach parties and hiking adventures. The best part? Your group votes on optional activities, so you're always doing what interests you most. It's your trip, your way!"
+    }
+};
+const getAIResponse = (userMessage)=>{
+    const lowerMessage = userMessage.toLowerCase();
+    // Check each knowledge category
+    for (const [key, value] of Object.entries(travelKnowledge)){
+        if (key === 'greetings') continue;
+        const category = value;
+        if (category.keywords.some((keyword)=>lowerMessage.includes(keyword))) {
+            return category.response;
+        }
+    }
+    // Default response
+    return "That's a great question! 🤔 I'd love to help you with that. You can also check out our website for more details, or feel free to ask me about our destinations, group travel concept, pricing, or booking process. What would you like to know more about?";
+};
+export const ChatFab = ()=>{
+    _s();
+    const [isOpen, setIsOpen] = useState(false);
+    const [message, setMessage] = useState('');
+    const [messages, setMessages] = useState([]);
+    const [isTyping, setIsTyping] = useState(false);
+    const messagesEndRef = useRef(null);
+    const scrollToBottom = ()=>{
+        messagesEndRef.current?.scrollIntoView({
+            behavior: "smooth"
+        });
+    };
+    useEffect(()=>{
+        scrollToBottom();
+    }, [
+        messages,
+        isTyping
+    ]);
+    useEffect(()=>{
+        if (isOpen && messages.length === 0) {
+            // Send welcome message when chat opens
+            const welcomeMessage = {
+                id: 'welcome',
+                text: travelKnowledge.greetings[Math.floor(Math.random() * travelKnowledge.greetings.length)],
+                isUser: false,
+                timestamp: new Date()
+            };
+            setMessages([
+                welcomeMessage
+            ]);
+        }
+    }, [
+        isOpen
+    ]);
+    const handleQuickAction = (action)=>{
+        handleSendMessage(action);
+    };
+    const handleSendMessage = (text)=>{
+        const messageText = text || message.trim();
+        if (!messageText) return;
+        // Add user message
+        const userMessage = {
+            id: `user-${Date.now()}`,
+            text: messageText,
+            isUser: true,
+            timestamp: new Date()
+        };
+        setMessages((prev)=>[
+                ...prev,
+                userMessage
+            ]);
+        setMessage('');
+        setIsTyping(true);
+        // Simulate AI thinking and respond
+        setTimeout(()=>{
+            const aiResponse = {
+                id: `ai-${Date.now()}`,
+                text: getAIResponse(messageText),
+                isUser: false,
+                timestamp: new Date()
+            };
+            setMessages((prev)=>[
+                    ...prev,
+                    aiResponse
+                ]);
+            setIsTyping(false);
+        }, 1000 + Math.random() * 1000); // 1-2 seconds delay
+    };
+    const quickActions = [
+        {
+            icon: MapPin,
+            text: 'Best destinations',
+            query: 'What are your best destinations?'
+        },
+        {
+            icon: Calendar,
+            text: 'Trip duration',
+            query: 'How long are the trips?'
+        },
+        {
+            icon: Users,
+            text: 'Group travel',
+            query: 'Tell me about group travel'
+        },
+        {
+            icon: Heart,
+            text: 'The Amigo Way',
+            query: 'What is the Amigo Way?'
+        }
+    ];
+    return /*#__PURE__*/ _jsxDEV(_Fragment, {
+        children: [
+            /*#__PURE__*/ _jsxDEV(motion.button, {
+                whileHover: {
+                    scale: 1.1
+                },
+                whileTap: {
+                    scale: 0.95
+                },
+                onClick: ()=>setIsOpen(true),
+                className: "fixed bottom-6 right-6 z-40 w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-primary via-orange-500 to-red-500 text-white flex items-center justify-center shadow-2xl",
+                style: {
+                    boxShadow: '0 0 40px rgba(255, 180, 0, 0.6), 0 0 80px rgba(255, 180, 0, 0.3)'
+                },
+                children: /*#__PURE__*/ _jsxDEV(motion.div, {
+                    animate: {
+                        rotate: [
+                            0,
+                            10,
+                            -10,
+                            0
+                        ]
+                    },
+                    transition: {
+                        duration: 2,
+                        repeat: Infinity,
+                        repeatDelay: 3
+                    },
+                    children: /*#__PURE__*/ _jsxDEV(Sparkles, {
+                        className: "w-5 h-5 md:w-7 md:h-7"
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                        lineNumber: 162,
+                        columnNumber: 11
+                    }, this)
+                }, void 0, false, {
+                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                    lineNumber: 152,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                lineNumber: 145,
+                columnNumber: 7
+            }, this),
+            !isOpen && /*#__PURE__*/ _jsxDEV(motion.div, {
+                initial: {
+                    opacity: 0,
+                    x: 10
+                },
+                animate: {
+                    opacity: 1,
+                    x: 0
+                },
+                transition: {
+                    delay: 2
+                },
+                className: "fixed bottom-8 right-24 z-40 px-5 py-3 rounded-2xl hidden md:block bg-gradient-to-r from-primary/90 to-orange-500/90 backdrop-blur-xl border border-white/20 shadow-xl",
+                children: [
+                    /*#__PURE__*/ _jsxDEV("p", {
+                        className: "text-sm text-white font-semibold whitespace-nowrap flex items-center gap-2",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV(Sparkles, {
+                                className: "h-4 w-4"
+                            }, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                lineNumber: 175,
+                                columnNumber: 13
+                            }, this),
+                            "Ask Amigo AI",
+                            /*#__PURE__*/ _jsxDEV(motion.span, {
+                                animate: {
+                                    scale: [
+                                        1,
+                                        1.2,
+                                        1
+                                    ]
+                                },
+                                transition: {
+                                    duration: 1.5,
+                                    repeat: Infinity
+                                },
+                                children: "✨"
+                            }, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                lineNumber: 177,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                        lineNumber: 174,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        className: "absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 w-3 h-3 bg-gradient-to-br from-primary to-orange-500 rotate-45"
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                        lineNumber: 184,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                lineNumber: 168,
+                columnNumber: 9
+            }, this),
+            /*#__PURE__*/ _jsxDEV(AnimatePresence, {
+                children: isOpen && /*#__PURE__*/ _jsxDEV(motion.div, {
+                    initial: {
+                        opacity: 0,
+                        scale: 0.9,
+                        y: 20
+                    },
+                    animate: {
+                        opacity: 1,
+                        scale: 1,
+                        y: 0
+                    },
+                    exit: {
+                        opacity: 0,
+                        scale: 0.9,
+                        y: 20
+                    },
+                    transition: {
+                        type: "spring",
+                        damping: 25
+                    },
+                    className: "fixed bottom-6 right-6 z-50 w-[calc(100%-3rem)] max-w-md rounded-3xl overflow-hidden shadow-2xl",
+                    style: {
+                        background: 'linear-gradient(135deg, rgba(10, 37, 64, 0.95) 0%, rgba(15, 45, 75, 0.95) 100%)',
+                        backdropFilter: 'blur(20px)',
+                        border: '1px solid rgba(255, 255, 255, 0.1)'
+                    },
+                    children: [
+                        /*#__PURE__*/ _jsxDEV("div", {
+                            className: "relative px-6 py-4 bg-gradient-to-r from-primary/20 to-orange-500/20 border-b border-white/10",
+                            children: /*#__PURE__*/ _jsxDEV("div", {
+                                className: "flex items-center justify-between",
+                                children: [
+                                    /*#__PURE__*/ _jsxDEV("div", {
+                                        className: "flex items-center gap-3",
+                                        children: [
+                                            /*#__PURE__*/ _jsxDEV("div", {
+                                                className: "relative",
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV("div", {
+                                                        className: "w-12 h-12 rounded-full bg-gradient-to-br from-primary to-orange-500 flex items-center justify-center",
+                                                        children: /*#__PURE__*/ _jsxDEV(Sparkles, {
+                                                            className: "w-6 h-6 text-white"
+                                                        }, void 0, false, {
+                                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                            lineNumber: 209,
+                                                            columnNumber: 23
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                        lineNumber: 208,
+                                                        columnNumber: 21
+                                                    }, this),
+                                                    /*#__PURE__*/ _jsxDEV("div", {
+                                                        className: "absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-navy-deep"
+                                                    }, void 0, false, {
+                                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                        lineNumber: 211,
+                                                        columnNumber: 21
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                lineNumber: 207,
+                                                columnNumber: 19
+                                            }, this),
+                                            /*#__PURE__*/ _jsxDEV("div", {
+                                                children: [
+                                                    /*#__PURE__*/ _jsxDEV("h4", {
+                                                        className: "font-bold text-white flex items-center gap-2",
+                                                        children: [
+                                                            "Amigo AI",
+                                                            /*#__PURE__*/ _jsxDEV("span", {
+                                                                className: "text-xs px-2 py-0.5 rounded-full bg-primary/30 text-primary-foreground",
+                                                                children: "Beta"
+                                                            }, void 0, false, {
+                                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                                lineNumber: 216,
+                                                                columnNumber: 23
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                        lineNumber: 214,
+                                                        columnNumber: 21
+                                                    }, this),
+                                                    /*#__PURE__*/ _jsxDEV("p", {
+                                                        className: "text-xs text-gray-300",
+                                                        children: "Your AI Travel Companion"
+                                                    }, void 0, false, {
+                                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                        lineNumber: 218,
+                                                        columnNumber: 21
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                lineNumber: 213,
+                                                columnNumber: 19
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                        lineNumber: 206,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV("button", {
+                                        onClick: ()=>setIsOpen(false),
+                                        className: "text-gray-400 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg",
+                                        children: /*#__PURE__*/ _jsxDEV(X, {
+                                            className: "w-5 h-5"
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                            lineNumber: 225,
+                                            columnNumber: 19
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                        lineNumber: 221,
+                                        columnNumber: 17
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                lineNumber: 205,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                            lineNumber: 204,
+                            columnNumber: 13
+                        }, this),
+                        /*#__PURE__*/ _jsxDEV("div", {
+                            className: "h-96 p-4 overflow-y-auto custom-scrollbar",
+                            children: [
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    className: "space-y-4",
+                                    children: [
+                                        messages.map((msg)=>/*#__PURE__*/ _jsxDEV(motion.div, {
+                                                initial: {
+                                                    opacity: 0,
+                                                    y: 10
+                                                },
+                                                animate: {
+                                                    opacity: 1,
+                                                    y: 0
+                                                },
+                                                className: `flex gap-3 ${msg.isUser ? 'flex-row-reverse' : 'flex-row'}`,
+                                                children: [
+                                                    !msg.isUser && /*#__PURE__*/ _jsxDEV("div", {
+                                                        className: "w-8 h-8 rounded-full bg-gradient-to-br from-primary to-orange-500 flex items-center justify-center flex-shrink-0",
+                                                        children: /*#__PURE__*/ _jsxDEV(Sparkles, {
+                                                            className: "w-4 h-4 text-white"
+                                                        }, void 0, false, {
+                                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                            lineNumber: 242,
+                                                            columnNumber: 25
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                        lineNumber: 241,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    /*#__PURE__*/ _jsxDEV("div", {
+                                                        className: `px-4 py-3 rounded-2xl max-w-[80%] ${msg.isUser ? 'bg-gradient-to-r from-primary to-orange-500 text-white rounded-tr-md' : 'bg-white/10 backdrop-blur-sm text-white rounded-tl-md border border-white/10'}`,
+                                                        children: /*#__PURE__*/ _jsxDEV("p", {
+                                                            className: "text-sm leading-relaxed",
+                                                            children: msg.text
+                                                        }, void 0, false, {
+                                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                            lineNumber: 251,
+                                                            columnNumber: 23
+                                                        }, this)
+                                                    }, void 0, false, {
+                                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                        lineNumber: 245,
+                                                        columnNumber: 21
+                                                    }, this)
+                                                ]
+                                            }, msg.id, true, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                lineNumber: 234,
+                                                columnNumber: 19
+                                            }, this)),
+                                        isTyping && /*#__PURE__*/ _jsxDEV(motion.div, {
+                                            initial: {
+                                                opacity: 0
+                                            },
+                                            animate: {
+                                                opacity: 1
+                                            },
+                                            className: "flex gap-3",
+                                            children: [
+                                                /*#__PURE__*/ _jsxDEV("div", {
+                                                    className: "w-8 h-8 rounded-full bg-gradient-to-br from-primary to-orange-500 flex items-center justify-center",
+                                                    children: /*#__PURE__*/ _jsxDEV(Sparkles, {
+                                                        className: "w-4 h-4 text-white"
+                                                    }, void 0, false, {
+                                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                        lineNumber: 264,
+                                                        columnNumber: 23
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                    lineNumber: 263,
+                                                    columnNumber: 21
+                                                }, this),
+                                                /*#__PURE__*/ _jsxDEV("div", {
+                                                    className: "px-4 py-3 rounded-2xl rounded-tl-md bg-white/10 backdrop-blur-sm border border-white/10",
+                                                    children: /*#__PURE__*/ _jsxDEV("div", {
+                                                        className: "flex gap-1",
+                                                        children: [
+                                                            /*#__PURE__*/ _jsxDEV(motion.div, {
+                                                                animate: {
+                                                                    scale: [
+                                                                        1,
+                                                                        1.2,
+                                                                        1
+                                                                    ]
+                                                                },
+                                                                transition: {
+                                                                    duration: 0.6,
+                                                                    repeat: Infinity,
+                                                                    delay: 0
+                                                                },
+                                                                className: "w-2 h-2 rounded-full bg-white/60"
+                                                            }, void 0, false, {
+                                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                                lineNumber: 268,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ _jsxDEV(motion.div, {
+                                                                animate: {
+                                                                    scale: [
+                                                                        1,
+                                                                        1.2,
+                                                                        1
+                                                                    ]
+                                                                },
+                                                                transition: {
+                                                                    duration: 0.6,
+                                                                    repeat: Infinity,
+                                                                    delay: 0.2
+                                                                },
+                                                                className: "w-2 h-2 rounded-full bg-white/60"
+                                                            }, void 0, false, {
+                                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                                lineNumber: 273,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ _jsxDEV(motion.div, {
+                                                                animate: {
+                                                                    scale: [
+                                                                        1,
+                                                                        1.2,
+                                                                        1
+                                                                    ]
+                                                                },
+                                                                transition: {
+                                                                    duration: 0.6,
+                                                                    repeat: Infinity,
+                                                                    delay: 0.4
+                                                                },
+                                                                className: "w-2 h-2 rounded-full bg-white/60"
+                                                            }, void 0, false, {
+                                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                                lineNumber: 278,
+                                                                columnNumber: 25
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                        lineNumber: 267,
+                                                        columnNumber: 23
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                    lineNumber: 266,
+                                                    columnNumber: 21
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                            lineNumber: 258,
+                                            columnNumber: 19
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDEV("div", {
+                                            ref: messagesEndRef
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                            lineNumber: 288,
+                                            columnNumber: 17
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                    lineNumber: 232,
+                                    columnNumber: 15
+                                }, this),
+                                messages.length <= 1 && !isTyping && /*#__PURE__*/ _jsxDEV("div", {
+                                    className: "mt-6 space-y-2",
+                                    children: [
+                                        /*#__PURE__*/ _jsxDEV("p", {
+                                            className: "text-xs text-gray-400 font-semibold uppercase tracking-wide",
+                                            children: "Quick Questions"
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                            lineNumber: 294,
+                                            columnNumber: 19
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDEV("div", {
+                                            className: "grid grid-cols-2 gap-2",
+                                            children: quickActions.map((action)=>/*#__PURE__*/ _jsxDEV(motion.button, {
+                                                    whileHover: {
+                                                        scale: 1.02
+                                                    },
+                                                    whileTap: {
+                                                        scale: 0.98
+                                                    },
+                                                    onClick: ()=>handleQuickAction(action.query),
+                                                    className: "flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 transition-all text-left",
+                                                    children: [
+                                                        /*#__PURE__*/ _jsxDEV(action.icon, {
+                                                            className: "w-4 h-4 text-primary flex-shrink-0"
+                                                        }, void 0, false, {
+                                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                            lineNumber: 304,
+                                                            columnNumber: 25
+                                                        }, this),
+                                                        /*#__PURE__*/ _jsxDEV("span", {
+                                                            className: "text-xs text-white",
+                                                            children: action.text
+                                                        }, void 0, false, {
+                                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                            lineNumber: 305,
+                                                            columnNumber: 25
+                                                        }, this)
+                                                    ]
+                                                }, action.text, true, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                    lineNumber: 297,
+                                                    columnNumber: 23
+                                                }, this))
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                            lineNumber: 295,
+                                            columnNumber: 19
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                    lineNumber: 293,
+                                    columnNumber: 17
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                            lineNumber: 231,
+                            columnNumber: 13
+                        }, this),
+                        /*#__PURE__*/ _jsxDEV("div", {
+                            className: "p-4 border-t border-white/10 bg-black/20",
+                            children: [
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    className: "flex items-end gap-2",
+                                    children: [
+                                        /*#__PURE__*/ _jsxDEV("input", {
+                                            type: "text",
+                                            value: message,
+                                            onChange: (e)=>setMessage(e.target.value),
+                                            onKeyDown: (e)=>e.key === 'Enter' && handleSendMessage(),
+                                            placeholder: "Ask me anything about travel...",
+                                            maxLength: MAX_MESSAGE_LENGTH,
+                                            className: "flex-1 bg-white/10 border border-white/20 rounded-2xl py-3 px-4 text-white placeholder:text-gray-400 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                            lineNumber: 316,
+                                            columnNumber: 17
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDEV(motion.button, {
+                                            whileHover: {
+                                                scale: 1.05
+                                            },
+                                            whileTap: {
+                                                scale: 0.95
+                                            },
+                                            onClick: ()=>handleSendMessage(),
+                                            disabled: !message.trim() || isTyping,
+                                            className: "w-12 h-12 rounded-2xl bg-gradient-to-r from-primary to-orange-500 text-white flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed shadow-lg",
+                                            children: /*#__PURE__*/ _jsxDEV(Send, {
+                                                className: "w-5 h-5"
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                                lineNumber: 332,
+                                                columnNumber: 19
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                            lineNumber: 325,
+                                            columnNumber: 17
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                    lineNumber: 315,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("p", {
+                                    className: "text-xs text-gray-500 mt-2 text-center",
+                                    children: [
+                                        "Powered by Amigo AI • ",
+                                        message.length,
+                                        "/",
+                                        MAX_MESSAGE_LENGTH
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                                    lineNumber: 335,
+                                    columnNumber: 15
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                            lineNumber: 314,
+                            columnNumber: 13
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                    lineNumber: 191,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                lineNumber: 189,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("style", {
+                children: `
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.05);
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(255, 180, 0, 0.5);
+          border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: rgba(255, 180, 0, 0.7);
+        }
+      `
+            }, void 0, false, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx",
+                lineNumber: 343,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true);
+};
+_s(ChatFab, "3wo5PzrxJBy8OQAD95xppQcArVE=");
+_c = ChatFab;
+var _c;
+$RefreshReg$(_c, "ChatFab");
+
+
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+
+
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/ChatFab.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkNoYXRGYWIudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IHVzZVN0YXRlLCB1c2VSZWYsIHVzZUVmZmVjdCB9IGZyb20gJ3JlYWN0JztcclxuaW1wb3J0IHsgbW90aW9uLCBBbmltYXRlUHJlc2VuY2UgfSBmcm9tICdmcmFtZXItbW90aW9uJztcclxuaW1wb3J0IHsgTWVzc2FnZUNpcmNsZSwgWCwgU2VuZCwgU3BhcmtsZXMsIE1hcFBpbiwgQ2FsZW5kYXIsIFVzZXJzLCBIZWFydCB9IGZyb20gJ2x1Y2lkZS1yZWFjdCc7XHJcbmltcG9ydCB7IHogfSBmcm9tICd6b2QnO1xyXG5cclxuY29uc3QgTUFYX01FU1NBR0VfTEVOR1RIID0gNTAwO1xyXG5jb25zdCBtZXNzYWdlU2NoZW1hID0gei5zdHJpbmcoKS50cmltKCkubWluKDEsIFwiTWVzc2FnZSBjYW5ub3QgYmUgZW1wdHlcIikubWF4KE1BWF9NRVNTQUdFX0xFTkdUSCk7XHJcblxyXG5pbnRlcmZhY2UgTWVzc2FnZSB7XHJcbiAgaWQ6IHN0cmluZztcclxuICB0ZXh0OiBzdHJpbmc7XHJcbiAgaXNVc2VyOiBib29sZWFuO1xyXG4gIHRpbWVzdGFtcDogRGF0ZTtcclxufVxyXG5cclxuLy8gQUkgS25vd2xlZGdlIEJhc2UgYWJvdXQgVHJhdmVsIEFtaWdvXHJcbmNvbnN0IHRyYXZlbEtub3dsZWRnZSA9IHtcclxuICBncmVldGluZ3M6IFtcclxuICAgIFwiSGV5IHRoZXJlLCBmZWxsb3cgdHJhdmVsZXIhIPCfkYsgSSdtIEFtaWdvIEFJLCB5b3VyIHBlcnNvbmFsIHRyYXZlbCBjb21wYW5pb24uIEhvdyBjYW4gSSBoZWxwIHlvdSBkaXNjb3ZlciB5b3VyIG5leHQgYWR2ZW50dXJlP1wiLFxyXG4gICAgXCJXZWxjb21lIHRvIFRyYXZlbCBBbWlnbyEg4pyoIEknbSBoZXJlIHRvIGhlbHAgeW91IGZpbmQgdGhlIHBlcmZlY3QgZ3JvdXAgdHJhdmVsIGV4cGVyaWVuY2UuIFdoYXQgYXJlIHlvdSBjdXJpb3VzIGFib3V0P1wiLFxyXG4gIF0sXHJcbiAgZGVzdGluYXRpb25zOiB7XHJcbiAgICBrZXl3b3JkczogWydkZXN0aW5hdGlvbicsICd3aGVyZScsICdwbGFjZScsICdjb3VudHJ5JywgJ2NpdHknLCAndGhhaWxhbmQnLCAnYmFsaScsICd2aWV0bmFtJ10sXHJcbiAgICByZXNwb25zZTogXCJXZSBvZmZlciBhbWF6aW5nIGdyb3VwIHRyaXBzIHRvIGluY3JlZGlibGUgZGVzdGluYXRpb25zISDwn4yPIE91ciBwb3B1bGFyIHNwb3RzIGluY2x1ZGUgVGhhaWxhbmQgKEJhbmdrb2ssIFBodWtldCwgQ2hpYW5nIE1haSksIEJhbGksIFZpZXRuYW0sIGFuZCBtYW55IG1vcmUuIEVhY2ggdHJpcCBpcyBjYXJlZnVsbHkgY3VyYXRlZCBmb3IgdGhlIHBlcmZlY3QgbWl4IG9mIGFkdmVudHVyZSwgY3VsdHVyZSwgYW5kIHJlbGF4YXRpb24uIFdoaWNoIGRlc3RpbmF0aW9uIGludGVyZXN0cyB5b3U/XCJcclxuICB9LFxyXG4gIGdyb3VwVHJhdmVsOiB7XHJcbiAgICBrZXl3b3JkczogWydncm91cCcsICdwZW9wbGUnLCAnc29sbycsICdhbG9uZScsICdmcmllbmRzJywgJ3RyaWJlJ10sXHJcbiAgICByZXNwb25zZTogXCJUcmF2ZWwgQW1pZ28gaXMgYWxsIGFib3V0IGdyb3VwIHRyYXZlbCB3aXRoIGEgdHdpc3QhIPCfjokgWW91J2xsIGpvaW4gYSBmaXhlZCBncm91cCBvZiBsaWtlLW1pbmRlZCB0cmF2ZWxlcnMgKHVzdWFsbHkgMTUtMjAgcGVvcGxlKSBmb3IgdGhlIGVudGlyZSB0cmlwLiBJdCdzIHBlcmZlY3QgZm9yIHNvbG8gdHJhdmVsZXJzIHdobyB3YW50IHRvIG1ha2UgZnJpZW5kcywgb3IgZ3JvdXBzIGxvb2tpbmcgZm9yIG5ldyBleHBlcmllbmNlcy4gWW91J2xsIHZvdGUgZGVtb2NyYXRpY2FsbHkgb24gYWN0aXZpdGllcyBhbmQgY3JlYXRlIG1lbW9yaWVzIHRvZ2V0aGVyIVwiXHJcbiAgfSxcclxuICBwcmljaW5nOiB7XHJcbiAgICBrZXl3b3JkczogWydwcmljZScsICdjb3N0JywgJ2V4cGVuc2l2ZScsICdjaGVhcCcsICdidWRnZXQnLCAncGF5JywgJ21vbmV5J10sXHJcbiAgICByZXNwb25zZTogXCJPdXIgdHJpcHMgYXJlIGRlc2lnbmVkIHRvIGJlIGFmZm9yZGFibGUgd2l0aG91dCBjb21wcm9taXNpbmcgb24gcXVhbGl0eSEg8J+SsCBQcmljZXMgdHlwaWNhbGx5IHJhbmdlIGZyb20g4oK5MzUsMDAwIHRvIOKCuTY1LDAwMCBkZXBlbmRpbmcgb24gdGhlIGRlc3RpbmF0aW9uIGFuZCBkdXJhdGlvbi4gVGhpcyBpbmNsdWRlcyBhY2NvbW1vZGF0aW9uLCBtb3N0IG1lYWxzLCBhY3Rpdml0aWVzLCBhbmQgbG9jYWwgdHJhbnNwb3J0LiBXZSBhbHNvIG9mZmVyIGVhcmx5IGJpcmQgZGlzY291bnRzIGFuZCBncm91cCBkZWFscyFcIlxyXG4gIH0sXHJcbiAgYm9va2luZzoge1xyXG4gICAga2V5d29yZHM6IFsnYm9vaycsICdyZXNlcnZlJywgJ2pvaW4nLCAnc2lnbiB1cCcsICdyZWdpc3RlciddLFxyXG4gICAgcmVzcG9uc2U6IFwiQm9va2luZyBpcyBzdXBlciBlYXN5ISDwn46rIEp1c3QgYnJvd3NlIG91ciB0cmlwcywgcGljayB5b3VyIGZhdm9yaXRlLCBhbmQgY2xpY2sgJ0Jvb2sgTm93Jy4gWW91IGNhbiBwYXkgaW4gaW5zdGFsbG1lbnRzLCBhbmQgd2UnbGwgaGFuZGxlIGFsbCB0aGUgcGxhbm5pbmcuIE9uY2UgYm9va2VkLCB5b3UnbGwgZ2V0IGFjY2VzcyB0byB5b3VyIHRyaXAncyBXaGF0c0FwcCBncm91cCB0byBtZWV0IHlvdXIgdHJhdmVsIHRyaWJlIGJlZm9yZSBkZXBhcnR1cmUhXCJcclxuICB9LFxyXG4gIGNvbmNlcHQ6IHtcclxuICAgIGtleXdvcmRzOiBbJ2NvbmNlcHQnLCAnYW1pZ28gd2F5JywgJ3BoaWxvc29waHknLCAnZGlmZmVyZW50JywgJ3VuaXF1ZScsICdzcGVjaWFsJ10sXHJcbiAgICByZXNwb25zZTogXCJUaGUgQW1pZ28gV2F5IGlzIHdoYXQgbWFrZXMgdXMgc3BlY2lhbCEg4pyoIFdlIGJlbGlldmUgaW46IDEpIEZpeGVkIEdyb3VwcyAtIHRyYXZlbCB3aXRoIHRoZSBzYW1lIGF3ZXNvbWUgcGVvcGxlIHRocm91Z2hvdXQsIDIpIERlbW9jcmF0aWMgVm90aW5nIC0gdGhlIGdyb3VwIGRlY2lkZXMgb24gYWN0aXZpdGllcyB0b2dldGhlciwgMykgT3BlbiBUcmliZSAtIHdlbGNvbWluZywgaW5jbHVzaXZlIGNvbW11bml0eSwgNCkgQXV0aGVudGljIEV4cGVyaWVuY2VzIC0gcmVhbCBjb25uZWN0aW9ucywgbm90IGp1c3QgdG91cmlzdCB0cmFwcyFcIlxyXG4gIH0sXHJcbiAgc2FmZXR5OiB7XHJcbiAgICBrZXl3b3JkczogWydzYWZlJywgJ3NhZmV0eScsICdzZWN1cmUnLCAndHJ1c3QnLCAncmVsaWFibGUnXSxcclxuICAgIHJlc3BvbnNlOiBcIllvdXIgc2FmZXR5IGlzIG91ciB0b3AgcHJpb3JpdHkhIPCfm6HvuI8gQWxsIHRyaXBzIGluY2x1ZGUgZXhwZXJpZW5jZWQgdHJpcCBsZWFkZXJzLCAyNC83IHN1cHBvcnQsIGNvbXByZWhlbnNpdmUgdHJhdmVsIGluc3VyYW5jZSBvcHRpb25zLCBhbmQgY2FyZWZ1bGx5IHZldHRlZCBhY2NvbW1vZGF0aW9ucy4gV2UgYWxzbyBoYXZlIGVtZXJnZW5jeSBwcm90b2NvbHMgYW5kIG1haW50YWluIGNvbnN0YW50IGNvbW11bmljYXRpb24gd2l0aCBhbGwgdHJhdmVsZXJzLlwiXHJcbiAgfSxcclxuICBkdXJhdGlvbjoge1xyXG4gICAga2V5d29yZHM6IFsnbG9uZycsICdkYXlzJywgJ2R1cmF0aW9uJywgJ3dlZWsnLCAndGltZSddLFxyXG4gICAgcmVzcG9uc2U6IFwiT3VyIHRyaXBzIHR5cGljYWxseSByYW5nZSBmcm9tIDUgdG8gMTQgZGF5cyEg4o+wIE1vc3QgcG9wdWxhciBhcmUgb3VyIDctZGF5IGFkdmVudHVyZXMgLSBwZXJmZWN0IGZvciBhIHdlZWstbG9uZyBlc2NhcGUuIFdlIGRlc2lnbiBpdGluZXJhcmllcyB0byBnaXZlIHlvdSB0aGUgYmVzdCBtaXggb2YgZXhwbG9yYXRpb24gYW5kIHJlbGF4YXRpb24sIHNvIHlvdSByZXR1cm4gcmVmcmVzaGVkLCBub3QgZXhoYXVzdGVkIVwiXHJcbiAgfSxcclxuICBhY3Rpdml0aWVzOiB7XHJcbiAgICBrZXl3b3JkczogWydhY3Rpdml0eScsICdhY3Rpdml0aWVzJywgJ2RvJywgJ2FkdmVudHVyZScsICdleHBlcmllbmNlJywgJ2Z1biddLFxyXG4gICAgcmVzcG9uc2U6IFwiRXZlcnkgdHJpcCBpcyBwYWNrZWQgd2l0aCBhbWF6aW5nIGV4cGVyaWVuY2VzISDwn46oIEZyb20gdGVtcGxlIHZpc2l0cyBhbmQgc3RyZWV0IGZvb2QgdG91cnMgdG8gYmVhY2ggcGFydGllcyBhbmQgaGlraW5nIGFkdmVudHVyZXMuIFRoZSBiZXN0IHBhcnQ/IFlvdXIgZ3JvdXAgdm90ZXMgb24gb3B0aW9uYWwgYWN0aXZpdGllcywgc28geW91J3JlIGFsd2F5cyBkb2luZyB3aGF0IGludGVyZXN0cyB5b3UgbW9zdC4gSXQncyB5b3VyIHRyaXAsIHlvdXIgd2F5IVwiXHJcbiAgfVxyXG59O1xyXG5cclxuY29uc3QgZ2V0QUlSZXNwb25zZSA9ICh1c2VyTWVzc2FnZTogc3RyaW5nKTogc3RyaW5nID0+IHtcclxuICBjb25zdCBsb3dlck1lc3NhZ2UgPSB1c2VyTWVzc2FnZS50b0xvd2VyQ2FzZSgpO1xyXG5cclxuICAvLyBDaGVjayBlYWNoIGtub3dsZWRnZSBjYXRlZ29yeVxyXG4gIGZvciAoY29uc3QgW2tleSwgdmFsdWVdIG9mIE9iamVjdC5lbnRyaWVzKHRyYXZlbEtub3dsZWRnZSkpIHtcclxuICAgIGlmIChrZXkgPT09ICdncmVldGluZ3MnKSBjb250aW51ZTtcclxuXHJcbiAgICBjb25zdCBjYXRlZ29yeSA9IHZhbHVlIGFzIHsga2V5d29yZHM6IHN0cmluZ1tdOyByZXNwb25zZTogc3RyaW5nIH07XHJcbiAgICBpZiAoY2F0ZWdvcnkua2V5d29yZHMuc29tZShrZXl3b3JkID0+IGxvd2VyTWVzc2FnZS5pbmNsdWRlcyhrZXl3b3JkKSkpIHtcclxuICAgICAgcmV0dXJuIGNhdGVnb3J5LnJlc3BvbnNlO1xyXG4gICAgfVxyXG4gIH1cclxuXHJcbiAgLy8gRGVmYXVsdCByZXNwb25zZVxyXG4gIHJldHVybiBcIlRoYXQncyBhIGdyZWF0IHF1ZXN0aW9uISDwn6SUIEknZCBsb3ZlIHRvIGhlbHAgeW91IHdpdGggdGhhdC4gWW91IGNhbiBhbHNvIGNoZWNrIG91dCBvdXIgd2Vic2l0ZSBmb3IgbW9yZSBkZXRhaWxzLCBvciBmZWVsIGZyZWUgdG8gYXNrIG1lIGFib3V0IG91ciBkZXN0aW5hdGlvbnMsIGdyb3VwIHRyYXZlbCBjb25jZXB0LCBwcmljaW5nLCBvciBib29raW5nIHByb2Nlc3MuIFdoYXQgd291bGQgeW91IGxpa2UgdG8ga25vdyBtb3JlIGFib3V0P1wiO1xyXG59O1xyXG5cclxuZXhwb3J0IGNvbnN0IENoYXRGYWIgPSAoKSA9PiB7XHJcbiAgY29uc3QgW2lzT3Blbiwgc2V0SXNPcGVuXSA9IHVzZVN0YXRlKGZhbHNlKTtcclxuICBjb25zdCBbbWVzc2FnZSwgc2V0TWVzc2FnZV0gPSB1c2VTdGF0ZSgnJyk7XHJcbiAgY29uc3QgW21lc3NhZ2VzLCBzZXRNZXNzYWdlc10gPSB1c2VTdGF0ZTxNZXNzYWdlW10+KFtdKTtcclxuICBjb25zdCBbaXNUeXBpbmcsIHNldElzVHlwaW5nXSA9IHVzZVN0YXRlKGZhbHNlKTtcclxuICBjb25zdCBtZXNzYWdlc0VuZFJlZiA9IHVzZVJlZjxIVE1MRGl2RWxlbWVudD4obnVsbCk7XHJcblxyXG4gIGNvbnN0IHNjcm9sbFRvQm90dG9tID0gKCkgPT4ge1xyXG4gICAgbWVzc2FnZXNFbmRSZWYuY3VycmVudD8uc2Nyb2xsSW50b1ZpZXcoeyBiZWhhdmlvcjogXCJzbW9vdGhcIiB9KTtcclxuICB9O1xyXG5cclxuICB1c2VFZmZlY3QoKCkgPT4ge1xyXG4gICAgc2Nyb2xsVG9Cb3R0b20oKTtcclxuICB9LCBbbWVzc2FnZXMsIGlzVHlwaW5nXSk7XHJcblxyXG4gIHVzZUVmZmVjdCgoKSA9PiB7XHJcbiAgICBpZiAoaXNPcGVuICYmIG1lc3NhZ2VzLmxlbmd0aCA9PT0gMCkge1xyXG4gICAgICAvLyBTZW5kIHdlbGNvbWUgbWVzc2FnZSB3aGVuIGNoYXQgb3BlbnNcclxuICAgICAgY29uc3Qgd2VsY29tZU1lc3NhZ2U6IE1lc3NhZ2UgPSB7XHJcbiAgICAgICAgaWQ6ICd3ZWxjb21lJyxcclxuICAgICAgICB0ZXh0OiB0cmF2ZWxLbm93bGVkZ2UuZ3JlZXRpbmdzW01hdGguZmxvb3IoTWF0aC5yYW5kb20oKSAqIHRyYXZlbEtub3dsZWRnZS5ncmVldGluZ3MubGVuZ3RoKV0sXHJcbiAgICAgICAgaXNVc2VyOiBmYWxzZSxcclxuICAgICAgICB0aW1lc3RhbXA6IG5ldyBEYXRlKCksXHJcbiAgICAgIH07XHJcbiAgICAgIHNldE1lc3NhZ2VzKFt3ZWxjb21lTWVzc2FnZV0pO1xyXG4gICAgfVxyXG4gIH0sIFtpc09wZW5dKTtcclxuXHJcbiAgY29uc3QgaGFuZGxlUXVpY2tBY3Rpb24gPSAoYWN0aW9uOiBzdHJpbmcpID0+IHtcclxuICAgIGhhbmRsZVNlbmRNZXNzYWdlKGFjdGlvbik7XHJcbiAgfTtcclxuXHJcbiAgY29uc3QgaGFuZGxlU2VuZE1lc3NhZ2UgPSAodGV4dD86IHN0cmluZykgPT4ge1xyXG4gICAgY29uc3QgbWVzc2FnZVRleHQgPSB0ZXh0IHx8IG1lc3NhZ2UudHJpbSgpO1xyXG5cclxuICAgIGlmICghbWVzc2FnZVRleHQpIHJldHVybjtcclxuXHJcbiAgICAvLyBBZGQgdXNlciBtZXNzYWdlXHJcbiAgICBjb25zdCB1c2VyTWVzc2FnZTogTWVzc2FnZSA9IHtcclxuICAgICAgaWQ6IGB1c2VyLSR7RGF0ZS5ub3coKX1gLFxyXG4gICAgICB0ZXh0OiBtZXNzYWdlVGV4dCxcclxuICAgICAgaXNVc2VyOiB0cnVlLFxyXG4gICAgICB0aW1lc3RhbXA6IG5ldyBEYXRlKCksXHJcbiAgICB9O1xyXG5cclxuICAgIHNldE1lc3NhZ2VzKHByZXYgPT4gWy4uLnByZXYsIHVzZXJNZXNzYWdlXSk7XHJcbiAgICBzZXRNZXNzYWdlKCcnKTtcclxuICAgIHNldElzVHlwaW5nKHRydWUpO1xyXG5cclxuICAgIC8vIFNpbXVsYXRlIEFJIHRoaW5raW5nIGFuZCByZXNwb25kXHJcbiAgICBzZXRUaW1lb3V0KCgpID0+IHtcclxuICAgICAgY29uc3QgYWlSZXNwb25zZTogTWVzc2FnZSA9IHtcclxuICAgICAgICBpZDogYGFpLSR7RGF0ZS5ub3coKX1gLFxyXG4gICAgICAgIHRleHQ6IGdldEFJUmVzcG9uc2UobWVzc2FnZVRleHQpLFxyXG4gICAgICAgIGlzVXNlcjogZmFsc2UsXHJcbiAgICAgICAgdGltZXN0YW1wOiBuZXcgRGF0ZSgpLFxyXG4gICAgICB9O1xyXG4gICAgICBzZXRNZXNzYWdlcyhwcmV2ID0+IFsuLi5wcmV2LCBhaVJlc3BvbnNlXSk7XHJcbiAgICAgIHNldElzVHlwaW5nKGZhbHNlKTtcclxuICAgIH0sIDEwMDAgKyBNYXRoLnJhbmRvbSgpICogMTAwMCk7IC8vIDEtMiBzZWNvbmRzIGRlbGF5XHJcbiAgfTtcclxuXHJcbiAgY29uc3QgcXVpY2tBY3Rpb25zID0gW1xyXG4gICAgeyBpY29uOiBNYXBQaW4sIHRleHQ6ICdCZXN0IGRlc3RpbmF0aW9ucycsIHF1ZXJ5OiAnV2hhdCBhcmUgeW91ciBiZXN0IGRlc3RpbmF0aW9ucz8nIH0sXHJcbiAgICB7IGljb246IENhbGVuZGFyLCB0ZXh0OiAnVHJpcCBkdXJhdGlvbicsIHF1ZXJ5OiAnSG93IGxvbmcgYXJlIHRoZSB0cmlwcz8nIH0sXHJcbiAgICB7IGljb246IFVzZXJzLCB0ZXh0OiAnR3JvdXAgdHJhdmVsJywgcXVlcnk6ICdUZWxsIG1lIGFib3V0IGdyb3VwIHRyYXZlbCcgfSxcclxuICAgIHsgaWNvbjogSGVhcnQsIHRleHQ6ICdUaGUgQW1pZ28gV2F5JywgcXVlcnk6ICdXaGF0IGlzIHRoZSBBbWlnbyBXYXk/JyB9LFxyXG4gIF07XHJcblxyXG4gIHJldHVybiAoXHJcbiAgICA8PlxyXG4gICAgICB7LyogRW5oYW5jZWQgRkFCIEJ1dHRvbiAqL31cclxuICAgICAgPG1vdGlvbi5idXR0b25cclxuICAgICAgICB3aGlsZUhvdmVyPXt7IHNjYWxlOiAxLjEgfX1cclxuICAgICAgICB3aGlsZVRhcD17eyBzY2FsZTogMC45NSB9fVxyXG4gICAgICAgIG9uQ2xpY2s9eygpID0+IHNldElzT3Blbih0cnVlKX1cclxuICAgICAgICBjbGFzc05hbWU9XCJmaXhlZCBib3R0b20tNiByaWdodC02IHotNDAgdy0xMiBoLTEyIG1kOnctMTYgbWQ6aC0xNiByb3VuZGVkLWZ1bGwgYmctZ3JhZGllbnQtdG8tYnIgZnJvbS1wcmltYXJ5IHZpYS1vcmFuZ2UtNTAwIHRvLXJlZC01MDAgdGV4dC13aGl0ZSBmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciBzaGFkb3ctMnhsXCJcclxuICAgICAgICBzdHlsZT17eyBib3hTaGFkb3c6ICcwIDAgNDBweCByZ2JhKDI1NSwgMTgwLCAwLCAwLjYpLCAwIDAgODBweCByZ2JhKDI1NSwgMTgwLCAwLCAwLjMpJyB9fVxyXG4gICAgICA+XHJcbiAgICAgICAgPG1vdGlvbi5kaXZcclxuICAgICAgICAgIGFuaW1hdGU9e3tcclxuICAgICAgICAgICAgcm90YXRlOiBbMCwgMTAsIC0xMCwgMF0sXHJcbiAgICAgICAgICB9fVxyXG4gICAgICAgICAgdHJhbnNpdGlvbj17e1xyXG4gICAgICAgICAgICBkdXJhdGlvbjogMixcclxuICAgICAgICAgICAgcmVwZWF0OiBJbmZpbml0eSxcclxuICAgICAgICAgICAgcmVwZWF0RGVsYXk6IDMsXHJcbiAgICAgICAgICB9fVxyXG4gICAgICAgID5cclxuICAgICAgICAgIDxTcGFya2xlcyBjbGFzc05hbWU9XCJ3LTUgaC01IG1kOnctNyBtZDpoLTdcIiAvPlxyXG4gICAgICAgIDwvbW90aW9uLmRpdj5cclxuICAgICAgPC9tb3Rpb24uYnV0dG9uPlxyXG5cclxuICAgICAgey8qIEVuaGFuY2VkIFRvb2x0aXAgKi99XHJcbiAgICAgIHshaXNPcGVuICYmIChcclxuICAgICAgICA8bW90aW9uLmRpdlxyXG4gICAgICAgICAgaW5pdGlhbD17eyBvcGFjaXR5OiAwLCB4OiAxMCB9fVxyXG4gICAgICAgICAgYW5pbWF0ZT17eyBvcGFjaXR5OiAxLCB4OiAwIH19XHJcbiAgICAgICAgICB0cmFuc2l0aW9uPXt7IGRlbGF5OiAyIH19XHJcbiAgICAgICAgICBjbGFzc05hbWU9XCJmaXhlZCBib3R0b20tOCByaWdodC0yNCB6LTQwIHB4LTUgcHktMyByb3VuZGVkLTJ4bCBoaWRkZW4gbWQ6YmxvY2sgYmctZ3JhZGllbnQtdG8tciBmcm9tLXByaW1hcnkvOTAgdG8tb3JhbmdlLTUwMC85MCBiYWNrZHJvcC1ibHVyLXhsIGJvcmRlciBib3JkZXItd2hpdGUvMjAgc2hhZG93LXhsXCJcclxuICAgICAgICA+XHJcbiAgICAgICAgICA8cCBjbGFzc05hbWU9XCJ0ZXh0LXNtIHRleHQtd2hpdGUgZm9udC1zZW1pYm9sZCB3aGl0ZXNwYWNlLW5vd3JhcCBmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMlwiPlxyXG4gICAgICAgICAgICA8U3BhcmtsZXMgY2xhc3NOYW1lPVwiaC00IHctNFwiIC8+XHJcbiAgICAgICAgICAgIEFzayBBbWlnbyBBSVxyXG4gICAgICAgICAgICA8bW90aW9uLnNwYW5cclxuICAgICAgICAgICAgICBhbmltYXRlPXt7IHNjYWxlOiBbMSwgMS4yLCAxXSB9fVxyXG4gICAgICAgICAgICAgIHRyYW5zaXRpb249e3sgZHVyYXRpb246IDEuNSwgcmVwZWF0OiBJbmZpbml0eSB9fVxyXG4gICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAg4pyoXHJcbiAgICAgICAgICAgIDwvbW90aW9uLnNwYW4+XHJcbiAgICAgICAgICA8L3A+XHJcbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImFic29sdXRlIHJpZ2h0LTAgdG9wLTEvMiAtdHJhbnNsYXRlLXktMS8yIHRyYW5zbGF0ZS14LTEgdy0zIGgtMyBiZy1ncmFkaWVudC10by1iciBmcm9tLXByaW1hcnkgdG8tb3JhbmdlLTUwMCByb3RhdGUtNDVcIiAvPlxyXG4gICAgICAgIDwvbW90aW9uLmRpdj5cclxuICAgICAgKX1cclxuXHJcbiAgICAgIHsvKiBFbmhhbmNlZCBDaGF0IFdpbmRvdyAqL31cclxuICAgICAgPEFuaW1hdGVQcmVzZW5jZT5cclxuICAgICAgICB7aXNPcGVuICYmIChcclxuICAgICAgICAgIDxtb3Rpb24uZGl2XHJcbiAgICAgICAgICAgIGluaXRpYWw9e3sgb3BhY2l0eTogMCwgc2NhbGU6IDAuOSwgeTogMjAgfX1cclxuICAgICAgICAgICAgYW5pbWF0ZT17eyBvcGFjaXR5OiAxLCBzY2FsZTogMSwgeTogMCB9fVxyXG4gICAgICAgICAgICBleGl0PXt7IG9wYWNpdHk6IDAsIHNjYWxlOiAwLjksIHk6IDIwIH19XHJcbiAgICAgICAgICAgIHRyYW5zaXRpb249e3sgdHlwZTogXCJzcHJpbmdcIiwgZGFtcGluZzogMjUgfX1cclxuICAgICAgICAgICAgY2xhc3NOYW1lPVwiZml4ZWQgYm90dG9tLTYgcmlnaHQtNiB6LTUwIHctW2NhbGMoMTAwJS0zcmVtKV0gbWF4LXctbWQgcm91bmRlZC0zeGwgb3ZlcmZsb3ctaGlkZGVuIHNoYWRvdy0yeGxcIlxyXG4gICAgICAgICAgICBzdHlsZT17e1xyXG4gICAgICAgICAgICAgIGJhY2tncm91bmQ6ICdsaW5lYXItZ3JhZGllbnQoMTM1ZGVnLCByZ2JhKDEwLCAzNywgNjQsIDAuOTUpIDAlLCByZ2JhKDE1LCA0NSwgNzUsIDAuOTUpIDEwMCUpJyxcclxuICAgICAgICAgICAgICBiYWNrZHJvcEZpbHRlcjogJ2JsdXIoMjBweCknLFxyXG4gICAgICAgICAgICAgIGJvcmRlcjogJzFweCBzb2xpZCByZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMSknXHJcbiAgICAgICAgICAgIH19XHJcbiAgICAgICAgICA+XHJcbiAgICAgICAgICAgIHsvKiBIZWFkZXIgd2l0aCBHcmFkaWVudCAqL31cclxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJyZWxhdGl2ZSBweC02IHB5LTQgYmctZ3JhZGllbnQtdG8tciBmcm9tLXByaW1hcnkvMjAgdG8tb3JhbmdlLTUwMC8yMCBib3JkZXItYiBib3JkZXItd2hpdGUvMTBcIj5cclxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktYmV0d2VlblwiPlxyXG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtM1wiPlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInJlbGF0aXZlXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJ3LTEyIGgtMTIgcm91bmRlZC1mdWxsIGJnLWdyYWRpZW50LXRvLWJyIGZyb20tcHJpbWFyeSB0by1vcmFuZ2UtNTAwIGZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyXCI+XHJcbiAgICAgICAgICAgICAgICAgICAgICA8U3BhcmtsZXMgY2xhc3NOYW1lPVwidy02IGgtNiB0ZXh0LXdoaXRlXCIgLz5cclxuICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImFic29sdXRlIC1ib3R0b20tMSAtcmlnaHQtMSB3LTQgaC00IGJnLWdyZWVuLTUwMCByb3VuZGVkLWZ1bGwgYm9yZGVyLTIgYm9yZGVyLW5hdnktZGVlcFwiIC8+XHJcbiAgICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2PlxyXG4gICAgICAgICAgICAgICAgICAgIDxoNCBjbGFzc05hbWU9XCJmb250LWJvbGQgdGV4dC13aGl0ZSBmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMlwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgQW1pZ28gQUlcclxuICAgICAgICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cInRleHQteHMgcHgtMiBweS0wLjUgcm91bmRlZC1mdWxsIGJnLXByaW1hcnkvMzAgdGV4dC1wcmltYXJ5LWZvcmVncm91bmRcIj5CZXRhPC9zcGFuPlxyXG4gICAgICAgICAgICAgICAgICAgIDwvaDQ+XHJcbiAgICAgICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPVwidGV4dC14cyB0ZXh0LWdyYXktMzAwXCI+WW91ciBBSSBUcmF2ZWwgQ29tcGFuaW9uPC9wPlxyXG4gICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgPGJ1dHRvblxyXG4gICAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBzZXRJc09wZW4oZmFsc2UpfVxyXG4gICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJ0ZXh0LWdyYXktNDAwIGhvdmVyOnRleHQtd2hpdGUgdHJhbnNpdGlvbi1jb2xvcnMgcC0yIGhvdmVyOmJnLXdoaXRlLzEwIHJvdW5kZWQtbGdcIlxyXG4gICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICA8WCBjbGFzc05hbWU9XCJ3LTUgaC01XCIgLz5cclxuICAgICAgICAgICAgICAgIDwvYnV0dG9uPlxyXG4gICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICA8L2Rpdj5cclxuXHJcbiAgICAgICAgICAgIHsvKiBDaGF0IE1lc3NhZ2VzICovfVxyXG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImgtOTYgcC00IG92ZXJmbG93LXktYXV0byBjdXN0b20tc2Nyb2xsYmFyXCI+XHJcbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJzcGFjZS15LTRcIj5cclxuICAgICAgICAgICAgICAgIHttZXNzYWdlcy5tYXAoKG1zZykgPT4gKFxyXG4gICAgICAgICAgICAgICAgICA8bW90aW9uLmRpdlxyXG4gICAgICAgICAgICAgICAgICAgIGtleT17bXNnLmlkfVxyXG4gICAgICAgICAgICAgICAgICAgIGluaXRpYWw9e3sgb3BhY2l0eTogMCwgeTogMTAgfX1cclxuICAgICAgICAgICAgICAgICAgICBhbmltYXRlPXt7IG9wYWNpdHk6IDEsIHk6IDAgfX1cclxuICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9e2BmbGV4IGdhcC0zICR7bXNnLmlzVXNlciA/ICdmbGV4LXJvdy1yZXZlcnNlJyA6ICdmbGV4LXJvdyd9YH1cclxuICAgICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICAgIHshbXNnLmlzVXNlciAmJiAoXHJcbiAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInctOCBoLTggcm91bmRlZC1mdWxsIGJnLWdyYWRpZW50LXRvLWJyIGZyb20tcHJpbWFyeSB0by1vcmFuZ2UtNTAwIGZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIGZsZXgtc2hyaW5rLTBcIj5cclxuICAgICAgICAgICAgICAgICAgICAgICAgPFNwYXJrbGVzIGNsYXNzTmFtZT1cInctNCBoLTQgdGV4dC13aGl0ZVwiIC8+XHJcbiAgICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgICApfVxyXG4gICAgICAgICAgICAgICAgICAgIDxkaXZcclxuICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT17YHB4LTQgcHktMyByb3VuZGVkLTJ4bCBtYXgtdy1bODAlXSAke21zZy5pc1VzZXJcclxuICAgICAgICAgICAgICAgICAgICAgICAgPyAnYmctZ3JhZGllbnQtdG8tciBmcm9tLXByaW1hcnkgdG8tb3JhbmdlLTUwMCB0ZXh0LXdoaXRlIHJvdW5kZWQtdHItbWQnXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIDogJ2JnLXdoaXRlLzEwIGJhY2tkcm9wLWJsdXItc20gdGV4dC13aGl0ZSByb3VuZGVkLXRsLW1kIGJvcmRlciBib3JkZXItd2hpdGUvMTAnXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIH1gfVxyXG4gICAgICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT1cInRleHQtc20gbGVhZGluZy1yZWxheGVkXCI+e21zZy50ZXh0fTwvcD5cclxuICAgICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgICAgPC9tb3Rpb24uZGl2PlxyXG4gICAgICAgICAgICAgICAgKSl9XHJcblxyXG4gICAgICAgICAgICAgICAgey8qIFR5cGluZyBJbmRpY2F0b3IgKi99XHJcbiAgICAgICAgICAgICAgICB7aXNUeXBpbmcgJiYgKFxyXG4gICAgICAgICAgICAgICAgICA8bW90aW9uLmRpdlxyXG4gICAgICAgICAgICAgICAgICAgIGluaXRpYWw9e3sgb3BhY2l0eTogMCB9fVxyXG4gICAgICAgICAgICAgICAgICAgIGFuaW1hdGU9e3sgb3BhY2l0eTogMSB9fVxyXG4gICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImZsZXggZ2FwLTNcIlxyXG4gICAgICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJ3LTggaC04IHJvdW5kZWQtZnVsbCBiZy1ncmFkaWVudC10by1iciBmcm9tLXByaW1hcnkgdG8tb3JhbmdlLTUwMCBmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlclwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPFNwYXJrbGVzIGNsYXNzTmFtZT1cInctNCBoLTQgdGV4dC13aGl0ZVwiIC8+XHJcbiAgICAgICAgICAgICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJweC00IHB5LTMgcm91bmRlZC0yeGwgcm91bmRlZC10bC1tZCBiZy13aGl0ZS8xMCBiYWNrZHJvcC1ibHVyLXNtIGJvcmRlciBib3JkZXItd2hpdGUvMTBcIj5cclxuICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBnYXAtMVwiPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICA8bW90aW9uLmRpdlxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgIGFuaW1hdGU9e3sgc2NhbGU6IFsxLCAxLjIsIDFdIH19XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgdHJhbnNpdGlvbj17eyBkdXJhdGlvbjogMC42LCByZXBlYXQ6IEluZmluaXR5LCBkZWxheTogMCB9fVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cInctMiBoLTIgcm91bmRlZC1mdWxsIGJnLXdoaXRlLzYwXCJcclxuICAgICAgICAgICAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgICAgICAgICAgICAgPG1vdGlvbi5kaXZcclxuICAgICAgICAgICAgICAgICAgICAgICAgICBhbmltYXRlPXt7IHNjYWxlOiBbMSwgMS4yLCAxXSB9fVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgIHRyYW5zaXRpb249e3sgZHVyYXRpb246IDAuNiwgcmVwZWF0OiBJbmZpbml0eSwgZGVsYXk6IDAuMiB9fVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cInctMiBoLTIgcm91bmRlZC1mdWxsIGJnLXdoaXRlLzYwXCJcclxuICAgICAgICAgICAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgICAgICAgICAgICAgPG1vdGlvbi5kaXZcclxuICAgICAgICAgICAgICAgICAgICAgICAgICBhbmltYXRlPXt7IHNjYWxlOiBbMSwgMS4yLCAxXSB9fVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgIHRyYW5zaXRpb249e3sgZHVyYXRpb246IDAuNiwgcmVwZWF0OiBJbmZpbml0eSwgZGVsYXk6IDAuNCB9fVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cInctMiBoLTIgcm91bmRlZC1mdWxsIGJnLXdoaXRlLzYwXCJcclxuICAgICAgICAgICAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgICAgICA8L21vdGlvbi5kaXY+XHJcbiAgICAgICAgICAgICAgICApfVxyXG5cclxuICAgICAgICAgICAgICAgIDxkaXYgcmVmPXttZXNzYWdlc0VuZFJlZn0gLz5cclxuICAgICAgICAgICAgICA8L2Rpdj5cclxuXHJcbiAgICAgICAgICAgICAgey8qIFF1aWNrIEFjdGlvbnMgLSBPbmx5IHNob3cgaW5pdGlhbGx5ICovfVxyXG4gICAgICAgICAgICAgIHttZXNzYWdlcy5sZW5ndGggPD0gMSAmJiAhaXNUeXBpbmcgJiYgKFxyXG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJtdC02IHNwYWNlLXktMlwiPlxyXG4gICAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9XCJ0ZXh0LXhzIHRleHQtZ3JheS00MDAgZm9udC1zZW1pYm9sZCB1cHBlcmNhc2UgdHJhY2tpbmctd2lkZVwiPlF1aWNrIFF1ZXN0aW9uczwvcD5cclxuICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJncmlkIGdyaWQtY29scy0yIGdhcC0yXCI+XHJcbiAgICAgICAgICAgICAgICAgICAge3F1aWNrQWN0aW9ucy5tYXAoKGFjdGlvbikgPT4gKFxyXG4gICAgICAgICAgICAgICAgICAgICAgPG1vdGlvbi5idXR0b25cclxuICAgICAgICAgICAgICAgICAgICAgICAga2V5PXthY3Rpb24udGV4dH1cclxuICAgICAgICAgICAgICAgICAgICAgICAgd2hpbGVIb3Zlcj17eyBzY2FsZTogMS4wMiB9fVxyXG4gICAgICAgICAgICAgICAgICAgICAgICB3aGlsZVRhcD17eyBzY2FsZTogMC45OCB9fVxyXG4gICAgICAgICAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBoYW5kbGVRdWlja0FjdGlvbihhY3Rpb24ucXVlcnkpfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMiBweC0zIHB5LTIgcm91bmRlZC14bCBiZy13aGl0ZS81IGJvcmRlciBib3JkZXItd2hpdGUvMTAgaG92ZXI6Ymctd2hpdGUvMTAgaG92ZXI6Ym9yZGVyLXByaW1hcnkvNTAgdHJhbnNpdGlvbi1hbGwgdGV4dC1sZWZ0XCJcclxuICAgICAgICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgICAgICAgPGFjdGlvbi5pY29uIGNsYXNzTmFtZT1cInctNCBoLTQgdGV4dC1wcmltYXJ5IGZsZXgtc2hyaW5rLTBcIiAvPlxyXG4gICAgICAgICAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJ0ZXh0LXhzIHRleHQtd2hpdGVcIj57YWN0aW9uLnRleHR9PC9zcGFuPlxyXG4gICAgICAgICAgICAgICAgICAgICAgPC9tb3Rpb24uYnV0dG9uPlxyXG4gICAgICAgICAgICAgICAgICAgICkpfVxyXG4gICAgICAgICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgICl9XHJcbiAgICAgICAgICAgIDwvZGl2PlxyXG5cclxuICAgICAgICAgICAgey8qIElucHV0IEFyZWEgKi99XHJcbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwicC00IGJvcmRlci10IGJvcmRlci13aGl0ZS8xMCBiZy1ibGFjay8yMFwiPlxyXG4gICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1lbmQgZ2FwLTJcIj5cclxuICAgICAgICAgICAgICAgIDxpbnB1dFxyXG4gICAgICAgICAgICAgICAgICB0eXBlPVwidGV4dFwiXHJcbiAgICAgICAgICAgICAgICAgIHZhbHVlPXttZXNzYWdlfVxyXG4gICAgICAgICAgICAgICAgICBvbkNoYW5nZT17KGUpID0+IHNldE1lc3NhZ2UoZS50YXJnZXQudmFsdWUpfVxyXG4gICAgICAgICAgICAgICAgICBvbktleURvd249eyhlKSA9PiBlLmtleSA9PT0gJ0VudGVyJyAmJiBoYW5kbGVTZW5kTWVzc2FnZSgpfVxyXG4gICAgICAgICAgICAgICAgICBwbGFjZWhvbGRlcj1cIkFzayBtZSBhbnl0aGluZyBhYm91dCB0cmF2ZWwuLi5cIlxyXG4gICAgICAgICAgICAgICAgICBtYXhMZW5ndGg9e01BWF9NRVNTQUdFX0xFTkdUSH1cclxuICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwiZmxleC0xIGJnLXdoaXRlLzEwIGJvcmRlciBib3JkZXItd2hpdGUvMjAgcm91bmRlZC0yeGwgcHktMyBweC00IHRleHQtd2hpdGUgcGxhY2Vob2xkZXI6dGV4dC1ncmF5LTQwMCBmb2N1czpvdXRsaW5lLW5vbmUgZm9jdXM6Ym9yZGVyLXByaW1hcnkgZm9jdXM6cmluZy0yIGZvY3VzOnJpbmctcHJpbWFyeS8yMCB0cmFuc2l0aW9uLWFsbFwiXHJcbiAgICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICAgICAgPG1vdGlvbi5idXR0b25cclxuICAgICAgICAgICAgICAgICAgd2hpbGVIb3Zlcj17eyBzY2FsZTogMS4wNSB9fVxyXG4gICAgICAgICAgICAgICAgICB3aGlsZVRhcD17eyBzY2FsZTogMC45NSB9fVxyXG4gICAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBoYW5kbGVTZW5kTWVzc2FnZSgpfVxyXG4gICAgICAgICAgICAgICAgICBkaXNhYmxlZD17IW1lc3NhZ2UudHJpbSgpIHx8IGlzVHlwaW5nfVxyXG4gICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJ3LTEyIGgtMTIgcm91bmRlZC0yeGwgYmctZ3JhZGllbnQtdG8tciBmcm9tLXByaW1hcnkgdG8tb3JhbmdlLTUwMCB0ZXh0LXdoaXRlIGZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIGRpc2FibGVkOm9wYWNpdHktNTAgZGlzYWJsZWQ6Y3Vyc29yLW5vdC1hbGxvd2VkIHNoYWRvdy1sZ1wiXHJcbiAgICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICAgIDxTZW5kIGNsYXNzTmFtZT1cInctNSBoLTVcIiAvPlxyXG4gICAgICAgICAgICAgICAgPC9tb3Rpb24uYnV0dG9uPlxyXG4gICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICAgIDxwIGNsYXNzTmFtZT1cInRleHQteHMgdGV4dC1ncmF5LTUwMCBtdC0yIHRleHQtY2VudGVyXCI+XHJcbiAgICAgICAgICAgICAgICBQb3dlcmVkIGJ5IEFtaWdvIEFJIOKAoiB7bWVzc2FnZS5sZW5ndGh9L3tNQVhfTUVTU0FHRV9MRU5HVEh9XHJcbiAgICAgICAgICAgICAgPC9wPlxyXG4gICAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICAgIDwvbW90aW9uLmRpdj5cclxuICAgICAgICApfVxyXG4gICAgICA8L0FuaW1hdGVQcmVzZW5jZT5cclxuXHJcbiAgICAgIDxzdHlsZT57YFxyXG4gICAgICAgIC5jdXN0b20tc2Nyb2xsYmFyOjotd2Via2l0LXNjcm9sbGJhciB7XHJcbiAgICAgICAgICB3aWR0aDogNnB4O1xyXG4gICAgICAgIH1cclxuICAgICAgICAuY3VzdG9tLXNjcm9sbGJhcjo6LXdlYmtpdC1zY3JvbGxiYXItdHJhY2sge1xyXG4gICAgICAgICAgYmFja2dyb3VuZDogcmdiYSgyNTUsIDI1NSwgMjU1LCAwLjA1KTtcclxuICAgICAgICAgIGJvcmRlci1yYWRpdXM6IDEwcHg7XHJcbiAgICAgICAgfVxyXG4gICAgICAgIC5jdXN0b20tc2Nyb2xsYmFyOjotd2Via2l0LXNjcm9sbGJhci10aHVtYiB7XHJcbiAgICAgICAgICBiYWNrZ3JvdW5kOiByZ2JhKDI1NSwgMTgwLCAwLCAwLjUpO1xyXG4gICAgICAgICAgYm9yZGVyLXJhZGl1czogMTBweDtcclxuICAgICAgICB9XHJcbiAgICAgICAgLmN1c3RvbS1zY3JvbGxiYXI6Oi13ZWJraXQtc2Nyb2xsYmFyLXRodW1iOmhvdmVyIHtcclxuICAgICAgICAgIGJhY2tncm91bmQ6IHJnYmEoMjU1LCAxODAsIDAsIDAuNyk7XHJcbiAgICAgICAgfVxyXG4gICAgICBgfTwvc3R5bGU+XHJcbiAgICA8Lz5cclxuICApO1xyXG59O1xyXG4iXSwibmFtZXMiOlsidXNlU3RhdGUiLCJ1c2VSZWYiLCJ1c2VFZmZlY3QiLCJtb3Rpb24iLCJBbmltYXRlUHJlc2VuY2UiLCJYIiwiU2VuZCIsIlNwYXJrbGVzIiwiTWFwUGluIiwiQ2FsZW5kYXIiLCJVc2VycyIsIkhlYXJ0IiwieiIsIk1BWF9NRVNTQUdFX0xFTkdUSCIsIm1lc3NhZ2VTY2hlbWEiLCJzdHJpbmciLCJ0cmltIiwibWluIiwibWF4IiwidHJhdmVsS25vd2xlZGdlIiwiZ3JlZXRpbmdzIiwiZGVzdGluYXRpb25zIiwia2V5d29yZHMiLCJyZXNwb25zZSIsImdyb3VwVHJhdmVsIiwicHJpY2luZyIsImJvb2tpbmciLCJjb25jZXB0Iiwic2FmZXR5IiwiZHVyYXRpb24iLCJhY3Rpdml0aWVzIiwiZ2V0QUlSZXNwb25zZSIsInVzZXJNZXNzYWdlIiwibG93ZXJNZXNzYWdlIiwidG9Mb3dlckNhc2UiLCJrZXkiLCJ2YWx1ZSIsIk9iamVjdCIsImVudHJpZXMiLCJjYXRlZ29yeSIsInNvbWUiLCJrZXl3b3JkIiwiaW5jbHVkZXMiLCJDaGF0RmFiIiwiaXNPcGVuIiwic2V0SXNPcGVuIiwibWVzc2FnZSIsInNldE1lc3NhZ2UiLCJtZXNzYWdlcyIsInNldE1lc3NhZ2VzIiwiaXNUeXBpbmciLCJzZXRJc1R5cGluZyIsIm1lc3NhZ2VzRW5kUmVmIiwic2Nyb2xsVG9Cb3R0b20iLCJjdXJyZW50Iiwic2Nyb2xsSW50b1ZpZXciLCJiZWhhdmlvciIsImxlbmd0aCIsIndlbGNvbWVNZXNzYWdlIiwiaWQiLCJ0ZXh0IiwiTWF0aCIsImZsb29yIiwicmFuZG9tIiwiaXNVc2VyIiwidGltZXN0YW1wIiwiRGF0ZSIsImhhbmRsZVF1aWNrQWN0aW9uIiwiYWN0aW9uIiwiaGFuZGxlU2VuZE1lc3NhZ2UiLCJtZXNzYWdlVGV4dCIsIm5vdyIsInByZXYiLCJzZXRUaW1lb3V0IiwiYWlSZXNwb25zZSIsInF1aWNrQWN0aW9ucyIsImljb24iLCJxdWVyeSIsImJ1dHRvbiIsIndoaWxlSG92ZXIiLCJzY2FsZSIsIndoaWxlVGFwIiwib25DbGljayIsImNsYXNzTmFtZSIsInN0eWxlIiwiYm94U2hhZG93IiwiZGl2IiwiYW5pbWF0ZSIsInJvdGF0ZSIsInRyYW5zaXRpb24iLCJyZXBlYXQiLCJJbmZpbml0eSIsInJlcGVhdERlbGF5IiwiaW5pdGlhbCIsIm9wYWNpdHkiLCJ4IiwiZGVsYXkiLCJwIiwic3BhbiIsInkiLCJleGl0IiwidHlwZSIsImRhbXBpbmciLCJiYWNrZ3JvdW5kIiwiYmFja2Ryb3BGaWx0ZXIiLCJib3JkZXIiLCJoNCIsIm1hcCIsIm1zZyIsInJlZiIsImlucHV0Iiwib25DaGFuZ2UiLCJlIiwidGFyZ2V0Iiwib25LZXlEb3duIiwicGxhY2Vob2xkZXIiLCJtYXhMZW5ndGgiLCJkaXNhYmxlZCJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsU0FBU0EsUUFBUSxFQUFFQyxNQUFNLEVBQUVDLFNBQVMsUUFBUSxRQUFRO0FBQ3BELFNBQVNDLE1BQU0sRUFBRUMsZUFBZSxRQUFRLGdCQUFnQjtBQUN4RCxTQUF3QkMsQ0FBQyxFQUFFQyxJQUFJLEVBQUVDLFFBQVEsRUFBRUMsTUFBTSxFQUFFQyxRQUFRLEVBQUVDLEtBQUssRUFBRUMsS0FBSyxRQUFRLGVBQWU7QUFDaEcsU0FBU0MsQ0FBQyxRQUFRLE1BQU07QUFFeEIsTUFBTUMscUJBQXFCO0FBQzNCLE1BQU1DLGdCQUFnQkYsRUFBRUcsTUFBTSxHQUFHQyxJQUFJLEdBQUdDLEdBQUcsQ0FBQyxHQUFHLDJCQUEyQkMsR0FBRyxDQUFDTDtBQVM5RSx1Q0FBdUM7QUFDdkMsTUFBTU0sa0JBQWtCO0lBQ3RCQyxXQUFXO1FBQ1Q7UUFDQTtLQUNEO0lBQ0RDLGNBQWM7UUFDWkMsVUFBVTtZQUFDO1lBQWU7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

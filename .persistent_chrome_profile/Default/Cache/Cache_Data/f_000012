@@ -1,0 +1,390 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/Navbar.tsx");import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope;
+
+let prevRefreshReg;
+let prevRefreshSig;
+
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react-swc can't detect preamble. Something is wrong."
+    );
+  }
+
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+
+import __vite__cjsImport2_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=c3ff4a43"; const _jsxDEV = __vite__cjsImport2_react_jsxDevRuntime["jsxDEV"]; const _Fragment = __vite__cjsImport2_react_jsxDevRuntime["Fragment"];
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=8e948b43"; const useState = __vite__cjsImport3_react["useState"]; const useEffect = __vite__cjsImport3_react["useEffect"];
+import { motion } from "/node_modules/.vite/deps/framer-motion.js?v=16c1ddc0";
+import { Menu, X } from "/node_modules/.vite/deps/lucide-react.js?v=31177f67";
+import logo from "/src/assets/logo.png?import";
+import { MagneticButton } from "/src/components/ui/animations.tsx";
+export const Navbar = ({ currentVersion, onVersionChange })=>{
+    _s();
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    useEffect(()=>{
+        const handleScroll = ()=>{
+            setIsScrolled(window.scrollY > 50);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return ()=>window.removeEventListener('scroll', handleScroll);
+    }, []);
+    const navLinks = [
+        {
+            label: 'Destinations',
+            href: '#destinations'
+        },
+        {
+            label: 'The Amigo Way',
+            href: '#amigo-way'
+        },
+        {
+            label: 'Community',
+            href: '#community'
+        },
+        {
+            label: 'About',
+            href: '#about'
+        }
+    ];
+    return /*#__PURE__*/ _jsxDEV(motion.nav, {
+        initial: {
+            y: -100
+        },
+        animate: {
+            y: 0
+        },
+        transition: {
+            duration: 0.6,
+            ease: [
+                0.25,
+                0.1,
+                0.25,
+                1
+            ]
+        },
+        className: `fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'glass-card py-3' : 'py-6'}`,
+        children: [
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "container mx-auto px-6 flex items-center justify-between",
+                children: [
+                    /*#__PURE__*/ _jsxDEV("a", {
+                        href: "#",
+                        className: "flex items-center relative group",
+                        children: currentVersion === 'v2' ? /*#__PURE__*/ _jsxDEV(_Fragment, {
+                            children: [
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    className: "absolute -inset-x-4 -inset-y-2.5 bg-white rounded-xl shadow-lg shadow-white/20"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                    lineNumber: 45,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    className: "absolute -inset-4 bg-white/40 rounded-2xl blur-xl opacity-80"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                    lineNumber: 47,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    className: "absolute -inset-5 bg-primary/30 rounded-2xl blur-2xl opacity-0 group-hover:opacity-70 transition-opacity duration-500"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                    lineNumber: 49,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("img", {
+                                    src: logo,
+                                    alt: "Travel Amigo",
+                                    loading: "eager",
+                                    fetchPriority: "high",
+                                    className: "relative h-10 md:h-12 w-auto"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                    lineNumber: 50,
+                                    columnNumber: 15
+                                }, this)
+                            ]
+                        }, void 0, true) : /*#__PURE__*/ _jsxDEV(_Fragment, {
+                            children: [
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    className: "absolute -inset-x-4 -inset-y-2.5 bg-white rounded-xl shadow-lg"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                    lineNumber: 61,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    className: "absolute -inset-4 bg-primary/30 rounded-2xl blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                    lineNumber: 63,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("img", {
+                                    src: logo,
+                                    alt: "Travel Amigo",
+                                    loading: "eager",
+                                    fetchPriority: "high",
+                                    className: "relative h-10 md:h-12 w-auto"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                    lineNumber: 64,
+                                    columnNumber: 15
+                                }, this)
+                            ]
+                        }, void 0, true)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                        lineNumber: 41,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        className: "hidden md:flex items-center gap-1 bg-navy-medium/50 rounded-lg p-1",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV("button", {
+                                onClick: ()=>onVersionChange('main'),
+                                className: `px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${currentVersion === 'main' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`,
+                                children: "Main"
+                            }, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                lineNumber: 77,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV("button", {
+                                onClick: ()=>onVersionChange('v1'),
+                                className: `px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${currentVersion === 'v1' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`,
+                                children: "V1"
+                            }, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                lineNumber: 86,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV("button", {
+                                onClick: ()=>onVersionChange('v2'),
+                                className: `px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${currentVersion === 'v2' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`,
+                                children: "V2"
+                            }, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                lineNumber: 95,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV("button", {
+                                onClick: ()=>onVersionChange('redesign'),
+                                className: `px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${currentVersion === 'redesign' ? 'bg-gradient-to-r from-primary to-purple-500 text-white' : 'text-muted-foreground hover:text-foreground'}`,
+                                children: "✨ Redesign"
+                            }, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                lineNumber: 104,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                        lineNumber: 76,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        className: "hidden md:flex items-center gap-10",
+                        children: navLinks.map((link)=>/*#__PURE__*/ _jsxDEV("a", {
+                                href: link.href,
+                                className: "font-sans text-sm font-medium transition-all duration-300 relative group text-foreground/80 hover:text-foreground hover:scale-105",
+                                children: [
+                                    link.label,
+                                    /*#__PURE__*/ _jsxDEV("span", {
+                                        className: "absolute -bottom-1 left-0 w-full h-0.5 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left bg-primary"
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                        lineNumber: 124,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, link.label, true, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                lineNumber: 118,
+                                columnNumber: 13
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                        lineNumber: 116,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        className: "hidden md:block",
+                        children: /*#__PURE__*/ _jsxDEV(MagneticButton, {
+                            className: "px-6 py-3 text-base",
+                            children: "Book Now"
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                            lineNumber: 131,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                        lineNumber: 130,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("button", {
+                        className: "md:hidden text-foreground p-2",
+                        onClick: ()=>setIsMobileMenuOpen(!isMobileMenuOpen),
+                        children: isMobileMenuOpen ? /*#__PURE__*/ _jsxDEV(X, {
+                            size: 24
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                            lineNumber: 141,
+                            columnNumber: 31
+                        }, this) : /*#__PURE__*/ _jsxDEV(Menu, {
+                            size: 24
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                            lineNumber: 141,
+                            columnNumber: 49
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                        lineNumber: 137,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                lineNumber: 39,
+                columnNumber: 7
+            }, this),
+            isMobileMenuOpen && /*#__PURE__*/ _jsxDEV(motion.div, {
+                initial: {
+                    opacity: 0,
+                    y: -20
+                },
+                animate: {
+                    opacity: 1,
+                    y: 0
+                },
+                exit: {
+                    opacity: 0,
+                    y: -20
+                },
+                className: "md:hidden glass-card mt-2 mx-4 p-6 rounded-2xl",
+                children: /*#__PURE__*/ _jsxDEV("div", {
+                    className: "flex flex-col gap-4",
+                    children: [
+                        /*#__PURE__*/ _jsxDEV("div", {
+                            className: "flex items-center gap-2 pb-4 border-b border-foreground/10",
+                            children: [
+                                /*#__PURE__*/ _jsxDEV("span", {
+                                    className: "text-sm text-muted-foreground font-sans",
+                                    children: "Version:"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                    lineNumber: 156,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("button", {
+                                    onClick: ()=>onVersionChange('main'),
+                                    className: `px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${currentVersion === 'main' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground bg-navy-medium/50'}`,
+                                    children: "Main"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                    lineNumber: 157,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("button", {
+                                    onClick: ()=>onVersionChange('v1'),
+                                    className: `px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${currentVersion === 'v1' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground bg-navy-medium/50'}`,
+                                    children: "V1"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                    lineNumber: 166,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("button", {
+                                    onClick: ()=>onVersionChange('v2'),
+                                    className: `px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${currentVersion === 'v2' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground bg-navy-medium/50'}`,
+                                    children: "V2"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                    lineNumber: 175,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("button", {
+                                    onClick: ()=>onVersionChange('redesign'),
+                                    className: `px-3 py-1.5 rounded-md text-sm font-sans font-medium transition-all ${currentVersion === 'redesign' ? 'bg-gradient-to-r from-primary to-purple-500 text-white' : 'text-muted-foreground hover:text-foreground bg-navy-medium/50'}`,
+                                    children: "✨"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                    lineNumber: 184,
+                                    columnNumber: 15
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                            lineNumber: 155,
+                            columnNumber: 13
+                        }, this),
+                        navLinks.map((link)=>/*#__PURE__*/ _jsxDEV("a", {
+                                href: link.href,
+                                className: "font-sans text-lg font-medium py-2 text-foreground",
+                                onClick: ()=>setIsMobileMenuOpen(false),
+                                children: link.label
+                            }, link.label, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                                lineNumber: 197,
+                                columnNumber: 15
+                            }, this)),
+                        /*#__PURE__*/ _jsxDEV(MagneticButton, {
+                            className: "mt-4 w-full text-center",
+                            children: "Book Now"
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                            lineNumber: 206,
+                            columnNumber: 13
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                    lineNumber: 153,
+                    columnNumber: 11
+                }, this)
+            }, void 0, false, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+                lineNumber: 147,
+                columnNumber: 9
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx",
+        lineNumber: 32,
+        columnNumber: 5
+    }, this);
+};
+_s(Navbar, "0+zEKVBL95ILuBb5rHE6ViYOHu8=");
+_c = Navbar;
+var _c;
+$RefreshReg$(_c, "Navbar");
+
+
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+
+
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/Navbar.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIk5hdmJhci50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgdXNlU3RhdGUsIHVzZUVmZmVjdCB9IGZyb20gJ3JlYWN0JztcclxuaW1wb3J0IHsgbW90aW9uIH0gZnJvbSAnZnJhbWVyLW1vdGlvbic7XHJcbmltcG9ydCB7IE1lbnUsIFggfSBmcm9tICdsdWNpZGUtcmVhY3QnO1xyXG5pbXBvcnQgbG9nbyBmcm9tICdAL2Fzc2V0cy9sb2dvLnBuZyc7XHJcbmltcG9ydCB7IE1hZ25ldGljQnV0dG9uIH0gZnJvbSAnLi91aS9hbmltYXRpb25zJztcclxuXHJcbmludGVyZmFjZSBOYXZiYXJQcm9wcyB7XHJcbiAgY3VycmVudFZlcnNpb246ICd2MScgfCAndjInIHwgJ3JlZGVzaWduJyB8ICdtYWluJztcclxuICBvblZlcnNpb25DaGFuZ2U6ICh2ZXJzaW9uOiAndjEnIHwgJ3YyJyB8ICdyZWRlc2lnbicgfCAnbWFpbicpID0+IHZvaWQ7XHJcbn1cclxuXHJcbmV4cG9ydCBjb25zdCBOYXZiYXIgPSAoeyBjdXJyZW50VmVyc2lvbiwgb25WZXJzaW9uQ2hhbmdlIH06IE5hdmJhclByb3BzKSA9PiB7XHJcbiAgY29uc3QgW2lzU2Nyb2xsZWQsIHNldElzU2Nyb2xsZWRdID0gdXNlU3RhdGUoZmFsc2UpO1xyXG4gIGNvbnN0IFtpc01vYmlsZU1lbnVPcGVuLCBzZXRJc01vYmlsZU1lbnVPcGVuXSA9IHVzZVN0YXRlKGZhbHNlKTtcclxuXHJcbiAgdXNlRWZmZWN0KCgpID0+IHtcclxuICAgIGNvbnN0IGhhbmRsZVNjcm9sbCA9ICgpID0+IHtcclxuICAgICAgc2V0SXNTY3JvbGxlZCh3aW5kb3cuc2Nyb2xsWSA+IDUwKTtcclxuICAgIH07XHJcbiAgICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcignc2Nyb2xsJywgaGFuZGxlU2Nyb2xsKTtcclxuICAgIHJldHVybiAoKSA9PiB3aW5kb3cucmVtb3ZlRXZlbnRMaXN0ZW5lcignc2Nyb2xsJywgaGFuZGxlU2Nyb2xsKTtcclxuICB9LCBbXSk7XHJcblxyXG4gIGNvbnN0IG5hdkxpbmtzID0gW1xyXG4gICAgeyBsYWJlbDogJ0Rlc3RpbmF0aW9ucycsIGhyZWY6ICcjZGVzdGluYXRpb25zJyB9LFxyXG4gICAgeyBsYWJlbDogJ1RoZSBBbWlnbyBXYXknLCBocmVmOiAnI2FtaWdvLXdheScgfSxcclxuICAgIHsgbGFiZWw6ICdDb21tdW5pdHknLCBocmVmOiAnI2NvbW11bml0eScgfSxcclxuICAgIHsgbGFiZWw6ICdBYm91dCcsIGhyZWY6ICcjYWJvdXQnIH0sXHJcbiAgXTtcclxuXHJcbiAgcmV0dXJuIChcclxuICAgIDxtb3Rpb24ubmF2XHJcbiAgICAgIGluaXRpYWw9e3sgeTogLTEwMCB9fVxyXG4gICAgICBhbmltYXRlPXt7IHk6IDAgfX1cclxuICAgICAgdHJhbnNpdGlvbj17eyBkdXJhdGlvbjogMC42LCBlYXNlOiBbMC4yNSwgMC4xLCAwLjI1LCAxXSB9fVxyXG4gICAgICBjbGFzc05hbWU9e2BmaXhlZCB0b3AtMCBsZWZ0LTAgcmlnaHQtMCB6LTUwIHRyYW5zaXRpb24tYWxsIGR1cmF0aW9uLTUwMCAke2lzU2Nyb2xsZWQgPyAnZ2xhc3MtY2FyZCBweS0zJyA6ICdweS02J1xyXG4gICAgICAgIH1gfVxyXG4gICAgPlxyXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImNvbnRhaW5lciBteC1hdXRvIHB4LTYgZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1iZXR3ZWVuXCI+XHJcbiAgICAgICAgey8qIExvZ28gd2l0aCB2ZXJzaW9uLXNwZWNpZmljIHN0eWxpbmcgKi99XHJcbiAgICAgICAgPGEgaHJlZj1cIiNcIiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciByZWxhdGl2ZSBncm91cFwiPlxyXG4gICAgICAgICAge2N1cnJlbnRWZXJzaW9uID09PSAndjInID8gKFxyXG4gICAgICAgICAgICA8PlxyXG4gICAgICAgICAgICAgIHsvKiBWMjogV2hpdGUgYmFja2dyb3VuZCB3aXRoIGdsb3cgKi99XHJcbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJhYnNvbHV0ZSAtaW5zZXQteC00IC1pbnNldC15LTIuNSBiZy13aGl0ZSByb3VuZGVkLXhsIHNoYWRvdy1sZyBzaGFkb3ctd2hpdGUvMjBcIiAvPlxyXG4gICAgICAgICAgICAgIHsvKiBBbWJpZW50IGdsb3cgKi99XHJcbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJhYnNvbHV0ZSAtaW5zZXQtNCBiZy13aGl0ZS80MCByb3VuZGVkLTJ4bCBibHVyLXhsIG9wYWNpdHktODBcIiAvPlxyXG4gICAgICAgICAgICAgIHsvKiBIb3ZlciBnbG93IGVmZmVjdCAqL31cclxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImFic29sdXRlIC1pbnNldC01IGJnLXByaW1hcnkvMzAgcm91bmRlZC0yeGwgYmx1ci0yeGwgb3BhY2l0eS0wIGdyb3VwLWhvdmVyOm9wYWNpdHktNzAgdHJhbnNpdGlvbi1vcGFjaXR5IGR1cmF0aW9uLTUwMFwiIC8+XHJcbiAgICAgICAgICAgICAgPGltZ1xyXG4gICAgICAgICAgICAgICAgc3JjPXtsb2dvfVxyXG4gICAgICAgICAgICAgICAgYWx0PVwiVHJhdmVsIEFtaWdvXCJcclxuICAgICAgICAgICAgICAgIGxvYWRpbmc9XCJlYWdlclwiXHJcbiAgICAgICAgICAgICAgICBmZXRjaFByaW9yaXR5PVwiaGlnaFwiXHJcbiAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJyZWxhdGl2ZSBoLTEwIG1kOmgtMTIgdy1hdXRvXCJcclxuICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICA8Lz5cclxuICAgICAgICAgICkgOiAoXHJcbiAgICAgICAgICAgIDw+XHJcbiAgICAgICAgICAgICAgey8qIFYxICYgUmVkZXNpZ246IFNvbGlkIHdoaXRlIGJhY2tncm91bmQgZm9yIGxvZ28gdmlzaWJpbGl0eSAqL31cclxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImFic29sdXRlIC1pbnNldC14LTQgLWluc2V0LXktMi41IGJnLXdoaXRlIHJvdW5kZWQteGwgc2hhZG93LWxnXCIgLz5cclxuICAgICAgICAgICAgICB7LyogSG92ZXIgZ2xvdyBlZmZlY3QgKi99XHJcbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJhYnNvbHV0ZSAtaW5zZXQtNCBiZy1wcmltYXJ5LzMwIHJvdW5kZWQtMnhsIGJsdXIteGwgb3BhY2l0eS0wIGdyb3VwLWhvdmVyOm9wYWNpdHktNzAgdHJhbnNpdGlvbi1vcGFjaXR5IGR1cmF0aW9uLTUwMFwiIC8+XHJcbiAgICAgICAgICAgICAgPGltZ1xyXG4gICAgICAgICAgICAgICAgc3JjPXtsb2dvfVxyXG4gICAgICAgICAgICAgICAgYWx0PVwiVHJhdmVsIEFtaWdvXCJcclxuICAgICAgICAgICAgICAgIGxvYWRpbmc9XCJlYWdlclwiXHJcbiAgICAgICAgICAgICAgICBmZXRjaFByaW9yaXR5PVwiaGlnaFwiXHJcbiAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJyZWxhdGl2ZSBoLTEwIG1kOmgtMTIgdy1hdXRvXCJcclxuICAgICAgICAgICAgICAvPlxyXG4gICAgICAgICAgICA8Lz5cclxuICAgICAgICAgICl9XHJcbiAgICAgICAgPC9hPlxyXG5cclxuICAgICAgICB7LyogVmVyc2lvbiBTd2l0Y2hlciAtIFNpbXBsZSBCdXR0b25zICovfVxyXG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiaGlkZGVuIG1kOmZsZXggaXRlbXMtY2VudGVyIGdhcC0xIGJnLW5hdnktbWVkaXVtLzUwIHJvdW5kZWQtbGcgcC0xXCI+XHJcbiAgICAgICAgICA8YnV0dG9uXHJcbiAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IG9uVmVyc2lvbkNoYW5nZSgnbWFpbicpfVxyXG4gICAgICAgICAgICBjbGFzc05hbWU9e2BweC0zIHB5LTEuNSByb3VuZGVkLW1kIHRleHQtc20gZm9udC1zYW5zIGZvbnQtbWVkaXVtIHRyYW5zaXRpb24tYWxsICR7Y3VycmVudFZlcnNpb24gPT09ICdtYWluJ1xyXG4gICAgICAgICAgICAgID8gJ2JnLXByaW1hcnkgdGV4dC1wcmltYXJ5LWZvcmVncm91bmQnXHJcbiAgICAgICAgICAgICAgOiAndGV4dC1tdXRlZC1mb3JlZ3JvdW5kIGhvdmVyOnRleHQtZm9yZWdyb3VuZCdcclxuICAgICAgICAgICAgICB9YH1cclxuICAgICAgICAgID5cclxuICAgICAgICAgICAgTWFpblxyXG4gICAgICAgICAgPC9idXR0b24+XHJcbiAgICAgICAgICA8YnV0dG9uXHJcbiAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IG9uVmVyc2lvbkNoYW5nZSgndjEnKX1cclxuICAgICAgICAgICAgY2xhc3NOYW1lPXtgcHgtMyBweS0xLjUgcm91bmRlZC1tZCB0ZXh0LXNtIGZvbnQtc2FucyBmb250LW1lZGl1bSB0cmFuc2l0aW9uLWFsbCAke2N1cnJlbnRWZXJzaW9uID09PSAndjEnXHJcbiAgICAgICAgICAgICAgPyAnYmctcHJpbWFyeSB0ZXh0LXByaW1hcnktZm9yZWdyb3VuZCdcclxuICAgICAgICAgICAgICA6ICd0ZXh0LW11dGVkLWZvcmVncm91bmQgaG92ZXI6dGV4dC1mb3JlZ3JvdW5kJ1xyXG4gICAgICAgICAgICAgIH1gfVxyXG4gICAgICAgICAgPlxyXG4gICAgICAgICAgICBWMVxyXG4gICAgICAgICAgPC9idXR0b24+XHJcbiAgICAgICAgICA8YnV0dG9uXHJcbiAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IG9uVmVyc2lvbkNoYW5nZSgndjInKX1cclxuICAgICAgICAgICAgY2xhc3NOYW1lPXtgcHgtMyBweS0xLjUgcm91bmRlZC1tZCB0ZXh0LXNtIGZvbnQtc2FucyBmb250LW1lZGl1bSB0cmFuc2l0aW9uLWFsbCAke2N1cnJlbnRWZXJzaW9uID09PSAndjInXHJcbiAgICAgICAgICAgICAgPyAnYmctcHJpbWFyeSB0ZXh0LXByaW1hcnktZm9yZWdyb3VuZCdcclxuICAgICAgICAgICAgICA6ICd0ZXh0LW11dGVkLWZvcmVncm91bmQgaG92ZXI6dGV4dC1mb3JlZ3JvdW5kJ1xyXG4gICAgICAgICAgICAgIH1gfVxyXG4gICAgICAgICAgPlxyXG4gICAgICAgICAgICBWMlxyXG4gICAgICAgICAgPC9idXR0b24+XHJcbiAgICAgICAgICA8YnV0dG9uXHJcbiAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IG9uVmVyc2lvbkNoYW5nZSgncmVkZXNpZ24nKX1cclxuICAgICAgICAgICAgY2xhc3NOYW1lPXtgcHgtMyBweS0xLjUgcm91bmRlZC1tZCB0ZXh0LXNtIGZvbnQtc2FucyBmb250LW1lZGl1bSB0cmFuc2l0aW9uLWFsbCAke2N1cnJlbnRWZXJzaW9uID09PSAncmVkZXNpZ24nXHJcbiAgICAgICAgICAgICAgPyAnYmctZ3JhZGllbnQtdG8tciBmcm9tLXByaW1hcnkgdG8tcHVycGxlLTUwMCB0ZXh0LXdoaXRlJ1xyXG4gICAgICAgICAgICAgIDogJ3RleHQtbXV0ZWQtZm9yZWdyb3VuZCBob3Zlcjp0ZXh0LWZvcmVncm91bmQnXHJcbiAgICAgICAgICAgICAgfWB9XHJcbiAgICAgICAgICA+XHJcbiAgICAgICAgICAgIOKcqCBSZWRlc2lnblxyXG4gICAgICAgICAgPC9idXR0b24+XHJcbiAgICAgICAgPC9kaXY+XHJcblxyXG4gICAgICAgIHsvKiBEZXNrdG9wIE5hdmlnYXRpb24gKi99XHJcbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJoaWRkZW4gbWQ6ZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTEwXCI+XHJcbiAgICAgICAgICB7bmF2TGlua3MubWFwKChsaW5rKSA9PiAoXHJcbiAgICAgICAgICAgIDxhXHJcbiAgICAgICAgICAgICAga2V5PXtsaW5rLmxhYmVsfVxyXG4gICAgICAgICAgICAgIGhyZWY9e2xpbmsuaHJlZn1cclxuICAgICAgICAgICAgICBjbGFzc05hbWU9XCJmb250LXNhbnMgdGV4dC1zbSBmb250LW1lZGl1bSB0cmFuc2l0aW9uLWFsbCBkdXJhdGlvbi0zMDAgcmVsYXRpdmUgZ3JvdXAgdGV4dC1mb3JlZ3JvdW5kLzgwIGhvdmVyOnRleHQtZm9yZWdyb3VuZCBob3ZlcjpzY2FsZS0xMDVcIlxyXG4gICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAge2xpbmsubGFiZWx9XHJcbiAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPVwiYWJzb2x1dGUgLWJvdHRvbS0xIGxlZnQtMCB3LWZ1bGwgaC0wLjUgc2NhbGUteC0wIGdyb3VwLWhvdmVyOnNjYWxlLXgtMTAwIHRyYW5zaXRpb24tdHJhbnNmb3JtIGR1cmF0aW9uLTMwMCBvcmlnaW4tbGVmdCBiZy1wcmltYXJ5XCIgLz5cclxuICAgICAgICAgICAgPC9hPlxyXG4gICAgICAgICAgKSl9XHJcbiAgICAgICAgPC9kaXY+XHJcblxyXG4gICAgICAgIHsvKiBDVEEgQnV0dG9uICovfVxyXG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiaGlkZGVuIG1kOmJsb2NrXCI+XHJcbiAgICAgICAgICA8TWFnbmV0aWNCdXR0b24gY2xhc3NOYW1lPVwicHgtNiBweS0zIHRleHQtYmFzZVwiPlxyXG4gICAgICAgICAgICBCb29rIE5vd1xyXG4gICAgICAgICAgPC9NYWduZXRpY0J1dHRvbj5cclxuICAgICAgICA8L2Rpdj5cclxuXHJcbiAgICAgICAgey8qIE1vYmlsZSBNZW51IEJ1dHRvbiAqL31cclxuICAgICAgICA8YnV0dG9uXHJcbiAgICAgICAgICBjbGFzc05hbWU9XCJtZDpoaWRkZW4gdGV4dC1mb3JlZ3JvdW5kIHAtMlwiXHJcbiAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBzZXRJc01vYmlsZU1lbnVPcGVuKCFpc01vYmlsZU1lbnVPcGVuKX1cclxuICAgICAgICA+XHJcbiAgICAgICAgICB7aXNNb2JpbGVNZW51T3BlbiA/IDxYIHNpemU9ezI0fSAvPiA6IDxNZW51IHNpemU9ezI0fSAvPn1cclxuICAgICAgICA8L2J1dHRvbj5cclxuICAgICAgPC9kaXY+XHJcblxyXG4gICAgICB7LyogTW9iaWxlIE1lbnUgKi99XHJcbiAgICAgIHtpc01vYmlsZU1lbnVPcGVuICYmIChcclxuICAgICAgICA8bW90aW9uLmRpdlxyXG4gICAgICAgICAgaW5pdGlhbD17eyBvcGFjaXR5OiAwLCB5OiAtMjAgfX1cclxuICAgICAgICAgIGFuaW1hdGU9e3sgb3BhY2l0eTogMSwgeTogMCB9fVxyXG4gICAgICAgICAgZXhpdD17eyBvcGFjaXR5OiAwLCB5OiAtMjAgfX1cclxuICAgICAgICAgIGNsYXNzTmFtZT1cIm1kOmhpZGRlbiBnbGFzcy1jYXJkIG10LTIgbXgtNCBwLTYgcm91bmRlZC0yeGxcIlxyXG4gICAgICAgID5cclxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBmbGV4LWNvbCBnYXAtNFwiPlxyXG4gICAgICAgICAgICB7LyogTW9iaWxlIFZlcnNpb24gU3dpdGNoZXIgKi99XHJcbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTIgcGItNCBib3JkZXItYiBib3JkZXItZm9yZWdyb3VuZC8xMFwiPlxyXG4gICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cInRleHQtc20gdGV4dC1tdXRlZC1mb3JlZ3JvdW5kIGZvbnQtc2Fuc1wiPlZlcnNpb246PC9zcGFuPlxyXG4gICAgICAgICAgICAgIDxidXR0b25cclxuICAgICAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IG9uVmVyc2lvbkNoYW5nZSgnbWFpbicpfVxyXG4gICAgICAgICAgICAgICAgY2xhc3NOYW1lPXtgcHgtMyBweS0xLjUgcm91bmRlZC1tZCB0ZXh0LXNtIGZvbnQtc2FucyBmb250LW1lZGl1bSB0cmFuc2l0aW9uLWFsbCAke2N1cnJlbnRWZXJzaW9uID09PSAnbWFpbidcclxuICAgICAgICAgICAgICAgICAgPyAnYmctcHJpbWFyeSB0ZXh0LXByaW1hcnktZm9yZWdyb3VuZCdcclxuICAgICAgICAgICAgICAgICAgOiAndGV4dC1tdXRlZC1mb3JlZ3JvdW5kIGhvdmVyOnRleHQtZm9yZWdyb3VuZCBiZy1uYXZ5LW1lZGl1bS81MCdcclxuICAgICAgICAgICAgICAgICAgfWB9XHJcbiAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgTWFpblxyXG4gICAgICAgICAgICAgIDwvYnV0dG9uPlxyXG4gICAgICAgICAgICAgIDxidXR0b25cclxuICAgICAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IG9uVmVyc2lvbkNoYW5nZSgndjEnKX1cclxuICAgICAgICAgICAgICAgIGNsYXNzTmFtZT17YHB4LTMgcHktMS41IHJvdW5kZWQtbWQgdGV4dC1zbSBmb250LXNhbnMgZm9udC1tZWRpdW0gdHJhbnNpdGlvbi1hbGwgJHtjdXJyZW50VmVyc2lvbiA9PT0gJ3YxJ1xyXG4gICAgICAgICAgICAgICAgICA/ICdiZy1wcmltYXJ5IHRleHQtcHJpbWFyeS1mb3JlZ3JvdW5kJ1xyXG4gICAgICAgICAgICAgICAgICA6ICd0ZXh0LW11dGVkLWZvcmVncm91bmQgaG92ZXI6dGV4dC1mb3JlZ3JvdW5kIGJnLW5hdnktbWVkaXVtLzUwJ1xyXG4gICAgICAgICAgICAgICAgICB9YH1cclxuICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICBWMVxyXG4gICAgICAgICAgICAgIDwvYnV0dG9uPlxyXG4gICAgICAgICAgICAgIDxidXR0b25cclxuICAgICAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IG9uVmVyc2lvbkNoYW5nZSgndjInKX1cclxuICAgICAgICAgICAgICAgIGNsYXNzTmFtZT17YHB4LTMgcHktMS41IHJvdW5kZWQtbWQgdGV4dC1zbSBmb250LXNhbnMgZm9udC1tZWRpdW0gdHJhbnNpdGlvbi1hbGwgJHtjdXJyZW50VmVyc2lvbiA9PT0gJ3YyJ1xyXG4gICAgICAgICAgICAgICAgICA/ICdiZy1wcmltYXJ5IHRleHQtcHJpbWFyeS1mb3JlZ3JvdW5kJ1xyXG4gICAgICAgICAgICAgICAgICA6ICd0ZXh0LW11dGVkLWZvcmVncm91bmQgaG92ZXI6dGV4dC1mb3JlZ3JvdW5kIGJnLW5hdnktbWVkaXVtLzUwJ1xyXG4gICAgICAgICAgICAgICAgICB9YH1cclxuICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICBWMlxyXG4gICAgICAgICAgICAgIDwvYnV0dG9uPlxyXG4gICAgICAgICAgICAgIDxidXR0b25cclxuICAgICAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IG9uVmVyc2lvbkNoYW5nZSgncmVkZXNpZ24nKX1cclxuICAgICAgICAgICAgICAgIGNsYXNzTmFtZT17YHB4LTMgcHktMS41IHJvdW5kZWQtbWQgdGV4dC1zbSBmb250LXNhbnMgZm9udC1tZWRpdW0gdHJhbnNpdGlvbi1hbGwgJHtjdXJyZW50VmVyc2lvbiA9PT0gJ3JlZGVzaWduJ1xyXG4gICAgICAgICAgICAgICAgICA/ICdiZy1ncmFkaWVudC10by1yIGZyb20tcHJpbWFyeSB0by1wdXJwbGUtNTAwIHRleHQtd2hpdGUnXHJcbiAgICAgICAgICAgICAgICAgIDogJ3RleHQtbXV0ZWQtZm9yZWdyb3VuZCBob3Zlcjp0ZXh0LWZvcmVncm91bmQgYmctbmF2eS1tZWRpdW0vNTAnXHJcbiAgICAgICAgICAgICAgICAgIH1gfVxyXG4gICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgIOKcqFxyXG4gICAgICAgICAgICAgIDwvYnV0dG9uPlxyXG4gICAgICAgICAgICA8L2Rpdj5cclxuXHJcblxyXG4gICAgICAgICAgICB7bmF2TGlua3MubWFwKChsaW5rKSA9PiAoXHJcbiAgICAgICAgICAgICAgPGFcclxuICAgICAgICAgICAgICAgIGtleT17bGluay5sYWJlbH1cclxuICAgICAgICAgICAgICAgIGhyZWY9e2xpbmsuaHJlZn1cclxuICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImZvbnQtc2FucyB0ZXh0LWxnIGZvbnQtbWVkaXVtIHB5LTIgdGV4dC1mb3JlZ3JvdW5kXCJcclxuICAgICAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IHNldElzTW9iaWxlTWVudU9wZW4oZmFsc2UpfVxyXG4gICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgIHtsaW5rLmxhYmVsfVxyXG4gICAgICAgICAgICAgIDwvYT5cclxuICAgICAgICAgICAgKSl9XHJcbiAgICAgICAgICAgIDxNYWduZXRpY0J1dHRvbiBjbGFzc05hbWU9XCJtdC00IHctZnVsbCB0ZXh0LWNlbnRlclwiPlxyXG4gICAgICAgICAgICAgIEJvb2sgTm93XHJcbiAgICAgICAgICAgIDwvTWFnbmV0aWNCdXR0b24+XHJcbiAgICAgICAgICA8L2Rpdj5cclxuICAgICAgICA8L21vdGlvbi5kaXY+XHJcbiAgICAgICl9XHJcbiAgICA8L21vdGlvbi5uYXY+XHJcbiAgKTtcclxufTtcclxuIl0sIm5hbWVzIjpbInVzZVN0YXRlIiwidXNlRWZmZWN0IiwibW90aW9uIiwiTWVudSIsIlgiLCJsb2dvIiwiTWFnbmV0aWNCdXR0b24iLCJOYXZiYXIiLCJjdXJyZW50VmVyc2lvbiIsIm9uVmVyc2lvbkNoYW5nZSIsImlzU2Nyb2xsZWQiLCJzZXRJc1Njcm9sbGVkIiwiaXNNb2JpbGVNZW51T3BlbiIsInNldElzTW9iaWxlTWVudU9wZW4iLCJoYW5kbGVTY3JvbGwiLCJ3aW5kb3ciLCJzY3JvbGxZIiwiYWRkRXZlbnRMaXN0ZW5lciIsInJlbW92ZUV2ZW50TGlzdGVuZXIiLCJuYXZMaW5rcyIsImxhYmVsIiwiaHJlZiIsIm5hdiIsImluaXRpYWwiLCJ5IiwiYW5pbWF0ZSIsInRyYW5zaXRpb24iLCJkdXJhdGlvbiIsImVhc2UiLCJjbGFzc05hbWUiLCJkaXYiLCJhIiwiaW1nIiwic3JjIiwiYWx0IiwibG9hZGluZyIsImZldGNoUHJpb3JpdHkiLCJidXR0b24iLCJvbkNsaWNrIiwibWFwIiwibGluayIsInNwYW4iLCJzaXplIiwib3BhY2l0eSIsImV4aXQiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLFNBQVNBLFFBQVEsRUFBRUMsU0FBUyxRQUFRLFFBQVE7QUFDNUMsU0FBU0MsTUFBTSxRQUFRLGdCQUFnQjtBQUN2QyxTQUFTQyxJQUFJLEVBQUVDLENBQUMsUUFBUSxlQUFlO0FBQ3ZDLE9BQU9DLFVBQVUsb0JBQW9CO0FBQ3JDLFNBQVNDLGNBQWMsUUFBUSxrQkFBa0I7QUFPakQsT0FBTyxNQUFNQyxTQUFTLENBQUMsRUFBRUMsY0FBYyxFQUFFQyxlQUFlLEVBQWU7O0lBQ3JFLE1BQU0sQ0FBQ0MsWUFBWUMsY0FBYyxHQUFHWCxTQUFTO0lBQzdDLE1BQU0sQ0FBQ1ksa0JBQWtCQyxvQkFBb0IsR0FBR2IsU0FBUztJQUV6REMsVUFBVTtRQUNSLE1BQU1hLGVBQWU7WUFDbkJILGNBQWNJLE9BQU9DLE9BQU8sR0FBRztRQUNqQztRQUNBRCxPQUFPRSxnQkFBZ0IsQ0FBQyxVQUFVSDtRQUNsQyxPQUFPLElBQU1DLE9BQU9HLG1CQUFtQixDQUFDLFVBQVVKO0lBQ3BELEdBQUcsRUFBRTtJQUVMLE1BQU1LLFdBQVc7UUFDZjtZQUFFQyxPQUFPO1lBQWdCQyxNQUFNO1FBQWdCO1FBQy9DO1lBQUVELE9BQU87WUFBaUJDLE1BQU07UUFBYTtRQUM3QztZQUFFRCxPQUFPO1lBQWFDLE1BQU07UUFBYTtRQUN6QztZQUFFRCxPQUFPO1lBQVNDLE1BQU07UUFBUztLQUNsQztJQUVELHFCQUNFLFFBQUNuQixPQUFPb0IsR0FBRztRQUNUQyxTQUFTO1lBQUVDLEdBQUcsQ0FBQztRQUFJO1FBQ25CQyxTQUFTO1lBQUVELEdBQUc7UUFBRTtRQUNoQkUsWUFBWTtZQUFFQyxVQUFVO1lBQUtDLE1BQU07Z0JBQUM7Z0JBQU07Z0JBQUs7Z0JBQU07YUFBRTtRQUFDO1FBQ3hEQyxXQUFXLENBQUMsNERBQTRELEVBQUVuQixhQUFhLG9CQUFvQixRQUN2Rzs7MEJBRUosUUFBQ29CO2dCQUFJRCxXQUFVOztrQ0FFYixRQUFDRTt3QkFBRVYsTUFBSzt3QkFBSVEsV0FBVTtrQ0FDbkJyQixtQkFBbUIscUJBQ2xCOzs4Q0FFRSxRQUFDc0I7b0NBQUlELFdBQVU7Ozs7Ozs4Q0FFZixRQUFDQztvQ0FBSUQsV0FBVTs7Ozs7OzhDQUVmLFFBQUNDO29DQUFJRCxXQUFVOzs7Ozs7OENBQ2YsUUFBQ0c7b0NBQ0NDLEtBQUs1QjtvQ0FDTDZCLEtBQUk7b0NBQ0pDLFNBQVE7b0NBQ1JDLGVBQWM7b0NBQ2RQLFdBQVU7Ozs7Ozs7eURBSWQ7OzhDQUVFLFFBQUNDO29DQUFJRCxXQUFVOzs7Ozs7OENBRWYsUUFBQ0M7b0NBQUlELFdBQVU7Ozs7Ozs4Q0FDZixRQUFDRztvQ0FDQ0MsS0FBSzVCO29DQUNMNkIsS0FBSTtvQ0FDSkMsU0FBUTtvQ0FDUkMsZUFBYztvQ0FDZFAsV0FBVTs7Ozs7Ozs7Ozs7OztrQ0FPbEIsUUFBQ0M7d0JBQUlELFdBQVU7OzBDQUNiLFFBQUNRO2dDQUNDQyxTQUFTLElBQU03QixnQkFBZ0I7Z0NBQy9Cb0IsV0FBVyxDQUFDLG9FQUFvRSxFQUFFckIsbUJBQW1CLFNBQ2pHLHVDQUNBLCtDQUNBOzBDQUNMOzs7Ozs7MENBR0QsUUFBQzZCO2dDQUNDQyxTQUFTLElBQU03QixnQkFBZ0I7Z0NBQy9Cb0IsV0FBVyxDQUFDLG9FQUFvRSxFQUFFckIsbUJBQW1CLE9BQ2pHLHVDQUNBLCtDQUNBOzBDQUNMOzs7Ozs7MENBR0QsUUFBQzZCO2dDQUNDQyxTQUFTLElBQU03QixnQkFBZ0I7Z0NBQy9Cb0IsV0FBVyxDQUFDLG9FQUFvRSxFQUFFckIsbUJBQW1CLE9BQ2pHLHVDQUNBLCtDQUNBOzBDQUNMOzs7Ozs7MENBR0QsUUFBQzZCO2dDQUNDQyxTQUFTLElBQU03QixnQkFBZ0I7Z0NBQy9Cb0IsV0FBVyxDQUFDLG9FQUFvRSxFQUFFckIsbUJBQW1CLGFBQ2pHLDJEQUNBLCtDQUNBOzBDQUNMOzs7Ozs7Ozs7Ozs7a0NBTUgsUUFBQ3NCO3dCQUFJRCxXQUFVO2tDQUNaVixTQUFTb0IsR0FBRyxDQUFDLENBQUNDLHFCQUNiLFFBQUNUO2dDQUVDVixNQUFNbUIsS0FBS25CLElBQUk7Z0NBQ2ZRLFdBQVU7O29DQUVUVyxLQUFLcEIsS0FBSztrREFDWCxRQUFDcUI7d0NBQUtaLFdBQVU7Ozs7Ozs7K0JBTFhXLEtBQUtwQixLQUFLOzs7Ozs7Ozs7O2tDQVdyQixRQUFDVTt3QkFBSUQsV0FBVTtrQ0FDYixjQUFBLFFBQUN2Qjs0QkFBZXVCLFdBQVU7c0NBQXNCOzs7Ozs7Ozs7OztrQ0FNbEQsUUFBQ1E7d0JBQ0NSLFdBQVU7d0JBQ1ZTLFNBQVMsSUFBTXpCLG9CQUFvQixDQUFDRDtrQ0FFbkNBLGlDQUFtQixRQUFDUjs0QkFBRXNDLE1BQU07Ozs7O2lEQUFTLFFBQUN2Qzs0QkFBS3VDLE1BQU07Ozs7Ozs7Ozs7Ozs7Ozs7O1lBS3JEOUIsa0NBQ0MsUUFBQ1YsT0FBTzRCLEdBQUc7Z0JBQ1RQLFNBQVM7b0JBQUVvQixTQUFTO29CQUFHbkIsR0FBRyxDQUFDO2dCQUFHO2dCQUM5QkMsU0FBUztvQkFBRWtCLFNBQVM7b0JBQUduQixHQUFHO2dCQUFFO2dCQUM1Qm9CLE1BQU07b0JBQUVELFNBQVM7b0JBQUduQixHQUFHLENBQUM7Z0JBQUc7Z0JBQzNCSyxXQUFVOzBCQUVWLGNBQUEsUUFBQ0M7b0JBQUlELFdBQVU7O3NDQUViLFFBQUNDOzRCQUFJRCxXQUFVOzs4Q0FDYixRQUFDWTtvQ0FBS1osV0FBVTs4Q0FBMEM7Ozs7Ozs4Q0FDMUQsUUFBQ1E7b0NBQ0NDLFNBQVMsSUFBTTdCLGdCQUFnQjtvQ0FDL0JvQixXQUFXLENBQUMsb0VBQW9FLEVBQUVyQixtQkFBbUIsU0FDakcsdUNBQ0EsaUVBQ0E7OENBQ0w7Ozs7Ozs4Q0FHRCxRQUFDNkI7b0NBQ0NDLFNBQVMsSUFBTTdCLGdCQUFnQjtvQ0FDL0JvQixXQUFXLENBQUMsb0VBQW9FLEVBQUVyQixtQkFBbUIsT0FDakcsdUNBQ0EsaUVBQ0E7OENBQ0w7Ozs7Ozs4Q0FHRCxRQUFDNkI7b0NBQ0NDLFNBQVMsSUFBTTdCLGdCQUFnQjtvQ0FDL0JvQixXQUFXLENBQUMsb0VBQW9FLEVBQUVyQixtQkFBbUIsT0FDakcsdUNBQ0EsaUVBQ0E7OENBQ0w7Ozs7Ozs4Q0FHRCxRQUFDNkI7b0NBQ0NDLFNBQVMsSUFBTTdCLGdCQUFnQjtvQ0FDL0JvQixXQUFXLENBQUMsb0VBQW9FLEVBQUVyQixtQkFBbUIsYUFDakcsMkRBQ0EsaUVBQ0E7OENBQ0w7Ozs7Ozs7Ozs7Ozt3QkFNRlcsU0FBU29CLEdBQUcsQ0FBQyxDQUFDQyxxQkFDYixRQUFDVDtnQ0FFQ1YsTUFBTW1CLEtBQUtuQixJQUFJO2dDQUNmUSxXQUFVO2dDQUNWUyxTQUFTLElBQU16QixvQkFBb0I7MENBRWxDMkIsS0FBS3BCLEtBQUs7K0JBTE5vQixLQUFLcEIsS0FBSzs7Ozs7c0NBUW5CLFFBQUNkOzRCQUFldUIsV0FBVTtzQ0FBMEI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBUWhFLEVBQUU7R0ExTVd0QjtLQUFBQSJ9

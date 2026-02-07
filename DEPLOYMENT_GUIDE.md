@@ -1,377 +1,228 @@
-# 🚀 Travel Amigo - Deployment Guide
+# 🚀 Vercel Deployment Guide - Trip Proposal Demo
 
-This guide will help you deploy Travel Amigo to a live website accessible via GitHub.
+## Quick Deploy (5 minutes)
 
----
+### Option 1: Deploy via Vercel CLI (Recommended)
 
-## 📋 Pre-Deployment Checklist
-
-Before deploying, ensure:
-- ✅ All code changes are committed to Git
-- ✅ Supabase database is set up and accessible
-- ✅ You have access to the GitHub repository
-- ✅ You have a Vercel or Netlify account (free tier works)
-
----
-
-## 🎯 Recommended: Deploy to Vercel
-
-Vercel is the **easiest and fastest** way to deploy this Vite + React app.
-
-### Step 1: Prepare Environment Variables
-
-First, we need to move Supabase credentials to environment variables for security.
-
-**Create `.env` file:**
+#### Step 1: Install Vercel CLI
 ```bash
-# Create .env file in project root
-VITE_SUPABASE_URL=https://whdbtkkgesfgqtkfedne.supabase.co
-VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndoZGJ0a2tnZXNmZ3F0a2ZlZG5lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njg1NTYwODgsImV4cCI6MjA4NDEzMjA4OH0.GeQsaI7LW29-FL1AIm-lMPqduKaWUyRkH_JNEWTBKms
-```
-
-**Update `.gitignore` to include `.env`:**
-```
-.env
-.env.local
-.env.production
-```
-
-**Update `src/integrations/supabase/client.ts`:**
-```typescript
-import { createClient } from '@supabase/supabase-js';
-import type { Database } from './database.types';
-
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-  throw new Error('Missing Supabase environment variables');
-}
-
-export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY);
-```
-
-### Step 2: Test Local Build
-
-```bash
-# Build the project
-npm run build
-
-# Preview the production build
-npm run preview
-```
-
-Visit `http://localhost:4173` and test:
-- ✅ Homepage loads correctly
-- ✅ V1/V2 toggle works
-- ✅ Login/Signup works
-- ✅ Dashboard is accessible
-- ✅ Admin panel works
-
-### Step 3: Commit Changes
-
-```bash
-git add .
-git commit -m "Prepare for deployment: Move Supabase config to env variables"
-git push origin main
-```
-
-### Step 4: Deploy to Vercel
-
-#### Option A: Using Vercel Dashboard (Easiest)
-
-1. **Go to [vercel.com](https://vercel.com)**
-2. **Sign in with GitHub**
-3. **Click "Add New Project"**
-4. **Import your GitHub repository:** `shanwalker/amigos-test`
-5. **Configure Project:**
-   - Framework Preset: **Vite**
-   - Root Directory: `./` (leave as is)
-   - Build Command: `npm run build`
-   - Output Directory: `dist`
-6. **Add Environment Variables:**
-   - `VITE_SUPABASE_URL` = `https://whdbtkkgesfgqtkfedne.supabase.co`
-   - `VITE_SUPABASE_ANON_KEY` = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...`
-7. **Click "Deploy"**
-
-#### Option B: Using Vercel CLI
-
-```bash
-# Install Vercel CLI globally
 npm install -g vercel
+```
 
-# Login to Vercel
+#### Step 2: Login to Vercel
+```bash
 vercel login
+```
 
-# Deploy
+#### Step 3: Deploy
+```bash
+cd "c:/Users/shan/Documents/Anti-Gravity Projects/amigos-test"
 vercel
+```
 
-# Follow the prompts:
-# - Set up and deploy? Yes
-# - Which scope? Your account
-# - Link to existing project? No
-# - Project name? amigos-test
-# - Directory? ./
-# - Override settings? No
+Follow the prompts:
+- **Set up and deploy?** → Yes
+- **Which scope?** → Your account
+- **Link to existing project?** → No
+- **Project name?** → amigos-trip-proposals (or your choice)
+- **Directory?** → ./
+- **Override settings?** → No
 
-# Add environment variables
+#### Step 4: Add Environment Variables
+```bash
 vercel env add VITE_SUPABASE_URL
-# Paste: https://whdbtkkgesfgqtkfedne.supabase.co
-
 vercel env add VITE_SUPABASE_ANON_KEY
-# Paste: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
 
-# Deploy to production
+Paste your Supabase URL and anon key when prompted.
+
+#### Step 5: Deploy to Production
+```bash
 vercel --prod
 ```
 
-### Step 5: Configure Custom Domain (Optional)
-
-1. Go to your Vercel project dashboard
-2. Click **"Settings"** → **"Domains"**
-3. Add your custom domain (e.g., `travelamigo.com`)
-4. Follow DNS configuration instructions
-5. Vercel will automatically provision SSL certificate
+**Your demo URL will be:** `https://amigos-trip-proposals.vercel.app`
 
 ---
 
-## 🌐 Alternative: Deploy to Netlify
+### Option 2: Deploy via Vercel Dashboard (No CLI)
 
-### Step 1: Create `netlify.toml`
-
-```toml
-[build]
-  command = "npm run build"
-  publish = "dist"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-```
-
-### Step 2: Deploy via Netlify Dashboard
-
-1. **Go to [netlify.com](https://netlify.com)**
-2. **Sign in with GitHub**
-3. **Click "Add new site" → "Import an existing project"**
-4. **Connect to GitHub:** Select `shanwalker/amigos-test`
-5. **Build Settings:**
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-6. **Environment Variables:**
-   - Add `VITE_SUPABASE_URL`
-   - Add `VITE_SUPABASE_ANON_KEY`
-7. **Click "Deploy site"**
-
-### Step 3: Configure Custom Domain
-
-1. Go to **"Domain settings"**
-2. Click **"Add custom domain"**
-3. Follow DNS configuration
-4. SSL is automatic
-
----
-
-## 📦 Alternative: Deploy to GitHub Pages
-
-**Note:** GitHub Pages requires additional configuration for SPA routing.
-
-### Step 1: Install `gh-pages`
-
+#### Step 1: Push to GitHub
 ```bash
-npm install --save-dev gh-pages
-```
-
-### Step 2: Update `package.json`
-
-Add these scripts:
-```json
-{
-  "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
-  },
-  "homepage": "https://shanwalker.github.io/amigos-test"
-}
-```
-
-### Step 3: Update `vite.config.ts`
-
-```typescript
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-import path from 'path'
-
-export default defineConfig({
-  base: '/amigos-test/', // Add this line
-  plugins: [react()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
-})
-```
-
-### Step 4: Create `404.html` for SPA routing
-
-Copy `dist/index.html` to `dist/404.html` after build.
-
-### Step 5: Deploy
-
-```bash
-npm run deploy
-```
-
-Your site will be live at: `https://shanwalker.github.io/amigos-test`
-
-**Limitations:**
-- ⚠️ Requires `/amigos-test` base path
-- ⚠️ No custom domain without DNS configuration
-- ⚠️ Manual environment variable handling
-
----
-
-## 🔒 Security Best Practices
-
-### 1. Environment Variables
-- ✅ Never commit `.env` files to Git
-- ✅ Use different Supabase keys for dev/prod
-- ✅ Rotate keys if accidentally exposed
-
-### 2. Supabase Security
-- ✅ Enable Row Level Security (RLS) on all tables
-- ✅ Configure proper authentication policies
-- ✅ Use service role key only on backend (never frontend)
-
-### 3. CORS Configuration
-- ✅ Configure allowed origins in Supabase dashboard
-- ✅ Add your production domain to allowed list
-
----
-
-## 🧪 Post-Deployment Testing
-
-After deployment, test these critical paths:
-
-### Public Pages
-- [ ] Homepage loads (V1 and V2)
-- [ ] All sections render correctly
-- [ ] Images and videos load
-- [ ] Animations work smoothly
-- [ ] Mobile responsive
-
-### Authentication
-- [ ] Signup creates new user
-- [ ] Login works with correct credentials
-- [ ] Logout clears session
-- [ ] Password reset email sends
-- [ ] Protected routes redirect to login
-
-### User Dashboard
-- [ ] Dashboard home shows user data
-- [ ] Browse trips displays all trips
-- [ ] Trip details page works
-- [ ] Booking creation works
-- [ ] Profile updates save
-- [ ] Wishlist add/remove works
-
-### Admin Dashboard
-- [ ] Admin login works
-- [ ] Only admin users can access
-- [ ] Trip CRUD operations work
-- [ ] User management works
-- [ ] Testimonials management works
-- [ ] Newsletter management works
-
----
-
-## 🐛 Common Deployment Issues
-
-### Issue 1: "404 Not Found" on refresh
-**Cause:** SPA routing not configured  
-**Solution:** Add redirect rules (see Netlify/Vercel config above)
-
-### Issue 2: "Supabase connection failed"
-**Cause:** Environment variables not set  
-**Solution:** Add env vars in deployment platform dashboard
-
-### Issue 3: "Build failed"
-**Cause:** TypeScript errors or missing dependencies  
-**Solution:** Run `npm run build` locally first, fix errors
-
-### Issue 4: Blank page after deployment
-**Cause:** Base path mismatch or build output directory wrong  
-**Solution:** Check `vite.config.ts` base path and output directory
-
-### Issue 5: Images not loading
-**Cause:** Incorrect asset paths  
-**Solution:** Use relative paths or import images in components
-
----
-
-## 📊 Monitoring & Analytics
-
-### Recommended Tools
-
-1. **Vercel Analytics** (built-in)
-   - Page views
-   - Performance metrics
-   - Real user monitoring
-
-2. **Google Analytics**
-   - Add GA4 tracking code to `index.html`
-   - Track user journeys
-
-3. **Sentry** (Error Tracking)
-   - Install Sentry SDK
-   - Monitor production errors
-
-4. **Supabase Dashboard**
-   - Monitor database queries
-   - Check authentication logs
-   - Review API usage
-
----
-
-## 🔄 Continuous Deployment
-
-Once set up, any push to `main` branch will automatically deploy:
-
-```bash
-# Make changes locally
+git init
 git add .
-git commit -m "Update hero section"
-git push origin main
+git commit -m "Initial commit - Trip Proposal System"
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/amigos-trip-proposals.git
+git push -u origin main
+```
 
-# Vercel/Netlify automatically:
-# 1. Detects push
-# 2. Runs build
-# 3. Deploys to production
-# 4. Sends notification
+#### Step 2: Import to Vercel
+1. Go to [vercel.com](https://vercel.com)
+2. Click **"Add New Project"**
+3. Import your GitHub repository
+4. Configure:
+   - **Framework Preset:** Vite
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
+   - **Install Command:** `npm install`
+
+#### Step 3: Add Environment Variables
+In Vercel Dashboard → Settings → Environment Variables, add:
+- `VITE_SUPABASE_URL` = Your Supabase project URL
+- `VITE_SUPABASE_ANON_KEY` = Your Supabase anon key
+
+#### Step 4: Deploy
+Click **"Deploy"** and wait 2-3 minutes.
+
+**Your demo URL:** `https://your-project-name.vercel.app`
+
+---
+
+## 🎯 Creating a Demo Proposal URL
+
+After deployment, you need a specific proposal to share:
+
+### Step 1: Get Proposal ID
+Run this in Supabase SQL Editor:
+```sql
+SELECT id, destination_name, status 
+FROM trip_proposals 
+WHERE status = 'published'
+ORDER BY created_at DESC 
+LIMIT 1;
+```
+
+### Step 2: Create Demo URL
+Your shareable demo URL will be:
+```
+https://your-project-name.vercel.app/dashboard/proposals/[PROPOSAL_ID]
+```
+
+Example:
+```
+https://amigos-trip-proposals.vercel.app/dashboard/proposals/123e4567-e89b-12d3-a456-426614174000
 ```
 
 ---
 
-## 🎉 You're Live!
+## 🔒 Making Proposal Public (Optional)
 
-After deployment, your Travel Amigo website will be accessible at:
+By default, proposals require login. To make a demo publicly accessible:
 
-- **Vercel:** `https://amigos-test.vercel.app` (or custom domain)
-- **Netlify:** `https://amigos-test.netlify.app` (or custom domain)
-- **GitHub Pages:** `https://shanwalker.github.io/amigos-test`
+### Option A: Create a Demo Route (Recommended)
+Create a public demo route that doesn't require authentication:
 
-Share your live URL and start accepting bookings! 🚀✈️
+1. Add this route to `App.tsx`:
+```tsx
+<Route path="/demo/proposal/:id" element={<TripProposalViewer />} />
+```
+
+2. Update RLS policy in Supabase:
+```sql
+-- Allow public read for demo proposals
+CREATE POLICY "Public can view demo proposals"
+ON trip_proposals FOR SELECT
+USING (status = 'published');
+```
+
+3. Share URL:
+```
+https://your-app.vercel.app/demo/proposal/[PROPOSAL_ID]
+```
+
+### Option B: Create a Demo User
+1. Create a demo account: `demo@travelamigo.com` / `demo123`
+2. Share credentials with the URL
+3. Users login and view proposals
 
 ---
 
-## 📞 Need Help?
+## 📱 Custom Domain (Optional)
 
-If you encounter issues:
-1. Check deployment logs in platform dashboard
-2. Review this guide's troubleshooting section
-3. Check Vercel/Netlify documentation
-4. Verify Supabase connection in dashboard
+### Add Custom Domain in Vercel
+1. Go to Project Settings → Domains
+2. Add your domain (e.g., `demo.travelamigo.com`)
+3. Update DNS records as instructed
+4. Wait for SSL certificate (automatic)
 
-**Happy Deploying! 🎊**
+**Demo URL becomes:** `https://demo.travelamigo.com/dashboard/proposals/[ID]`
+
+---
+
+## 🎬 Demo Features to Showcase
+
+Your deployed demo will include:
+- ✅ Animated hero section with Bali beach
+- ✅ Scroll-triggered animations
+- ✅ Mobile-responsive design
+- ✅ 6 beautiful experience cards
+- ✅ Pricing breakdown with animations
+- ✅ Professional gradient design
+
+---
+
+## 🔧 Troubleshooting
+
+### Build Fails
+- Check `package.json` has all dependencies
+- Ensure `.env.production` variables are set in Vercel
+- Review build logs in Vercel dashboard
+
+### Blank Page After Deploy
+- Check browser console for errors
+- Verify Supabase URL and anon key are correct
+- Ensure RLS policies allow access
+
+### Images Not Loading
+- Check Supabase storage bucket is public
+- Verify image URLs are accessible
+- Check CORS settings in Supabase
+
+---
+
+## 🚀 Quick Commands Reference
+
+```bash
+# Deploy to preview
+vercel
+
+# Deploy to production
+vercel --prod
+
+# View deployment logs
+vercel logs
+
+# List deployments
+vercel ls
+
+# Remove deployment
+vercel rm [deployment-url]
+```
+
+---
+
+## 📊 Deployment Checklist
+
+- [ ] Vercel account created
+- [ ] Project deployed
+- [ ] Environment variables added
+- [ ] Test proposal created in database
+- [ ] Demo URL tested and working
+- [ ] Mobile responsiveness verified
+- [ ] Animations working smoothly
+- [ ] Images loading correctly
+
+---
+
+## 🎉 Success!
+
+Once deployed, share your demo URL:
+```
+https://your-project-name.vercel.app/dashboard/proposals/[PROPOSAL_ID]
+```
+
+**Deployment time:** ~3-5 minutes  
+**Free tier:** Unlimited bandwidth, 100GB/month  
+**SSL:** Automatic HTTPS  
+**CDN:** Global edge network

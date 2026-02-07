@@ -60,7 +60,7 @@ export const createSignupSession = (tripType: TripType, sourcePage: string): voi
         timestamp: Date.now(),
     };
     sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
-    console.log('[SignupSession] Created:', sessionData);
+    // console.log('[SignupSession] Created:', sessionData);
 };
 
 /**
@@ -75,7 +75,7 @@ export const saveSignupSession = (data: Partial<SignupSessionData>): void => {
             timestamp: Date.now(),
         };
         sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
-        console.log('[SignupSession] Saved:', sessionData);
+        // console.log('[SignupSession] Saved:', sessionData);
     } catch (error) {
         console.error('[SignupSession] Error saving session:', error);
     }
@@ -102,7 +102,7 @@ export const getSignupSession = (): SignupSessionData | null => {
             return null;
         }
 
-        console.log('[SignupSession] Retrieved:', parsed);
+        // console.log('[SignupSession] Retrieved:', parsed);
         return parsed;
     } catch (error) {
         console.error('[SignupSession] Error getting session:', error);
@@ -159,7 +159,7 @@ export const clearSignupSession = (): void => {
     try {
         sessionStorage.removeItem(SESSION_KEY);
         sessionStorage.removeItem(TRIP_ID_KEY);
-        console.log('[SignupSession] Cleared');
+        // console.log('[SignupSession] Cleared');
     } catch (error) {
         console.error('[SignupSession] Error clearing session:', error);
     }

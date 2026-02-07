@@ -1,0 +1,373 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - region "Notifications (F8)":
+      - list
+    - region "Notifications alt+T"
+    - generic [ref=e3]:
+      - complementary [ref=e4]:
+        - generic [ref=e5]:
+          - generic [ref=e6]:
+            - img [ref=e8]
+            - generic [ref=e10]:
+              - text: Admin
+              - paragraph [ref=e11]: TravelAmigo
+          - button [ref=e12] [cursor=pointer]:
+            - img
+        - navigation [ref=e16]:
+          - link "Overview" [ref=e17] [cursor=pointer]:
+            - /url: /admin
+            - img [ref=e18]
+            - generic [ref=e23]: Overview
+          - link "Trips" [ref=e24] [cursor=pointer]:
+            - /url: /admin/trips
+            - img [ref=e25]
+            - generic [ref=e27]: Trips
+          - link "Bookings" [ref=e28] [cursor=pointer]:
+            - /url: /admin/bookings
+            - img [ref=e29]
+            - generic [ref=e32]: Bookings
+          - link "Users" [ref=e33] [cursor=pointer]:
+            - /url: /admin/users
+            - img [ref=e34]
+            - generic [ref=e39]: Users
+          - link "All Requests" [ref=e40] [cursor=pointer]:
+            - /url: /admin/all-requests
+            - img [ref=e41]
+            - generic [ref=e44]: All Requests
+          - link "Surprise Requests" [ref=e45] [cursor=pointer]:
+            - /url: /admin/surprise-requests
+            - img [ref=e46]
+            - generic [ref=e48]: Surprise Requests
+          - link "Reservations" [ref=e49] [cursor=pointer]:
+            - /url: /admin/reservations
+            - img [ref=e50]
+            - generic [ref=e52]: Reservations
+          - link "Custom Requests" [ref=e53] [cursor=pointer]:
+            - /url: /admin/custom-requests
+            - img [ref=e54]
+            - generic [ref=e57]: Custom Requests
+          - link "Onboarding Quizzes" [ref=e58] [cursor=pointer]:
+            - /url: /admin/onboarding-quizzes
+            - img [ref=e59]
+            - generic [ref=e63]: Onboarding Quizzes
+          - link "Local Buddies" [ref=e64] [cursor=pointer]:
+            - /url: /admin/local-buddies
+            - img [ref=e65]
+            - generic [ref=e69]: Local Buddies
+          - link "Testimonials" [ref=e70] [cursor=pointer]:
+            - /url: /admin/testimonials
+            - img [ref=e71]
+            - generic [ref=e73]: Testimonials
+          - link "Stories" [ref=e74] [cursor=pointer]:
+            - /url: /admin/stories
+            - img [ref=e75]
+            - generic [ref=e77]: Stories
+          - link "Newsletter" [ref=e78] [cursor=pointer]:
+            - /url: /admin/newsletter
+            - img [ref=e79]
+            - generic [ref=e82]: Newsletter
+          - link "Settings" [ref=e83] [cursor=pointer]:
+            - /url: /admin/settings
+            - img [ref=e84]
+            - generic [ref=e87]: Settings
+        - button "TA Test Admin Administrator" [ref=e89] [cursor=pointer]:
+          - generic [ref=e91]: TA
+          - generic [ref=e92]:
+            - paragraph [ref=e93]: Test Admin
+            - paragraph [ref=e94]: Administrator
+      - main [ref=e95]:
+        - generic [ref=e96]:
+          - generic [ref=e98]:
+            - img [ref=e99]
+            - textbox "Search..." [ref=e102]
+          - generic [ref=e103]:
+            - button [ref=e104] [cursor=pointer]:
+              - img
+            - button [ref=e106] [cursor=pointer]:
+              - img
+        - generic [ref=e108]:
+          - generic [ref=e109]:
+            - heading "Admin Dashboard" [level=1] [ref=e110]
+            - paragraph [ref=e111]: Complete overview of your travel platform
+          - generic [ref=e112]:
+            - generic [ref=e116]:
+              - generic [ref=e117]:
+                - paragraph [ref=e118]: Total Trips
+                - paragraph [ref=e119]: "2"
+                - paragraph [ref=e120]: Active trips available
+                - paragraph [ref=e121]: +12% from last month
+              - img [ref=e123]
+            - generic [ref=e128]:
+              - generic [ref=e129]:
+                - paragraph [ref=e130]: Total Users
+                - paragraph [ref=e131]: "3"
+                - paragraph [ref=e132]: Registered users
+                - paragraph [ref=e133]: +8% from last month
+              - img [ref=e135]
+            - generic [ref=e143]:
+              - generic [ref=e144]:
+                - paragraph [ref=e145]: Total Bookings
+                - paragraph [ref=e146]: "1"
+                - paragraph [ref=e147]: 1 confirmed, 0 pending
+                - paragraph [ref=e148]: +23% from last month
+              - img [ref=e150]
+            - generic [ref=e156]:
+              - generic [ref=e157]:
+                - paragraph [ref=e158]: Revenue
+                - paragraph [ref=e159]: ₹1,200
+                - paragraph [ref=e160]: Total earnings
+                - paragraph [ref=e161]: +18% from last month
+              - img [ref=e163]
+          - generic [ref=e165]:
+            - generic [ref=e169]:
+              - generic [ref=e170]:
+                - paragraph [ref=e171]: Conversion Rate
+                - paragraph [ref=e172]: 12.5%
+                - generic [ref=e173]:
+                  - img [ref=e174]
+                  - generic [ref=e177]: +2.5%
+                  - generic [ref=e178]: vs last month
+              - img [ref=e180]
+            - generic [ref=e187]:
+              - generic [ref=e188]:
+                - paragraph [ref=e189]: Avg Booking Value
+                - paragraph [ref=e190]: ₹45,000
+                - generic [ref=e191]:
+                  - img [ref=e192]
+                  - generic [ref=e195]: +8.3%
+                  - generic [ref=e196]: vs last month
+              - img [ref=e198]
+            - generic [ref=e203]:
+              - generic [ref=e204]:
+                - paragraph [ref=e205]: Customer Satisfaction
+                - paragraph [ref=e206]: "4.8"
+                - generic [ref=e207]:
+                  - img [ref=e208]
+                  - generic [ref=e211]: +0.3%
+                  - generic [ref=e212]: rating increase
+              - img [ref=e214]
+            - generic [ref=e219]:
+              - generic [ref=e220]:
+                - paragraph [ref=e221]: Revenue Per Trip
+                - paragraph [ref=e222]: ₹180K
+                - generic [ref=e223]:
+                  - img [ref=e224]
+                  - generic [ref=e227]: +15.2%
+                  - generic [ref=e228]: vs last month
+              - img [ref=e230]
+          - generic [ref=e234]:
+            - generic [ref=e236]:
+              - img [ref=e237]
+              - heading "Quick Actions" [level=3] [ref=e239]
+            - generic [ref=e241]:
+              - button "Create Trip Add new travel package" [ref=e243] [cursor=pointer]:
+                - generic [ref=e244]:
+                  - img
+                - generic [ref=e245]:
+                  - paragraph [ref=e246]: Create Trip
+                  - paragraph [ref=e247]: Add new travel package
+              - button "Approve Bookings Review pending bookings" [ref=e249] [cursor=pointer]:
+                - generic [ref=e250]:
+                  - img
+                - generic [ref=e251]:
+                  - paragraph [ref=e252]: Approve Bookings
+                  - paragraph [ref=e253]: Review pending bookings
+              - button "Add Testimonial Feature customer review" [ref=e255] [cursor=pointer]:
+                - generic [ref=e256]:
+                  - img
+                - generic [ref=e257]:
+                  - paragraph [ref=e258]: Add Testimonial
+                  - paragraph [ref=e259]: Feature customer review
+              - button "Write Story Create blog post" [ref=e261] [cursor=pointer]:
+                - generic [ref=e262]:
+                  - img
+                - generic [ref=e263]:
+                  - paragraph [ref=e264]: Write Story
+                  - paragraph [ref=e265]: Create blog post
+              - button "Manage Users View all users" [ref=e267] [cursor=pointer]:
+                - generic [ref=e268]:
+                  - img
+                - generic [ref=e269]:
+                  - paragraph [ref=e270]: Manage Users
+                  - paragraph [ref=e271]: View all users
+              - button "Newsletter Send campaign" [ref=e273] [cursor=pointer]:
+                - generic [ref=e274]:
+                  - img
+                - generic [ref=e275]:
+                  - paragraph [ref=e276]: Newsletter
+                  - paragraph [ref=e277]: Send campaign
+          - generic [ref=e278]:
+            - generic [ref=e279]:
+              - heading "Revenue Trend (Last 7 Days)" [level=3] [ref=e281]
+              - img [ref=e285]:
+                - generic [ref=e290]:
+                  - generic [ref=e292]: Mon
+                  - generic [ref=e294]: Tue
+                  - generic [ref=e296]: Wed
+                  - generic [ref=e298]: Thu
+                  - generic [ref=e300]: Fri
+                  - generic [ref=e302]: Sat
+                  - generic [ref=e304]: Sun
+                - generic [ref=e306]:
+                  - generic [ref=e308]: "0"
+                  - generic [ref=e310]: "15000"
+                  - generic [ref=e312]: "30000"
+                  - generic [ref=e314]: "45000"
+                  - generic [ref=e316]: "60000"
+            - generic [ref=e323]:
+              - heading "User Growth (Last 6 Months)" [level=3] [ref=e325]
+              - generic [ref=e328]:
+                - img [ref=e329]:
+                  - generic [ref=e334]:
+                    - generic [ref=e336]: Jan
+                    - generic [ref=e338]: Feb
+                    - generic [ref=e340]: Mar
+                    - generic [ref=e342]: Apr
+                    - generic [ref=e344]: May
+                    - generic [ref=e346]: Jun
+                  - generic [ref=e348]:
+                    - generic [ref=e350]: "0"
+                    - generic [ref=e352]: "50"
+                    - generic [ref=e354]: "100"
+                    - generic [ref=e356]: "150"
+                    - generic [ref=e358]: "200"
+                - list [ref=e369]:
+                  - listitem [ref=e370]:
+                    - img [ref=e371]
+                    - text: users
+          - generic [ref=e373]:
+            - generic [ref=e377]:
+              - generic [ref=e378]:
+                - paragraph [ref=e379]: Surprise Requests
+                - paragraph [ref=e381]: "0"
+              - img [ref=e382]
+            - generic [ref=e387]:
+              - generic [ref=e388]:
+                - paragraph [ref=e389]: Reservations
+                - paragraph [ref=e391]: "0"
+              - img [ref=e392]
+            - generic [ref=e397]:
+              - generic [ref=e398]:
+                - paragraph [ref=e399]: Local Buddies
+                - generic [ref=e400]:
+                  - paragraph [ref=e401]: "0"
+                  - generic [ref=e402]: 0 verified
+              - img [ref=e403]
+            - generic [ref=e410]:
+              - generic [ref=e411]:
+                - paragraph [ref=e412]: Custom Requests
+                - paragraph [ref=e414]: "0"
+              - img [ref=e415]
+          - generic [ref=e418]:
+            - generic [ref=e420]:
+              - generic [ref=e422]:
+                - img [ref=e423]
+                - heading "Recent Activity" [level=3] [ref=e425]
+              - generic [ref=e430]:
+                - generic [ref=e431]:
+                  - img [ref=e433]
+                  - generic [ref=e435]:
+                    - generic [ref=e436]:
+                      - generic [ref=e437]:
+                        - paragraph [ref=e438]: New Booking
+                        - paragraph [ref=e439]: John Doe booked "Bali Adventure" for 2 travelers
+                      - generic [ref=e440]: pending
+                    - generic [ref=e441]:
+                      - img [ref=e442]
+                      - generic [ref=e445]: 15 minutes ago
+                - generic [ref=e446]:
+                  - img [ref=e448]
+                  - generic [ref=e451]:
+                    - generic [ref=e452]:
+                      - generic [ref=e453]:
+                        - paragraph [ref=e454]: New User Registration
+                        - paragraph [ref=e455]: Sarah Smith signed up
+                      - generic [ref=e456]: success
+                    - generic [ref=e457]:
+                      - img [ref=e458]
+                      - generic [ref=e461]: about 1 hour ago
+                - generic [ref=e462]:
+                  - img [ref=e464]
+                  - generic [ref=e466]:
+                    - generic [ref=e467]:
+                      - generic [ref=e468]:
+                        - paragraph [ref=e469]: Booking Confirmed
+                        - paragraph [ref=e470]: Payment received for "Thailand Escape"
+                      - generic [ref=e471]: success
+                    - generic [ref=e472]:
+                      - img [ref=e473]
+                      - generic [ref=e476]: about 2 hours ago
+                - generic [ref=e477]:
+                  - img [ref=e479]
+                  - generic [ref=e481]:
+                    - generic [ref=e482]:
+                      - generic [ref=e483]:
+                        - paragraph [ref=e484]: New Review
+                        - paragraph [ref=e485]: Mike Johnson left a 5-star review
+                      - generic [ref=e486]: success
+                    - generic [ref=e487]:
+                      - img [ref=e488]
+                      - generic [ref=e491]: about 3 hours ago
+                - generic [ref=e492]:
+                  - img [ref=e494]
+                  - generic [ref=e498]:
+                    - generic [ref=e499]:
+                      - generic [ref=e500]:
+                        - paragraph [ref=e501]: Booking Cancelled
+                        - paragraph [ref=e502]: Emma Wilson cancelled "Vietnam Tour"
+                      - generic [ref=e503]: error
+                    - generic [ref=e504]:
+                      - img [ref=e505]
+                      - generic [ref=e508]: about 4 hours ago
+            - generic [ref=e509]:
+              - generic [ref=e513]:
+                - generic [ref=e514]:
+                  - paragraph [ref=e515]: Testimonials
+                  - paragraph [ref=e516]: "0"
+                - img [ref=e517]
+              - generic [ref=e522]:
+                - generic [ref=e523]:
+                  - paragraph [ref=e524]: Travel Stories
+                  - paragraph [ref=e525]: "0"
+                - img [ref=e526]
+              - generic [ref=e531]:
+                - generic [ref=e532]:
+                  - paragraph [ref=e533]: Avg Rating
+                  - paragraph [ref=e534]: "4.8"
+                - img [ref=e535]
+              - generic [ref=e540]:
+                - generic [ref=e541]:
+                  - paragraph [ref=e542]: Conversion
+                  - paragraph [ref=e543]: 12.5%
+                - img [ref=e544]
+          - generic [ref=e547]:
+            - generic [ref=e548]:
+              - heading "Recent Bookings" [level=3] [ref=e550]
+              - generic [ref=e553]:
+                - generic [ref=e554]:
+                  - paragraph [ref=e555]: Bali Adventure
+                  - paragraph [ref=e556]: User One
+                - generic [ref=e557]: confirmed
+            - generic [ref=e558]:
+              - heading "Recent Users" [level=3] [ref=e560]
+              - generic [ref=e562]:
+                - generic [ref=e564]:
+                  - generic [ref=e565]: U
+                  - generic [ref=e566]:
+                    - paragraph [ref=e567]: User One
+                    - paragraph [ref=e568]: user1@example.com
+                - generic [ref=e570]:
+                  - generic [ref=e571]: U
+                  - generic [ref=e572]:
+                    - paragraph [ref=e573]: User Two
+                    - paragraph [ref=e574]: user2@example.com
+                - generic [ref=e576]:
+                  - generic [ref=e577]: T
+                  - generic [ref=e578]:
+                    - paragraph [ref=e579]: Test Admin
+                    - paragraph [ref=e580]: admin@travelamigo.com
+  - generic [ref=e581]: "50"
+```

@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -48,7 +49,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // This is crucial if database sync is slow or RLS fails
       const metaRole = user.user_metadata?.role;
       if (metaRole && ['admin', 'moderator', 'user'].includes(metaRole)) {
-        console.log('[AuthContext] ⚠️ Using metadata role fallback:', metaRole);
+        // console.log('[AuthContext] ⚠️ Using metadata role fallback:', metaRole);
         return [metaRole as AppRole];
       }
 
@@ -104,7 +105,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signUp = async (email: string, password: string, fullName: string) => {
     try {
-      console.log('[AuthContext] 🚀 Starting signup process...', { email, fullName });
+      // console.log('[AuthContext] 🚀 Starting signup process...', { email, fullName });
 
       const { data, error } = await supabase.auth.signUp({
         email,
@@ -131,19 +132,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { error: { ...error, message: userMessage } as Error };
       }
 
-      console.log('[AuthContext] 📊 Signup response:', {
+      /* console.log('[AuthContext] 📊 Signup response:', {
         userId: data?.user?.id,
         userEmail: data?.user?.email,
         hasUser: !!data?.user,
         hasSession: !!data?.session,
         userConfirmed: data?.user?.confirmed_at ? true : false,
         emailConfirmedAt: data?.user?.confirmed_at
-      });
+      }); */
 
       // If we got a session directly, email verification is DISABLED
       // User is auto-confirmed and logged in immediately
       if (data?.session && data?.user) {
-        console.log('[AuthContext] ✅ Email verification DISABLED - User auto-logged in');
+        // console.log('[AuthContext] ✅ Email verification DISABLED - User auto-logged in');
 
         // Set user and session immediately
         setUser(data.user);
@@ -153,7 +154,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         await new Promise(resolve => setTimeout(resolve, 500));
 
         // Verify profile was created
-        console.log('[AuthContext] 🔍 Verifying profile creation...');
+        // console.log('[AuthContext] 🔍 Verifying profile creation...');
         const { data: profileData, error: profileError } = await supabase
           .from('profiles')
           .select('id, email, full_name')
@@ -210,7 +211,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setRoles(userRoles);
         }
 
-        console.log('[AuthContext] ✨ Signup complete - user ready to use app');
+        // console.log('[AuthContext] ✨ Signup complete - user ready to use app');
         return { error: null };
       }
 
@@ -248,6 +249,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
+        options: {
+        },
       });
       return { error: error as Error | null };
     } catch (err) {

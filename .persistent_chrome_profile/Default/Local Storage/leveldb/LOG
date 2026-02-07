@@ -1,0 +1,12 @@
+2026/02/06-01:18:48.616 4ec0 Reusing MANIFEST C:\Users\shan\Documents\Anti-Gravity Projects\amigos-test\.persistent_chrome_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2026/02/06-01:18:48.622 4ec0 Recovering log #4
+2026/02/06-01:18:48.625 4ec0 Reusing old log C:\Users\shan\Documents\Anti-Gravity Projects\amigos-test\.persistent_chrome_profile\Default\Local Storage\leveldb/000004.log 
+2026/02/06-01:26:04.775 49d4 Level-0 table #8: started
+2026/02/06-01:26:04.782 49d4 Level-0 table #8: 69501 bytes OK
+2026/02/06-01:26:04.784 49d4 Delete type=0 #4
+2026/02/06-01:46:55.155 4ec0 Level-0 table #10: started
+2026/02/06-01:46:55.163 4ec0 Level-0 table #10: 64315 bytes OK
+2026/02/06-01:46:55.165 4ec0 Delete type=0 #7
+2026/02/06-01:57:54.793 4ec0 Level-0 table #12: started
+2026/02/06-01:57:54.798 4ec0 Level-0 table #12: 63481 bytes OK
+2026/02/06-01:57:54.800 4ec0 Delete type=0 #9

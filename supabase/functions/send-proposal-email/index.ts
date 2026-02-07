@@ -1,0 +1,140 @@
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
+
+interface EmailRequest {
+    to: string
+    userName: string
+    proposalId: string
+    destinationName: string
+    expiryDate?: string
+    proposalUrl: string
+}
+
+const emailTemplate = (data: EmailRequest) => `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Trip Proposal is Ready!</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f5f5f5;">
+  <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; text-align: center;">
+      <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 700;">✈️ Your Trip Proposal is Ready!</h1>
+    </div>
+    
+    <div style="padding: 40px 30px;">
+      <p style="font-size: 18px; color: #333333; margin-bottom: 20px;">Hi ${data.userName},</p>
+      
+      <p style="font-size: 16px; color: #666666; line-height: 1.6; margin-bottom: 30px;">
+        Great news! We've crafted a personalized trip proposal just for you based on your preferences. 
+        Your adventure is waiting, and we can't wait for you to see what we've planned!
+      </p>
+      
+      <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: #ffffff; padding: 20px; border-radius: 8px; text-align: center; margin-bottom: 30px;">
+        <h2 style="margin: 0 0 10px 0; font-size: 24px;">🌍 ${data.destinationName}</h2>
+        <p style="margin: 0; font-size: 14px; opacity: 0.9;">Matched to your style and ready to book</p>
+      </div>
+      
+      <center>
+        <a href="${data.proposalUrl}" style="display: inline-block; background-color: #667eea; color: #ffffff; text-decoration: none; padding: 16px 40px; border-radius: 8px; font-weight: 600; font-size: 16px; text-align: center; margin: 20px 0;">
+          View Your Trip Proposal →
+        </a>
+      </center>
+      
+      ${data.expiryDate ? `
+      <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; font-size: 14px; color: #856404;">
+        <strong>⏰ Important:</strong> This proposal expires on ${new Date(data.expiryDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}. 
+        Don't miss out on this amazing opportunity!
+      </div>
+      ` : ''}
+      
+      <p style="font-size: 16px; color: #666666; line-height: 1.6; margin-bottom: 20px;">
+        Inside your proposal, you'll find:
+      </p>
+      <ul style="color: #666666; line-height: 1.8;">
+        <li>Personalized destination details</li>
+        <li>Curated experiences matched to your interests</li>
+        <li>Complete pricing breakdown</li>
+        <li>Flexible payment options</li>
+        <li>Travel dates and logistics</li>
+      </ul>
+      
+      <p style="font-size: 16px; color: #666666; line-height: 1.6; margin-bottom: 30px;">
+        Have questions? Just hit reply to this email, and our team will be happy to help!
+      </p>
+    </div>
+    
+    <div style="background-color: #f8f9fa; padding: 30px; text-align: center; font-size: 14px; color: #6c757d;">
+      <p>
+        <strong>The Travel Amigo</strong><br>
+        Making your travel dreams come true
+      </p>
+      <p>
+        <a href="mailto:support@thetravelamigo.com" style="color: #667eea; text-decoration: none;">support@thetravelamigo.com</a>
+      </p>
+      <p style="font-size: 12px; margin-top: 20px;">
+        You're receiving this email because you completed a travel quiz with us.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
+`
+
+serve(async (req) => {
+    // Handle CORS
+    if (req.method === 'OPTIONS') {
+        return new Response('ok', {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'POST',
+                'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+            },
+        })
+    }
+
+    try {
+        const emailData: EmailRequest = await req.json()
+
+        // Send email using Resend
+        const res = await fetch('https://api.resend.com/emails', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${RESEND_API_KEY}`,
+            },
+            body: JSON.stringify({
+                from: 'The Travel Amigo <proposals@thetravelamigo.com>',
+                to: [emailData.to],
+                subject: `✈️ Your ${emailData.destinationName} Trip Proposal is Ready!`,
+                html: emailTemplate(emailData),
+            }),
+        })
+
+        const data = await res.json()
+
+        if (!res.ok) {
+            throw new Error(data.message || 'Failed to send email')
+        }
+
+        return new Response(JSON.stringify({ success: true, data }), {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
+            status: 200,
+        })
+    } catch (error) {
+        return new Response(JSON.stringify({ error: error.message }), {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            },
+            status: 400,
+        })
+    }
+})

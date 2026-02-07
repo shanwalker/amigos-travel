@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { PageLoader } from "@/components/PageLoader";
@@ -66,6 +66,11 @@ const LocalBuddiesManagement = lazy(() => import("./pages/admin/LocalBuddiesMana
 const SettingsManagement = lazy(() => import("./pages/admin/SettingsManagement"));
 const OnboardingQuizzesManagement = lazy(() => import("./pages/admin/OnboardingQuizzesManagement"));
 
+// Trip Proposals - lazy loaded
+const ProposalsList = lazy(() => import("./pages/ProposalsList"));
+const TripProposalViewer = lazy(() => import("./pages/TripProposalViewer"));
+const ProposalBuilder = lazy(() => import("./pages/admin/ProposalBuilder"));
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -105,7 +110,10 @@ const App = () => (
               <Route path="/quiz/result/custom" element={<CustomTripResult />} />
 
               {/* Legacy Start Quiz Route (redirects to /quiz basically, or keep alias) */}
-              <Route path="/start-quiz" element={<OnboardingQuiz />} />
+              <Route path="/start-quiz" element={<Navigate to="/quiz" replace />} />
+
+              {/* Public Demo Route - No Authentication Required */}
+              <Route path="/demo/proposal/:id" element={<TripProposalViewer />} />
 
               {/* Auth Routes */}
               <Route path="/login" element={<Login />} />
@@ -167,6 +175,20 @@ const App = () => (
                 <ProtectedRoute>
                   <DashboardLayout>
                     <SurpriseTripSuggestions />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/dashboard/proposals" element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <ProposalsList />
+                  </DashboardLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/dashboard/proposals/:id" element={
+                <ProtectedRoute>
+                  <DashboardLayout>
+                    <TripProposalViewer />
                   </DashboardLayout>
                 </ProtectedRoute>
               } />
@@ -263,10 +285,17 @@ const App = () => (
                   </AdminLayout>
                 </ProtectedRoute>
               } />
-              <Route path="/admin/onboarding-quizzes" element={
+              <Route path="/admin/quizzes" element={
                 <ProtectedRoute requiredRole="admin">
                   <AdminLayout>
                     <OnboardingQuizzesManagement />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/proposals/create" element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminLayout>
+                    <ProposalBuilder />
                   </AdminLayout>
                 </ProtectedRoute>
               } />

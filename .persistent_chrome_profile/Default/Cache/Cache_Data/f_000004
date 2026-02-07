@@ -1,0 +1,1054 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/App.tsx");import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope;
+
+let prevRefreshReg;
+let prevRefreshSig;
+
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react-swc can't detect preamble. Something is wrong."
+    );
+  }
+
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+
+import __vite__cjsImport2_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=c3ff4a43"; const _jsxDEV = __vite__cjsImport2_react_jsxDevRuntime["jsxDEV"];
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=8e948b43"; const lazy = __vite__cjsImport3_react["lazy"]; const Suspense = __vite__cjsImport3_react["Suspense"];
+import { Toaster } from "/src/components/ui/toaster.tsx";
+import { Toaster as Sonner } from "/src/components/ui/sonner.tsx";
+import { TooltipProvider } from "/src/components/ui/tooltip.tsx";
+import { QueryClient, QueryClientProvider } from "/node_modules/.vite/deps/@tanstack_react-query.js?v=47ac9ed6";
+import { BrowserRouter, Routes, Route } from "/node_modules/.vite/deps/react-router-dom.js?v=65e862e2";
+import { AuthProvider } from "/src/contexts/AuthContext.tsx?t=1770313026870";
+import { ProtectedRoute } from "/src/components/auth/ProtectedRoute.tsx?t=1770313026870";
+import { PageLoader } from "/src/components/PageLoader.tsx";
+// Critical - load immediately
+import Index from "/src/pages/Index.tsx?t=1770313026870";
+// Lazy load all other pages for code splitting
+const Thailand = /*#__PURE__*/ lazy(_c = ()=>import("/src/pages/destinations/Thailand.tsx"));
+_c1 = Thailand;
+const SurpriseTrip = /*#__PURE__*/ lazy(_c2 = ()=>import("/src/pages/SurpriseTrip.tsx"));
+_c3 = SurpriseTrip;
+const CustomTrip = /*#__PURE__*/ lazy(_c4 = ()=>import("/src/pages/CustomTrip.tsx"));
+_c5 = CustomTrip;
+const BecomeABuddy = /*#__PURE__*/ lazy(_c6 = ()=>import("/src/pages/BecomeABuddy.tsx"));
+_c7 = BecomeABuddy;
+const Onboarding = /*#__PURE__*/ lazy(_c8 = ()=>import("/src/pages/Onboarding.tsx?t=1770313026870"));
+_c9 = Onboarding;
+const NotFound = /*#__PURE__*/ lazy(_c10 = ()=>import("/src/pages/NotFound.tsx"));
+_c11 = NotFound;
+// Trip Signup Flow - lazy loaded
+const GetStarted = /*#__PURE__*/ lazy(_c12 = ()=>import("/src/pages/GetStarted.tsx"));
+_c13 = GetStarted;
+const TripSignup = /*#__PURE__*/ lazy(_c14 = ()=>import("/src/pages/TripSignup.tsx"));
+_c15 = TripSignup;
+// Travel Profile Quiz - lazy loaded (COMPLETE VERSION with all 10 steps)
+const TravelProfileQuiz = /*#__PURE__*/ lazy(_c16 = ()=>import("/src/pages/TravelProfileQuizRedesign.tsx?t=1770313026870"));
+_c17 = TravelProfileQuiz;
+const MatchedTripResult = /*#__PURE__*/ lazy(_c18 = ()=>import("/src/pages/quiz/MatchedTripResult.tsx"));
+_c19 = MatchedTripResult;
+const SurpriseTripResult = /*#__PURE__*/ lazy(_c20 = ()=>import("/src/pages/quiz/SurpriseTripResult.tsx"));
+_c21 = SurpriseTripResult;
+const CustomTripResult = /*#__PURE__*/ lazy(_c22 = ()=>import("/src/pages/quiz/CustomTripResult.tsx"));
+_c23 = CustomTripResult;
+// New Onboarding Quiz (17-step version)
+const OnboardingQuiz = /*#__PURE__*/ lazy(_c24 = ()=>import("/src/pages/OnboardingQuiz.tsx?t=1770313026870"));
+_c25 = OnboardingQuiz;
+// Auth Pages - lazy loaded
+const Login = /*#__PURE__*/ lazy(_c26 = ()=>import("/src/pages/auth/Login.tsx?t=1770307997629"));
+_c27 = Login;
+const Signup = /*#__PURE__*/ lazy(_c28 = ()=>import("/src/pages/auth/Signup.tsx"));
+_c29 = Signup;
+const ForgotPassword = /*#__PURE__*/ lazy(_c30 = ()=>import("/src/pages/auth/ForgotPassword.tsx"));
+_c31 = ForgotPassword;
+const AdminLogin = /*#__PURE__*/ lazy(_c32 = ()=>import("/src/pages/auth/AdminLogin.tsx?t=1770313026870"));
+_c33 = AdminLogin;
+// User Dashboard - lazy loaded
+const DashboardLayout = /*#__PURE__*/ lazy(_c34 = ()=>import("/src/components/dashboard/DashboardLayout.tsx").then((m)=>({
+            default: m.DashboardLayout
+        })));
+_c35 = DashboardLayout;
+const DashboardHome = /*#__PURE__*/ lazy(_c36 = ()=>import("/src/pages/dashboard/DashboardHome.tsx"));
+_c37 = DashboardHome;
+const BrowseTrips = /*#__PURE__*/ lazy(_c38 = ()=>import("/src/pages/dashboard/BrowseTrips.tsx"));
+_c39 = BrowseTrips;
+const TripDetails = /*#__PURE__*/ lazy(_c40 = ()=>import("/src/pages/dashboard/TripDetails.tsx"));
+_c41 = TripDetails;
+const MyBookings = /*#__PURE__*/ lazy(_c42 = ()=>import("/src/pages/dashboard/MyBookings.tsx"));
+_c43 = MyBookings;
+const MyRequests = /*#__PURE__*/ lazy(_c44 = ()=>import("/src/pages/dashboard/MyRequests.tsx"));
+_c45 = MyRequests;
+const Profile = /*#__PURE__*/ lazy(_c46 = ()=>import("/src/pages/dashboard/Profile.tsx"));
+_c47 = Profile;
+const Wishlist = /*#__PURE__*/ lazy(_c48 = ()=>import("/src/pages/dashboard/Wishlist.tsx"));
+_c49 = Wishlist;
+const SurpriseTripSuggestions = /*#__PURE__*/ lazy(_c50 = ()=>import("/src/pages/dashboard/SurpriseTripSuggestions.tsx"));
+_c51 = SurpriseTripSuggestions;
+// Admin Dashboard - lazy loaded
+const AdminLayout = /*#__PURE__*/ lazy(_c52 = ()=>import("/src/components/admin/AdminLayout.tsx?t=1770313026870").then((m)=>({
+            default: m.AdminLayout
+        })));
+_c53 = AdminLayout;
+const AdminOverview = /*#__PURE__*/ lazy(_c54 = ()=>import("/src/pages/admin/AdminOverview.tsx?t=1770313026870"));
+_c55 = AdminOverview;
+const TripManagement = /*#__PURE__*/ lazy(_c56 = ()=>import("/src/pages/admin/TripManagement.tsx?t=1770313026870"));
+_c57 = TripManagement;
+const BookingsManagement = /*#__PURE__*/ lazy(_c58 = ()=>import("/src/pages/admin/BookingsManagement.tsx?t=1770313026870"));
+_c59 = BookingsManagement;
+const UserManagement = /*#__PURE__*/ lazy(_c60 = ()=>import("/src/pages/admin/UserManagement.tsx?t=1770308934718"));
+_c61 = UserManagement;
+const TestimonialsManagement = /*#__PURE__*/ lazy(_c62 = ()=>import("/src/pages/admin/TestimonialsManagement.tsx"));
+_c63 = TestimonialsManagement;
+const StoriesManagement = /*#__PURE__*/ lazy(_c64 = ()=>import("/src/pages/admin/StoriesManagement.tsx"));
+_c65 = StoriesManagement;
+const NewsletterManagement = /*#__PURE__*/ lazy(_c66 = ()=>import("/src/pages/admin/NewsletterManagement.tsx"));
+_c67 = NewsletterManagement;
+const AllRequestsManagement = /*#__PURE__*/ lazy(_c68 = ()=>import("/src/pages/admin/AllRequestsManagement.tsx"));
+_c69 = AllRequestsManagement;
+const SurpriseRequestsManagement = /*#__PURE__*/ lazy(_c70 = ()=>import("/src/pages/admin/SurpriseRequestsManagement.tsx"));
+_c71 = SurpriseRequestsManagement;
+const CustomRequestsManagement = /*#__PURE__*/ lazy(_c72 = ()=>import("/src/pages/admin/CustomRequestsManagement.tsx"));
+_c73 = CustomRequestsManagement;
+const ReservationsManagement = /*#__PURE__*/ lazy(_c74 = ()=>import("/src/pages/admin/ReservationsManagement.tsx"));
+_c75 = ReservationsManagement;
+const LocalBuddiesManagement = /*#__PURE__*/ lazy(_c76 = ()=>import("/src/pages/admin/LocalBuddiesManagement.tsx"));
+_c77 = LocalBuddiesManagement;
+const SettingsManagement = /*#__PURE__*/ lazy(_c78 = ()=>import("/src/pages/admin/SettingsManagement.tsx"));
+_c79 = SettingsManagement;
+const OnboardingQuizzesManagement = /*#__PURE__*/ lazy(_c80 = ()=>import("/src/pages/admin/OnboardingQuizzesManagement.tsx?t=1770313026870"));
+_c81 = OnboardingQuizzesManagement;
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: 1000 * 60 * 5,
+            gcTime: 1000 * 60 * 30,
+            refetchOnWindowFocus: false,
+            retry: 1
+        }
+    }
+});
+const App = ()=>/*#__PURE__*/ _jsxDEV(QueryClientProvider, {
+        client: queryClient,
+        children: /*#__PURE__*/ _jsxDEV(AuthProvider, {
+            children: /*#__PURE__*/ _jsxDEV(TooltipProvider, {
+                children: [
+                    /*#__PURE__*/ _jsxDEV(Toaster, {}, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                        lineNumber: 84,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(Sonner, {}, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                        lineNumber: 85,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(BrowserRouter, {
+                        children: /*#__PURE__*/ _jsxDEV(Suspense, {
+                            fallback: /*#__PURE__*/ _jsxDEV(PageLoader, {}, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                lineNumber: 87,
+                                columnNumber: 31
+                            }, void 0),
+                            children: /*#__PURE__*/ _jsxDEV(Routes, {
+                                children: [
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/",
+                                        element: /*#__PURE__*/ _jsxDEV(Index, {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 90,
+                                            columnNumber: 40
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 90,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/destinations/thailand",
+                                        element: /*#__PURE__*/ _jsxDEV(Thailand, {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 91,
+                                            columnNumber: 61
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 91,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/surprise-trip",
+                                        element: /*#__PURE__*/ _jsxDEV(SurpriseTrip, {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 92,
+                                            columnNumber: 53
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 92,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/custom-trip",
+                                        element: /*#__PURE__*/ _jsxDEV(CustomTrip, {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 93,
+                                            columnNumber: 51
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 93,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/become-a-buddy",
+                                        element: /*#__PURE__*/ _jsxDEV(BecomeABuddy, {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 94,
+                                            columnNumber: 54
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 94,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/onboarding",
+                                        element: /*#__PURE__*/ _jsxDEV(Onboarding, {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 95,
+                                            columnNumber: 50
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 95,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/get-started",
+                                        element: /*#__PURE__*/ _jsxDEV(GetStarted, {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 98,
+                                            columnNumber: 51
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 98,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/signup/:tripType",
+                                        element: /*#__PURE__*/ _jsxDEV(TripSignup, {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 99,
+                                            columnNumber: 56
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 99,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/quiz",
+                                        element: /*#__PURE__*/ _jsxDEV(OnboardingQuiz, {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 102,
+                                            columnNumber: 44
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 102,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/quiz/result/matched",
+                                        element: /*#__PURE__*/ _jsxDEV(MatchedTripResult, {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 103,
+                                            columnNumber: 59
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 103,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/quiz/result/surprise",
+                                        element: /*#__PURE__*/ _jsxDEV(SurpriseTripResult, {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 104,
+                                            columnNumber: 60
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 104,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/quiz/result/custom",
+                                        element: /*#__PURE__*/ _jsxDEV(CustomTripResult, {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 105,
+                                            columnNumber: 58
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 105,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/start-quiz",
+                                        element: /*#__PURE__*/ _jsxDEV(OnboardingQuiz, {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 108,
+                                            columnNumber: 50
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 108,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/login",
+                                        element: /*#__PURE__*/ _jsxDEV(Login, {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 111,
+                                            columnNumber: 45
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 111,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/signup",
+                                        element: /*#__PURE__*/ _jsxDEV(Signup, {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 112,
+                                            columnNumber: 46
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 112,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/forgot-password",
+                                        element: /*#__PURE__*/ _jsxDEV(ForgotPassword, {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 113,
+                                            columnNumber: 55
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 113,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/admin/login",
+                                        element: /*#__PURE__*/ _jsxDEV(AdminLogin, {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 114,
+                                            columnNumber: 51
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 114,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/dashboard",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            children: /*#__PURE__*/ _jsxDEV(DashboardLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(DashboardHome, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 120,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 119,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 118,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 117,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/dashboard/trips",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            children: /*#__PURE__*/ _jsxDEV(DashboardLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(BrowseTrips, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 127,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 126,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 125,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 124,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/dashboard/trips/:id",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            children: /*#__PURE__*/ _jsxDEV(DashboardLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(TripDetails, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 134,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 133,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 132,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 131,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/dashboard/bookings",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            children: /*#__PURE__*/ _jsxDEV(DashboardLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(MyBookings, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 141,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 140,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 139,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 138,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/dashboard/profile",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            children: /*#__PURE__*/ _jsxDEV(DashboardLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(Profile, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 148,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 147,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 146,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 145,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/dashboard/wishlist",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            children: /*#__PURE__*/ _jsxDEV(DashboardLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(Wishlist, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 155,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 154,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 153,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 152,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/dashboard/requests",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            children: /*#__PURE__*/ _jsxDEV(DashboardLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(MyRequests, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 162,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 161,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 160,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 159,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/dashboard/surprise-suggestions",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            children: /*#__PURE__*/ _jsxDEV(DashboardLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(SurpriseTripSuggestions, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 169,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 168,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 167,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 166,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/admin",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            requiredRole: "admin",
+                                            children: /*#__PURE__*/ _jsxDEV(AdminLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(AdminOverview, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 178,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 177,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 176,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 175,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/admin/trips",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            requiredRole: "admin",
+                                            children: /*#__PURE__*/ _jsxDEV(AdminLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(TripManagement, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 185,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 184,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 183,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 182,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/admin/bookings",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            requiredRole: "admin",
+                                            children: /*#__PURE__*/ _jsxDEV(AdminLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(BookingsManagement, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 192,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 191,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 190,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 189,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/admin/users",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            requiredRole: "admin",
+                                            children: /*#__PURE__*/ _jsxDEV(AdminLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(UserManagement, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 199,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 198,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 197,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 196,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/admin/testimonials",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            requiredRole: "admin",
+                                            children: /*#__PURE__*/ _jsxDEV(AdminLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(TestimonialsManagement, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 206,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 205,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 204,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 203,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/admin/stories",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            requiredRole: "admin",
+                                            children: /*#__PURE__*/ _jsxDEV(AdminLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(StoriesManagement, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 213,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 212,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 211,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 210,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/admin/newsletter",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            requiredRole: "admin",
+                                            children: /*#__PURE__*/ _jsxDEV(AdminLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(NewsletterManagement, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 220,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 219,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 218,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 217,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/admin/all-requests",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            requiredRole: "admin",
+                                            children: /*#__PURE__*/ _jsxDEV(AdminLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(AllRequestsManagement, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 227,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 226,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 225,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 224,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/admin/surprise-requests",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            requiredRole: "admin",
+                                            children: /*#__PURE__*/ _jsxDEV(AdminLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(SurpriseRequestsManagement, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 234,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 233,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 232,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 231,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/admin/custom-requests",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            requiredRole: "admin",
+                                            children: /*#__PURE__*/ _jsxDEV(AdminLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(CustomRequestsManagement, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 241,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 240,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 239,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 238,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/admin/reservations",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            requiredRole: "admin",
+                                            children: /*#__PURE__*/ _jsxDEV(AdminLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(ReservationsManagement, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 248,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 247,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 246,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 245,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/admin/local-buddies",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            requiredRole: "admin",
+                                            children: /*#__PURE__*/ _jsxDEV(AdminLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(LocalBuddiesManagement, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 255,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 254,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 253,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 252,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/admin/settings",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            requiredRole: "admin",
+                                            children: /*#__PURE__*/ _jsxDEV(AdminLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(SettingsManagement, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 262,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 261,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 260,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 259,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "/admin/onboarding-quizzes",
+                                        element: /*#__PURE__*/ _jsxDEV(ProtectedRoute, {
+                                            requiredRole: "admin",
+                                            children: /*#__PURE__*/ _jsxDEV(AdminLayout, {
+                                                children: /*#__PURE__*/ _jsxDEV(OnboardingQuizzesManagement, {}, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                    lineNumber: 269,
+                                                    columnNumber: 21
+                                                }, void 0)
+                                            }, void 0, false, {
+                                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                                lineNumber: 268,
+                                                columnNumber: 19
+                                            }, void 0)
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 267,
+                                            columnNumber: 17
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 266,
+                                        columnNumber: 15
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV(Route, {
+                                        path: "*",
+                                        element: /*#__PURE__*/ _jsxDEV(NotFound, {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                            lineNumber: 274,
+                                            columnNumber: 40
+                                        }, void 0)
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                        lineNumber: 274,
+                                        columnNumber: 15
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                                lineNumber: 88,
+                                columnNumber: 13
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                            lineNumber: 87,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                        lineNumber: 86,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+                lineNumber: 83,
+                columnNumber: 7
+            }, this)
+        }, void 0, false, {
+            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+            lineNumber: 82,
+            columnNumber: 5
+        }, this)
+    }, void 0, false, {
+        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx",
+        lineNumber: 81,
+        columnNumber: 3
+    }, this);
+_c82 = App;
+export default App;
+var _c, _c1, _c2, _c3, _c4, _c5, _c6, _c7, _c8, _c9, _c10, _c11, _c12, _c13, _c14, _c15, _c16, _c17, _c18, _c19, _c20, _c21, _c22, _c23, _c24, _c25, _c26, _c27, _c28, _c29, _c30, _c31, _c32, _c33, _c34, _c35, _c36, _c37, _c38, _c39, _c40, _c41, _c42, _c43, _c44, _c45, _c46, _c47, _c48, _c49, _c50, _c51, _c52, _c53, _c54, _c55, _c56, _c57, _c58, _c59, _c60, _c61, _c62, _c63, _c64, _c65, _c66, _c67, _c68, _c69, _c70, _c71, _c72, _c73, _c74, _c75, _c76, _c77, _c78, _c79, _c80, _c81, _c82;
+$RefreshReg$(_c, "Thailand$lazy");
+$RefreshReg$(_c1, "Thailand");
+$RefreshReg$(_c2, "SurpriseTrip$lazy");
+$RefreshReg$(_c3, "SurpriseTrip");
+$RefreshReg$(_c4, "CustomTrip$lazy");
+$RefreshReg$(_c5, "CustomTrip");
+$RefreshReg$(_c6, "BecomeABuddy$lazy");
+$RefreshReg$(_c7, "BecomeABuddy");
+$RefreshReg$(_c8, "Onboarding$lazy");
+$RefreshReg$(_c9, "Onboarding");
+$RefreshReg$(_c10, "NotFound$lazy");
+$RefreshReg$(_c11, "NotFound");
+$RefreshReg$(_c12, "GetStarted$lazy");
+$RefreshReg$(_c13, "GetStarted");
+$RefreshReg$(_c14, "TripSignup$lazy");
+$RefreshReg$(_c15, "TripSignup");
+$RefreshReg$(_c16, "TravelProfileQuiz$lazy");
+$RefreshReg$(_c17, "TravelProfileQuiz");
+$RefreshReg$(_c18, "MatchedTripResult$lazy");
+$RefreshReg$(_c19, "MatchedTripResult");
+$RefreshReg$(_c20, "SurpriseTripResult$lazy");
+$RefreshReg$(_c21, "SurpriseTripResult");
+$RefreshReg$(_c22, "CustomTripResult$lazy");
+$RefreshReg$(_c23, "CustomTripResult");
+$RefreshReg$(_c24, "OnboardingQuiz$lazy");
+$RefreshReg$(_c25, "OnboardingQuiz");
+$RefreshReg$(_c26, "Login$lazy");
+$RefreshReg$(_c27, "Login");
+$RefreshReg$(_c28, "Signup$lazy");
+$RefreshReg$(_c29, "Signup");
+$RefreshReg$(_c30, "ForgotPassword$lazy");
+$RefreshReg$(_c31, "ForgotPassword");
+$RefreshReg$(_c32, "AdminLogin$lazy");
+$RefreshReg$(_c33, "AdminLogin");
+$RefreshReg$(_c34, "DashboardLayout$lazy");
+$RefreshReg$(_c35, "DashboardLayout");
+$RefreshReg$(_c36, "DashboardHome$lazy");
+$RefreshReg$(_c37, "DashboardHome");
+$RefreshReg$(_c38, "BrowseTrips$lazy");
+$RefreshReg$(_c39, "BrowseTrips");
+$RefreshReg$(_c40, "TripDetails$lazy");
+$RefreshReg$(_c41, "TripDetails");
+$RefreshReg$(_c42, "MyBookings$lazy");
+$RefreshReg$(_c43, "MyBookings");
+$RefreshReg$(_c44, "MyRequests$lazy");
+$RefreshReg$(_c45, "MyRequests");
+$RefreshReg$(_c46, "Profile$lazy");
+$RefreshReg$(_c47, "Profile");
+$RefreshReg$(_c48, "Wishlist$lazy");
+$RefreshReg$(_c49, "Wishlist");
+$RefreshReg$(_c50, "SurpriseTripSuggestions$lazy");
+$RefreshReg$(_c51, "SurpriseTripSuggestions");
+$RefreshReg$(_c52, "AdminLayout$lazy");
+$RefreshReg$(_c53, "AdminLayout");
+$RefreshReg$(_c54, "AdminOverview$lazy");
+$RefreshReg$(_c55, "AdminOverview");
+$RefreshReg$(_c56, "TripManagement$lazy");
+$RefreshReg$(_c57, "TripManagement");
+$RefreshReg$(_c58, "BookingsManagement$lazy");
+$RefreshReg$(_c59, "BookingsManagement");
+$RefreshReg$(_c60, "UserManagement$lazy");
+$RefreshReg$(_c61, "UserManagement");
+$RefreshReg$(_c62, "TestimonialsManagement$lazy");
+$RefreshReg$(_c63, "TestimonialsManagement");
+$RefreshReg$(_c64, "StoriesManagement$lazy");
+$RefreshReg$(_c65, "StoriesManagement");
+$RefreshReg$(_c66, "NewsletterManagement$lazy");
+$RefreshReg$(_c67, "NewsletterManagement");
+$RefreshReg$(_c68, "AllRequestsManagement$lazy");
+$RefreshReg$(_c69, "AllRequestsManagement");
+$RefreshReg$(_c70, "SurpriseRequestsManagement$lazy");
+$RefreshReg$(_c71, "SurpriseRequestsManagement");
+$RefreshReg$(_c72, "CustomRequestsManagement$lazy");
+$RefreshReg$(_c73, "CustomRequestsManagement");
+$RefreshReg$(_c74, "ReservationsManagement$lazy");
+$RefreshReg$(_c75, "ReservationsManagement");
+$RefreshReg$(_c76, "LocalBuddiesManagement$lazy");
+$RefreshReg$(_c77, "LocalBuddiesManagement");
+$RefreshReg$(_c78, "SettingsManagement$lazy");
+$RefreshReg$(_c79, "SettingsManagement");
+$RefreshReg$(_c80, "OnboardingQuizzesManagement$lazy");
+$RefreshReg$(_c81, "OnboardingQuizzesManagement");
+$RefreshReg$(_c82, "App");
+
+
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+
+
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/App.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkFwcC50c3giXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgbGF6eSwgU3VzcGVuc2UgfSBmcm9tICdyZWFjdCc7XHJcbmltcG9ydCB7IFRvYXN0ZXIgfSBmcm9tIFwiQC9jb21wb25lbnRzL3VpL3RvYXN0ZXJcIjtcclxuaW1wb3J0IHsgVG9hc3RlciBhcyBTb25uZXIgfSBmcm9tIFwiQC9jb21wb25lbnRzL3VpL3Nvbm5lclwiO1xyXG5pbXBvcnQgeyBUb29sdGlwUHJvdmlkZXIgfSBmcm9tIFwiQC9jb21wb25lbnRzL3VpL3Rvb2x0aXBcIjtcclxuaW1wb3J0IHsgUXVlcnlDbGllbnQsIFF1ZXJ5Q2xpZW50UHJvdmlkZXIgfSBmcm9tIFwiQHRhbnN0YWNrL3JlYWN0LXF1ZXJ5XCI7XHJcbmltcG9ydCB7IEJyb3dzZXJSb3V0ZXIsIFJvdXRlcywgUm91dGUgfSBmcm9tIFwicmVhY3Qtcm91dGVyLWRvbVwiO1xyXG5pbXBvcnQgeyBBdXRoUHJvdmlkZXIgfSBmcm9tIFwiQC9jb250ZXh0cy9BdXRoQ29udGV4dFwiO1xyXG5pbXBvcnQgeyBQcm90ZWN0ZWRSb3V0ZSB9IGZyb20gXCJAL2NvbXBvbmVudHMvYXV0aC9Qcm90ZWN0ZWRSb3V0ZVwiO1xyXG5pbXBvcnQgeyBQYWdlTG9hZGVyIH0gZnJvbSBcIkAvY29tcG9uZW50cy9QYWdlTG9hZGVyXCI7XHJcblxyXG4vLyBDcml0aWNhbCAtIGxvYWQgaW1tZWRpYXRlbHlcclxuaW1wb3J0IEluZGV4IGZyb20gXCIuL3BhZ2VzL0luZGV4XCI7XHJcblxyXG4vLyBMYXp5IGxvYWQgYWxsIG90aGVyIHBhZ2VzIGZvciBjb2RlIHNwbGl0dGluZ1xyXG5jb25zdCBUaGFpbGFuZCA9IGxhenkoKCkgPT4gaW1wb3J0KFwiLi9wYWdlcy9kZXN0aW5hdGlvbnMvVGhhaWxhbmRcIikpO1xyXG5jb25zdCBTdXJwcmlzZVRyaXAgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vcGFnZXMvU3VycHJpc2VUcmlwXCIpKTtcclxuY29uc3QgQ3VzdG9tVHJpcCA9IGxhenkoKCkgPT4gaW1wb3J0KFwiLi9wYWdlcy9DdXN0b21UcmlwXCIpKTtcclxuY29uc3QgQmVjb21lQUJ1ZGR5ID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuL3BhZ2VzL0JlY29tZUFCdWRkeVwiKSk7XHJcbmNvbnN0IE9uYm9hcmRpbmcgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vcGFnZXMvT25ib2FyZGluZ1wiKSk7XHJcbmNvbnN0IE5vdEZvdW5kID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuL3BhZ2VzL05vdEZvdW5kXCIpKTtcclxuXHJcbi8vIFRyaXAgU2lnbnVwIEZsb3cgLSBsYXp5IGxvYWRlZFxyXG5jb25zdCBHZXRTdGFydGVkID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuL3BhZ2VzL0dldFN0YXJ0ZWRcIikpO1xyXG5jb25zdCBUcmlwU2lnbnVwID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuL3BhZ2VzL1RyaXBTaWdudXBcIikpO1xyXG5cclxuLy8gVHJhdmVsIFByb2ZpbGUgUXVpeiAtIGxhenkgbG9hZGVkIChDT01QTEVURSBWRVJTSU9OIHdpdGggYWxsIDEwIHN0ZXBzKVxyXG5jb25zdCBUcmF2ZWxQcm9maWxlUXVpeiA9IGxhenkoKCkgPT4gaW1wb3J0KFwiLi9wYWdlcy9UcmF2ZWxQcm9maWxlUXVpelJlZGVzaWduXCIpKTtcclxuY29uc3QgTWF0Y2hlZFRyaXBSZXN1bHQgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vcGFnZXMvcXVpei9NYXRjaGVkVHJpcFJlc3VsdFwiKSk7XHJcbmNvbnN0IFN1cnByaXNlVHJpcFJlc3VsdCA9IGxhenkoKCkgPT4gaW1wb3J0KFwiLi9wYWdlcy9xdWl6L1N1cnByaXNlVHJpcFJlc3VsdFwiKSk7XHJcbmNvbnN0IEN1c3RvbVRyaXBSZXN1bHQgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vcGFnZXMvcXVpei9DdXN0b21UcmlwUmVzdWx0XCIpKTtcclxuXHJcbi8vIE5ldyBPbmJvYXJkaW5nIFF1aXogKDE3LXN0ZXAgdmVyc2lvbilcclxuY29uc3QgT25ib2FyZGluZ1F1aXogPSBsYXp5KCgpID0+IGltcG9ydChcIi4vcGFnZXMvT25ib2FyZGluZ1F1aXpcIikpO1xyXG5cclxuLy8gQXV0aCBQYWdlcyAtIGxhenkgbG9hZGVkXHJcbmNvbnN0IExvZ2luID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuL3BhZ2VzL2F1dGgvTG9naW5cIikpO1xyXG5jb25zdCBTaWdudXAgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vcGFnZXMvYXV0aC9TaWdudXBcIikpO1xyXG5jb25zdCBGb3Jnb3RQYXNzd29yZCA9IGxhenkoKCkgPT4gaW1wb3J0KFwiLi9wYWdlcy9hdXRoL0ZvcmdvdFBhc3N3b3JkXCIpKTtcclxuY29uc3QgQWRtaW5Mb2dpbiA9IGxhenkoKCkgPT4gaW1wb3J0KFwiLi9wYWdlcy9hdXRoL0FkbWluTG9naW5cIikpO1xyXG5cclxuLy8gVXNlciBEYXNoYm9hcmQgLSBsYXp5IGxvYWRlZFxyXG5jb25zdCBEYXNoYm9hcmRMYXlvdXQgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vY29tcG9uZW50cy9kYXNoYm9hcmQvRGFzaGJvYXJkTGF5b3V0XCIpLnRoZW4obSA9PiAoeyBkZWZhdWx0OiBtLkRhc2hib2FyZExheW91dCB9KSkpO1xyXG5jb25zdCBEYXNoYm9hcmRIb21lID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuL3BhZ2VzL2Rhc2hib2FyZC9EYXNoYm9hcmRIb21lXCIpKTtcclxuY29uc3QgQnJvd3NlVHJpcHMgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vcGFnZXMvZGFzaGJvYXJkL0Jyb3dzZVRyaXBzXCIpKTtcclxuY29uc3QgVHJpcERldGFpbHMgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vcGFnZXMvZGFzaGJvYXJkL1RyaXBEZXRhaWxzXCIpKTtcclxuY29uc3QgTXlCb29raW5ncyA9IGxhenkoKCkgPT4gaW1wb3J0KFwiLi9wYWdlcy9kYXNoYm9hcmQvTXlCb29raW5nc1wiKSk7XHJcbmNvbnN0IE15UmVxdWVzdHMgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vcGFnZXMvZGFzaGJvYXJkL015UmVxdWVzdHNcIikpO1xyXG5jb25zdCBQcm9maWxlID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuL3BhZ2VzL2Rhc2hib2FyZC9Qcm9maWxlXCIpKTtcclxuY29uc3QgV2lzaGxpc3QgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vcGFnZXMvZGFzaGJvYXJkL1dpc2hsaXN0XCIpKTtcclxuY29uc3QgU3VycHJpc2VUcmlwU3VnZ2VzdGlvbnMgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vcGFnZXMvZGFzaGJvYXJkL1N1cnByaXNlVHJpcFN1Z2dlc3Rpb25zXCIpKTtcclxuXHJcbi8vIEFkbWluIERhc2hib2FyZCAtIGxhenkgbG9hZGVkXHJcbmNvbnN0IEFkbWluTGF5b3V0ID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuL2NvbXBvbmVudHMvYWRtaW4vQWRtaW5MYXlvdXRcIikudGhlbihtID0+ICh7IGRlZmF1bHQ6IG0uQWRtaW5MYXlvdXQgfSkpKTtcclxuY29uc3QgQWRtaW5PdmVydmlldyA9IGxhenkoKCkgPT4gaW1wb3J0KFwiLi9wYWdlcy9hZG1pbi9BZG1pbk92ZXJ2aWV3XCIpKTtcclxuY29uc3QgVHJpcE1hbmFnZW1lbnQgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vcGFnZXMvYWRtaW4vVHJpcE1hbmFnZW1lbnRcIikpO1xyXG5jb25zdCBCb29raW5nc01hbmFnZW1lbnQgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vcGFnZXMvYWRtaW4vQm9va2luZ3NNYW5hZ2VtZW50XCIpKTtcclxuY29uc3QgVXNlck1hbmFnZW1lbnQgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vcGFnZXMvYWRtaW4vVXNlck1hbmFnZW1lbnRcIikpO1xyXG5jb25zdCBUZXN0aW1vbmlhbHNNYW5hZ2VtZW50ID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuL3BhZ2VzL2FkbWluL1Rlc3RpbW9uaWFsc01hbmFnZW1lbnRcIikpO1xyXG5jb25zdCBTdG9yaWVzTWFuYWdlbWVudCA9IGxhenkoKCkgPT4gaW1wb3J0KFwiLi9wYWdlcy9hZG1pbi9TdG9yaWVzTWFuYWdlbWVudFwiKSk7XHJcbmNvbnN0IE5ld3NsZXR0ZXJNYW5hZ2VtZW50ID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuL3BhZ2VzL2FkbWluL05ld3NsZXR0ZXJNYW5hZ2VtZW50XCIpKTtcclxuY29uc3QgQWxsUmVxdWVzdHNNYW5hZ2VtZW50ID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuL3BhZ2VzL2FkbWluL0FsbFJlcXVlc3RzTWFuYWdlbWVudFwiKSk7XHJcbmNvbnN0IFN1cnByaXNlUmVxdWVzdHNNYW5hZ2VtZW50ID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuL3BhZ2VzL2FkbWluL1N1cnByaXNlUmVxdWVzdHNNYW5hZ2VtZW50XCIpKTtcclxuY29uc3QgQ3VzdG9tUmVxdWVzdHNNYW5hZ2VtZW50ID0gbGF6eSgoKSA9PiBpbXBvcnQoXCIuL3BhZ2VzL2FkbWluL0N1c3RvbVJlcXVlc3RzTWFuYWdlbWVudFwiKSk7XHJcbmNvbnN0IFJlc2VydmF0aW9uc01hbmFnZW1lbnQgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vcGFnZXMvYWRtaW4vUmVzZXJ2YXRpb25zTWFuYWdlbWVudFwiKSk7XHJcbmNvbnN0IExvY2FsQnVkZGllc01hbmFnZW1lbnQgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vcGFnZXMvYWRtaW4vTG9jYWxCdWRkaWVzTWFuYWdlbWVudFwiKSk7XHJcbmNvbnN0IFNldHRpbmdzTWFuYWdlbWVudCA9IGxhenkoKCkgPT4gaW1wb3J0KFwiLi9wYWdlcy9hZG1pbi9TZXR0aW5nc01hbmFnZW1lbnRcIikpO1xyXG5jb25zdCBPbmJvYXJkaW5nUXVpenplc01hbmFnZW1lbnQgPSBsYXp5KCgpID0+IGltcG9ydChcIi4vcGFnZXMvYWRtaW4vT25ib2FyZGluZ1F1aXp6ZXNNYW5hZ2VtZW50XCIpKTtcclxuXHJcbmNvbnN0IHF1ZXJ5Q2xpZW50ID0gbmV3IFF1ZXJ5Q2xpZW50KHtcclxuICBkZWZhdWx0T3B0aW9uczoge1xyXG4gICAgcXVlcmllczoge1xyXG4gICAgICBzdGFsZVRpbWU6IDEwMDAgKiA2MCAqIDUsIC8vIDUgbWludXRlc1xyXG4gICAgICBnY1RpbWU6IDEwMDAgKiA2MCAqIDMwLCAvLyAzMCBtaW51dGVzIChmb3JtZXJseSBjYWNoZVRpbWUpXHJcbiAgICAgIHJlZmV0Y2hPbldpbmRvd0ZvY3VzOiBmYWxzZSxcclxuICAgICAgcmV0cnk6IDEsXHJcbiAgICB9LFxyXG4gIH0sXHJcbn0pO1xyXG5cclxuY29uc3QgQXBwID0gKCkgPT4gKFxyXG4gIDxRdWVyeUNsaWVudFByb3ZpZGVyIGNsaWVudD17cXVlcnlDbGllbnR9PlxyXG4gICAgPEF1dGhQcm92aWRlcj5cclxuICAgICAgPFRvb2x0aXBQcm92aWRlcj5cclxuICAgICAgICA8VG9hc3RlciAvPlxyXG4gICAgICAgIDxTb25uZXIgLz5cclxuICAgICAgICA8QnJvd3NlclJvdXRlcj5cclxuICAgICAgICAgIDxTdXNwZW5zZSBmYWxsYmFjaz17PFBhZ2VMb2FkZXIgLz59PlxyXG4gICAgICAgICAgICA8Um91dGVzPlxyXG4gICAgICAgICAgICAgIHsvKiBQdWJsaWMgUm91dGVzICovfVxyXG4gICAgICAgICAgICAgIDxSb3V0ZSBwYXRoPVwiL1wiIGVsZW1lbnQ9ezxJbmRleCAvPn0gLz5cclxuICAgICAgICAgICAgICA8Um91dGUgcGF0aD1cIi9kZXN0aW5hdGlvbnMvdGhhaWxhbmRcIiBlbGVtZW50PXs8VGhhaWxhbmQgLz59IC8+XHJcbiAgICAgICAgICAgICAgPFJvdXRlIHBhdGg9XCIvc3VycHJpc2UtdHJpcFwiIGVsZW1lbnQ9ezxTdXJwcmlzZVRyaXAgLz59IC8+XHJcbiAgICAgICAgICAgICAgPFJvdXRlIHBhdGg9XCIvY3VzdG9tLXRyaXBcIiBlbGVtZW50PXs8Q3VzdG9tVHJpcCAvPn0gLz5cclxuICAgICAgICAgICAgICA8Um91dGUgcGF0aD1cIi9iZWNvbWUtYS1idWRkeVwiIGVsZW1lbnQ9ezxCZWNvbWVBQnVkZHkgLz59IC8+XHJcbiAgICAgICAgICAgICAgPFJvdXRlIHBhdGg9XCIvb25ib2FyZGluZ1wiIGVsZW1lbnQ9ezxPbmJvYXJkaW5nIC8+fSAvPlxyXG5cclxuICAgICAgICAgICAgICB7LyogVHJpcCBTaWdudXAgRmxvdyAqL31cclxuICAgICAgICAgICAgICA8Um91dGUgcGF0aD1cIi9nZXQtc3RhcnRlZFwiIGVsZW1lbnQ9ezxHZXRTdGFydGVkIC8+fSAvPlxyXG4gICAgICAgICAgICAgIDxSb3V0ZSBwYXRoPVwiL3NpZ251cC86dHJpcFR5cGVcIiBlbGVtZW50PXs8VHJpcFNpZ251cCAvPn0gLz5cclxuXHJcbiAgICAgICAgICAgICAgey8qIFRyYXZlbCBQcm9maWxlIFF1aXogLSBOb3cgdXNpbmcgdGhlIG5ldyAxNy1zdGVwIE9uYm9hcmRpbmcgUXVpeiAqL31cclxuICAgICAgICAgICAgICA8Um91dGUgcGF0aD1cIi9xdWl6XCIgZWxlbWVudD17PE9uYm9hcmRpbmdRdWl6IC8+fSAvPlxyXG4gICAgICAgICAgICAgIDxSb3V0ZSBwYXRoPVwiL3F1aXovcmVzdWx0L21hdGNoZWRcIiBlbGVtZW50PXs8TWF0Y2hlZFRyaXBSZXN1bHQgLz59IC8+XHJcbiAgICAgICAgICAgICAgPFJvdXRlIHBhdGg9XCIvcXVpei9yZXN1bHQvc3VycHJpc2VcIiBlbGVtZW50PXs8U3VycHJpc2VUcmlwUmVzdWx0IC8+fSAvPlxyXG4gICAgICAgICAgICAgIDxSb3V0ZSBwYXRoPVwiL3F1aXovcmVzdWx0L2N1c3RvbVwiIGVsZW1lbnQ9ezxDdXN0b21UcmlwUmVzdWx0IC8+fSAvPlxyXG5cclxuICAgICAgICAgICAgICB7LyogTGVnYWN5IFN0YXJ0IFF1aXogUm91dGUgKHJlZGlyZWN0cyB0byAvcXVpeiBiYXNpY2FsbHksIG9yIGtlZXAgYWxpYXMpICovfVxyXG4gICAgICAgICAgICAgIDxSb3V0ZSBwYXRoPVwiL3N0YXJ0LXF1aXpcIiBlbGVtZW50PXs8T25ib2FyZGluZ1F1aXogLz59IC8+XHJcblxyXG4gICAgICAgICAgICAgIHsvKiBBdXRoIFJvdXRlcyAqL31cclxuICAgICAgICAgICAgICA8Um91dGUgcGF0aD1cIi9sb2dpblwiIGVsZW1lbnQ9ezxMb2dpbiAvPn0gLz5cclxuICAgICAgICAgICAgICA8Um91dGUgcGF0aD1cIi9zaWdudXBcIiBlbGVtZW50PXs8U2lnbnVwIC8+fSAvPlxyXG4gICAgICAgICAgICAgIDxSb3V0ZSBwYXRoPVwiL2ZvcmdvdC1wYXNzd29yZFwiIGVsZW1lbnQ9ezxGb3Jnb3RQYXNzd29yZCAvPn0gLz5cclxuICAgICAgICAgICAgICA8Um91dGUgcGF0aD1cIi9hZG1pbi9sb2dpblwiIGVsZW1lbnQ9ezxBZG1pbkxvZ2luIC8+fSAvPlxyXG5cclxuICAgICAgICAgICAgICB7LyogVXNlciBEYXNoYm9hcmQgUm91dGVzICovfVxyXG4gICAgICAgICAgICAgIDxSb3V0ZSBwYXRoPVwiL2Rhc2hib2FyZFwiIGVsZW1lbnQ9e1xyXG4gICAgICAgICAgICAgICAgPFByb3RlY3RlZFJvdXRlPlxyXG4gICAgICAgICAgICAgICAgICA8RGFzaGJvYXJkTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgICAgIDxEYXNoYm9hcmRIb21lIC8+XHJcbiAgICAgICAgICAgICAgICAgIDwvRGFzaGJvYXJkTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgPC9Qcm90ZWN0ZWRSb3V0ZT5cclxuICAgICAgICAgICAgICB9IC8+XHJcbiAgICAgICAgICAgICAgPFJvdXRlIHBhdGg9XCIvZGFzaGJvYXJkL3RyaXBzXCIgZWxlbWVudD17XHJcbiAgICAgICAgICAgICAgICA8UHJvdGVjdGVkUm91dGU+XHJcbiAgICAgICAgICAgICAgICAgIDxEYXNoYm9hcmRMYXlvdXQ+XHJcbiAgICAgICAgICAgICAgICAgICAgPEJyb3dzZVRyaXBzIC8+XHJcbiAgICAgICAgICAgICAgICAgIDwvRGFzaGJvYXJkTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgPC9Qcm90ZWN0ZWRSb3V0ZT5cclxuICAgICAgICAgICAgICB9IC8+XHJcbiAgICAgICAgICAgICAgPFJvdXRlIHBhdGg9XCIvZGFzaGJvYXJkL3RyaXBzLzppZFwiIGVsZW1lbnQ9e1xyXG4gICAgICAgICAgICAgICAgPFByb3RlY3RlZFJvdXRlPlxyXG4gICAgICAgICAgICAgICAgICA8RGFzaGJvYXJkTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgICAgIDxUcmlwRGV0YWlscyAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0Rhc2hib2FyZExheW91dD5cclxuICAgICAgICAgICAgICAgIDwvUHJvdGVjdGVkUm91dGU+XHJcbiAgICAgICAgICAgICAgfSAvPlxyXG4gICAgICAgICAgICAgIDxSb3V0ZSBwYXRoPVwiL2Rhc2hib2FyZC9ib29raW5nc1wiIGVsZW1lbnQ9e1xyXG4gICAgICAgICAgICAgICAgPFByb3RlY3RlZFJvdXRlPlxyXG4gICAgICAgICAgICAgICAgICA8RGFzaGJvYXJkTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgICAgIDxNeUJvb2tpbmdzIC8+XHJcbiAgICAgICAgICAgICAgICAgIDwvRGFzaGJvYXJkTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgPC9Qcm90ZWN0ZWRSb3V0ZT5cclxuICAgICAgICAgICAgICB9IC8+XHJcbiAgICAgICAgICAgICAgPFJvdXRlIHBhdGg9XCIvZGFzaGJvYXJkL3Byb2ZpbGVcIiBlbGVtZW50PXtcclxuICAgICAgICAgICAgICAgIDxQcm90ZWN0ZWRSb3V0ZT5cclxuICAgICAgICAgICAgICAgICAgPERhc2hib2FyZExheW91dD5cclxuICAgICAgICAgICAgICAgICAgICA8UHJvZmlsZSAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0Rhc2hib2FyZExheW91dD5cclxuICAgICAgICAgICAgICAgIDwvUHJvdGVjdGVkUm91dGU+XHJcbiAgICAgICAgICAgICAgfSAvPlxyXG4gICAgICAgICAgICAgIDxSb3V0ZSBwYXRoPVwiL2Rhc2hib2FyZC93aXNobGlzdFwiIGVsZW1lbnQ9e1xyXG4gICAgICAgICAgICAgICAgPFByb3RlY3RlZFJvdXRlPlxyXG4gICAgICAgICAgICAgICAgICA8RGFzaGJvYXJkTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgICAgIDxXaXNobGlzdCAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0Rhc2hib2FyZExheW91dD5cclxuICAgICAgICAgICAgICAgIDwvUHJvdGVjdGVkUm91dGU+XHJcbiAgICAgICAgICAgICAgfSAvPlxyXG4gICAgICAgICAgICAgIDxSb3V0ZSBwYXRoPVwiL2Rhc2hib2FyZC9yZXF1ZXN0c1wiIGVsZW1lbnQ9e1xyXG4gICAgICAgICAgICAgICAgPFByb3RlY3RlZFJvdXRlPlxyXG4gICAgICAgICAgICAgICAgICA8RGFzaGJvYXJkTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgICAgIDxNeVJlcXVlc3RzIC8+XHJcbiAgICAgICAgICAgICAgICAgIDwvRGFzaGJvYXJkTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgPC9Qcm90ZWN0ZWRSb3V0ZT5cclxuICAgICAgICAgICAgICB9IC8+XHJcbiAgICAgICAgICAgICAgPFJvdXRlIHBhdGg9XCIvZGFzaGJvYXJkL3N1cnByaXNlLXN1Z2dlc3Rpb25zXCIgZWxlbWVudD17XHJcbiAgICAgICAgICAgICAgICA8UHJvdGVjdGVkUm91dGU+XHJcbiAgICAgICAgICAgICAgICAgIDxEYXNoYm9hcmRMYXlvdXQ+XHJcbiAgICAgICAgICAgICAgICAgICAgPFN1cnByaXNlVHJpcFN1Z2dlc3Rpb25zIC8+XHJcbiAgICAgICAgICAgICAgICAgIDwvRGFzaGJvYXJkTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgPC9Qcm90ZWN0ZWRSb3V0ZT5cclxuICAgICAgICAgICAgICB9IC8+XHJcblxyXG4gICAgICAgICAgICAgIHsvKiBBZG1pbiBSb3V0ZXMgKi99XHJcbiAgICAgICAgICAgICAgPFJvdXRlIHBhdGg9XCIvYWRtaW5cIiBlbGVtZW50PXtcclxuICAgICAgICAgICAgICAgIDxQcm90ZWN0ZWRSb3V0ZSByZXF1aXJlZFJvbGU9XCJhZG1pblwiPlxyXG4gICAgICAgICAgICAgICAgICA8QWRtaW5MYXlvdXQ+XHJcbiAgICAgICAgICAgICAgICAgICAgPEFkbWluT3ZlcnZpZXcgLz5cclxuICAgICAgICAgICAgICAgICAgPC9BZG1pbkxheW91dD5cclxuICAgICAgICAgICAgICAgIDwvUHJvdGVjdGVkUm91dGU+XHJcbiAgICAgICAgICAgICAgfSAvPlxyXG4gICAgICAgICAgICAgIDxSb3V0ZSBwYXRoPVwiL2FkbWluL3RyaXBzXCIgZWxlbWVudD17XHJcbiAgICAgICAgICAgICAgICA8UHJvdGVjdGVkUm91dGUgcmVxdWlyZWRSb2xlPVwiYWRtaW5cIj5cclxuICAgICAgICAgICAgICAgICAgPEFkbWluTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgICAgIDxUcmlwTWFuYWdlbWVudCAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0FkbWluTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgPC9Qcm90ZWN0ZWRSb3V0ZT5cclxuICAgICAgICAgICAgICB9IC8+XHJcbiAgICAgICAgICAgICAgPFJvdXRlIHBhdGg9XCIvYWRtaW4vYm9va2luZ3NcIiBlbGVtZW50PXtcclxuICAgICAgICAgICAgICAgIDxQcm90ZWN0ZWRSb3V0ZSByZXF1aXJlZFJvbGU9XCJhZG1pblwiPlxyXG4gICAgICAgICAgICAgICAgICA8QWRtaW5MYXlvdXQ+XHJcbiAgICAgICAgICAgICAgICAgICAgPEJvb2tpbmdzTWFuYWdlbWVudCAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0FkbWluTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgPC9Qcm90ZWN0ZWRSb3V0ZT5cclxuICAgICAgICAgICAgICB9IC8+XHJcbiAgICAgICAgICAgICAgPFJvdXRlIHBhdGg9XCIvYWRtaW4vdXNlcnNcIiBlbGVtZW50PXtcclxuICAgICAgICAgICAgICAgIDxQcm90ZWN0ZWRSb3V0ZSByZXF1aXJlZFJvbGU9XCJhZG1pblwiPlxyXG4gICAgICAgICAgICAgICAgICA8QWRtaW5MYXlvdXQ+XHJcbiAgICAgICAgICAgICAgICAgICAgPFVzZXJNYW5hZ2VtZW50IC8+XHJcbiAgICAgICAgICAgICAgICAgIDwvQWRtaW5MYXlvdXQ+XHJcbiAgICAgICAgICAgICAgICA8L1Byb3RlY3RlZFJvdXRlPlxyXG4gICAgICAgICAgICAgIH0gLz5cclxuICAgICAgICAgICAgICA8Um91dGUgcGF0aD1cIi9hZG1pbi90ZXN0aW1vbmlhbHNcIiBlbGVtZW50PXtcclxuICAgICAgICAgICAgICAgIDxQcm90ZWN0ZWRSb3V0ZSByZXF1aXJlZFJvbGU9XCJhZG1pblwiPlxyXG4gICAgICAgICAgICAgICAgICA8QWRtaW5MYXlvdXQ+XHJcbiAgICAgICAgICAgICAgICAgICAgPFRlc3RpbW9uaWFsc01hbmFnZW1lbnQgLz5cclxuICAgICAgICAgICAgICAgICAgPC9BZG1pbkxheW91dD5cclxuICAgICAgICAgICAgICAgIDwvUHJvdGVjdGVkUm91dGU+XHJcbiAgICAgICAgICAgICAgfSAvPlxyXG4gICAgICAgICAgICAgIDxSb3V0ZSBwYXRoPVwiL2FkbWluL3N0b3JpZXNcIiBlbGVtZW50PXtcclxuICAgICAgICAgICAgICAgIDxQcm90ZWN0ZWRSb3V0ZSByZXF1aXJlZFJvbGU9XCJhZG1pblwiPlxyXG4gICAgICAgICAgICAgICAgICA8QWRtaW5MYXlvdXQ+XHJcbiAgICAgICAgICAgICAgICAgICAgPFN0b3JpZXNNYW5hZ2VtZW50IC8+XHJcbiAgICAgICAgICAgICAgICAgIDwvQWRtaW5MYXlvdXQ+XHJcbiAgICAgICAgICAgICAgICA8L1Byb3RlY3RlZFJvdXRlPlxyXG4gICAgICAgICAgICAgIH0gLz5cclxuICAgICAgICAgICAgICA8Um91dGUgcGF0aD1cIi9hZG1pbi9uZXdzbGV0dGVyXCIgZWxlbWVudD17XHJcbiAgICAgICAgICAgICAgICA8UHJvdGVjdGVkUm91dGUgcmVxdWlyZWRSb2xlPVwiYWRtaW5cIj5cclxuICAgICAgICAgICAgICAgICAgPEFkbWluTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgICAgIDxOZXdzbGV0dGVyTWFuYWdlbWVudCAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0FkbWluTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgPC9Qcm90ZWN0ZWRSb3V0ZT5cclxuICAgICAgICAgICAgICB9IC8+XHJcbiAgICAgICAgICAgICAgPFJvdXRlIHBhdGg9XCIvYWRtaW4vYWxsLXJlcXVlc3RzXCIgZWxlbWVudD17XHJcbiAgICAgICAgICAgICAgICA8UHJvdGVjdGVkUm91dGUgcmVxdWlyZWRSb2xlPVwiYWRtaW5cIj5cclxuICAgICAgICAgICAgICAgICAgPEFkbWluTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgICAgIDxBbGxSZXF1ZXN0c01hbmFnZW1lbnQgLz5cclxuICAgICAgICAgICAgICAgICAgPC9BZG1pbkxheW91dD5cclxuICAgICAgICAgICAgICAgIDwvUHJvdGVjdGVkUm91dGU+XHJcbiAgICAgICAgICAgICAgfSAvPlxyXG4gICAgICAgICAgICAgIDxSb3V0ZSBwYXRoPVwiL2FkbWluL3N1cnByaXNlLXJlcXVlc3RzXCIgZWxlbWVudD17XHJcbiAgICAgICAgICAgICAgICA8UHJvdGVjdGVkUm91dGUgcmVxdWlyZWRSb2xlPVwiYWRtaW5cIj5cclxuICAgICAgICAgICAgICAgICAgPEFkbWluTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgICAgIDxTdXJwcmlzZVJlcXVlc3RzTWFuYWdlbWVudCAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0FkbWluTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgPC9Qcm90ZWN0ZWRSb3V0ZT5cclxuICAgICAgICAgICAgICB9IC8+XHJcbiAgICAgICAgICAgICAgPFJvdXRlIHBhdGg9XCIvYWRtaW4vY3VzdG9tLXJlcXVlc3RzXCIgZWxlbWVudD17XHJcbiAgICAgICAgICAgICAgICA8UHJvdGVjdGVkUm91dGUgcmVxdWlyZWRSb2xlPVwiYWRtaW5cIj5cclxuICAgICAgICAgICAgICAgICAgPEFkbWluTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgICAgIDxDdXN0b21SZXF1ZXN0c01hbmFnZW1lbnQgLz5cclxuICAgICAgICAgICAgICAgICAgPC9BZG1pbkxheW91dD5cclxuICAgICAgICAgICAgICAgIDwvUHJvdGVjdGVkUm91dGU+XHJcbiAgICAgICAgICAgICAgfSAvPlxyXG4gICAgICAgICAgICAgIDxSb3V0ZSBwYXRoPVwiL2FkbWluL3Jlc2VydmF0aW9uc1wiIGVsZW1lbnQ9e1xyXG4gICAgICAgICAgICAgICAgPFByb3RlY3RlZFJvdXRlIHJlcXVpcmVkUm9sZT1cImFkbWluXCI+XHJcbiAgICAgICAgICAgICAgICAgIDxBZG1pbkxheW91dD5cclxuICAgICAgICAgICAgICAgICAgICA8UmVzZXJ2YXRpb25zTWFuYWdlbWVudCAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0FkbWluTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgPC9Qcm90ZWN0ZWRSb3V0ZT5cclxuICAgICAgICAgICAgICB9IC8+XHJcbiAgICAgICAgICAgICAgPFJvdXRlIHBhdGg9XCIvYWRtaW4vbG9jYWwtYnVkZGllc1wiIGVsZW1lbnQ9e1xyXG4gICAgICAgICAgICAgICAgPFByb3RlY3RlZFJvdXRlIHJlcXVpcmVkUm9sZT1cImFkbWluXCI+XHJcbiAgICAgICAgICAgICAgICAgIDxBZG1pbkxheW91dD5cclxuICAgICAgICAgICAgICAgICAgICA8TG9jYWxCdWRkaWVzTWFuYWdlbWVudCAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0FkbWluTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgPC9Qcm90ZWN0ZWRSb3V0ZT5cclxuICAgICAgICAgICAgICB9IC8+XHJcbiAgICAgICAgICAgICAgPFJvdXRlIHBhdGg9XCIvYWRtaW4vc2V0dGluZ3NcIiBlbGVtZW50PXtcclxuICAgICAgICAgICAgICAgIDxQcm90ZWN0ZWRSb3V0ZSByZXF1aXJlZFJvbGU9XCJhZG1pblwiPlxyXG4gICAgICAgICAgICAgICAgICA8QWRtaW5MYXlvdXQ+XHJcbiAgICAgICAgICAgICAgICAgICAgPFNldHRpbmdzTWFuYWdlbWVudCAvPlxyXG4gICAgICAgICAgICAgICAgICA8L0FkbWluTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgPC9Qcm90ZWN0ZWRSb3V0ZT5cclxuICAgICAgICAgICAgICB9IC8+XHJcbiAgICAgICAgICAgICAgPFJvdXRlIHBhdGg9XCIvYWRtaW4vb25ib2FyZGluZy1xdWl6emVzXCIgZWxlbWVudD17XHJcbiAgICAgICAgICAgICAgICA8UHJvdGVjdGVkUm91dGUgcmVxdWlyZWRSb2xlPVwiYWRtaW5cIj5cclxuICAgICAgICAgICAgICAgICAgPEFkbWluTGF5b3V0PlxyXG4gICAgICAgICAgICAgICAgICAgIDxPbmJvYXJkaW5nUXVpenplc01hbmFnZW1lbnQgLz5cclxuICAgICAgICAgICAgICAgICAgPC9BZG1pbkxheW91dD5cclxuICAgICAgICAgICAgICAgIDwvUHJvdGVjdGVkUm91dGU+XHJcbiAgICAgICAgICAgICAgfSAvPlxyXG5cclxuICAgICAgICAgICAgICA8Um91dGUgcGF0aD1cIipcIiBlbGVtZW50PXs8Tm90Rm91bmQgLz59IC8+XHJcbiAgICAgICAgICAgIDwvUm91dGVzPlxyXG4gICAgICAgICAgPC9TdXNwZW5zZT5cclxuICAgICAgICA8L0Jyb3dzZXJSb3V0ZXI+XHJcbiAgICAgIDwvVG9vbHRpcFByb3ZpZGVyPlxyXG4gICAgPC9BdXRoUHJvdmlkZXI+XHJcbiAgPC9RdWVyeUNsaWVudFByb3ZpZGVyPlxyXG4pO1xyXG5cclxuZXhwb3J0IGRlZmF1bHQgQXBwO1xyXG4iXSwibmFtZXMiOlsibGF6eSIsIlN1c3BlbnNlIiwiVG9hc3RlciIsIlNvbm5lciIsIlRvb2x0aXBQcm92aWRlciIsIlF1ZXJ5Q2xpZW50IiwiUXVlcnlDbGllbnRQcm92aWRlciIsIkJyb3dzZXJSb3V0ZXIiLCJSb3V0ZXMiLCJSb3V0ZSIsIkF1dGhQcm92aWRlciIsIlByb3RlY3RlZFJvdXRlIiwiUGFnZUxvYWRlciIsIkluZGV4IiwiVGhhaWxhbmQiLCJTdXJwcmlzZVRyaXAiLCJDdXN0b21UcmlwIiwiQmVjb21lQUJ1ZGR5IiwiT25ib2FyZGluZyIsIk5vdEZvdW5kIiwiR2V0U3RhcnRlZCIsIlRyaXBTaWdudXAiLCJUcmF2ZWxQcm9maWxlUXVpeiIsIk1hdGNoZWRUcmlwUmVzdWx0IiwiU3VycHJpc2VUcmlwUmVzdWx0IiwiQ3VzdG9tVHJpcFJlc3VsdCIsIk9uYm9hcmRpbmdRdWl6IiwiTG9naW4iLCJTaWdudXAiLCJGb3Jnb3RQYXNzd29yZCIsIkFkbWluTG9naW4iLCJEYXNoYm9hcmRMYXlvdXQiLCJ0aGVuIiwibSIsImRlZmF1bHQiLCJEYXNoYm9hcmRIb21lIiwiQnJvd3NlVHJpcHMiLCJUcmlwRGV0YWlscyIsIk15Qm9va2luZ3MiLCJNeVJlcXVlc3RzIiwiUHJvZmlsZSIsIldpc2hsaXN0IiwiU3VycHJpc2VUcmlwU3VnZ2VzdGlvbnMiLCJBZG1pbkxheW91dCIsIkFkbWluT3ZlcnZpZXciLCJUcmlwTWFuYWdlbWVudCIsIkJvb2tpbmdzTWFuYWdlbWVudCIsIlVzZXJNYW5hZ2VtZW50IiwiVGVzdGltb25pYWxzTWFuYWdlbWVudCIsIlN0b3JpZXNNYW5hZ2VtZW50IiwiTmV3c2xldHRlck1hbmFnZW1lbnQiLCJBbGxSZXF1ZXN0c01hbmFnZW1lbnQiLCJTdXJwcmlzZVJlcXVlc3RzTWFuYWdlbWVudCIsIkN1c3RvbVJlcXVlc3RzTWFuYWdlbWVudCIsIlJlc2VydmF0aW9uc01hbmFnZW1lbnQiLCJMb2NhbEJ1ZGRpZXNNYW5hZ2VtZW50IiwiU2V0dGluZ3NNYW5hZ2VtZW50IiwiT25ib2FyZGluZ1F1aXp6ZXNNYW5hZ2VtZW50IiwicXVlcnlDbGllbnQiLCJkZWZhdWx0T3B0aW9ucyIsInF1ZXJpZXMiLCJzdGFsZVRpbWUiLCJnY1RpbWUiLCJyZWZldGNoT25XaW5kb3dGb2N1cyIsInJldHJ5IiwiQXBwIiwiY2xpZW50IiwiZmFsbGJhY2siLCJwYXRoIiwiZWxl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

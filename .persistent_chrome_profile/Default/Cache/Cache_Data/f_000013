@@ -1,0 +1,982 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/HeroSection.tsx");import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope;
+
+let prevRefreshReg;
+let prevRefreshSig;
+
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react-swc can't detect preamble. Something is wrong."
+    );
+  }
+
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+
+import __vite__cjsImport2_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=c3ff4a43"; const _jsxDEV = __vite__cjsImport2_react_jsxDevRuntime["jsxDEV"];
+var _s = $RefreshSig$();
+import { motion } from "/node_modules/.vite/deps/framer-motion.js?v=16c1ddc0";
+import { ChevronLeft, ChevronRight, Calendar, Users } from "/node_modules/.vite/deps/lucide-react.js?v=31177f67";
+import __vite__cjsImport5_react from "/node_modules/.vite/deps/react.js?v=8e948b43"; const useState = __vite__cjsImport5_react["useState"]; const useRef = __vite__cjsImport5_react["useRef"]; const useEffect = __vite__cjsImport5_react["useEffect"]; const useCallback = __vite__cjsImport5_react["useCallback"]; const memo = __vite__cjsImport5_react["memo"]; const useMemo = __vite__cjsImport5_react["useMemo"];
+import { useNavigate } from "/node_modules/.vite/deps/react-router-dom.js?v=65e862e2";
+import heroVideo from "/src/assets/hero-video.mp4?import";
+import tripThailand from "/src/assets/trip-thailand.jpg?import";
+import heroBg from "/src/assets/hero-bg.jpg?import";
+import tripVietnam from "/src/assets/trip-vietnam.jpg?import";
+import tripBali from "/src/assets/trip-bali.jpg?import";
+import tripJapan from "/src/assets/trip-japan.jpg?import";
+import { MagneticButton } from "/src/components/ui/animations.tsx";
+import { useAuth } from "/src/contexts/AuthContext.tsx?t=1770313026870";
+const upcomingTrips = [
+    {
+        id: 1,
+        destination: 'Thailand Islands',
+        dates: 'Mar 15 - Mar 25',
+        spotsLeft: 4,
+        price: '₹45,999',
+        image: tripThailand,
+        duration: '10 Days'
+    },
+    {
+        id: 2,
+        destination: 'Vietnam Explorer',
+        dates: 'Apr 02 - Apr 12',
+        spotsLeft: 6,
+        price: '₹52,999',
+        image: tripVietnam,
+        duration: '10 Days'
+    },
+    {
+        id: 3,
+        destination: 'Bali Adventure',
+        dates: 'Apr 18 - Apr 28',
+        spotsLeft: 3,
+        price: '₹48,999',
+        image: tripBali,
+        duration: '10 Days'
+    },
+    {
+        id: 4,
+        destination: 'Japan Sakura',
+        dates: 'May 05 - May 15',
+        spotsLeft: 8,
+        price: '₹89,999',
+        image: tripJapan,
+        duration: '10 Days'
+    }
+];
+// Memoized TripCard for performance
+const TripCard = /*#__PURE__*/ memo(({ trip, index })=>{
+    return /*#__PURE__*/ _jsxDEV(motion.div, {
+        initial: {
+            opacity: 0,
+            y: 20
+        },
+        animate: {
+            opacity: 1,
+            y: 0
+        },
+        transition: {
+            duration: 0.5,
+            delay: 0.1 * (index % 4)
+        },
+        className: "flex-shrink-0 w-[280px] h-[380px] rounded-2xl overflow-hidden relative group cursor-pointer",
+        children: [
+            /*#__PURE__*/ _jsxDEV("img", {
+                src: trip.image,
+                alt: trip.destination,
+                loading: index < 4 ? "eager" : "lazy",
+                decoding: "async",
+                width: 280,
+                height: 380,
+                className: "absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 will-change-transform"
+            }, void 0, false, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                lineNumber: 77,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"
+            }, void 0, false, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                lineNumber: 88,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "absolute top-4 right-4 px-3 py-1.5 rounded-full glass-card text-sm font-sans font-semibold text-primary",
+                children: [
+                    trip.spotsLeft,
+                    " spots left"
+                ]
+            }, void 0, true, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                lineNumber: 91,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "absolute bottom-0 left-0 right-0 p-6",
+                children: [
+                    /*#__PURE__*/ _jsxDEV("h3", {
+                        className: "font-serif text-xl font-bold text-white mb-2",
+                        children: trip.destination
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                        lineNumber: 97,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        className: "flex items-center gap-4 text-white/80 text-sm font-sans mb-3",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV("div", {
+                                className: "flex items-center gap-1",
+                                children: [
+                                    /*#__PURE__*/ _jsxDEV(Calendar, {
+                                        className: "w-4 h-4"
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                        lineNumber: 101,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV("span", {
+                                        children: trip.duration
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                        lineNumber: 102,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                lineNumber: 100,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV("div", {
+                                className: "flex items-center gap-1",
+                                children: [
+                                    /*#__PURE__*/ _jsxDEV(Users, {
+                                        className: "w-4 h-4"
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                        lineNumber: 105,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV("span", {
+                                        children: "12 travelers"
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                        lineNumber: 106,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                lineNumber: 104,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                        lineNumber: 99,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("div", {
+                        className: "flex items-center justify-between",
+                        children: [
+                            /*#__PURE__*/ _jsxDEV("div", {
+                                children: [
+                                    /*#__PURE__*/ _jsxDEV("span", {
+                                        className: "text-xs text-white/60 font-sans",
+                                        children: "Starting from"
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                        lineNumber: 112,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ _jsxDEV("div", {
+                                        className: "text-xl font-display font-bold text-primary",
+                                        children: trip.price
+                                    }, void 0, false, {
+                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                        lineNumber: 113,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                lineNumber: 111,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ _jsxDEV("button", {
+                                className: "px-4 py-2 rounded-lg bg-primary text-primary-foreground font-sans font-medium text-sm    opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0    transition-all duration-300 will-change-[opacity,transform]",
+                                children: "View Trip"
+                            }, void 0, false, {
+                                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                lineNumber: 115,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                        lineNumber: 110,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                lineNumber: 96,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+        lineNumber: 71,
+        columnNumber: 5
+    }, this);
+});
+_c = TripCard;
+TripCard.displayName = 'TripCard';
+// Duplicate trips for infinite scroll effect - memoized
+const infiniteTrips = [
+    ...upcomingTrips,
+    ...upcomingTrips,
+    ...upcomingTrips
+];
+// Memoized stats for performance
+const stats = [
+    {
+        value: '10K+',
+        label: 'Amigos'
+    },
+    {
+        value: '50+',
+        label: 'Countries'
+    },
+    {
+        value: '4.9',
+        label: 'Rating'
+    }
+];
+export const HeroSection = /*#__PURE__*/ _s(memo(_c1 = _s(()=>{
+    _s();
+    const scrollRef = useRef(null);
+    const videoRef = useRef(null);
+    const [isPaused, setIsPaused] = useState(false);
+    const [videoLoaded, setVideoLoaded] = useState(false);
+    const animationFrameRef = useRef(null);
+    const lastTimeRef = useRef(0);
+    const cardWidth = 300; // 280px card + 20px gap
+    const navigate = useNavigate();
+    const { user } = useAuth();
+    const scroll = useCallback((direction)=>{
+        if (scrollRef.current) {
+            const scrollAmount = 300;
+            scrollRef.current.scrollBy({
+                left: direction === 'left' ? -scrollAmount : scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+    }, []);
+    // Infinite scroll logic - seamlessly loop
+    const handleInfiniteScroll = useCallback(()=>{
+        if (scrollRef.current) {
+            const { scrollLeft } = scrollRef.current;
+            const singleSetWidth = upcomingTrips.length * cardWidth;
+            // If scrolled past the second set, jump back to first set
+            if (scrollLeft >= singleSetWidth * 2) {
+                scrollRef.current.scrollLeft = scrollLeft - singleSetWidth;
+            } else if (scrollLeft <= 0) {
+                scrollRef.current.scrollLeft = singleSetWidth;
+            }
+        }
+    }, []);
+    // Auto-scroll using requestAnimationFrame for smooth 60fps animation
+    const autoScroll = useCallback((timestamp)=>{
+        if (scrollRef.current && !isPaused) {
+            // Throttle to ~30fps for battery efficiency while still smooth
+            if (timestamp - lastTimeRef.current >= 33) {
+                scrollRef.current.scrollLeft += 1;
+                handleInfiniteScroll();
+                lastTimeRef.current = timestamp;
+            }
+        }
+        animationFrameRef.current = requestAnimationFrame(autoScroll);
+    }, [
+        isPaused,
+        handleInfiniteScroll
+    ]);
+    // Initialize scroll position to middle set for seamless infinite scroll
+    useEffect(()=>{
+        if (scrollRef.current) {
+            const singleSetWidth = upcomingTrips.length * cardWidth;
+            scrollRef.current.scrollLeft = singleSetWidth;
+        }
+    }, []);
+    // Start/stop auto-scroll based on pause state using RAF
+    useEffect(()=>{
+        if (!isPaused) {
+            animationFrameRef.current = requestAnimationFrame(autoScroll);
+        } else {
+            if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+                animationFrameRef.current = null;
+            }
+        }
+        return ()=>{
+            if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+            }
+        };
+    }, [
+        isPaused,
+        autoScroll
+    ]);
+    const handleMouseEnter = useCallback(()=>setIsPaused(true), []);
+    const handleMouseLeave = useCallback(()=>setIsPaused(false), []);
+    const handleTouchStart = useCallback(()=>setIsPaused(true), []);
+    const handleTouchEnd = useCallback(()=>setIsPaused(false), []);
+    // Start video playback with better performance
+    useEffect(()=>{
+        const video = videoRef.current;
+        if (video) {
+            // Use Intersection Observer to only load video when in view
+            const observer = new IntersectionObserver(([entry])=>{
+                if (entry.isIntersecting) {
+                    video.play().catch(()=>{
+                        // Autoplay was prevented, add click handler to start video
+                        const startVideo = ()=>{
+                            video.play();
+                            document.removeEventListener('click', startVideo);
+                            document.removeEventListener('touchstart', startVideo);
+                        };
+                        document.addEventListener('click', startVideo, {
+                            passive: true
+                        });
+                        document.addEventListener('touchstart', startVideo, {
+                            passive: true
+                        });
+                    });
+                    observer.disconnect();
+                }
+            }, {
+                threshold: 0.1
+            });
+            observer.observe(video);
+            return ()=>observer.disconnect();
+        }
+    }, []);
+    // Memoized trip cards
+    const tripCards = useMemo(()=>infiniteTrips.map((trip, index)=>/*#__PURE__*/ _jsxDEV(TripCard, {
+                trip: trip,
+                index: index % upcomingTrips.length
+            }, `${trip.id}-${index}`, false, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                lineNumber: 253,
+                columnNumber: 7
+            }, this)), []);
+    return /*#__PURE__*/ _jsxDEV("section", {
+        className: "relative min-h-screen overflow-hidden",
+        children: [
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "absolute inset-0",
+                children: [
+                    /*#__PURE__*/ _jsxDEV("img", {
+                        src: heroBg,
+                        alt: "",
+                        loading: "eager",
+                        fetchPriority: "high",
+                        className: `absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${videoLoaded ? 'opacity-0' : 'opacity-100'}`
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                        lineNumber: 262,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV("video", {
+                        ref: videoRef,
+                        autoPlay: true,
+                        muted: true,
+                        loop: true,
+                        playsInline: true,
+                        preload: "metadata",
+                        onLoadedData: ()=>setVideoLoaded(true),
+                        className: `absolute inset-0 w-full h-full object-cover transition-opacity duration-700 will-change-opacity ${videoLoaded ? 'opacity-100' : 'opacity-0'}`,
+                        // @ts-ignore - webkit-playsinline for iOS Safari
+                        "webkit-playsinline": "true",
+                        children: /*#__PURE__*/ _jsxDEV("source", {
+                            src: heroVideo,
+                            type: "video/mp4"
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                            lineNumber: 285,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                        lineNumber: 272,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                lineNumber: 260,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "absolute inset-0 bg-gradient-to-r from-navy-deep/95 via-navy-deep/80 to-navy-deep/60"
+            }, void 0, false, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                lineNumber: 290,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV("div", {
+                className: "relative z-10 container mx-auto px-6 py-32",
+                children: /*#__PURE__*/ _jsxDEV("div", {
+                    className: "flex flex-col lg:flex-row items-start justify-between gap-12",
+                    children: [
+                        /*#__PURE__*/ _jsxDEV(motion.div, {
+                            initial: {
+                                opacity: 0,
+                                x: -50
+                            },
+                            animate: {
+                                opacity: 1,
+                                x: 0
+                            },
+                            transition: {
+                                duration: 0.8,
+                                delay: 0.2
+                            },
+                            className: "flex-shrink-0 lg:max-w-lg",
+                            children: [
+                                /*#__PURE__*/ _jsxDEV(motion.span, {
+                                    initial: {
+                                        opacity: 0,
+                                        y: 20
+                                    },
+                                    animate: {
+                                        opacity: 1,
+                                        y: 0
+                                    },
+                                    transition: {
+                                        duration: 0.6,
+                                        delay: 0.4
+                                    },
+                                    className: "inline-block px-4 py-2 rounded-full glass-card text-sm font-sans font-medium text-primary mb-6",
+                                    children: "✈️ Premium Group Travel"
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                    lineNumber: 302,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("h1", {
+                                    className: "font-serif text-5xl md:text-6xl xl:text-7xl font-bold text-foreground leading-[1.1] mb-6 relative",
+                                    children: [
+                                        /*#__PURE__*/ _jsxDEV("div", {
+                                            className: "absolute -inset-4 pointer-events-none",
+                                            children: [
+                                                ...Array(8)
+                                            ].map((_, i)=>/*#__PURE__*/ _jsxDEV(motion.div, {
+                                                    className: "absolute w-1 h-1 bg-primary/30 rounded-full",
+                                                    style: {
+                                                        left: `${Math.random() * 100}%`,
+                                                        top: `${Math.random() * 100}%`
+                                                    },
+                                                    animate: {
+                                                        y: [
+                                                            0,
+                                                            -20,
+                                                            0
+                                                        ],
+                                                        opacity: [
+                                                            0.3,
+                                                            0.8,
+                                                            0.3
+                                                        ],
+                                                        scale: [
+                                                            1,
+                                                            1.5,
+                                                            1
+                                                        ]
+                                                    },
+                                                    transition: {
+                                                        duration: 3 + Math.random() * 2,
+                                                        repeat: Infinity,
+                                                        delay: Math.random() * 2
+                                                    }
+                                                }, i, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                                    lineNumber: 316,
+                                                    columnNumber: 19
+                                                }, this))
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                            lineNumber: 314,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDEV(motion.span, {
+                                            initial: {
+                                                opacity: 0,
+                                                x: -20
+                                            },
+                                            animate: {
+                                                opacity: 1,
+                                                x: 0
+                                            },
+                                            transition: {
+                                                duration: 0.5,
+                                                delay: 0.6
+                                            },
+                                            className: "inline-block",
+                                            children: "Your Trip."
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                            lineNumber: 338,
+                                            columnNumber: 15
+                                        }, this),
+                                        ' ',
+                                        /*#__PURE__*/ _jsxDEV(motion.span, {
+                                            initial: {
+                                                opacity: 0,
+                                                scale: 0.8
+                                            },
+                                            animate: {
+                                                opacity: 1,
+                                                scale: 1
+                                            },
+                                            transition: {
+                                                duration: 0.6,
+                                                delay: 0.8,
+                                                type: "spring",
+                                                stiffness: 200
+                                            },
+                                            className: "text-gradient inline-block relative",
+                                            children: [
+                                                "Your Style.",
+                                                /*#__PURE__*/ _jsxDEV(motion.div, {
+                                                    initial: {
+                                                        scaleX: 0
+                                                    },
+                                                    animate: {
+                                                        scaleX: 1
+                                                    },
+                                                    transition: {
+                                                        duration: 0.8,
+                                                        delay: 1.2
+                                                    },
+                                                    className: "absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-primary/50 via-primary to-primary/50 rounded-full origin-left"
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                                    lineNumber: 355,
+                                                    columnNumber: 17
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                            lineNumber: 347,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDEV("br", {}, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                            lineNumber: 362,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDEV(motion.span, {
+                                            initial: {
+                                                opacity: 0,
+                                                y: 20
+                                            },
+                                            animate: {
+                                                opacity: 1,
+                                                y: 0
+                                            },
+                                            transition: {
+                                                duration: 0.5,
+                                                delay: 1.0
+                                            },
+                                            className: "inline-block",
+                                            children: "Travel Amigo"
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                            lineNumber: 363,
+                                            columnNumber: 15
+                                        }, this),
+                                        ' ',
+                                        /*#__PURE__*/ _jsxDEV(motion.span, {
+                                            initial: {
+                                                opacity: 0,
+                                                rotateX: -90
+                                            },
+                                            animate: {
+                                                opacity: 1,
+                                                rotateX: 0
+                                            },
+                                            transition: {
+                                                duration: 0.6,
+                                                delay: 1.2,
+                                                type: "spring"
+                                            },
+                                            className: "inline-block",
+                                            children: "Makes It Easy"
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                            lineNumber: 372,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDEV(motion.span, {
+                                            initial: {
+                                                opacity: 0,
+                                                scale: 0
+                                            },
+                                            animate: {
+                                                opacity: 1,
+                                                scale: 1
+                                            },
+                                            transition: {
+                                                duration: 0.4,
+                                                delay: 1.4,
+                                                type: "spring",
+                                                stiffness: 400
+                                            },
+                                            className: "text-primary inline-block",
+                                            children: "."
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                            lineNumber: 380,
+                                            columnNumber: 15
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                    lineNumber: 312,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV(motion.p, {
+                                    initial: {
+                                        opacity: 0,
+                                        y: 20
+                                    },
+                                    animate: {
+                                        opacity: 1,
+                                        y: 0
+                                    },
+                                    transition: {
+                                        duration: 0.6,
+                                        delay: 1.5
+                                    },
+                                    className: "text-lg text-muted-foreground font-sans max-w-md mb-8",
+                                    children: "Solo, couple, family, friends, or group — tell us how you like to travel. Take our quick quiz and let Travel Amigo guide you to the perfect trip, planned the best way for you."
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                    lineNumber: 390,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV(motion.div, {
+                                    initial: {
+                                        opacity: 0,
+                                        y: 20
+                                    },
+                                    animate: {
+                                        opacity: 1,
+                                        y: 0
+                                    },
+                                    transition: {
+                                        duration: 0.6,
+                                        delay: 1.7
+                                    },
+                                    className: "flex flex-wrap gap-4 mb-8",
+                                    children: [
+                                        /*#__PURE__*/ _jsxDEV(MagneticButton, {
+                                            className: "animate-glow-pulse",
+                                            onClick: ()=>navigate(user ? '/dashboard' : '/get-started'),
+                                            children: user ? 'Go to Dashboard' : 'Start Your Journey'
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                            lineNumber: 406,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDEV("button", {
+                                            className: "px-6 py-4 rounded-xl border border-foreground/20 text-foreground font-sans font-semibold hover:bg-foreground/5 transition-colors",
+                                            children: "Watch Story"
+                                        }, void 0, false, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                            lineNumber: 412,
+                                            columnNumber: 15
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                    lineNumber: 400,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    className: "flex gap-10",
+                                    children: stats.map((stat, i)=>/*#__PURE__*/ _jsxDEV(motion.div, {
+                                            initial: {
+                                                opacity: 0,
+                                                y: 20
+                                            },
+                                            animate: {
+                                                opacity: 1,
+                                                y: 0
+                                            },
+                                            transition: {
+                                                duration: 0.6,
+                                                delay: 0.6 + i * 0.1
+                                            },
+                                            className: "text-center",
+                                            children: [
+                                                /*#__PURE__*/ _jsxDEV("div", {
+                                                    className: "text-3xl md:text-4xl font-display font-bold text-foreground tracking-tight",
+                                                    children: stat.value
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                                    lineNumber: 427,
+                                                    columnNumber: 19
+                                                }, this),
+                                                /*#__PURE__*/ _jsxDEV("div", {
+                                                    className: "text-xs text-muted-foreground font-sans uppercase tracking-wider mt-1",
+                                                    children: stat.label
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                                    lineNumber: 428,
+                                                    columnNumber: 19
+                                                }, this)
+                                            ]
+                                        }, stat.label, true, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                            lineNumber: 420,
+                                            columnNumber: 17
+                                        }, this))
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                    lineNumber: 418,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                            lineNumber: 296,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ _jsxDEV(motion.div, {
+                            initial: {
+                                opacity: 0,
+                                x: 50
+                            },
+                            animate: {
+                                opacity: 1,
+                                x: 0
+                            },
+                            transition: {
+                                duration: 0.8,
+                                delay: 0.4
+                            },
+                            className: "flex-1 w-full lg:w-auto lg:max-w-[55%] overflow-hidden",
+                            children: [
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    className: "flex items-start justify-between mb-6 gap-4 pr-6",
+                                    children: [
+                                        /*#__PURE__*/ _jsxDEV("div", {
+                                            className: "flex-1 min-w-0",
+                                            children: [
+                                                /*#__PURE__*/ _jsxDEV("h2", {
+                                                    className: "font-serif text-2xl font-bold text-foreground",
+                                                    children: "Upcoming Trips"
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                                    lineNumber: 444,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ _jsxDEV("p", {
+                                                    className: "text-sm text-muted-foreground font-sans",
+                                                    children: "Curated departures filling fast"
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                                    lineNumber: 445,
+                                                    columnNumber: 17
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                            lineNumber: 443,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ _jsxDEV("div", {
+                                            className: "flex gap-3 flex-shrink-0",
+                                            children: [
+                                                /*#__PURE__*/ _jsxDEV("button", {
+                                                    onClick: ()=>scroll('left'),
+                                                    "aria-label": "Previous trips",
+                                                    className: "w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 border-primary bg-primary/20 hover:bg-primary/40 text-primary cursor-pointer hover:scale-105 will-change-transform",
+                                                    children: /*#__PURE__*/ _jsxDEV(ChevronLeft, {
+                                                        className: "w-5 h-5"
+                                                    }, void 0, false, {
+                                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                                        lineNumber: 455,
+                                                        columnNumber: 19
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                                    lineNumber: 450,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ _jsxDEV("button", {
+                                                    onClick: ()=>scroll('right'),
+                                                    "aria-label": "Next trips",
+                                                    className: "w-11 h-11 rounded-full border-2 flex items-center justify-center transition-all duration-300 border-primary bg-primary/20 hover:bg-primary/40 text-primary cursor-pointer hover:scale-105 will-change-transform",
+                                                    children: /*#__PURE__*/ _jsxDEV(ChevronRight, {
+                                                        className: "w-5 h-5"
+                                                    }, void 0, false, {
+                                                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                                        lineNumber: 462,
+                                                        columnNumber: 19
+                                                    }, this)
+                                                }, void 0, false, {
+                                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                                    lineNumber: 457,
+                                                    columnNumber: 17
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                            lineNumber: 449,
+                                            columnNumber: 15
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                    lineNumber: 442,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ _jsxDEV("div", {
+                                    ref: scrollRef,
+                                    onScroll: handleInfiniteScroll,
+                                    onMouseEnter: handleMouseEnter,
+                                    onMouseLeave: handleMouseLeave,
+                                    onTouchStart: handleTouchStart,
+                                    onTouchEnd: handleTouchEnd,
+                                    className: "flex gap-5 overflow-x-auto scrollbar-hide pb-4 pr-6",
+                                    style: {
+                                        scrollbarWidth: 'none',
+                                        msOverflowStyle: 'none'
+                                    },
+                                    children: tripCards
+                                }, void 0, false, {
+                                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                                    lineNumber: 468,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                            lineNumber: 435,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                    lineNumber: 294,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                lineNumber: 293,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ _jsxDEV(motion.div, {
+                initial: {
+                    opacity: 0
+                },
+                animate: {
+                    opacity: 1
+                },
+                transition: {
+                    delay: 1.5
+                },
+                className: "absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2",
+                children: [
+                    /*#__PURE__*/ _jsxDEV("span", {
+                        className: "text-xs text-muted-foreground font-sans",
+                        children: "Scroll to explore"
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                        lineNumber: 491,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDEV(motion.div, {
+                        animate: {
+                            y: [
+                                0,
+                                8,
+                                0
+                            ]
+                        },
+                        transition: {
+                            duration: 1.5,
+                            repeat: Infinity
+                        },
+                        className: "w-6 h-10 rounded-full border-2 border-foreground/30 flex justify-center pt-2",
+                        children: /*#__PURE__*/ _jsxDEV("div", {
+                            className: "w-1.5 h-1.5 rounded-full bg-primary"
+                        }, void 0, false, {
+                            fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                            lineNumber: 497,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                        lineNumber: 492,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+                lineNumber: 485,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx",
+        lineNumber: 258,
+        columnNumber: 5
+    }, this);
+}, "E+zQWPiJaZuB4e4gZTX6aiGU4zI=", false, function() {
+    return [
+        useNavigate,
+        useAuth
+    ];
+})), "E+zQWPiJaZuB4e4gZTX6aiGU4zI=", false, function() {
+    return [
+        useNavigate,
+        useAuth
+    ];
+});
+_c2 = HeroSection;
+HeroSection.displayName = 'HeroSection';
+var _c, _c1, _c2;
+$RefreshReg$(_c, "TripCard");
+$RefreshReg$(_c1, "HeroSection$memo");
+$RefreshReg$(_c2, "HeroSection");
+
+
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+
+
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/shan/Documents/Anti-Gravity Projects/amigos-test/src/components/HeroSection.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkhlcm9TZWN0aW9uLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBtb3Rpb24gfSBmcm9tICdmcmFtZXItbW90aW9uJztcclxuaW1wb3J0IHsgQ2hldnJvbkxlZnQsIENoZXZyb25SaWdodCwgQ2FsZW5kYXIsIFVzZXJzIH0gZnJvbSAnbHVjaWRlLXJlYWN0JztcclxuaW1wb3J0IHsgdXNlU3RhdGUsIHVzZVJlZiwgdXNlRWZmZWN0LCB1c2VDYWxsYmFjaywgbWVtbywgdXNlTWVtbyB9IGZyb20gJ3JlYWN0JztcclxuaW1wb3J0IHsgdXNlTmF2aWdhdGUgfSBmcm9tICdyZWFjdC1yb3V0ZXItZG9tJztcclxuaW1wb3J0IGhlcm9WaWRlbyBmcm9tICdAL2Fzc2V0cy9oZXJvLXZpZGVvLm1wNCc7XHJcbmltcG9ydCB0cmlwVGhhaWxhbmQgZnJvbSAnQC9hc3NldHMvdHJpcC10aGFpbGFuZC5qcGcnO1xyXG5pbXBvcnQgaGVyb0JnIGZyb20gJ0AvYXNzZXRzL2hlcm8tYmcuanBnJztcclxuaW1wb3J0IHRyaXBWaWV0bmFtIGZyb20gJ0AvYXNzZXRzL3RyaXAtdmlldG5hbS5qcGcnO1xyXG5pbXBvcnQgdHJpcEJhbGkgZnJvbSAnQC9hc3NldHMvdHJpcC1iYWxpLmpwZyc7XHJcbmltcG9ydCB0cmlwSmFwYW4gZnJvbSAnQC9hc3NldHMvdHJpcC1qYXBhbi5qcGcnO1xyXG5pbXBvcnQgeyBNYWduZXRpY0J1dHRvbiB9IGZyb20gJy4vdWkvYW5pbWF0aW9ucyc7XHJcbmltcG9ydCB7IHVzZUF1dGggfSBmcm9tICdAL2NvbnRleHRzL0F1dGhDb250ZXh0JztcclxuXHJcbmludGVyZmFjZSBUcmlwIHtcclxuICBpZDogbnVtYmVyO1xyXG4gIGRlc3RpbmF0aW9uOiBzdHJpbmc7XHJcbiAgZGF0ZXM6IHN0cmluZztcclxuICBzcG90c0xlZnQ6IG51bWJlcjtcclxuICBwcmljZTogc3RyaW5nO1xyXG4gIGltYWdlOiBzdHJpbmc7XHJcbiAgZHVyYXRpb246IHN0cmluZztcclxufVxyXG5cclxuY29uc3QgdXBjb21pbmdUcmlwczogVHJpcFtdID0gW1xyXG4gIHtcclxuICAgIGlkOiAxLFxyXG4gICAgZGVzdGluYXRpb246ICdUaGFpbGFuZCBJc2xhbmRzJyxcclxuICAgIGRhdGVzOiAnTWFyIDE1IC0gTWFyIDI1JyxcclxuICAgIHNwb3RzTGVmdDogNCxcclxuICAgIHByaWNlOiAn4oK5NDUsOTk5JyxcclxuICAgIGltYWdlOiB0cmlwVGhhaWxhbmQsXHJcbiAgICBkdXJhdGlvbjogJzEwIERheXMnXHJcbiAgfSxcclxuICB7XHJcbiAgICBpZDogMixcclxuICAgIGRlc3RpbmF0aW9uOiAnVmlldG5hbSBFeHBsb3JlcicsXHJcbiAgICBkYXRlczogJ0FwciAwMiAtIEFwciAxMicsXHJcbiAgICBzcG90c0xlZnQ6IDYsXHJcbiAgICBwcmljZTogJ+KCuTUyLDk5OScsXHJcbiAgICBpbWFnZTogdHJpcFZpZXRuYW0sXHJcbiAgICBkdXJhdGlvbjogJzEwIERheXMnXHJcbiAgfSxcclxuICB7XHJcbiAgICBpZDogMyxcclxuICAgIGRlc3RpbmF0aW9uOiAnQmFsaSBBZHZlbnR1cmUnLFxyXG4gICAgZGF0ZXM6ICdBcHIgMTggLSBBcHIgMjgnLFxyXG4gICAgc3BvdHNMZWZ0OiAzLFxyXG4gICAgcHJpY2U6ICfigrk0OCw5OTknLFxyXG4gICAgaW1hZ2U6IHRyaXBCYWxpLFxyXG4gICAgZHVyYXRpb246ICcxMCBEYXlzJ1xyXG4gIH0sXHJcbiAge1xyXG4gICAgaWQ6IDQsXHJcbiAgICBkZXN0aW5hdGlvbjogJ0phcGFuIFNha3VyYScsXHJcbiAgICBkYXRlczogJ01heSAwNSAtIE1heSAxNScsXHJcbiAgICBzcG90c0xlZnQ6IDgsXHJcbiAgICBwcmljZTogJ+KCuTg5LDk5OScsXHJcbiAgICBpbWFnZTogdHJpcEphcGFuLFxyXG4gICAgZHVyYXRpb246ICcxMCBEYXlzJ1xyXG4gIH0sXHJcbl07XHJcblxyXG5pbnRlcmZhY2UgVHJpcENhcmRQcm9wcyB7XHJcbiAgdHJpcDogVHJpcDtcclxuICBpbmRleDogbnVtYmVyO1xyXG59XHJcblxyXG4vLyBNZW1vaXplZCBUcmlwQ2FyZCBmb3IgcGVyZm9ybWFuY2VcclxuY29uc3QgVHJpcENhcmQgPSBtZW1vKCh7IHRyaXAsIGluZGV4IH06IFRyaXBDYXJkUHJvcHMpID0+IHtcclxuICByZXR1cm4gKFxyXG4gICAgPG1vdGlvbi5kaXZcclxuICAgICAgaW5pdGlhbD17eyBvcGFjaXR5OiAwLCB5OiAyMCB9fVxyXG4gICAgICBhbmltYXRlPXt7IG9wYWNpdHk6IDEsIHk6IDAgfX1cclxuICAgICAgdHJhbnNpdGlvbj17eyBkdXJhdGlvbjogMC41LCBkZWxheTogMC4xICogKGluZGV4ICUgNCkgfX1cclxuICAgICAgY2xhc3NOYW1lPVwiZmxleC1zaHJpbmstMCB3LVsyODBweF0gaC1bMzgwcHhdIHJvdW5kZWQtMnhsIG92ZXJmbG93LWhpZGRlbiByZWxhdGl2ZSBncm91cCBjdXJzb3ItcG9pbnRlclwiXHJcbiAgICA+XHJcbiAgICAgIDxpbWdcclxuICAgICAgICBzcmM9e3RyaXAuaW1hZ2V9XHJcbiAgICAgICAgYWx0PXt0cmlwLmRlc3RpbmF0aW9ufVxyXG4gICAgICAgIGxvYWRpbmc9e2luZGV4IDwgNCA/IFwiZWFnZXJcIiA6IFwibGF6eVwifVxyXG4gICAgICAgIGRlY29kaW5nPVwiYXN5bmNcIlxyXG4gICAgICAgIHdpZHRoPXsyODB9XHJcbiAgICAgICAgaGVpZ2h0PXszODB9XHJcbiAgICAgICAgY2xhc3NOYW1lPVwiYWJzb2x1dGUgaW5zZXQtMCB3LWZ1bGwgaC1mdWxsIG9iamVjdC1jb3ZlciB0cmFuc2l0aW9uLXRyYW5zZm9ybSBkdXJhdGlvbi03MDAgZ3JvdXAtaG92ZXI6c2NhbGUtMTEwIHdpbGwtY2hhbmdlLXRyYW5zZm9ybVwiXHJcbiAgICAgIC8+XHJcblxyXG4gICAgICB7LyogT3ZlcmxheSBHcmFkaWVudCAqL31cclxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJhYnNvbHV0ZSBpbnNldC0wIGJnLWdyYWRpZW50LXRvLXQgZnJvbS1ibGFjay84MCB2aWEtYmxhY2svMjAgdG8tdHJhbnNwYXJlbnRcIiAvPlxyXG5cclxuICAgICAgey8qIFNwb3RzIEJhZGdlICovfVxyXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImFic29sdXRlIHRvcC00IHJpZ2h0LTQgcHgtMyBweS0xLjUgcm91bmRlZC1mdWxsIGdsYXNzLWNhcmQgdGV4dC1zbSBmb250LXNhbnMgZm9udC1zZW1pYm9sZCB0ZXh0LXByaW1hcnlcIj5cclxuICAgICAgICB7dHJpcC5zcG90c0xlZnR9IHNwb3RzIGxlZnRcclxuICAgICAgPC9kaXY+XHJcblxyXG4gICAgICB7LyogQ29udGVudCAqL31cclxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJhYnNvbHV0ZSBib3R0b20tMCBsZWZ0LTAgcmlnaHQtMCBwLTZcIj5cclxuICAgICAgICA8aDMgY2xhc3NOYW1lPVwiZm9udC1zZXJpZiB0ZXh0LXhsIGZvbnQtYm9sZCB0ZXh0LXdoaXRlIG1iLTJcIj57dHJpcC5kZXN0aW5hdGlvbn08L2gzPlxyXG5cclxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGdhcC00IHRleHQtd2hpdGUvODAgdGV4dC1zbSBmb250LXNhbnMgbWItM1wiPlxyXG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMVwiPlxyXG4gICAgICAgICAgICA8Q2FsZW5kYXIgY2xhc3NOYW1lPVwidy00IGgtNFwiIC8+XHJcbiAgICAgICAgICAgIDxzcGFuPnt0cmlwLmR1cmF0aW9ufTwvc3Bhbj5cclxuICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMVwiPlxyXG4gICAgICAgICAgICA8VXNlcnMgY2xhc3NOYW1lPVwidy00IGgtNFwiIC8+XHJcbiAgICAgICAgICAgIDxzcGFuPjEyIHRyYXZlbGVyczwvc3Bhbj5cclxuICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgIDwvZGl2PlxyXG5cclxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktYmV0d2VlblwiPlxyXG4gICAgICAgICAgPGRpdj5cclxuICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPVwidGV4dC14cyB0ZXh0LXdoaXRlLzYwIGZvbnQtc2Fuc1wiPlN0YXJ0aW5nIGZyb208L3NwYW4+XHJcbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwidGV4dC14bCBmb250LWRpc3BsYXkgZm9udC1ib2xkIHRleHQtcHJpbWFyeVwiPnt0cmlwLnByaWNlfTwvZGl2PlxyXG4gICAgICAgICAgPC9kaXY+XHJcbiAgICAgICAgICA8YnV0dG9uXHJcbiAgICAgICAgICAgIGNsYXNzTmFtZT1cInB4LTQgcHktMiByb3VuZGVkLWxnIGJnLXByaW1hcnkgdGV4dC1wcmltYXJ5LWZvcmVncm91bmQgZm9udC1zYW5zIGZvbnQtbWVkaXVtIHRleHQtc20gXHJcbiAgICAgICAgICAgICAgICAgICAgICAgb3BhY2l0eS0wIHRyYW5zbGF0ZS15LTIgZ3JvdXAtaG92ZXI6b3BhY2l0eS0xMDAgZ3JvdXAtaG92ZXI6dHJhbnNsYXRlLXktMCBcclxuICAgICAgICAgICAgICAgICAgICAgICB0cmFuc2l0aW9uLWFsbCBkdXJhdGlvbi0zMDAgd2lsbC1jaGFuZ2UtW29wYWNpdHksdHJhbnNmb3JtXVwiXHJcbiAgICAgICAgICA+XHJcbiAgICAgICAgICAgIFZpZXcgVHJpcFxyXG4gICAgICAgICAgPC9idXR0b24+XHJcbiAgICAgICAgPC9kaXY+XHJcbiAgICAgIDwvZGl2PlxyXG4gICAgPC9tb3Rpb24uZGl2PlxyXG4gICk7XHJcbn0pO1xyXG5cclxuVHJpcENhcmQuZGlzcGxheU5hbWUgPSAnVHJpcENhcmQnO1xyXG5cclxuLy8gRHVwbGljYXRlIHRyaXBzIGZvciBpbmZpbml0ZSBzY3JvbGwgZWZmZWN0IC0gbWVtb2l6ZWRcclxuY29uc3QgaW5maW5pdGVUcmlwcyA9IFsuLi51cGNvbWluZ1RyaXBzLCAuLi51cGNvbWluZ1RyaXBzLCAuLi51cGNvbWluZ1RyaXBzXTtcclxuXHJcbi8vIE1lbW9pemVkIHN0YXRzIGZvciBwZXJmb3JtYW5jZVxyXG5jb25zdCBzdGF0cyA9IFtcclxuICB7IHZhbHVlOiAnMTBLKycsIGxhYmVsOiAnQW1pZ29zJyB9LFxyXG4gIHsgdmFsdWU6ICc1MCsnLCBsYWJlbDogJ0NvdW50cmllcycgfSxcclxuICB7IHZhbHVlOiAnNC45JywgbGFiZWw6ICdSYXRpbmcnIH0sXHJcbl07XHJcblxyXG5leHBvcnQgY29uc3QgSGVyb1NlY3Rpb24gPSBtZW1vKCgpID0+IHtcclxuICBjb25zdCBzY3JvbGxSZWYgPSB1c2VSZWY8SFRNTERpdkVsZW1lbnQ+KG51bGwpO1xyXG4gIGNvbnN0IHZpZGVvUmVmID0gdXNlUmVmPEhUTUxWaWRlb0VsZW1lbnQ+KG51bGwpO1xyXG4gIGNvbnN0IFtpc1BhdXNlZCwgc2V0SXNQYXVzZWRdID0gdXNlU3RhdGUoZmFsc2UpO1xyXG4gIGNvbnN0IFt2aWRlb0xvYWRlZCwgc2V0VmlkZW9Mb2FkZWRdID0gdXNlU3RhdGUoZmFsc2UpO1xyXG4gIGNvbnN0IGFuaW1hdGlvbkZyYW1lUmVmID0gdXNlUmVmPG51bWJlciB8IG51bGw+KG51bGwpO1xyXG4gIGNvbnN0IGxhc3RUaW1lUmVmID0gdXNlUmVmPG51bWJlcj4oMCk7XHJcbiAgY29uc3QgY2FyZFdpZHRoID0gMzAwOyAvLyAyODBweCBjYXJkICsgMjBweCBnYXBcclxuICBjb25zdCBuYXZpZ2F0ZSA9IHVzZU5hdmlnYXRlKCk7XHJcbiAgY29uc3QgeyB1c2VyIH0gPSB1c2VBdXRoKCk7XHJcblxyXG4gIGNvbnN0IHNjcm9sbCA9IHVzZUNhbGxiYWNrKChkaXJlY3Rpb246ICdsZWZ0JyB8ICdyaWdodCcpID0+IHtcclxuICAgIGlmIChzY3JvbGxSZWYuY3VycmVudCkge1xyXG4gICAgICBjb25zdCBzY3JvbGxBbW91bnQgPSAzMDA7XHJcbiAgICAgIHNjcm9sbFJlZi5jdXJyZW50LnNjcm9sbEJ5KHtcclxuICAgICAgICBsZWZ0OiBkaXJlY3Rpb24gPT09ICdsZWZ0JyA/IC1zY3JvbGxBbW91bnQgOiBzY3JvbGxBbW91bnQsXHJcbiAgICAgICAgYmVoYXZpb3I6ICdzbW9vdGgnLFxyXG4gICAgICB9KTtcclxuICAgIH1cclxuICB9LCBbXSk7XHJcblxyXG4gIC8vIEluZmluaXRlIHNjcm9sbCBsb2dpYyAtIHNlYW1sZXNzbHkgbG9vcFxyXG4gIGNvbnN0IGhhbmRsZUluZmluaXRlU2Nyb2xsID0gdXNlQ2FsbGJhY2soKCkgPT4ge1xyXG4gICAgaWYgKHNjcm9sbFJlZi5jdXJyZW50KSB7XHJcbiAgICAgIGNvbnN0IHsgc2Nyb2xsTGVmdCB9ID0gc2Nyb2xsUmVmLmN1cnJlbnQ7XHJcbiAgICAgIGNvbnN0IHNpbmdsZVNldFdpZHRoID0gdXBjb21pbmdUcmlwcy5sZW5ndGggKiBjYXJkV2lkdGg7XHJcblxyXG4gICAgICAvLyBJZiBzY3JvbGxlZCBwYXN0IHRoZSBzZWNvbmQgc2V0LCBqdW1wIGJhY2sgdG8gZmlyc3Qgc2V0XHJcbiAgICAgIGlmIChzY3JvbGxMZWZ0ID49IHNpbmdsZVNldFdpZHRoICogMikge1xyXG4gICAgICAgIHNjcm9sbFJlZi5jdXJyZW50LnNjcm9sbExlZnQgPSBzY3JvbGxMZWZ0IC0gc2luZ2xlU2V0V2lkdGg7XHJcbiAgICAgIH1cclxuICAgICAgLy8gSWYgc2Nyb2xsZWQgYmVmb3JlIHRoZSBmaXJzdCBzZXQsIGp1bXAgdG8gc2Vjb25kIHNldFxyXG4gICAgICBlbHNlIGlmIChzY3JvbGxMZWZ0IDw9IDApIHtcclxuICAgICAgICBzY3JvbGxSZWYuY3VycmVudC5zY3JvbGxMZWZ0ID0gc2luZ2xlU2V0V2lkdGg7XHJcbiAgICAgIH1cclxuICAgIH1cclxuICB9LCBbXSk7XHJcblxyXG4gIC8vIEF1dG8tc2Nyb2xsIHVzaW5nIHJlcXVlc3RBbmltYXRpb25GcmFtZSBmb3Igc21vb3RoIDYwZnBzIGFuaW1hdGlvblxyXG4gIGNvbnN0IGF1dG9TY3JvbGwgPSB1c2VDYWxsYmFjaygodGltZXN0YW1wOiBudW1iZXIpID0+IHtcclxuICAgIGlmIChzY3JvbGxSZWYuY3VycmVudCAmJiAhaXNQYXVzZWQpIHtcclxuICAgICAgLy8gVGhyb3R0bGUgdG8gfjMwZnBzIGZvciBiYXR0ZXJ5IGVmZmljaWVuY3kgd2hpbGUgc3RpbGwgc21vb3RoXHJcbiAgICAgIGlmICh0aW1lc3RhbXAgLSBsYXN0VGltZVJlZi5jdXJyZW50ID49IDMzKSB7XHJcbiAgICAgICAgc2Nyb2xsUmVmLmN1cnJlbnQuc2Nyb2xsTGVmdCArPSAxO1xyXG4gICAgICAgIGhhbmRsZUluZmluaXRlU2Nyb2xsKCk7XHJcbiAgICAgICAgbGFzdFRpbWVSZWYuY3VycmVudCA9IHRpbWVzdGFtcDtcclxuICAgICAgfVxyXG4gICAgfVxyXG4gICAgYW5pbWF0aW9uRnJhbWVSZWYuY3VycmVudCA9IHJlcXVlc3RBbmltYXRpb25GcmFtZShhdXRvU2Nyb2xsKTtcclxuICB9LCBbaXNQYXVzZWQsIGhhbmRsZUluZmluaXRlU2Nyb2xsXSk7XHJcblxyXG4gIC8vIEluaXRpYWxpemUgc2Nyb2xsIHBvc2l0aW9uIHRvIG1pZGRsZSBzZXQgZm9yIHNlYW1sZXNzIGluZmluaXRlIHNjcm9sbFxyXG4gIHVzZUVmZmVjdCgoKSA9PiB7XHJcbiAgICBpZiAoc2Nyb2xsUmVmLmN1cnJlbnQpIHtcclxuICAgICAgY29uc3Qgc2luZ2xlU2V0V2lkdGggPSB1cGNvbWluZ1RyaXBzLmxlbmd0aCAqIGNhcmRXaWR0aDtcclxuICAgICAgc2Nyb2xsUmVmLmN1cnJlbnQuc2Nyb2xsTGVmdCA9IHNpbmdsZVNldFdpZHRoO1xyXG4gICAgfVxyXG4gIH0sIFtdKTtcclxuXHJcbiAgLy8gU3RhcnQvc3RvcCBhdXRvLXNjcm9sbCBiYXNlZCBvbiBwYXVzZSBzdGF0ZSB1c2luZyBSQUZcclxuICB1c2VFZmZlY3QoKCkgPT4ge1xyXG4gICAgaWYgKCFpc1BhdXNlZCkge1xyXG4gICAgICBhbmltYXRpb25GcmFtZVJlZi5jdXJyZW50ID0gcmVxdWVzdEFuaW1hdGlvbkZyYW1lKGF1dG9TY3JvbGwpO1xyXG4gICAgfSBlbHNlIHtcclxuICAgICAgaWYgKGFuaW1hdGlvbkZyYW1lUmVmLmN1cnJlbnQpIHtcclxuICAgICAgICBjYW5jZWxBbmltYXRpb25GcmFtZShhbmltYXRpb25GcmFtZVJlZi5jdXJyZW50KTtcclxuICAgICAgICBhbmltYXRpb25GcmFtZVJlZi5jdXJyZW50ID0gbnVsbDtcclxuICAgICAgfVxyXG4gICAgfVxyXG5cclxuICAgIHJldHVybiAoKSA9PiB7XHJcbiAgICAgIGlmIChhbmltYXRpb25GcmFtZVJlZi5jdXJyZW50KSB7XHJcbiAgICAgICAgY2FuY2VsQW5pbWF0aW9uRnJhbWUoYW5pbWF0aW9uRnJhbWVSZWYuY3VycmVudCk7XHJcbiAgICAgIH1cclxuICAgIH07XHJcbiAgfSwgW2lzUGF1c2VkLCBhdXRvU2Nyb2xsXSk7XHJcblxyXG4gIGNvbnN0IGhhbmRsZU1vdXNlRW50ZXIgPSB1c2VDYWxsYmFjaygoKSA9PiBzZXRJc1BhdXNlZCh0cnVlKSwgW10pO1xyXG4gIGNvbnN0IGhhbmRsZU1vdXNlTGVhdmUgPSB1c2VDYWxsYmFjaygoKSA9PiBzZXRJc1BhdXNlZChmYWxzZSksIFtdKTtcclxuICBjb25zdCBoYW5kbGVUb3VjaFN0YXJ0ID0gdXNlQ2FsbGJhY2soKCkgPT4gc2V0SXNQYXVzZWQodHJ1ZSksIFtdKTtcclxuICBjb25zdCBoYW5kbGVUb3VjaEVuZCA9IHVzZUNhbGxiYWNrKCgpID0+IHNldElzUGF1c2VkKGZhbHNlKSwgW10pO1xyXG5cclxuICAvLyBTdGFydCB2aWRlbyBwbGF5YmFjayB3aXRoIGJldHRlciBwZXJmb3JtYW5jZVxyXG4gIHVzZUVmZmVjdCgoKSA9PiB7XHJcbiAgICBjb25zdCB2aWRlbyA9IHZpZGVvUmVmLmN1cnJlbnQ7XHJcbiAgICBpZiAodmlkZW8pIHtcclxuICAgICAgLy8gVXNlIEludGVyc2VjdGlvbiBPYnNlcnZlciB0byBvbmx5IGxvYWQgdmlkZW8gd2hlbiBpbiB2aWV3XHJcbiAgICAgIGNvbnN0IG9ic2VydmVyID0gbmV3IEludGVyc2VjdGlvbk9ic2VydmVyKFxyXG4gICAgICAgIChbZW50cnldKSA9PiB7XHJcbiAgICAgICAgICBpZiAoZW50cnkuaXNJbnRlcnNlY3RpbmcpIHtcclxuICAgICAgICAgICAgdmlkZW8ucGxheSgpLmNhdGNoKCgpID0+IHtcclxuICAgICAgICAgICAgICAvLyBBdXRvcGxheSB3YXMgcHJldmVudGVkLCBhZGQgY2xpY2sgaGFuZGxlciB0byBzdGFydCB2aWRlb1xyXG4gICAgICAgICAgICAgIGNvbnN0IHN0YXJ0VmlkZW8gPSAoKSA9PiB7XHJcbiAgICAgICAgICAgICAgICB2aWRlby5wbGF5KCk7XHJcbiAgICAgICAgICAgICAgICBkb2N1bWVudC5yZW1vdmVFdmVudExpc3RlbmVyKCdjbGljaycsIHN0YXJ0VmlkZW8pO1xyXG4gICAgICAgICAgICAgICAgZG9jdW1lbnQucmVtb3ZlRXZlbnRMaXN0ZW5lcigndG91Y2hzdGFydCcsIHN0YXJ0VmlkZW8pO1xyXG4gICAgICAgICAgICAgIH07XHJcbiAgICAgICAgICAgICAgZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignY2xpY2snLCBzdGFydFZpZGVvLCB7IHBhc3NpdmU6IHRydWUgfSk7XHJcbiAgICAgICAgICAgICAgZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcigndG91Y2hzdGFydCcsIHN0YXJ0VmlkZW8sIHsgcGFzc2l2ZTogdHJ1ZSB9KTtcclxuICAgICAgICAgICAgfSk7XHJcbiAgICAgICAgICAgIG9ic2VydmVyLmRpc2Nvbm5lY3QoKTtcclxuICAgICAgICAgIH1cclxuICAgICAgICB9LFxyXG4gICAgICAgIHsgdGhyZXNob2xkOiAwLjEgfVxyXG4gICAgICApO1xyXG4gICAgICBvYnNlcnZlci5vYnNlcnZlKHZpZGVvKTtcclxuICAgICAgcmV0dXJuICgpID0+IG9ic2VydmVyLmRpc2Nvbm5lY3QoKTtcclxuICAgIH1cclxuICB9LCBbXSk7XHJcblxyXG4gIC8vIE1lbW9pemVkIHRyaXAgY2FyZHNcclxuICBjb25zdCB0cmlwQ2FyZHMgPSB1c2VNZW1vKCgpID0+XHJcbiAgICBpbmZpbml0ZVRyaXBzLm1hcCgodHJpcCwgaW5kZXgpID0+IChcclxuICAgICAgPFRyaXBDYXJkIGtleT17YCR7dHJpcC5pZH0tJHtpbmRleH1gfSB0cmlwPXt0cmlwfSBpbmRleD17aW5kZXggJSB1cGNvbWluZ1RyaXBzLmxlbmd0aH0gLz5cclxuICAgICkpLFxyXG4gICAgW10pO1xyXG5cclxuICByZXR1cm4gKFxyXG4gICAgPHNlY3Rpb24gY2xhc3NOYW1lPVwicmVsYXRpdmUgbWluLWgtc2NyZWVuIG92ZXJmbG93LWhpZGRlblwiPlxyXG4gICAgICB7LyogQmFja2dyb3VuZCAtIFBsYWNlaG9sZGVyIEltYWdlICsgVmlkZW8gKi99XHJcbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwiYWJzb2x1dGUgaW5zZXQtMFwiPlxyXG4gICAgICAgIHsvKiBQbGFjZWhvbGRlciBJbWFnZSAtIHNob3dzIGluc3RhbnRseSAqL31cclxuICAgICAgICA8aW1nXHJcbiAgICAgICAgICBzcmM9e2hlcm9CZ31cclxuICAgICAgICAgIGFsdD1cIlwiXHJcbiAgICAgICAgICBsb2FkaW5nPVwiZWFnZXJcIlxyXG4gICAgICAgICAgZmV0Y2hQcmlvcml0eT1cImhpZ2hcIlxyXG4gICAgICAgICAgY2xhc3NOYW1lPXtgYWJzb2x1dGUgaW5zZXQtMCB3LWZ1bGwgaC1mdWxsIG9iamVjdC1jb3ZlciB0cmFuc2l0aW9uLW9wYWNpdHkgZHVyYXRpb24tNzAwICR7dmlkZW9Mb2FkZWQgPyAnb3BhY2l0eS0wJyA6ICdvcGFjaXR5LTEwMCdcclxuICAgICAgICAgICAgfWB9XHJcbiAgICAgICAgLz5cclxuXHJcbiAgICAgICAgey8qIFZpZGVvIC0gZmFkZXMgaW4gd2hlbiBsb2FkZWQsIHVzZXMgbWV0YWRhdGEgcHJlbG9hZCBmb3IgZmFzdGVyIHN0YXJ0ICovfVxyXG4gICAgICAgIDx2aWRlb1xyXG4gICAgICAgICAgcmVmPXt2aWRlb1JlZn1cclxuICAgICAgICAgIGF1dG9QbGF5XHJcbiAgICAgICAgICBtdXRlZFxyXG4gICAgICAgICAgbG9vcFxyXG4gICAgICAgICAgcGxheXNJbmxpbmVcclxuICAgICAgICAgIHByZWxvYWQ9XCJtZXRhZGF0YVwiXHJcbiAgICAgICAgICBvbkxvYWRlZERhdGE9eygpID0+IHNldFZpZGVvTG9hZGVkKHRydWUpfVxyXG4gICAgICAgICAgY2xhc3NOYW1lPXtgYWJzb2x1dGUgaW5zZXQtMCB3LWZ1bGwgaC1mdWxsIG9iamVjdC1jb3ZlciB0cmFuc2l0aW9uLW9wYWNpdHkgZHVyYXRpb24tNzAwIHdpbGwtY2hhbmdlLW9wYWNpdHkgJHt2aWRlb0xvYWRlZCA/ICdvcGFjaXR5LTEwMCcgOiAnb3BhY2l0eS0wJ1xyXG4gICAgICAgICAgICB9YH1cclxuICAgICAgICAgIC8vIEB0cy1pZ25vcmUgLSB3ZWJraXQtcGxheXNpbmxpbmUgZm9yIGlPUyBTYWZhcmlcclxuICAgICAgICAgIHdlYmtpdC1wbGF5c2lubGluZT1cInRydWVcIlxyXG4gICAgICAgID5cclxuICAgICAgICAgIDxzb3VyY2Ugc3JjPXtoZXJvVmlkZW99IHR5cGU9XCJ2aWRlby9tcDRcIiAvPlxyXG4gICAgICAgIDwvdmlkZW8+XHJcbiAgICAgIDwvZGl2PlxyXG5cclxuICAgICAgey8qIEdyYWRpZW50IE92ZXJsYXkgKi99XHJcbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwiYWJzb2x1dGUgaW5zZXQtMCBiZy1ncmFkaWVudC10by1yIGZyb20tbmF2eS1kZWVwLzk1IHZpYS1uYXZ5LWRlZXAvODAgdG8tbmF2eS1kZWVwLzYwXCIgLz5cclxuXHJcbiAgICAgIHsvKiBDb250ZW50ICovfVxyXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cInJlbGF0aXZlIHotMTAgY29udGFpbmVyIG14LWF1dG8gcHgtNiBweS0zMlwiPlxyXG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBmbGV4LWNvbCBsZzpmbGV4LXJvdyBpdGVtcy1zdGFydCBqdXN0aWZ5LWJldHdlZW4gZ2FwLTEyXCI+XHJcbiAgICAgICAgICB7LyogTGVmdCBDb250ZW50IC0gSGVhZGxpbmUgKi99XHJcbiAgICAgICAgICA8bW90aW9uLmRpdlxyXG4gICAgICAgICAgICBpbml0aWFsPXt7IG9wYWNpdHk6IDAsIHg6IC01MCB9fVxyXG4gICAgICAgICAgICBhbmltYXRlPXt7IG9wYWNpdHk6IDEsIHg6IDAgfX1cclxuICAgICAgICAgICAgdHJhbnNpdGlvbj17eyBkdXJhdGlvbjogMC44LCBkZWxheTogMC4yIH19XHJcbiAgICAgICAgICAgIGNsYXNzTmFtZT1cImZsZXgtc2hyaW5rLTAgbGc6bWF4LXctbGdcIlxyXG4gICAgICAgICAgPlxyXG4gICAgICAgICAgICA8bW90aW9uLnNwYW5cclxuICAgICAgICAgICAgICBpbml0aWFsPXt7IG9wYWNpdHk6IDAsIHk6IDIwIH19XHJcbiAgICAgICAgICAgICAgYW5pbWF0ZT17eyBvcGFjaXR5OiAxLCB5OiAwIH19XHJcbiAgICAgICAgICAgICAgdHJhbnNpdGlvbj17eyBkdXJhdGlvbjogMC42LCBkZWxheTogMC40IH19XHJcbiAgICAgICAgICAgICAgY2xhc3NOYW1lPVwiaW5saW5lLWJsb2NrIHB4LTQgcHktMiByb3VuZGVkLWZ1bGwgZ2xhc3MtY2FyZCB0ZXh0LXNtIGZvbnQtc2FucyBmb250LW1lZGl1bSB0ZXh0LXByaW1hcnkgbWItNlwiXHJcbiAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICDinIjvuI8gUHJlbWl1bSBHcm91cCBUcmF2ZWxcclxuICAgICAgICAgICAgPC9tb3Rpb24uc3Bhbj5cclxuXHJcbiAgICAgICAgICAgIHsvKiBFbmhhbmNlZCBIZWFkbGluZSB3aXRoIFdvcmQtYnktV29yZCBBbmltYXRpb24gKi99XHJcbiAgICAgICAgICAgIDxoMSBjbGFzc05hbWU9XCJmb250LXNlcmlmIHRleHQtNXhsIG1kOnRleHQtNnhsIHhsOnRleHQtN3hsIGZvbnQtYm9sZCB0ZXh0LWZvcmVncm91bmQgbGVhZGluZy1bMS4xXSBtYi02IHJlbGF0aXZlXCI+XHJcbiAgICAgICAgICAgICAgey8qIEZsb2F0aW5nIHBhcnRpY2xlcyBiZWhpbmQgdGV4dCAqL31cclxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImFic29sdXRlIC1pbnNldC00IHBvaW50ZXItZXZlbnRzLW5vbmVcIj5cclxuICAgICAgICAgICAgICAgIHtbLi4uQXJyYXkoOCldLm1hcCgoXywgaSkgPT4gKFxyXG4gICAgICAgICAgICAgICAgICA8bW90aW9uLmRpdlxyXG4gICAgICAgICAgICAgICAgICAgIGtleT17aX1cclxuICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJhYnNvbHV0ZSB3LTEgaC0xIGJnLXByaW1hcnkvMzAgcm91bmRlZC1mdWxsXCJcclxuICAgICAgICAgICAgICAgICAgICBzdHlsZT17e1xyXG4gICAgICAgICAgICAgICAgICAgICAgbGVmdDogYCR7TWF0aC5yYW5kb20oKSAqIDEwMH0lYCxcclxuICAgICAgICAgICAgICAgICAgICAgIHRvcDogYCR7TWF0aC5yYW5kb20oKSAqIDEwMH0lYCxcclxuICAgICAgICAgICAgICAgICAgICB9fVxyXG4gICAgICAgICAgICAgICAgICAgIGFuaW1hdGU9e3tcclxuICAgICAgICAgICAgICAgICAgICAgIHk6IFswLCAtMjAsIDBdLFxyXG4gICAgICAgICAgICAgICAgICAgICAgb3BhY2l0eTogWzAuMywgMC44LCAwLjNdLFxyXG4gICAgICAgICAgICAgICAgICAgICAgc2NhbGU6IFsxLCAxLjUsIDFdLFxyXG4gICAgICAgICAgICAgICAgICAgIH19XHJcbiAgICAgICAgICAgICAgICAgICAgdHJhbnNpdGlvbj17e1xyXG4gICAgICAgICAgICAgICAgICAgICAgZHVyYXRpb246IDMgKyBNYXRoLnJhbmRvbSgpICogMixcclxuICAgICAgICAgICAgICAgICAgICAgIHJlcGVhdDogSW5maW5pdHksXHJcbiAgICAgICAgICAgICAgICAgICAgICBkZWxheTogTWF0aC5yYW5kb20oKSAqIDIsXHJcbiAgICAgICAgICAgICAgICAgICAgfX1cclxuICAgICAgICAgICAgICAgICAgLz5cclxuICAgICAgICAgICAgICAgICkpfVxyXG4gICAgICAgICAgICAgIDwvZGl2PlxyXG5cclxuICAgICAgICAgICAgICB7LyogQW5pbWF0ZWQgdGV4dCB3aXRoIHdvcmQtYnktd29yZCByZXZlYWwgKi99XHJcbiAgICAgICAgICAgICAgPG1vdGlvbi5zcGFuXHJcbiAgICAgICAgICAgICAgICBpbml0aWFsPXt7IG9wYWNpdHk6IDAsIHg6IC0yMCB9fVxyXG4gICAgICAgICAgICAgICAgYW5pbWF0ZT17eyBvcGFjaXR5OiAxLCB4OiAwIH19XHJcbiAgICAgICAgICAgICAgICB0cmFuc2l0aW9uPXt7IGR1cmF0aW9uOiAwLjUsIGRlbGF5OiAwLjYgfX1cclxuICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cImlubGluZS1ibG9ja1wiXHJcbiAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgWW91ciBUcmlwLlxyXG4gICAgICAgICAgICAgIDwvbW90aW9uLnNwYW4+XHJcbiAgICAgICAgICAgICAgeycgJ31cclxuICAgICAgICAgICAgICA8bW90aW9uLnNwYW5cclxuICAgICAgICAgICAgICAgIGluaXRpYWw9e3sgb3BhY2l0eTogMCwgc2NhbGU6IDAuOCB9fVxyXG4gICAgICAgICAgICAgICAgYW5pbWF0ZT17eyBvcGFjaXR5OiAxLCBzY2FsZTogMSB9fVxyXG4gICAgICAgICAgICAgICAgdHJhbnNpdGlvbj17eyBkdXJhdGlvbjogMC42LCBkZWxheTogMC44LCB0eXBlOiBcInNwcmluZ1wiLCBzdGlmZm5lc3M6IDIwMCB9fVxyXG4gICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwidGV4dC1ncmFkaWVudCBpbmxpbmUtYmxvY2sgcmVsYXRpdmVcIlxyXG4gICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgIFlvdXIgU3R5bGUuXHJcbiAgICAgICAgICAgICAgICB7LyogVW5kZXJsaW5lIGVmZmVjdCAqL31cclxuICAgICAgICAgICAgICAgIDxtb3Rpb24uZGl2XHJcbiAgICAgICAgICAgICAgICAgIGluaXRpYWw9e3sgc2NhbGVYOiAwIH19XHJcbiAgICAgICAgICAgICAgICAgIGFuaW1hdGU9e3sgc2NhbGVYOiAxIH19XHJcbiAgICAgICAgICAgICAgICAgIHRyYW5zaXRpb249e3sgZHVyYXRpb246IDAuOCwgZGVsYXk6IDEuMiB9fVxyXG4gICAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJhYnNvbHV0ZSAtYm90dG9tLTIgbGVmdC0wIHJpZ2h0LTAgaC0xIGJnLWdyYWRpZW50LXRvLXIgZnJvbS1wcmltYXJ5LzUwIHZpYS1wcmltYXJ5IHRvLXByaW1hcnkvNTAgcm91bmRlZC1mdWxsIG9yaWdpbi1sZWZ0XCJcclxuICAgICAgICAgICAgICAgIC8+XHJcbiAgICAgICAgICAgICAgPC9tb3Rpb24uc3Bhbj5cclxuICAgICAgICAgICAgICA8YnIgLz5cclxuICAgICAgICAgICAgICA8bW90aW9uLnNwYW5cclxuICAgICAgICAgICAgICAgIGluaXRpYWw9e3sgb3BhY2l0eTogMCwgeTogMjAgfX1cclxuICAgICAgICAgICAgICAgIGFuaW1hdGU9e3sgb3BhY2l0eTogMSwgeTogMCB9fVxyXG4gICAgICAgICAgICAgICAgdHJhbnNpdGlvbj17eyBkdXJhdGlvbjogMC41LCBkZWxheTogMS4wIH19XHJcbiAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJpbmxpbmUtYmxvY2tcIlxyXG4gICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgIFRyYXZlbCBBbWlnb1xyXG4gICAgICAgICAgICAgIDwvbW90aW9uLnNwYW4+XHJcbiAgICAgICAgICAgICAgeycgJ31cclxuICAgICAgICAgICAgICA8bW90aW9uLnNwYW5cclxuICAgICAgICAgICAgICAgIGluaXRpYWw9e3sgb3BhY2l0eTogMCwgcm90YXRlWDogLTkwIH19XHJcbiAgICAgICAgICAgICAgICBhbmltYXRlPXt7IG9wYWNpdHk6IDEsIHJvdGF0ZVg6IDAgfX1cclxuICAgICAgICAgICAgICAgIHRyYW5zaXRpb249e3sgZHVyYXRpb246IDAuNiwgZGVsYXk6IDEuMiwgdHlwZTogXCJzcHJpbmdcIiB9fVxyXG4gICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwiaW5saW5lLWJsb2NrXCJcclxuICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICBNYWtlcyBJdCBFYXN5XHJcbiAgICAgICAgICAgICAgPC9tb3Rpb24uc3Bhbj5cclxuICAgICAgICAgICAgICA8bW90aW9uLnNwYW5cclxuICAgICAgICAgICAgICAgIGluaXRpYWw9e3sgb3BhY2l0eTogMCwgc2NhbGU6IDAgfX1cclxuICAgICAgICAgICAgICAgIGFuaW1hdGU9e3sgb3BhY2l0eTogMSwgc2NhbGU6IDEgfX1cclxuICAgICAgICAgICAgICAgIHRyYW5zaXRpb249e3sgZHVyYXRpb246IDAuNCwgZGVsYXk6IDEuNCwgdHlwZTogXCJzcHJpbmdcIiwgc3RpZmZuZXNzOiA0MDAgfX1cclxuICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cInRleHQtcHJpbWFyeSBpbmxpbmUtYmxvY2tcIlxyXG4gICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgIC5cclxuICAgICAgICAgICAgICA8L21vdGlvbi5zcGFuPlxyXG4gICAgICAgICAgICA8L2gxPlxyXG5cclxuICAgICAgICAgICAgPG1vdGlvbi5wXHJcbiAgICAgICAgICAgICAgaW5pdGlhbD17eyBvcGFjaXR5OiAwLCB5OiAyMCB9fVxyXG4gICAgICAgICAgICAgIGFuaW1hdGU9e3sgb3BhY2l0eTogMSwgeTogMCB9fVxyXG4gICAgICAgICAgICAgIHRyYW5zaXRpb249e3sgZHVyYXRpb246IDAuNiwgZGVsYXk6IDEuNSB9fVxyXG4gICAgICAgICAgICAgIGNsYXNzTmFtZT1cInRleHQtbGcgdGV4dC1tdXRlZC1mb3JlZ3JvdW5kIGZvbnQtc2FucyBtYXgtdy1tZCBtYi04XCJcclxuICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgIFNvbG8sIGNvdXBsZSwgZmFtaWx5LCBmcmllbmRzLCBvciBncm91cCDigJQgdGVsbCB1cyBob3cgeW91IGxpa2UgdG8gdHJhdmVsLiBcclxuICAgICAgICAgICAgICBUYWtlIG91ciBxdWljayBxdWl6IGFuZCBsZXQgVHJhdmVsIEFtaWdvIGd1aWRlIHlvdSB0byB0aGUgcGVyZmVjdCB0cmlwLCBwbGFubmVkIHRoZSBiZXN0IHdheSBmb3IgeW91LlxyXG4gICAgICAgICAgICA8L21vdGlvbi5wPlxyXG5cclxuICAgICAgICAgICAgPG1vdGlvbi5kaXZcclxuICAgICAgICAgICAgICBpbml0aWFsPXt7IG9wYWNpdHk6IDAsIHk6IDIwIH19XHJcbiAgICAgICAgICAgICAgYW5pbWF0ZT17eyBvcGFjaXR5OiAxLCB5OiAwIH19XHJcbiAgICAgICAgICAgICAgdHJhbnNpdGlvbj17eyBkdXJhdGlvbjogMC42LCBkZWxheTogMS43IH19XHJcbiAgICAgICAgICAgICAgY2xhc3NOYW1lPVwiZmxleCBmbGV4LXdyYXAgZ2FwLTQgbWItOFwiXHJcbiAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICA8TWFnbmV0aWNCdXR0b24gXHJcbiAgICAgICAgICAgICAgICBjbGFzc05hbWU9XCJhbmltYXRlLWdsb3ctcHVsc2VcIlxyXG4gICAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gbmF2aWdhdGUodXNlciA/ICcvZGFzaGJvYXJkJyA6ICcvZ2V0LXN0YXJ0ZWQnKX1cclxuICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICB7dXNlciA/ICdHbyB0byBEYXNoYm9hcmQnIDogJ1N0YXJ0IFlvdXIgSm91cm5leSd9XHJcbiAgICAgICAgICAgICAgPC9NYWduZXRpY0J1dHRvbj5cclxuICAgICAgICAgICAgICA8YnV0dG9uIGNsYXNzTmFtZT1cInB4LTYgcHktNCByb3VuZGVkLXhsIGJvcmRlciBib3JkZXItZm9yZWdyb3VuZC8yMCB0ZXh0LWZvcmVncm91bmQgZm9udC1zYW5zIGZvbnQtc2VtaWJvbGQgaG92ZXI6YmctZm9yZWdyb3VuZC81IHRyYW5zaXRpb24tY29sb3JzXCI+XHJcbiAgICAgICAgICAgICAgICBXYXRjaCBTdG9yeVxyXG4gICAgICAgICAgICAgIDwvYnV0dG9uPlxyXG4gICAgICAgICAgICA8L21vdGlvbi5kaXY+XHJcblxyXG4gICAgICAgICAgICB7LyogU3RhdHMgKi99XHJcbiAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBnYXAtMTBcIj5cclxuICAgICAgICAgICAgICB7c3RhdHMubWFwKChzdGF0LCBpKSA9PiAoXHJcbiAgICAgICAgICAgICAgICA8bW90aW9uLmRpdlxyXG4gICAgICAgICAgICAgICAgICBrZXk9e3N0YXQubGFiZWx9XHJcbiAgICAgICAgICAgICAgICAgIGluaXRpYWw9e3sgb3BhY2l0eTogMCwgeTogMjAgfX1cclxuICAgICAgICAgICAgICAgICAgYW5pbWF0ZT17eyBvcGFjaXR5OiAxLCB5OiAwIH19XHJcbiAgICAgICAgICAgICAgICAgIHRyYW5zaXRpb249e3sgZHVyYXRpb246IDAuNiwgZGVsYXk6IDAuNiArIGkgKiAwLjEgfX1cclxuICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwidGV4dC1jZW50ZXJcIlxyXG4gICAgICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInRleHQtM3hsIG1kOnRleHQtNHhsIGZvbnQtZGlzcGxheSBmb250LWJvbGQgdGV4dC1mb3JlZ3JvdW5kIHRyYWNraW5nLXRpZ2h0XCI+e3N0YXQudmFsdWV9PC9kaXY+XHJcbiAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwidGV4dC14cyB0ZXh0LW11dGVkLWZvcmVncm91bmQgZm9udC1zYW5zIHVwcGVyY2FzZSB0cmFja2luZy13aWRlciBtdC0xXCI+e3N0YXQubGFiZWx9PC9kaXY+XHJcbiAgICAgICAgICAgICAgICA8L21vdGlvbi5kaXY+XHJcbiAgICAgICAgICAgICAgKSl9XHJcbiAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgPC9tb3Rpb24uZGl2PlxyXG5cclxuICAgICAgICAgIHsvKiBSaWdodCAtIFVwY29taW5nIFRyaXBzIFNsaWRlciAqL31cclxuICAgICAgICAgIDxtb3Rpb24uZGl2XHJcbiAgICAgICAgICAgIGluaXRpYWw9e3sgb3BhY2l0eTogMCwgeDogNTAgfX1cclxuICAgICAgICAgICAgYW5pbWF0ZT17eyBvcGFjaXR5OiAxLCB4OiAwIH19XHJcbiAgICAgICAgICAgIHRyYW5zaXRpb249e3sgZHVyYXRpb246IDAuOCwgZGVsYXk6IDAuNCB9fVxyXG4gICAgICAgICAgICBjbGFzc05hbWU9XCJmbGV4LTEgdy1mdWxsIGxnOnctYXV0byBsZzptYXgtdy1bNTUlXSBvdmVyZmxvdy1oaWRkZW5cIlxyXG4gICAgICAgICAgPlxyXG4gICAgICAgICAgICB7LyogU2VjdGlvbiBIZWFkZXIgd2l0aCBOYXZpZ2F0aW9uICovfVxyXG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtc3RhcnQganVzdGlmeS1iZXR3ZWVuIG1iLTYgZ2FwLTQgcHItNlwiPlxyXG4gICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleC0xIG1pbi13LTBcIj5cclxuICAgICAgICAgICAgICAgIDxoMiBjbGFzc05hbWU9XCJmb250LXNlcmlmIHRleHQtMnhsIGZvbnQtYm9sZCB0ZXh0LWZvcmVncm91bmRcIj5VcGNvbWluZyBUcmlwczwvaDI+XHJcbiAgICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9XCJ0ZXh0LXNtIHRleHQtbXV0ZWQtZm9yZWdyb3VuZCBmb250LXNhbnNcIj5DdXJhdGVkIGRlcGFydHVyZXMgZmlsbGluZyBmYXN0PC9wPlxyXG4gICAgICAgICAgICAgIDwvZGl2PlxyXG5cclxuICAgICAgICAgICAgICB7LyogTmF2aWdhdGlvbiBBcnJvd3MgKi99XHJcbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGdhcC0zIGZsZXgtc2hyaW5rLTBcIj5cclxuICAgICAgICAgICAgICAgIDxidXR0b25cclxuICAgICAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gc2Nyb2xsKCdsZWZ0Jyl9XHJcbiAgICAgICAgICAgICAgICAgIGFyaWEtbGFiZWw9XCJQcmV2aW91cyB0cmlwc1wiXHJcbiAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cInctMTEgaC0xMSByb3VuZGVkLWZ1bGwgYm9yZGVyLTIgZmxleCBpdGVtcy1jZW50ZXIganVzdGlmeS1jZW50ZXIgdHJhbnNpdGlvbi1hbGwgZHVyYXRpb24tMzAwIGJvcmRlci1wcmltYXJ5IGJnLXByaW1hcnkvMjAgaG92ZXI6YmctcHJpbWFyeS80MCB0ZXh0LXByaW1hcnkgY3Vyc29yLXBvaW50ZXIgaG92ZXI6c2NhbGUtMTA1IHdpbGwtY2hhbmdlLXRyYW5zZm9ybVwiXHJcbiAgICAgICAgICAgICAgICA+XHJcbiAgICAgICAgICAgICAgICAgIDxDaGV2cm9uTGVmdCBjbGFzc05hbWU9XCJ3LTUgaC01XCIgLz5cclxuICAgICAgICAgICAgICAgIDwvYnV0dG9uPlxyXG4gICAgICAgICAgICAgICAgPGJ1dHRvblxyXG4gICAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBzY3JvbGwoJ3JpZ2h0Jyl9XHJcbiAgICAgICAgICAgICAgICAgIGFyaWEtbGFiZWw9XCJOZXh0IHRyaXBzXCJcclxuICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwidy0xMSBoLTExIHJvdW5kZWQtZnVsbCBib3JkZXItMiBmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciB0cmFuc2l0aW9uLWFsbCBkdXJhdGlvbi0zMDAgYm9yZGVyLXByaW1hcnkgYmctcHJpbWFyeS8yMCBob3ZlcjpiZy1wcmltYXJ5LzQwIHRleHQtcHJpbWFyeSBjdXJzb3ItcG9pbnRlciBob3ZlcjpzY2FsZS0xMDUgd2lsbC1jaGFuZ2UtdHJhbnNmb3JtXCJcclxuICAgICAgICAgICAgICAgID5cclxuICAgICAgICAgICAgICAgICAgPENoZXZyb25SaWdodCBjbGFzc05hbWU9XCJ3LTUgaC01XCIgLz5cclxuICAgICAgICAgICAgICAgIDwvYnV0dG9uPlxyXG4gICAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgICA8L2Rpdj5cclxuXHJcbiAgICAgICAgICAgIHsvKiBUcmlwIENhcmRzIFNsaWRlciAtIEluZmluaXRlICovfVxyXG4gICAgICAgICAgICA8ZGl2XHJcbiAgICAgICAgICAgICAgcmVmPXtzY3JvbGxSZWZ9XHJcbiAgICAgICAgICAgICAgb25TY3JvbGw9e2hhbmRsZUluZmluaXRlU2Nyb2xsfVxyXG4gICAgICAgICAgICAgIG9uTW91c2VFbnRlcj17aGFuZGxlTW91c2VFbnRlcn1cclxuICAgICAgICAgICAgICBvbk1vdXNlTGVhdmU9e2hhbmRsZU1vdXNlTGVhdmV9XHJcbiAgICAgICAgICAgICAgb25Ub3VjaFN0YXJ0PXtoYW5kbGVUb3VjaFN0YXJ0fVxyXG4gICAgICAgICAgICAgIG9uVG91Y2hFbmQ9e2hhbmRsZVRvdWNoRW5kfVxyXG4gICAgICAgICAgICAgIGNsYXNzTmFtZT1cImZsZXggZ2FwLTUgb3ZlcmZsb3cteC1hdXRvIHNjcm9sbGJhci1oaWRlIHBiLTQgcHItNlwiXHJcbiAgICAgICAgICAgICAgc3R5bGU9e3sgc2Nyb2xsYmFyV2lkdGg6ICdub25lJywgbXNPdmVyZmxvd1N0eWxlOiAnbm9uZScgfX1cclxuICAgICAgICAgICAgPlxyXG4gICAgICAgICAgICAgIHt0cmlwQ2FyZHN9XHJcbiAgICAgICAgICAgIDwvZGl2PlxyXG4gICAgICAgICAgPC9tb3Rpb24uZGl2PlxyXG4gICAgICAgIDwvZGl2PlxyXG4gICAgICA8L2Rpdj5cclxuXHJcbiAgICAgIHsvKiBTY3JvbGwgSW5kaWNhdG9yICovfVxyXG4gICAgICA8bW90aW9uLmRpdlxyXG4gICAgICAgIGluaXRpYWw9e3sgb3BhY2l0eTogMCB9fVxyXG4gICAgICAgIGFuaW1hdGU9e3sgb3BhY2l0eTogMSB9fVxyXG4gICAgICAgIHRyYW5zaXRpb249e3sgZGVsYXk6IDEuNSB9fVxyXG4gICAgICAgIGNsYXNzTmFtZT1cImFic29sdXRlIGJvdHRvbS04IGxlZnQtMS8yIC10cmFuc2xhdGUteC0xLzIgZmxleCBmbGV4LWNvbCBpdGVtcy1jZW50ZXIgZ2FwLTJcIlxyXG4gICAgICA+XHJcbiAgICAgICAgPHNwYW4gY2xhc3NOYW1lPVwidGV4dC14cyB0ZXh0LW11dGVkLWZvcmVncm91bmQgZm9udC1zYW5zXCI+U2Nyb2xsIHRvIGV4cGxvcmU8L3NwYW4+XHJcbiAgICAgICAgPG1vdGlvbi5kaXZcclxuICAgICAgICAgIGFuaW1hdGU9e3sgeTogWzAsIDgsIDBdIH19XHJcbiAgICAgICAgICB0cmFuc2l0aW9uPXt7IGR1cmF0aW9uOiAxLjUsIHJlcGVhdDogSW5maW5pdHkgfX1cclxuICAgICAgICAgIGNsYXNzTmFtZT1cInctNiBoLTEwIHJvdW5kZWQtZnVsbCBib3JkZXItMiBib3JkZXItZm9yZWdyb3VuZC8zMCBmbGV4IGp1c3RpZnktY2VudGVyIHB0LTJcIlxyXG4gICAgICAgID5cclxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwidy0xLjUgaC0xLjUgcm91bmRlZC1mdWxsIGJnLXByaW1hcnlcIiAvPlxyXG4gICAgICAgIDwvbW90aW9uLmRpdj5cclxuICAgICAgPC9tb3Rpb24uZGl2PlxyXG4gICAgPC9zZWN0aW9uPlxyXG4gICk7XHJcbn0pO1xyXG5cclxuSGVyb1NlY3Rpb24uZGlzcGxheU5hbWUgPSAnSGVyb1NlY3Rpb24nO1xyXG4iXSwibmFtZXMiOlsibW90aW9uIiwiQ2hldnJvbkxlZnQiLCJDaGV2cm9uUmlnaHQiLCJDYWxlbmRhciIsIlVzZXJzIiwidXNlU3RhdGUiLCJ1c2VSZWYiLCJ1c2VFZmZlY3QiLCJ1c2VDYWxsYmFjayIsIm1lbW8iLCJ1c2VNZW1vIiwidXNlTmF2aWdhdGUiLCJoZXJvVmlkZW8iLCJ0cmlwVGhhaWxhbmQiLCJoZXJvQmciLCJ0cmlwVmlldG5hbSIsInRyaXBCYWxpIiwidHJpcEphcGFuIiwiTWFnbmV0aWNCdXR0b24iLCJ1c2VBdXRoIiwidXBjb21pbmdUcmlwcyIsImlkIiwiZGVzdGluYXRpb24iLCJkYXRlcyIsInNwb3RzTGVmdCIsInByaWNlIiwiaW1hZ2UiLCJkdXJhdGlvbiIsIlRyaXBDYXJkIiwidHJpcCIsImluZGV4IiwiZGl2IiwiaW5pdGlhbCIsIm9wYWNpdHkiLCJ5IiwiYW5pbWF0ZSIsInRyYW5zaXRpb24iLCJkZWxheSIsImNsYXNzTmFtZSIsImltZyIsInNyYyIsImFsdCIsImxvYWRpbmciLCJkZWNvZGluZyIsIndpZHRoIiwiaGVpZ2h0IiwiaDMiLCJzcGFuIiwiYnV0dG9uIiwiZGlzcGxheU5hbWUiLCJpbmZpbml0ZVRyaXBzIiwic3RhdHMiLCJ2YWx1ZSIsImxhYmVsIiwiSGVyb1NlY3Rpb24iLCJzY3JvbGxSZWYiLCJ2aWRlb1JlZiIsImlzUGF1c2VkIiwic2V0SXNQYXVzZWQiLCJ2aWRlb0xvYWRlZCIsInNldFZpZGVvTG9hZGVkIiwiYW5pbWF0aW9uRnJhbWVSZWYiLCJsYXN0VGltZVJlZiIsImNhcmRXaWR0aCIsIm5hdmlnYXRlIiwidXNlciIsInNjcm9sbCIsImRpcmVjdGlvbiIsImN1cnJlbnQiLCJzY3JvbGxBbW91bnQiLCJzY3JvbGxCeSIsImxlZnQiLCJiZWhhdmlvciIsImhhbmRsZUluZmluaXRlU2Nyb2xsIiwic2Nyb2xsTGVmdCIsInNpbmdsZVNldFdpZHRoIiwibGVuZ3RoIiwiYXV0b1Njcm9sbCIsInRpbWVzdGFtcCIsInJlcXVlc3RBbmltYXRpb25GcmFtZSIsImNhbmNlbEFuaW1hdGlvbkZyYW1lIiwiaGFuZGxlTW91c2VFbnRlciIsImhhbmRsZU1vdXNlTGVhdmUiLCJoYW5kbGVUb3VjaFN0YXJ0IiwiaGFuZGxlVG91Y2hFbmQiLCJ2aWRlbyIsIm9ic2VydmVyIiwiSW50ZXJzZWN0aW9uT2JzZXJ2ZXIiLCJlbnRyeSIsImlzSW50ZXJzZWN0aW5nIiwicGxheSIsImNhdGNoIiwic3RhcnRWaWRlbyIsImRvY3VtZW50IiwicmVtb3ZlRXZlbnRMaXN0ZW5lciIsImFkZEV2ZW50TGlzdGVuZXIiLCJwYXNzaXZlIiwiZGlzY29ubmVjdCIsInRocmVzaG9sZCIsIm9ic2VydmUiLCJ0cmlwQ2FyZHMiLCJtYXAiLCJzZWN0aW9uIiwiZmV0Y2hQcmlvcml0eSIsInJlZiIsImF1dG9QbGF5IiwibXV0ZWQiLCJsb29wIiwicGxheXNJbmxpbmUiLCJwcmVsb2FkIiwib25Mb2FkZWREYXRhIiwid2Via2l0LXBsYXlzaW5saW5lIiwic291cmNlIiwidHlwZSIsIngiLCJoMSIsIkFycmF5IiwiXyIsImkiLCJzdHlsZSIsIk1hdGgiLCJyYW5kb20iLCJ0b3AiLCJzY2FsZSIsInJlcGVhdCIsIkluZmluaXR5Iiwic3RpZmZuZXNzIiwic2NhbGVYIiwiYnIiLCJyb3RhdGVYIiwicCIsIm9uQ2xpY2siLCJzdGF0IiwiaDIiLCJhcmlhLWxhYmVsIiwib25TY3JvbGwiLCJvbk1vdXNlRW50ZXIiLCJvbk1vdXNlTGVhdmUiLCJvblRvdWNoU3RhcnQiLCJvblRvdWNoRW5kIiwic2Nyb2xsYmFyV2lkdGgiLCJtc092ZXJmbG93U3R5bGUiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLFNBQVNBLE1BQU0sUUFBUSxnQkFBZ0I7QUFDdkMsU0FBU0MsV0FBVyxFQUFFQyxZQUFZLEVBQUVDLFFBQVEsRUFBRUMsS0FBSyxRQUFRLGVBQWU7QUFDMUUsU0FBU0MsUUFBUSxFQUFFQyxNQUFNLEVBQUVDLFNBQVMsRUFBRUMsV0FBVyxFQUFFQyxJQUFJLEVBQUVDLE9BQU8sUUFBUSxRQUFRO0FBQ2hGLFNBQVNDLFdBQVcsUUFBUSxtQkFBbUI7QUFDL0MsT0FBT0MsZUFBZSwwQkFBMEI7QUFDaEQsT0FBT0Msa0JBQWtCLDZCQUE2QjtBQUN0RCxPQUFPQyxZQUFZLHVCQUF1QjtBQUMxQyxPQUFPQyxpQkFBaUIsNEJBQTRCO0FBQ3BELE9BQU9DLGNBQWMseUJBQXlCO0FBQzlDLE9BQU9DLGVBQWUsMEJBQTBC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

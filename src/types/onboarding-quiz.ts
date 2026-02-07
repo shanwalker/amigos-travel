@@ -130,6 +130,7 @@ export interface OnboardingQuizRecord {
     submitted_at: string | null;
     is_submitted: boolean;
     linked_surprise_request_id?: string;
+    admin_reviewed?: boolean;
 }
 
 // Step configuration

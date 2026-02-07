@@ -67,7 +67,7 @@ const Login = () => {
 
       // Create trip-specific request based on trip type
       switch (sessionData.tripType) {
-        case 'surprise':
+        case 'surprise': {
           const { error: surpriseError } = await supabase
             .from('surprise_requests' as any)
             .insert({
@@ -80,8 +80,9 @@ const Login = () => {
             } as any);
           if (surpriseError) throw surpriseError;
           break;
+        }
 
-        case 'custom':
+        case 'custom': {
           const { error: customError } = await supabase
             .from('custom_trip_requests' as any)
             .insert({
@@ -96,8 +97,9 @@ const Login = () => {
             } as any);
           if (customError) throw customError;
           break;
+        }
 
-        case 'group':
+        case 'group': {
           const { error: groupError } = await supabase
             .from('trip_reservations' as any)
             .insert({
@@ -110,11 +112,13 @@ const Login = () => {
             } as any);
           if (groupError) throw groupError;
           break;
+        }
 
         // For standard packages, just save preferences to profile (already done above)
-        case 'standard':
+        case 'standard': {
           console.log('[Login] Standard package preferences saved to profile');
           break;
+        }
       }
 
       console.log('[Login] Signup session processed successfully');
