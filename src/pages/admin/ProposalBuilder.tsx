@@ -129,7 +129,7 @@ export default function ProposalBuilder() {
         setHighlights(highlights.filter((_, i) => i !== index));
     };
 
-    const handleSubmit = async (status: 'draft' | 'published') => {
+    const handleSubmit = async (status: 'draft' | 'sent') => {
         if (!formData.user_id || !formData.title || !formData.destination_name || !formData.total_price) {
             toast.error('Please fill in all required fields');
             return;
@@ -144,8 +144,8 @@ export default function ProposalBuilder() {
         try {
             const proposal = await createProposal.mutateAsync(proposalData);
 
-            if (status === 'published') {
-                await updateProposal.mutateAsync({ id: proposal.id, status: 'published' });
+            if (status === 'sent') {
+                await updateProposal.mutateAsync({ id: proposal.id, status: 'sent' });
 
                 // Send email notification
                 if (userEmail) {
@@ -157,13 +157,13 @@ export default function ProposalBuilder() {
                             destinationName: proposal.destination_name,
                             expiryDate: proposal.expiry_date,
                         });
-                        toast.success('Proposal published and email sent!');
+                        toast.success('Proposal sent and email delivered!');
                     } catch (emailError) {
                         console.error('Email failed:', emailError);
-                        toast.success('Proposal published (email notification failed)');
+                        toast.success('Proposal sent (email notification failed)');
                     }
                 } else {
-                    toast.success('Proposal published successfully!');
+                    toast.success('Proposal sent successfully!');
                 }
             } else {
                 toast.success('Proposal saved as draft');
@@ -400,7 +400,7 @@ export default function ProposalBuilder() {
                             Save as Draft
                         </Button>
                         <Button
-                            onClick={() => handleSubmit('published')}
+                            onClick={() => handleSubmit('sent')}
                             disabled={createProposal.isPending}
                             className="flex-1"
                         >
