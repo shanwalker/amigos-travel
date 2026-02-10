@@ -36,6 +36,8 @@ export async function createChatSession(
     pageUrl: string
 ): Promise<{ success: boolean; sessionId?: string; error?: string }> {
     try {
+        console.log('[createChatSession] Attempting to create session...', { userId, userIp, isAnonymous: !userId });
+
         const { data, error } = await (supabase
             .from('chat_sessions') as any)
             .insert({
@@ -51,14 +53,24 @@ export async function createChatSession(
             .single();
 
         if (error) {
-            console.error('[createChatSession] Error:', error);
+            console.error('[createChatSession] ❌ Error:', error);
+            console.error('[createChatSession] Error details:', JSON.stringify(error, null, 2));
+            // Show alert for debugging (remove after fix)
+            if (!userId) {
+                console.error('🚨 ANONYMOUS USER SESSION CREATION FAILED - Check Supabase RLS policies!');
+            }
             return { success: false, error: error.message };
+        }
+
+        if (!data) {
+            console.error('[createChatSession] ❌ No data returned from insert');
+            return { success: false, error: 'No data returned' };
         }
 
         console.log('[createChatSession] ✅ Created session:', data.id);
         return { success: true, sessionId: data.id };
     } catch (error: any) {
-        console.error('[createChatSession] Exception:', error);
+        console.error('[createChatSession] ❌ Exception:', error);
         return { success: false, error: error.message };
     }
 }
