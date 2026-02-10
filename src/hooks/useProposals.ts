@@ -143,7 +143,7 @@ export const usePublishProposal = () => {
 
     return useMutation({
         mutationFn: async (id: string) => {
-            return updateProposal.mutateAsync({ id, status: 'published' });
+            return updateProposal.mutateAsync({ id, status: 'sent' });
         },
     });
 };

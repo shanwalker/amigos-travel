@@ -6,8 +6,8 @@ import type { TripProposal } from '@/types/proposals';
  */
 export async function sendProposal(proposalId: string): Promise<{ success: boolean; error?: string }> {
     try {
-        const { error } = await supabase
-            .from('trip_proposals')
+        const { error } = await (supabase
+            .from('trip_proposals') as any)
             .update({
                 status: 'sent',
                 sent_at: new Date().toISOString()
@@ -29,18 +29,18 @@ export async function sendProposal(proposalId: string): Promise<{ success: boole
 export async function markProposalViewed(proposalId: string): Promise<{ success: boolean; error?: string }> {
     try {
         // Only update if not already viewed
-        const { data: existing } = await supabase
-            .from('trip_proposals')
+        const { data: existing } = await (supabase
+            .from('trip_proposals') as any)
             .select('viewed_at')
             .eq('id', proposalId)
             .single();
 
-        if (existing?.viewed_at) {
+        if (existing && existing.viewed_at) {
             return { success: true }; // Already viewed
         }
 
-        const { error } = await supabase
-            .from('trip_proposals')
+        const { error } = await (supabase
+            .from('trip_proposals') as any)
             .update({
                 status: 'viewed',
                 viewed_at: new Date().toISOString()
@@ -66,8 +66,8 @@ export async function updateProposalStatus(
     notes?: string
 ): Promise<{ success: boolean; error?: string }> {
     try {
-        const { error } = await supabase
-            .from('trip_proposals')
+        const { error } = await (supabase
+            .from('trip_proposals') as any)
             .update({
                 status,
                 responded_at: new Date().toISOString(),

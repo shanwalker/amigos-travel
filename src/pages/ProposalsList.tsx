@@ -106,7 +106,7 @@ export default function ProposalsList() {
                             )}
 
                             <Link to={`/dashboard/proposals/${proposal.id}`}>
-                                <Button className="w-full" variant={proposal.status === 'published' ? 'default' : 'outline'}>
+                                <Button className="w-full" variant={proposal.status === 'sent' ? 'default' : 'outline'}>
                                     <Eye className="w-4 h-4 mr-2" />
                                     View Proposal
                                 </Button>
@@ -122,10 +122,10 @@ export default function ProposalsList() {
 function StatusBadge({ status }: { status: string }) {
     const variants: Record<string, { label: string; variant: 'default' | 'secondary' | 'destructive' | 'outline' }> = {
         draft: { label: 'Draft', variant: 'secondary' },
-        published: { label: 'New', variant: 'default' },
+        sent: { label: 'New', variant: 'default' },
+        viewed: { label: 'Viewed', variant: 'outline' },
         accepted: { label: 'Accepted', variant: 'default' },
-        rejected: { label: 'Declined', variant: 'destructive' },
-        expired: { label: 'Expired', variant: 'outline' },
+        declined: { label: 'Declined', variant: 'destructive' },
     };
 
     const config = variants[status] || { label: status, variant: 'outline' };
