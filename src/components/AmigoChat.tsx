@@ -125,6 +125,12 @@ export const AmigoChat = () => {
             }
         } catch (error) {
             console.error('Chat error:', error);
+            // Specific check for missing API key or permission issues
+            if (error.toString().includes('API key') || error.toString().includes('403')) {
+                console.error("🚨 PRODUCTION ISSUE: It seems the Gemini API Key is missing or invalid in this environment.");
+                console.error("👉 Check your hosting provider's Environment Variables settings.");
+            }
+
             const errorMessage: Message = {
                 id: (Date.now() + 1).toString(),
                 role: 'model',
