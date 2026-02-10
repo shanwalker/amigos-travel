@@ -4,7 +4,6 @@ import { HeroSection } from '@/components/HeroSection';
 import { HeroSectionRedesign } from '@/components/HeroSectionRedesign';
 import { HowItWorksSection } from '@/components/HowItWorksSection';
 import { Footer } from '@/components/Footer';
-import { ChatFab } from '@/components/ChatFab';
 import { LazySection } from '@/components/LazySection';
 
 // NEW Main Components
@@ -355,7 +354,6 @@ const Index = () => {
         </Suspense>
       )}
       <Footer />
-      <ChatFab />
     </div>
   );
 };

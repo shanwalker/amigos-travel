@@ -8,7 +8,6 @@ import { MemoryReelSection } from '@/components/MemoryReelSection';
 import { TrustShieldSection } from '@/components/TrustShieldSection';
 import { BlogSection } from '@/components/home/BlogSection'; // New Blog
 import { Footer } from '@/components/Footer';
-import { ChatFab } from '@/components/ChatFab';
 import { LazySection } from '@/components/LazySection';
 // V1 Search Bar
 import { TripSearchBar } from '@/components/TripSearchBar';
@@ -92,7 +91,6 @@ const IndexMain = () => {
             </LazySection>
 
             <Footer />
-            <ChatFab />
         </div>
     );
 };

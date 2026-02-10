@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { PageLoader } from "@/components/PageLoader";
+import { AmigoChat } from "@/components/AmigoChat";
 
 // Critical - load immediately
 import Index from "./pages/Index";
@@ -302,6 +303,7 @@ const App = () => (
 
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <AmigoChat />
           </Suspense>
         </BrowserRouter>
       </TooltipProvider>
