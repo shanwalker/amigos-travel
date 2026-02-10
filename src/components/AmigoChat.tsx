@@ -45,26 +45,30 @@ export const AmigoChat = () => {
         }
     }, [chatSession]);
 
-    // Create database session when chat is opened
+    // Create database session when chat is opened (only for authenticated users)
     useEffect(() => {
         const initSession = async () => {
-            if (isOpen && !dbSessionId) {
-                const ip = await getUserIP();
-                const result = await createChatSession(
-                    user?.id || null,
-                    ip,
-                    navigator.userAgent,
-                    window.location.href
-                );
+            if (isOpen && !dbSessionId && user?.id) {
+                try {
+                    const ip = await getUserIP();
+                    const result = await createChatSession(
+                        user.id,
+                        ip,
+                        navigator.userAgent,
+                        window.location.href
+                    );
 
-                if (result.success && result.sessionId) {
-                    setDbSessionId(result.sessionId);
+                    if (result.success && result.sessionId) {
+                        setDbSessionId(result.sessionId);
+                    }
+                } catch (e) {
+                    console.warn('Chat session logging skipped:', e);
                 }
             }
         };
 
         initSession();
-    }, [isOpen]);
+    }, [isOpen, user]);
 
     // Update session page URL when location changes
     useEffect(() => {
@@ -123,12 +127,11 @@ export const AmigoChat = () => {
             if (dbSessionId) {
                 logChatMessage(dbSessionId, 'assistant', text);
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error('Chat error:', error);
-            // Specific check for missing API key or permission issues
-            if (error.toString().includes('API key') || error.toString().includes('403')) {
-                console.error("🚨 PRODUCTION ISSUE: It seems the Gemini API Key is missing or invalid in this environment.");
-                console.error("👉 Check your hosting provider's Environment Variables settings.");
+            const errStr = error?.message || error?.toString() || '';
+            if (errStr.includes('API key') || errStr.includes('403') || errStr.includes('400')) {
+                console.error("🚨 Gemini API Key issue — key may be missing or invalid.");
             }
 
             const errorMessage: Message = {
