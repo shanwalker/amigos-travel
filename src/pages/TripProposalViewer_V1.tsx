@@ -85,7 +85,10 @@ function HeroSection({ proposal, opacity }: { proposal: any; opacity: any }) {
                     transition={{ delay: 0.7, duration: 0.8 }}
                     className="text-xl sm:text-2xl md:text-3xl font-light mb-8 text-white/80"
                 >
-                    {proposal.destination_tagline || 'A personalized journey crafted just for you'}
+                    {proposal.reveal_destination !== false
+                        ? (proposal.destination_tagline || 'A personalized journey crafted just for you')
+                        : 'A mystery destination crafted just for you 🎁'
+                    }
                 </motion.p>
 
                 <motion.div
@@ -287,31 +290,65 @@ function DestinationSection({ proposal }: { proposal: any }) {
                     transition={{ delay: 0.2 }}
                     className="text-center mb-12"
                 >
-                    <div className="inline-block px-6 py-2 bg-gradient-to-r from-primary to-[hsl(42,100%,60%)] rounded-full text-[hsl(210,75%,15%)] font-semibold mb-4">
-                        🌍 YOUR DESTINATION
-                    </div>
-                    <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-white">
-                        {proposal.destination_name}
-                    </h2>
-                    {proposal.destination_description && (
-                        <p className="text-lg sm:text-xl text-white/80 leading-relaxed max-w-3xl mx-auto">
-                            {proposal.destination_description}
-                        </p>
+                    {proposal.reveal_destination !== false ? (
+                        <>
+                            <div className="inline-block px-6 py-2 bg-gradient-to-r from-primary to-[hsl(42,100%,60%)] rounded-full text-[hsl(210,75%,15%)] font-semibold mb-4">
+                                🌍 YOUR DESTINATION
+                            </div>
+                            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-white">
+                                {proposal.destination_name}
+                            </h2>
+                            {proposal.destination_description && (
+                                <p className="text-lg sm:text-xl text-white/80 leading-relaxed max-w-3xl mx-auto">
+                                    {proposal.destination_description}
+                                </p>
+                            )}
+                        </>
+                    ) : (
+                        <>
+                            <div className="inline-block px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-white font-semibold mb-4">
+                                🎁 MYSTERY DESTINATION
+                            </div>
+                            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
+                                Your Surprise Awaits!
+                            </h2>
+                            <p className="text-lg sm:text-xl text-white/80 leading-relaxed max-w-3xl mx-auto">
+                                We've handpicked the perfect destination based on your preferences.
+                                The reveal will make it even more exciting! ✨
+                            </p>
+                        </>
                     )}
                 </motion.div>
 
-                {proposal.destination_highlights && proposal.destination_highlights.length > 0 && (
+                {proposal.reveal_destination !== false ? (
+                    proposal.destination_highlights && proposal.destination_highlights.length > 0 && (
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {proposal.destination_highlights.map((highlight: string, i: number) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={inView ? { opacity: 1, y: 0 } : {}}
+                                    transition={{ delay: i * 0.1, duration: 0.4 }}
+                                    className="flex items-start gap-3 p-4 bg-gradient-to-br from-[hsl(210,60%,22%)] to-[hsl(210,65%,18%)] rounded-xl hover:shadow-lg hover:shadow-primary/20 transition-shadow border border-primary/10"
+                                >
+                                    <Check className="w-6 h-6 text-green-500 mt-0.5 flex-shrink-0" />
+                                    <span className="text-white/90 font-medium">{highlight}</span>
+                                </motion.div>
+                            ))}
+                        </div>
+                    )
+                ) : (
                     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {proposal.destination_highlights.map((highlight: string, i: number) => (
+                        {['Tailored to your travel style', 'Perfect for your budget', 'Matches your interests', 'Curated experiences included'].map((item, i) => (
                             <motion.div
                                 key={i}
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={inView ? { opacity: 1, y: 0 } : {}}
                                 transition={{ delay: i * 0.1, duration: 0.4 }}
-                                className="flex items-start gap-3 p-4 bg-gradient-to-br from-[hsl(210,60%,22%)] to-[hsl(210,65%,18%)] rounded-xl hover:shadow-lg hover:shadow-primary/20 transition-shadow border border-primary/10"
+                                className="flex items-start gap-3 p-4 bg-gradient-to-br from-purple-900/30 to-pink-900/30 rounded-xl border border-purple-500/20"
                             >
-                                <Check className="w-6 h-6 text-green-500 mt-0.5 flex-shrink-0" />
-                                <span className="text-white/90 font-medium">{highlight}</span>
+                                <Sparkles className="w-6 h-6 text-purple-400 mt-0.5 flex-shrink-0" />
+                                <span className="text-white/90 font-medium">{item}</span>
                             </motion.div>
                         ))}
                     </div>

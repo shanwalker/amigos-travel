@@ -8,6 +8,9 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import React from 'react';
+import { createChatSession, logChatMessage, getUserIP } from '@/lib/supabase/chat-logging';
+import { useAuth } from '@/contexts/AuthContext';
+import { useLocation } from 'react-router-dom';
 
 interface Message {
     id: string;
@@ -22,8 +25,11 @@ export const AmigoChat = () => {
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [chatSession, setChatSession] = useState<any>(null); // Store chat session state locally
+    const [dbSessionId, setDbSessionId] = useState<string | null>(null); // Database session ID
     const scrollRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+    const { user } = useAuth();
+    const location = useLocation();
 
     // Initialize chat session on mount or when reopened if needed
     useEffect(() => {
@@ -38,6 +44,33 @@ export const AmigoChat = () => {
             }
         }
     }, [chatSession]);
+
+    // Create database session when chat is opened
+    useEffect(() => {
+        const initSession = async () => {
+            if (isOpen && !dbSessionId) {
+                const ip = await getUserIP();
+                const result = await createChatSession(
+                    user?.id || null,
+                    ip,
+                    navigator.userAgent,
+                    window.location.href
+                );
+
+                if (result.success && result.sessionId) {
+                    setDbSessionId(result.sessionId);
+                }
+            }
+        };
+
+        initSession();
+    }, [isOpen]);
+
+    // Update session page URL when location changes
+    useEffect(() => {
+        // Ideally we would update the session with the new URL, 
+        // but for now we just track the entry URL in createChatSession
+    }, [location]);
 
     // Auto-scroll to bottom
     useEffect(() => {
@@ -67,6 +100,11 @@ export const AmigoChat = () => {
         setInput('');
         setIsLoading(true);
 
+        // Log user message
+        if (dbSessionId) {
+            logChatMessage(dbSessionId, 'user', userMessage.content);
+        }
+
         try {
             const result = await chatSession.sendMessage(userMessage.content);
             const response = await result.response;
@@ -80,6 +118,11 @@ export const AmigoChat = () => {
             };
 
             setMessages((prev) => [...prev, botMessage]);
+
+            // Log bot message
+            if (dbSessionId) {
+                logChatMessage(dbSessionId, 'assistant', text);
+            }
         } catch (error) {
             console.error('Chat error:', error);
             const errorMessage: Message = {
@@ -89,6 +132,11 @@ export const AmigoChat = () => {
                 timestamp: new Date(),
             };
             setMessages((prev) => [...prev, errorMessage]);
+
+            // Log error message
+            if (dbSessionId) {
+                logChatMessage(dbSessionId, 'system', `Error: ${error}`);
+            }
         } finally {
             setIsLoading(false);
         }
@@ -142,8 +190,8 @@ export const AmigoChat = () => {
                                     <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
                                         <Plane className="w-6 h-6 text-primary" />
                                     </div>
-                                    <p>Sawasdee! 🙏</p>
-                                    <p>I'm Amigo AI. Ask me about Thailand trips, hostels, or adventures!</p>
+                                    <p>Hey bhai! 👋</p>
+                                    <p>I'm Amigo AI—your travel buddy. Ask me about trips, destinations, or how TravelAmigo works!</p>
                                 </div>
                             )}
                             {messages.map((msg) => (
@@ -198,7 +246,7 @@ export const AmigoChat = () => {
                                     value={input}
                                     onChange={(e) => setInput(e.target.value)}
                                     onKeyDown={handleKeyDown}
-                                    placeholder="Ask about Thailand..."
+                                    placeholder="Ask about trips, destinations..."
                                     className="pr-10 rounded-full border-gray-200 focus-visible:ring-primary shadow-sm bg-white/50"
                                     disabled={isLoading}
                                 />

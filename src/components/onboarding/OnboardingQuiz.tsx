@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import {
   Palmtree, Mountain, Building2, TreePine, Waves,
@@ -130,6 +131,7 @@ export const OnboardingQuiz = ({ onComplete }: OnboardingQuizProps) => {
   const [saving, setSaving] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const step = QUIZ_STEPS[currentStep];
   const progress = ((currentStep + 1) / QUIZ_STEPS.length) * 100;
@@ -210,6 +212,11 @@ export const OnboardingQuiz = ({ onComplete }: OnboardingQuizProps) => {
         .eq('id', user.id);
 
       if (error) throw error;
+
+      // CRITICAL FIX: Invalidate the needs-onboarding query cache
+      // This ensures ProtectedRoute sees the updated preferences immediately
+      await queryClient.invalidateQueries({ queryKey: ['needs-onboarding', user.id] });
+      await queryClient.invalidateQueries({ queryKey: ['profile', user.id] });
 
       toast.success('Preferences saved! Let\'s find your perfect trip!');
       onComplete?.();

@@ -66,6 +66,8 @@ const ReservationsManagement = lazy(() => import("./pages/admin/ReservationsMana
 const LocalBuddiesManagement = lazy(() => import("./pages/admin/LocalBuddiesManagement"));
 const SettingsManagement = lazy(() => import("./pages/admin/SettingsManagement"));
 const OnboardingQuizzesManagement = lazy(() => import("./pages/admin/OnboardingQuizzesManagement"));
+const ProposalsManagement = lazy(() => import("./pages/admin/ProposalsManagement"));
+const ChatHistoryManagement = lazy(() => import("./pages/admin/ChatHistoryManagement"));
 
 // Trip Proposals - lazy loaded
 const ProposalsList = lazy(() => import("./pages/ProposalsList"));
@@ -286,10 +288,31 @@ const App = () => (
                   </AdminLayout>
                 </ProtectedRoute>
               } />
-              <Route path="/admin/quizzes" element={
+              <Route path="/admin/onboarding-quizzes" element={
                 <ProtectedRoute requiredRole="admin">
                   <AdminLayout>
                     <OnboardingQuizzesManagement />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/proposals" element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminLayout>
+                    <ProposalsManagement />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/proposal-builder" element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminLayout>
+                    <ProposalBuilder />
+                  </AdminLayout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/chat-history" element={
+                <ProtectedRoute requiredRole="admin">
+                  <AdminLayout>
+                    <ChatHistoryManagement />
                   </AdminLayout>
                 </ProtectedRoute>
               } />

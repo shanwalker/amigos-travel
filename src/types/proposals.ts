@@ -3,8 +3,15 @@ export interface TripProposal {
     user_id: string;
     quiz_response_id?: string;
 
+    // Status Tracking (NEW)
+    status: 'draft' | 'sent' | 'viewed' | 'accepted' | 'declined';
+    sent_at?: string;
+    viewed_at?: string;
+    responded_at?: string;
+    response_notes?: string;
+    admin_notes?: string;
+
     // Metadata
-    status: 'draft' | 'published' | 'accepted' | 'rejected' | 'expired';
     title: string;
     destination_name: string;
     destination_tagline?: string;
@@ -49,12 +56,14 @@ export interface TripProposal {
     payment_deadline?: string;
     flexible_payments?: boolean;
 
+    // Destination Reveal
+    reveal_destination?: boolean;
+
     // CTA
     expiry_date?: string;
     reservation_url?: string;
 
     // Admin
-    admin_notes?: string;
     created_by?: string;
 
     created_at?: string;

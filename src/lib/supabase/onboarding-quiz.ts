@@ -16,8 +16,10 @@ export async function saveOnboardingQuiz(
     try {
         const record = stateToRecord(state, userId);
 
-        // Mark as submitted
+        // Mark as submitted - CRITICAL: Set both fields for admin dashboard visibility
         record.completion_status = 'submitted';
+        record.is_submitted = true;
+        record.submitted_at = new Date().toISOString();
 
         const { data, error } = await (supabase
             .from('onboarding_quiz_responses') as any)

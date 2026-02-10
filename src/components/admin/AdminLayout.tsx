@@ -37,6 +37,9 @@ import {
   UserCheck,
   ClipboardList,
   ClipboardCheck,
+  FileText,
+  FileCheck,
+  MessagesSquare,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Input } from '@/components/ui/input';
@@ -55,7 +58,10 @@ const sidebarItems = [
   { icon: Ticket, label: 'Reservations', path: '/admin/reservations' },
   { icon: Wand2, label: 'Custom Requests', path: '/admin/custom-requests' },
   { icon: ClipboardCheck, label: 'Onboarding Quizzes', path: '/admin/onboarding-quizzes' },
+  { icon: FileCheck, label: 'Proposals', path: '/admin/proposals' },
+  { icon: FileText, label: 'Proposal Builder', path: '/admin/proposal-builder' },
   { icon: UserCheck, label: 'Local Buddies', path: '/admin/local-buddies' },
+  { icon: MessagesSquare, label: 'Chat History', path: '/admin/chat-history' },
   { icon: MessageSquare, label: 'Testimonials', path: '/admin/testimonials' },
   { icon: BookOpen, label: 'Stories', path: '/admin/stories' },
   { icon: Mail, label: 'Newsletter', path: '/admin/newsletter' },
