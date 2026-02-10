@@ -35,8 +35,8 @@ interface TripCustomizationProviderProps {
 
 export function TripCustomizationProvider({ proposal, children }: TripCustomizationProviderProps) {
     const defaultDuration = proposal.duration_days || 7;
-    // Assuming proposal total_price is the base price for 1 person for the default duration
-    const basePrice = proposal.total_price;
+    // Ensure basePrice is a valid number
+    const basePrice = Number(proposal.total_price) || 0;
     const transferCost = 5000; // Fixed cost for transfer (flat fee per group)
 
     // Calculate daily rate relative to base price for duration changes

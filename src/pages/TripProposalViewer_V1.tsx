@@ -544,7 +544,7 @@ function PricingSection({ proposal }: { proposal: any }) {
                         transition={{ delay: 0.3 }}
                         className="mb-8 text-white/80"
                     >
-                        <p className="text-lg font-medium mb-2">For {totalPrice === proposal.total_price ? '1 Traveler' : `${travelers.length} Travelers`}</p>
+                        <p className="text-lg font-medium mb-2">For {totalPrice === Number(proposal.total_price) ? '1 Traveler' : `${travelers.length} Travelers`}</p>
                         <div className="flex flex-wrap justify-center gap-2">
                             {travelers.map(t => (
                                 <span key={t.id} className="bg-white/10 px-3 py-1 rounded-full text-sm backdrop-blur-sm border border-white/10">

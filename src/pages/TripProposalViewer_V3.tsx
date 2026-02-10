@@ -615,7 +615,7 @@ function PricingWithAnimation({ proposal }: { proposal: any }) {
 
                     <div className="mb-8">
                         <p className="text-white/60 mb-2 text-sm uppercase tracking-wider font-bold">
-                            For {totalPrice === proposal.total_price ? '1 Traveler' : `${travelers.length} Travelers`}
+                            For {totalPrice === Number(proposal.total_price) ? '1 Traveler' : `${travelers.length} Travelers`}
                         </p>
                         <div className="flex flex-wrap justify-center gap-2">
                             {travelers.map(t => (
