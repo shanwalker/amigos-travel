@@ -473,3 +473,9 @@
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+/* This targets the branding link inside the widget iframe */
+iframe[title*="chat"] {
+  /* Some devs try to 'clip' the bottom of the iframe to hide the logo */
+  /* But this often makes the chat box look cut-off or broken */
+}
