@@ -36,8 +36,8 @@ export async function createChatSession(
     pageUrl: string
 ): Promise<{ success: boolean; sessionId?: string; error?: string }> {
     try {
-        const { data, error } = await supabase
-            .from('chat_sessions')
+        const { data, error } = await (supabase
+            .from('chat_sessions') as any)
             .insert({
                 user_id: userId,
                 is_authenticated: !!userId,
@@ -74,8 +74,8 @@ export async function logChatMessage(
 ): Promise<{ success: boolean; error?: string }> {
     try {
         // Insert message
-        const { error: messageError } = await supabase
-            .from('chat_messages')
+        const { error: messageError } = await (supabase
+            .from('chat_messages') as any)
             .insert({
                 session_id: sessionId,
                 role,
@@ -89,7 +89,7 @@ export async function logChatMessage(
         }
 
         // Update session message count
-        const { error: updateError } = await supabase.rpc('increment_chat_session_messages', {
+        const { error: updateError } = await (supabase as any).rpc('increment_chat_session_messages', {
             session_id: sessionId
         });
 
@@ -111,8 +111,8 @@ export async function logChatMessage(
 export async function endChatSession(sessionId: string): Promise<{ success: boolean; error?: string }> {
     try {
         // Get session start time to calculate duration
-        const { data: session } = await supabase
-            .from('chat_sessions')
+        const { data: session } = await (supabase
+            .from('chat_sessions') as any)
             .select('session_started_at')
             .eq('id', sessionId)
             .single();
@@ -125,8 +125,8 @@ export async function endChatSession(sessionId: string): Promise<{ success: bool
         const endTime = new Date();
         const durationSeconds = Math.floor((endTime.getTime() - startTime.getTime()) / 1000);
 
-        const { error } = await supabase
-            .from('chat_sessions')
+        const { error } = await (supabase
+            .from('chat_sessions') as any)
             .update({
                 session_ended_at: endTime.toISOString(),
                 duration_seconds: durationSeconds
