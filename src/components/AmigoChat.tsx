@@ -190,7 +190,7 @@ export const AmigoChat = () => {
                                     <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
                                         <Plane className="w-6 h-6 text-primary" />
                                     </div>
-                                    <p>Hey bhai! 👋</p>
+                                    <p>Hey Amigo! 👋</p>
                                     <p>I'm Amigo AI—your travel buddy. Ask me about trips, destinations, or how TravelAmigo works!</p>
                                 </div>
                             )}
