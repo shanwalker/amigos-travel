@@ -1,17 +1,15 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "AIzaSyC8TuCEa4VHti_bjbC5AXUiPj6TUhwzCso";
 
 // Enhanced logging for debugging
-if (!API_KEY) {
-    console.error("❌ CRTICAL ERROR: VITE_GEMINI_API_KEY is missing from environment variables.");
-    console.error("👉 Please ensure you have a .env file with VITE_GEMINI_API_KEY=...");
-    console.error("👉 AND restart your development server (npm run dev) to load the new variable.");
+if (!import.meta.env.VITE_GEMINI_API_KEY) {
+    console.warn("⚠️ Warning: VITE_GEMINI_API_KEY is missing. Using hardcoded fallback key for production.");
 } else {
-    console.log("✅ Amigo AI: Gemini API Key found.");
+    console.log("✅ Amigo AI: Gemini API Key found in environment.");
 }
 
-const genAI = new GoogleGenerativeAI(API_KEY || "missing_key_placeholder");
+const genAI = new GoogleGenerativeAI(API_KEY);
 
 // Amigo AI Persona & Knowledge Base
 const SYSTEM_INSTRUCTION = `
